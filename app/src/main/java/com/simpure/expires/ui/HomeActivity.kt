@@ -3,8 +3,8 @@ package com.simpure.expires.ui
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import com.simpure.expires.R
-import com.simpure.expires.data.CommodityRepository
-import com.simpure.expires.data.CommodityEnum
+import com.simpure.expires.data.*
+import com.simpure.expires.databinding.ActivityHomeBinding
 
 class HomeActivity : BaseActivity() {
 
@@ -20,17 +20,22 @@ class HomeActivity : BaseActivity() {
     }
 
     override fun initView() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
     }
 
     private lateinit var commodityList: List<CommodityRepository>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding: com.simpure.expires.databinding.ActivityHomeBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-        mainViewModel = ViewModelProviders.of(this).get(MainActivityViewModel::class.java)
-        binding.mainViewModel = mainViewModel
-        binding.setLifecycleOwner(this)
+        val binding: ActivityHomeBinding = DataBindingUtil.setContentView(this, R.layout.activity_home)
+        binding.homeDTO = CommodityListRepository(
+            User("qin", 0,0L,1L),
+            BoxRepository("box", commodityList)
+        )
+//            setContentView(R.layout.activity_home)
+//        mainViewModel = ViewModelProviders.of(this).get(MainActivityViewModel::class.java)
+//        binding.mainViewModel = mainViewModel
+//        binding.setLifecycleOwner(this)
 
     }
 
