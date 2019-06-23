@@ -1,12 +1,13 @@
 package com.simpure.expires.ui
 
 import android.os.Bundle
+import android.view.View
 import androidx.databinding.DataBindingUtil
 import com.simpure.expires.R
 import com.simpure.expires.data.*
 import com.simpure.expires.databinding.ActivityHomeBinding
 
-class HomeActivity : BaseActivity() {
+class CommodityHomeActivity : BaseActivity() {
 
 
     override fun initData() {
@@ -24,19 +25,29 @@ class HomeActivity : BaseActivity() {
     }
 
     private lateinit var commodityList: List<CommodityRepository>
+    private lateinit var commodity: CommodityHomeRepository
+
+    private lateinit var binding: ActivityHomeBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding: ActivityHomeBinding = DataBindingUtil.setContentView(this, R.layout.activity_home)
-        binding.homeDTO = CommodityListRepository(
-            User("qin", 0,0L,1L),
-            BoxRepository("box", commodityList)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_home)
+        commodity = CommodityHomeRepository(
+            User("qin", 0, 0L, 1L),
+            listOf(BoxRepository("box", commodityList))
         )
+        binding.homeDTO = commodity
 //            setContentView(R.layout.activity_home)
 //        mainViewModel = ViewModelProviders.of(this).get(MainActivityViewModel::class.java)
 //        binding.mainViewModel = mainViewModel
 //        binding.setLifecycleOwner(this)
+    }
 
+    fun changeText(view: View) {
+        binding.homeDTO = CommodityHomeRepository(
+            User("ting", 0, 0L, 1L),
+            listOf(BoxRepository("box", commodityList))
+        )
     }
 
     private fun getExpiredList(): List<CommodityRepository> {
