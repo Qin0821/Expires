@@ -6,6 +6,7 @@ import androidx.databinding.DataBindingUtil
 import com.simpure.expires.R
 import com.simpure.expires.data.*
 import com.simpure.expires.databinding.ActivityHomeBinding
+import kotlinx.android.synthetic.main.activity_home.*
 
 class CommodityHomeActivity : BaseActivity() {
 
@@ -37,6 +38,17 @@ class CommodityHomeActivity : BaseActivity() {
             listOf(BoxRepository("box", commodityList))
         )
         binding.homeDTO = commodity
+
+        val placeList = arrayListOf(
+            Place("000", 0),
+            Place("111", 1),
+            Place("222", 2),
+            Place("333", 3),
+            Place("444", 4),
+            Place("555", 5)
+        )
+        rlvBoxes.adapter = PlaceNameAdapter(placeList)
+        rlvBoxes.setOffscreenItems(3)
 //            setContentView(R.layout.activity_home)
 //        mainViewModel = ViewModelProviders.of(this).get(MainActivityViewModel::class.java)
 //        binding.mainViewModel = mainViewModel

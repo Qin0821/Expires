@@ -35,4 +35,7 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.46'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0-beta01'
+    // https://github.com/yarolegovich/DiscreteScrollView
+    implementation 'com.yarolegovich:discrete-scrollview:1.4.9'
 }
