@@ -30,6 +30,7 @@
         </RelativeLayout>
 
         <androidx.viewpager.widget.ViewPager
+                android:id="@+id/vpCommodityList"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
