@@ -13,22 +13,20 @@
             android:background="@color/appBg"
             tools:context=".ui.CommodityHomeActivity">
 
-        <LinearLayout android:layout_width="match_parent"
+        <RelativeLayout android:layout_width="match_parent"
                       android:layout_height="wrap_content"
                       app:layout_constraintTop_toTopOf="parent"
                       app:layout_constraintLeft_toLeftOf="parent"
-                      android:orientation="vertical"
                       app:layout_constraintRight_toRightOf="parent" android:id="@+id/relativeLayout">
             <!--<view class="androidx.appcompat.app.AlertController$RecycleListView" android:layout_width="match_parent"-->
             <!--android:id="@+id/rlvBoxes"-->
             <!--android:layout_height="42dp"-->
             <!--android:layout_alignParentBottom="true"/>-->
-            <LinearLayout
-                    android:orientation="horizontal"
-                    android:id="@+id/llBoxContainer"
+            <com.yarolegovich.discretescrollview.DiscreteScrollView
+                    android:id="@+id/rlvBoxes"
                     android:layout_width="match_parent"
-                    android:layout_height="80dp"
-                    android:layout_marginBottom="2dp"/>
+                    android:layout_height="wrap_content"
+                    app:dsv_orientation="horizontal" />
             <RelativeLayout android:layout_width="match_parent"
                             android:layout_margin="10dp"
                             android:background="@drawable/bg_white_radius5"
@@ -40,7 +38,7 @@
             </RelativeLayout>
             <View android:layout_width="match_parent" android:layout_height="1dp"
                   android:background="@color/line"/>
-        </LinearLayout>
+        </RelativeLayout>
 
         <androidx.viewpager.widget.ViewPager
                 android:id="@+id/vpCommodityList"
@@ -48,6 +46,8 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
                 app:layout_constraintTop_toBottomOf="@+id/relativeLayout">
 
         </androidx.viewpager.widget.ViewPager>
