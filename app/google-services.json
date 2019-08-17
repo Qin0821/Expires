@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1077502765056",
+    "firebase_url": "https://expires-simpure.firebaseio.com",
+    "project_id": "expires-simpure",
+    "storage_bucket": "expires-simpure.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1077502765056:android:f01d012f2553b45e",
+        "android_client_info": {
+          "package_name": "com.simpure.expires"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1077502765056-8a1hvfmd8ue7j6rpvhj910mkkh44h0dc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.simpure.expires",
+            "certificate_hash": "7d7a2ed4f22c661bce9415db911b63769db90659"
+          }
+        },
+        {
+          "client_id": "1077502765056-aar3bcjvsddesv3d02apiv93ehv4ddij.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAf3qETK-qjCOG-PjN9srwcI41XpPgE4eE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1077502765056-aar3bcjvsddesv3d02apiv93ehv4ddij.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

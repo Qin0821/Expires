@@ -1,32 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools" xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:tools="http://schemas.android.com/tools"
+        xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <data>
         <variable
                 name="homeDTO"
                 type="com.simpure.expires.data.CommodityHomeRepository"/>
         <variable name="commodityHomeActivity" type="com.simpure.expires.ui.CommodityHomeActivity"/>
     </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/appBg"
             tools:context=".ui.CommodityHomeActivity">
 
-        <RelativeLayout android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
-                      app:layout_constraintTop_toTopOf="parent"
-                      app:layout_constraintLeft_toLeftOf="parent"
-                      app:layout_constraintRight_toRightOf="parent" android:id="@+id/relativeLayout">
-            <!--<view class="androidx.appcompat.app.AlertController$RecycleListView" android:layout_width="match_parent"-->
-            <!--android:id="@+id/rlvBoxes"-->
-            <!--android:layout_height="42dp"-->
-            <!--android:layout_alignParentBottom="true"/>-->
-            <com.yarolegovich.discretescrollview.DiscreteScrollView
-                    android:id="@+id/rlvBoxes"
+        <LinearLayout
+                android:id="@+id/relativeLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:orientation="vertical"
+                app:layout_constraintRight_toRightOf="parent">
+            <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvLabels"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:dsv_orientation="horizontal" />
+                    android:layout_height="100dp"/>
             <RelativeLayout android:layout_width="match_parent"
                             android:layout_margin="10dp"
                             android:background="@drawable/bg_white_radius5"
@@ -38,7 +39,7 @@
             </RelativeLayout>
             <View android:layout_width="match_parent" android:layout_height="1dp"
                   android:background="@color/line"/>
-        </RelativeLayout>
+        </LinearLayout>
 
         <androidx.viewpager.widget.ViewPager
                 android:id="@+id/vpCommodityList"

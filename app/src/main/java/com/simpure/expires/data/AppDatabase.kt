@@ -18,6 +18,7 @@ import com.simpure.expires.workers.SeedDatabaseWorker
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
 
+    abstract fun commodityHomeDao(): CommodityHomeDao
 
     companion object {
 

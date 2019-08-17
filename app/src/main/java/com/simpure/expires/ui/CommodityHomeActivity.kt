@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.viewpager.widget.ViewPager
@@ -20,37 +21,41 @@ class CommodityHomeActivity : BaseActivity() {
 
 
     override fun initData() {
-        fridgeCommodityList = listOf(
-            CommodityRepository("薯条", "1234567890", 1234567890, 1234567890, 3, CommodityEnum.FRESH),
-            CommodityRepository("西瓜", "1234567890", 1234567890, 1234567890, 3, CommodityEnum.ALMOST),
-            CommodityRepository("牛奶", "1234567890", 1234567890, 1234567890, 3, CommodityEnum.EXPIRED),
-            CommodityRepository("鸡蛋", "1234567890", 1234567890, 1234567890, 3, CommodityEnum.FRESH),
-            CommodityRepository("紫薯", "1234567890", 1234567890, 1234567890, 3, CommodityEnum.EXPIRED)
-        )
-        makeUpsCommodityList = listOf(
-            CommodityRepository("口红", "1234567890", 1234567890, 1234567890, 3, CommodityEnum.FRESH),
-            CommodityRepository("乳液", "1234567890", 1234567890, 1234567890, 3, CommodityEnum.ALMOST),
-            CommodityRepository("卸妆水", "1234567890", 1234567890, 1234567890, 3, CommodityEnum.EXPIRED),
-            CommodityRepository("精华", "1234567890", 1234567890, 1234567890, 3, CommodityEnum.FRESH),
-            CommodityRepository("面霜", "1234567890", 1234567890, 1234567890, 3, CommodityEnum.EXPIRED)
-        )
+//        fridgeCommodityList = listOf(
+//            CommodityRepository("薯条", "1234567890", 1234567890, 1234567890, 3, CommodityEnum.FRESH),
+//            CommodityRepository("西瓜", "1234567890", 1234567890, 1234567890, 3, CommodityEnum.ALMOST),
+//            CommodityRepository("牛奶", "1234567890", 1234567890, 1234567890, 3, CommodityEnum.EXPIRED),
+//            CommodityRepository("鸡蛋", "1234567890", 1234567890, 1234567890, 3, CommodityEnum.FRESH),
+//            CommodityRepository("紫薯", "1234567890", 1234567890, 1234567890, 3, CommodityEnum.EXPIRED)
+//        )
+//        makeUpsCommodityList = listOf(
+//            CommodityRepository("口红", "1234567890", 1234567890, 1234567890, 3, CommodityEnum.FRESH),
+//            CommodityRepository("乳液", "1234567890", 1234567890, 1234567890, 3, CommodityEnum.ALMOST),
+//            CommodityRepository("卸妆水", "1234567890", 1234567890, 1234567890, 3, CommodityEnum.EXPIRED),
+//            CommodityRepository("精华", "1234567890", 1234567890, 1234567890, 3, CommodityEnum.FRESH),
+//            CommodityRepository("面霜", "1234567890", 1234567890, 1234567890, 3, CommodityEnum.EXPIRED)
+//        )
 
-        commodity = CommodityHomeRepository(
-            User("qin", 0, 0L, 1L),
-            listOf(
-                BoxRepository("fridge", fridgeCommodityList),
-                BoxRepository("Make-ups", makeUpsCommodityList)
-            )
+//        commodity = CommodityHomeRepository(
+//            User("qin", 0, 0L, 1L),
+//            listOf(
+//                BoxRepository("fridge", fridgeCommodityList),
+//                BoxRepository("Make-ups", makeUpsCommodityList)
+//            )
+//        )
+//        binding.homeDTO = commodity
+
+//        commodity.boxes.forEach {
+//
+//        }
+
+        fragmentList = listOf(
+            BoxFragment()
         )
-        binding.homeDTO = commodity
-
-        commodity.boxes.forEach {
-
-        }
     }
 
     override fun initView() {
-        vpCommodityList.adapter = BoxFragmentAdapter(supportFragmentManager, fragmentList)
+
     }
 
     private lateinit var fridgeCommodityList: List<CommodityRepository>
@@ -107,32 +112,45 @@ class CommodityHomeActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_home)
+        binding.vpCommodityList.adapter = BoxFragmentAdapter(supportFragmentManager, fragmentList)
 
 
-        commodity = CommodityHomeRepository(
-            User("qin", 0, 0L, 1L),
-            listOf(BoxRepository("box", commodityList))
+        /**
+         * 1. 获取place列表
+         * 2. 根据placeList创建CommodityListFragment
+         */
+        val commodityList = arrayListOf(
+            Commodity("薯条", 10, 0, 1, 3, 2)
         )
-        binding.homeDTO = commodity
 
         val placeList = arrayListOf(
-            Place("000", 0),
-            Place("111", 1),
-            Place("222", 2),
-            Place("333", 3),
-            Place("444", 4),
-            Place("555", 5)
+            Place("000", commodityList, 0),
+            Place("111", commodityList, 0),
+            Place("222", commodityList, 0),
+            Place("333", commodityList, 0),
+            Place("444", commodityList, 0),
+            Place("555", commodityList, 0)
         )
-        rlvBoxes.adapter = PlaceNameAdapter(placeList)
-        rlvBoxes.setOffscreenItems(3)
+        binding.rvLabels.adapter = PlaceNameAdapter(placeList)
 
-        if (vpCommodityList.adapter != null) {
-            vpCommodityList.adapter = CommodityFragmentAdapter(fragments)
+//        commodity = CommodityHomeRepository(
+//            User("qin", 0, 0L, 1L),
+//            listOf(BoxRepository("box", commodityList))
+//        )
+//        binding.homeDTO = commodity
+
+
+        if (binding.vpCommodityList.adapter != null) {
+
+            val fragments = arrayListOf(
+                BoxFragment()
+            )
+            binding.vpCommodityList.adapter = CommodityFragmentAdapter(fragments, supportFragmentManager)
             lastPosition = -1
 //            createIndicators()
-            vpCommodityList.removeOnPageChangeListener(internalPageChangeListener)
-            vpCommodityList.addOnPageChangeListener(internalPageChangeListener)
-            internalPageChangeListener.onPageSelected(vpCommodityList.currentItem)
+            binding.vpCommodityList.removeOnPageChangeListener(internalPageChangeListener)
+            binding.vpCommodityList.addOnPageChangeListener(internalPageChangeListener)
+            internalPageChangeListener.onPageSelected(binding.vpCommodityList.currentItem)
         }
 //            setContentView(R.layout.activity_home)
 //        mainViewModel = ViewModelProviders.of(this).get(MainActivityViewModel::class.java)
@@ -141,24 +159,9 @@ class CommodityHomeActivity : BaseActivity() {
     }
 
     fun changeText(view: View) {
-        binding.homeDTO = CommodityHomeRepository(
-            User("ting", 0, 0L, 1L),
-            listOf(BoxRepository("box", fridgeCommodityList))
-        )
+//        binding.homeDTO = CommodityHomeRepository(
+//            User("ting", 0, 0L, 1L),
+//            listOf(BoxRepository("box", fridgeCommodityList))
+//        )
     }
-
-    private fun getExpiredList(): List<CommodityRepository> {
-
-        return fridgeCommodityList.filter { it.type == CommodityEnum.EXPIRED }
-    }
-
-    private fun getAtmostList(): List<CommodityRepository> {
-
-        return fridgeCommodityList.filter { it.type == CommodityEnum.ALMOST }
-    }
-
-    private fun getFreshtList(): List<CommodityRepository> {
-        return fridgeCommodityList.filter { it.type == CommodityEnum.FRESH }
-    }
-
 }

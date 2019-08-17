@@ -29,12 +29,13 @@ import com.simpure.expires.viewmodels.CommodityListViewModel
 object InjectorUtils {
 
     private fun getCommodityHomeRepository(context: Context): CommodityRepository {
-        return CommodityRepository
+        return CommodityRepository.getInstance(
+            AppDatabase.getInstance(context.applicationContext).commodityHomeDao())
     }
 
     fun provideCommodityHomeViewModelFactory(
         context: Context
-    ): CommodityHomeViewModel {
+    ): CommodityHomeViewModelFactory {
         val repository = getCommodityHomeRepository(context)
         return CommodityHomeViewModelFactory(repository)
     }
