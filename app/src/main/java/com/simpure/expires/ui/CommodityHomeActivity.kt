@@ -1,5 +1,6 @@
 package com.simpure.expires.ui
 
+import android.Manifest
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -15,6 +16,13 @@ import com.simpure.expires.data.*
 import com.simpure.expires.databinding.ActivityHomeBinding
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.activity_home.*
+import com.google.zxing.util.Constant.REQ_QR_CODE
+import com.google.zxing.activity.CaptureActivity
+import android.content.Intent
+import android.os.Build
+import com.blankj.utilcode.constant.PermissionConstants
+import com.blankj.utilcode.util.*
+import com.google.zxing.util.Constant
 
 
 class CommodityHomeActivity : BaseActivity() {
@@ -163,5 +171,43 @@ class CommodityHomeActivity : BaseActivity() {
 //            User("ting", 0, 0L, 1L),
 //            listOf(BoxRepository("box", fridgeCommodityList))
 //        )
+    }
+
+    fun scan(view: View) {
+        PermissionUtils.permission(PermissionConstants.CAMERA)
+            .rationale { shouldRequest -> ToastUtils.showShort(shouldRequest.toString()) }
+            .callback(object : PermissionUtils.FullCallback {
+                override fun onGranted(permissionsGranted: List<String>) {
+                    LogUtils.d(permissionsGranted)
+                    val intent = Intent(this@CommodityHomeActivity, CaptureActivity::class.java)
+                    startActivityForResult(intent, REQ_QR_CODE)
+                }
+
+                override fun onDenied(
+                    permissionsDeniedForever: List<String>,
+                    permissionsDenied: List<String>
+                ) {
+                    LogUtils.d(permissionsDeniedForever, permissionsDenied)
+                    if (permissionsDeniedForever.isNotEmpty()) {
+                        ToastUtils.showShort("showOpenAppSettingDialog")
+                        return
+                    }
+                    ToastUtils.showShort("requestCamera")
+                }
+            })
+            .theme { activity -> ScreenUtils.setFullScreen(activity) }
+            .request()
+
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        // 扫描结果回调
+        if (requestCode == Constant.REQ_QR_CODE && resultCode == RESULT_OK) {
+            val bundle = data?.extras
+            val scanResult = bundle?.getString(Constant.INTENT_EXTRA_KEY_QR_SCAN)
+            binding.btScan.text = scanResult
+        }
     }
 }

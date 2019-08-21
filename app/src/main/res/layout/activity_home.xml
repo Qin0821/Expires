@@ -67,6 +67,14 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent">
 
+            <Button
+                    android:id="@+id/btScan"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:gravity="center"
+                    android:onClick="scan"
+                    android:text="scan"/>
+
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

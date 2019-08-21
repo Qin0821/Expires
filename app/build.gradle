@@ -62,6 +62,10 @@ dependencies {
     implementation 'com.gyf.immersionbar:immersionbar-components:3.0.0-beta05'
     // kotlin扩展（可选）
     implementation 'com.gyf.immersionbar:immersionbar-ktx:3.0.0-beta05'
+
+    implementation project(':zxing-lib')
+
+    implementation 'com.blankj:utilcodex:1.25.8'
 }
 
 apply plugin: 'com.google.gms.google-services'
