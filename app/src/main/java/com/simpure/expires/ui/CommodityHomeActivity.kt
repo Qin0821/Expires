@@ -6,14 +6,13 @@ import android.util.Log
 import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import androidx.navigation.NavController
-import androidx.navigation.Navigation
-import androidx.viewpager.widget.ViewPager
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
-import com.simpure.expires.R
 import com.simpure.expires.data.*
 import com.simpure.expires.databinding.ActivityHomeBinding
+import androidx.recyclerview.widget.LinearLayoutManager
+
+
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.activity_home.*
 import com.google.zxing.util.Constant.REQ_QR_CODE
@@ -58,7 +57,7 @@ class CommodityHomeActivity : BaseActivity() {
 //        }
 
         fragmentList = listOf(
-            BoxFragment()
+            PlaceFragment()
         )
     }
 
@@ -119,7 +118,7 @@ class CommodityHomeActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_home)
+        binding = DataBindingUtil.setContentView(this, com.simpure.expires.R.layout.activity_home)
         binding.vpCommodityList.adapter = BoxFragmentAdapter(supportFragmentManager, fragmentList)
 
 
@@ -132,14 +131,22 @@ class CommodityHomeActivity : BaseActivity() {
         )
 
         val placeList = arrayListOf(
-            Place("000", commodityList, 0),
-            Place("111", commodityList, 0),
-            Place("222", commodityList, 0),
-            Place("333", commodityList, 0),
-            Place("444", commodityList, 0),
-            Place("555", commodityList, 0)
+            Place("All", commodityList, 0),
+            Place("Fridge", commodityList, 0),
+            Place("Make-ups", commodityList, 0),
+            Place("Snacks", commodityList, 0),
+            Place("Icebox", commodityList, 0),
+            Place("Tea table", commodityList, 0),
+            Place("Night table", commodityList, 0),
+            Place("Chest", commodityList, 0),
+            Place("Safe", commodityList, 0),
+            Place("Mirror cabinet", commodityList, 0),
+            Place("Shoe rack", commodityList, 0)
         )
-        binding.rvLabels.adapter = PlaceNameAdapter(placeList)
+        val layoutManager = LinearLayoutManager(this)
+        layoutManager.orientation = LinearLayoutManager.HORIZONTAL
+        binding.rvLabels.layoutManager = layoutManager
+        binding.rvLabels.adapter = PlaceNameAdapter(this, placeList)
 
 //        commodity = CommodityHomeRepository(
 //            User("qin", 0, 0L, 1L),
@@ -151,7 +158,7 @@ class CommodityHomeActivity : BaseActivity() {
         if (binding.vpCommodityList.adapter != null) {
 
             val fragments = arrayListOf(
-                BoxFragment()
+                PlaceFragment()
             )
             binding.vpCommodityList.adapter = CommodityFragmentAdapter(fragments, supportFragmentManager)
             lastPosition = -1

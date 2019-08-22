@@ -63,6 +63,8 @@ dependencies {
     // kotlin扩展（可选）
     implementation 'com.gyf.immersionbar:immersionbar-ktx:3.0.0-beta05'
 
+    implementation 'joda-time:joda-time:2.10.3'
+
     implementation project(':zxing-lib')
 
     implementation 'com.blankj:utilcodex:1.25.8'

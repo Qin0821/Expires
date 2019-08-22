@@ -5,6 +5,7 @@
     <color name="colorAccent">#D81B60</color>
 
     <color name="white">#ffffff</color>
+    <color name="transparency">#00000000</color>
 
     <color name="commodity_label_red">#F54949</color>
     <color name="commodity_label_yellow">#EBC509</color>
@@ -12,6 +13,8 @@
 
     <color name="text_expires_days">#222222</color>
     <color name="text_commodity_desc">#999999</color>
+    <color name="text_place">#B3B3B3</color>
+    <color name="text_place_select">#222222</color>
 
     <color name="appBg">#F7F7F7</color>
     <color name="searchHint">#D8D8D8</color>
