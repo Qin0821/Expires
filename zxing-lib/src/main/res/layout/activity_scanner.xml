@@ -1,72 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+    <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <SurfaceView
+                android:id="@+id/scanner_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"/>
+
+        <com.google.zxing.view.ViewfinderView
+                android:id="@+id/viewfinder_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:corner_color="@color/corner_color"
+                app:frame_color="@color/viewfinder_frame"
+                app:label_text="@string/layout_focus_qrcode"
+                app:label_text_color="@color/note_text_color"
+                app:label_text_margin_top="8dip"
+                app:label_text_size="16sp"
+                app:laser_color="@color/laser_color"
+                app:mask_color="@color/viewfinder_mask"
+                app:result_color="@color/result_view"
+                app:result_point_color="@color/result_point_color"/>
+
+        <ImageButton
+                android:id="@+id/btn_flash"
+                android:layout_width="40dip"
+                android:layout_height="40dip"
+                android:layout_gravity="bottom|center_horizontal"
+                android:layout_marginBottom="30dip"
+                android:background="?attr/selectableItemBackground"
+                android:padding="6dip"
+                android:scaleType="centerInside"
+                android:src="@drawable/flash_off"/>
+    </FrameLayout>
 
     <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#b3000000"
-            android:gravity="center_vertical">
+            android:layout_height="80dp"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:paddingBottom="6dp"
+            android:background="#b3000000">
 
         <ImageButton
                 android:id="@+id/btn_back"
-                android:layout_width="40dip"
-                android:layout_height="40dip"
-                android:layout_centerVertical="true"
-                android:padding="14dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentBottom="true"
                 android:scaleType="centerCrop"
-                android:src="@drawable/btn_back" />
-
-        <Button
-                android:id="@+id/btn_album"
-                android:layout_width="66dip"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:text="@string/layout_album"
-                android:textAllCaps="false"
-                android:textColor="@android:color/white" />
-    </RelativeLayout>
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <SurfaceView
-            android:id="@+id/scanner_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center" />
-
-        <com.google.zxing.view.ViewfinderView
-            android:id="@+id/viewfinder_content"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:corner_color="@color/corner_color"
-            app:frame_color="@color/viewfinder_frame"
-            app:label_text="@string/layout_focus_qrcode"
-            app:label_text_color="@color/note_text_color"
-            app:label_text_margin_top="8dip"
-            app:label_text_size="16sp"
-            app:laser_color="@color/laser_color"
-            app:mask_color="@color/viewfinder_mask"
-            app:result_color="@color/result_view"
-            app:result_point_color="@color/result_point_color" />
+                android:src="@drawable/btn_back"/>
 
         <ImageButton
-            android:id="@+id/btn_flash"
-            android:layout_width="40dip"
-            android:layout_height="40dip"
-            android:layout_gravity="bottom|center_horizontal"
-            android:layout_marginBottom="30dip"
-            android:background="?attr/selectableItemBackground"
-            android:padding="6dip"
-            android:scaleType="centerInside"
-            android:src="@drawable/flash_off" />
-    </FrameLayout>
+                android:id="@+id/btn_album"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"/>
+    </RelativeLayout>
 
 </RelativeLayout>
