@@ -16,7 +16,6 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 
     protected fun setActivityTheme() {
-//        ScreenUtils.setTranslucentTheme(this)
         immersionBar {
             statusBarDarkFont(true)
         }

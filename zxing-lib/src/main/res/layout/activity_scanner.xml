@@ -45,13 +45,13 @@
     <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="80dp"
+            android:background="#b3000000"
             android:paddingStart="12dp"
             android:paddingEnd="12dp"
-            android:paddingBottom="6dp"
-            android:background="#b3000000">
+            android:paddingBottom="6dp">
 
         <ImageButton
-                android:id="@+id/btn_back"
+                android:id="@+id/ibBack"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_alignParentBottom="true"
@@ -59,12 +59,14 @@
                 android:src="@drawable/btn_back"/>
 
         <ImageButton
-                android:id="@+id/btn_album"
+                android:id="@+id/ibAlbum"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
-                android:layout_alignParentBottom="true"/>
+                android:layout_alignParentBottom="true"
+                android:scaleType="centerCrop"
+                android:textColor="@android:color/white"/>
     </RelativeLayout>
 
 </RelativeLayout>
