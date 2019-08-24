@@ -17,11 +17,10 @@
 package com.simpure.expires.utilities
 
 import android.content.Context
+import com.simpure.expires.AppExecutors
 import com.simpure.expires.data.AppDatabase
 import com.simpure.expires.data.CommodityRepository
-import com.simpure.expires.viewmodels.CommodityHomeViewModel
-import com.simpure.expires.viewmodels.CommodityHomeViewModelFactory
-import com.simpure.expires.viewmodels.CommodityListViewModel
+import com.simpure.expires.viewmodel.CommodityHomeViewModelFactory
 
 /**
  * Static methods used to inject classes needed for various Activities and Fragments.
@@ -30,7 +29,7 @@ object InjectorUtils {
 
     private fun getCommodityHomeRepository(context: Context): CommodityRepository {
         return CommodityRepository.getInstance(
-            AppDatabase.getInstance(context.applicationContext).commodityHomeDao())
+            AppDatabase.getInstance(context.applicationContext, AppExecutors()).commodityHomeDao())
     }
 
     fun provideCommodityHomeViewModelFactory(

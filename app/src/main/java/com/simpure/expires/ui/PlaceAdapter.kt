@@ -5,13 +5,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.DataBindingUtil.inflate
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.simpure.expires.R
-import com.simpure.expires.data.Commodity
-import com.simpure.expires.data.Place
-import com.simpure.expires.utilities.getCompatColor
+import com.simpure.expires.databinding.ItemCommodityOverviewBinding
+import com.simpure.expires.model.Commodity
 
-class PlaceAdapter(private val context: Context, private val commodityList: List<Commodity>) :
+class PlaceAdapter(
+    private val context: Context,
+    private val mCommodityClickCallback: CommodityClickCallback
+) :
     RecyclerView.Adapter<PlaceAdapter.ViewHolder>() {
 
     private var selectedPlacePosition = 0
@@ -22,30 +27,69 @@ class PlaceAdapter(private val context: Context, private val commodityList: List
 
     fun getSelectedPlacePosition() = selectedPlacePosition
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val inflater = LayoutInflater.from(parent.context)
-        val view = inflater.inflate(R.layout.item_commodity_overview, parent, false)
-        return ViewHolder(view)
+    internal var mCommodityList: List<Commodity>? = null
+
+    init {
+        setHasStableIds(true)
     }
 
-    override fun getItemCount(): Int {
-        return commodityList.size
-    }
+    fun setCommodityList(commodityList: List<Commodity>) {
+        if (mCommodityList == null) {
+            mCommodityList = commodityList
+            notifyItemRangeInserted(0, commodityList.size)
+        } else {
+            val result = DiffUtil.calculateDiff(object : DiffUtil.Callback() {
+                override fun getOldListSize(): Int {
+                    return mCommodityList!!.size
+                }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+                override fun getNewListSize(): Int {
+                    return commodityList.size
+                }
 
-        with(holder) {
+                override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+                    return mCommodityList!![oldItemPosition].id === commodityList[newItemPosition].id
+                }
 
-            label
+                override fun areContentsTheSame(
+                    oldItemPosition: Int,
+                    newItemPosition: Int
+                ): Boolean {
+                    val newCommodity = commodityList[newItemPosition]
+                    val oldCommodity = mCommodityList!![oldItemPosition]
+                    return (newCommodity.id === oldCommodity.id
+                            && newCommodity.name == oldCommodity.name
+                            && newCommodity.date === oldCommodity.date)
+                }
+            })
+            mCommodityList = commodityList
+            result.dispatchUpdatesTo(this)
         }
     }
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
-        val label: View = itemView.findViewById(R.id.label)
-        val tvExpireDay: TextView = itemView.findViewById(R.id.tvExpireDay)
-        val tvCommodityName: TextView = itemView.findViewById(R.id.tvCommodityName)
-        val tvCommodityDesc: TextView = itemView.findViewById(R.id.tvCommodityDesc)
-
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val binding: ItemCommodityOverviewBinding = inflate(
+            LayoutInflater.from(parent.context), R.layout.item_commodity_overview,
+            parent, false
+        )
+        binding.callback = mCommodityClickCallback
+        return ViewHolder(binding)
     }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.binding.commodity = mCommodityList!![position]
+        holder.binding.executePendingBindings()
+    }
+
+    override fun getItemCount(): Int {
+        return if (mCommodityList == null) 0 else mCommodityList!!.size
+    }
+
+    override fun getItemId(position: Int): Long {
+        return mCommodityList!![position].id
+    }
+
+    class ViewHolder(val binding: ItemCommodityOverviewBinding) :
+        RecyclerView.ViewHolder(binding.getRoot())
+
 }

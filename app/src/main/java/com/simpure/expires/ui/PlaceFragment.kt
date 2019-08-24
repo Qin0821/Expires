@@ -4,23 +4,73 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import com.simpure.expires.R
+import com.simpure.expires.data.Commodity
+import com.simpure.expires.data.entry.CommodityEntity
 import com.simpure.expires.databinding.FragmentPlaceBinding
-import com.simpure.expires.utilities.InjectorUtils
-import com.simpure.expires.viewmodels.CommodityListViewModel
+import com.simpure.expires.viewmodel.CommodityListViewModel
 
 class PlaceFragment : Fragment() {
 
-    private val viewModel: CommodityListViewModel by viewModels {
-        InjectorUtils.provideCommodityHomeViewModelFactory(requireContext())
+    val TAG = "ProductListFragment"
+
+    private var mPlaceAdapter: PlaceAdapter? = null
+
+    private var mBinding: FragmentPlaceBinding? = null
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_place, container, false)
+
+        mPlaceAdapter = PlaceAdapter(context!!, mCommodityClickCallback)
+        mBinding!!.rvCommodityList.adapter = mPlaceAdapter
+
+        return mBinding!!.root
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val binding = FragmentPlaceBinding.inflate(inflater, container, false)
-//        binding.rvCommodityList.layoutManager = LinearLayoutManager(context)
-//        binding.rvCommodityList.adapter = PlaceAdapter(context!!, placeList)
-        return super.onCreateView(inflater, container, savedInstanceState)
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        val viewModel = ViewModelProvider(this).get(CommodityListViewModel::class.java)
+
+//        mBinding!!.productsSearchBtn.setOnClickListener(View.OnClickListener {
+//            val query = mBinding!!.productsSearchBox.getText()
+//            if (query == null || query!!.toString().isEmpty()) {
+//                subscribeUi(viewModel.commodities)
+//            }
+//        })
+
+        subscribeUi(viewModel.commodities)
     }
+
+    private fun subscribeUi(liveData: LiveData<List<CommodityEntity>>) {
+        // Update the list when the data changes
+        liveData.observe(this,
+            Observer<List<Any>> { myCommodities ->
+                if (myCommodities != null) {
+                    mBinding!!.isLoading = false
+                    mPlaceAdapter!!.setCommodityList(myCommodities as List<com.simpure.expires.model.Commodity>)
+                } else {
+                    mBinding!!.isLoading = true
+                }
+                // espresso does not know how to wait for data binding's loop so we execute changes
+                // sync.
+                mBinding!!.executePendingBindings()
+            })
+    }
+
+    private val mCommodityClickCallback = CommodityClickCallback { commodity ->
+        if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
+            (activity as CommodityHomeActivity).showCommodityDetail(commodity)
+        }
+    }
+
 }

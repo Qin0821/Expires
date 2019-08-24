@@ -1,4 +1,4 @@
-package com.simpure.expires.data
+package com.simpure.expires.data.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao

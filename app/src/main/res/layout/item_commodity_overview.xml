@@ -1,74 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-        xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:orientation="vertical"
-        app:cardCornerRadius="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="80dp">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <variable
+                name="isLoading"
+                type="boolean" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+        <variable
+                name="commodity"
+                type="com.simpure.expires.model.Commodity" />
+        <variable
+                name="callback"
+                type="com.simpure.expires.ui.CommodityClickCallback" />
+    </data>
+
+    <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="80dp"
+            android:orientation="vertical"
+            app:cardCornerRadius="10dp">
 
 
-        <View android:id="@+id/label"
-              android:layout_width="8dp" android:layout_height="80dp"
-              app:layout_constraintStart_toStartOf="parent"
-              app:layout_constraintTop_toTopOf="parent"
-              android:background="@color/commodity_label_blue"
-              app:layout_constraintBottom_toBottomOf="parent"/>
-
-        <TextView
-                android:id="@+id/tvExpireDay"
-                app:layout_constraintStart_toEndOf="@id/label"
-                android:layout_width="80dp"
-                android:layout_height="40dp"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:gravity="center"
-                android:text="128"
-                android:textSize="34sp"
-                android:layout_marginLeft="2dp"
-                android:textColor="@color/text_expires_days"/>
-
-        <TextView
-                android:id="@+id/tvCommodityName"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toEndOf="@id/tvExpireDay"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="2dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:text="超级超级超级超级超级超级长的宝贝"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:textSize="20sp"
-                android:textColor="@color/text_expires_days"
-                android:layout_width="0dp"
-                app:layout_constraintHorizontal_weight="1"
-                android:layout_height="24dp"
-                app:layout_constraintBottom_toTopOf="@+id/tvCommodityDesc"
-                app:layout_constraintVertical_chainStyle="packed"/>
-
-        <TextView
-                android:id="@+id/tvCommodityDesc"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@id/tvExpireDay"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="2dp"
-                android:maxLines="1"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:ellipsize="end"
-                app:layout_constraintHorizontal_weight="1"
-                android:text="超级超级超级超级超级超级超级超级超级超级超级长的描述"
-                android:textSize="12sp"
-                android:textColor="@color/text_commodity_desc"
-                android:layout_width="0dp"
-                android:layout_height="14dp"
-                app:layout_constraintTop_toBottomOf="@+id/tvCommodityName"/>
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</androidx.cardview.widget.CardView>
+            <View
+                    android:id="@+id/label"
+                    android:layout_width="8dp"
+                    android:layout_height="80dp"
+                    android:background="@color/commodity_label_blue"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                    android:id="@+id/tvExpireDay"
+                    android:layout_width="80dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="2dp"
+                    android:gravity="center"
+                    android:text="128"
+                    android:textColor="@color/text_expires_days"
+                    android:textSize="34sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/label"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                    android:id="@+id/tvCommodityName"
+                    android:layout_width="0dp"
+                    android:layout_height="24dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="2dp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="超级超级超级超级超级超级长的宝贝"
+                    android:textColor="@color/text_expires_days"
+                    android:textSize="20sp"
+                    app:layout_constraintBottom_toTopOf="@+id/tvCommodityDesc"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_weight="1"
+                    app:layout_constraintStart_toEndOf="@id/tvExpireDay"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_chainStyle="packed" />
+
+            <TextView
+                    android:id="@+id/tvCommodityDesc"
+                    android:layout_width="0dp"
+                    android:layout_height="14dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="2dp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="超级超级超级超级超级超级超级超级超级超级超级长的描述"
+                    android:textColor="@color/text_commodity_desc"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_weight="1"
+                    app:layout_constraintStart_toEndOf="@id/tvExpireDay"
+                    app:layout_constraintTop_toBottomOf="@+id/tvCommodityName" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</layout>

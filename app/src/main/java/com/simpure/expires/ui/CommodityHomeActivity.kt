@@ -1,6 +1,5 @@
 package com.simpure.expires.ui
 
-import android.Manifest
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -13,15 +12,13 @@ import com.simpure.expires.databinding.ActivityHomeBinding
 import androidx.recyclerview.widget.LinearLayoutManager
 
 
-import kotlinx.android.synthetic.main.activity_home.*
-import kotlinx.android.synthetic.main.activity_home.*
 import com.google.zxing.util.Constant.REQ_QR_CODE
 import com.google.zxing.activity.CaptureActivity
 import android.content.Intent
-import android.os.Build
 import com.blankj.utilcode.constant.PermissionConstants
 import com.blankj.utilcode.util.*
 import com.google.zxing.util.Constant
+import com.simpure.expires.R
 
 
 class CommodityHomeActivity : BaseActivity() {
@@ -56,9 +53,9 @@ class CommodityHomeActivity : BaseActivity() {
 //
 //        }
 
-        fragmentList = listOf(
-            PlaceFragment()
-        )
+//        fragmentList = listOf(
+//            PlaceFragment()
+//        )
     }
 
     override fun initView() {
@@ -82,7 +79,11 @@ class CommodityHomeActivity : BaseActivity() {
             Log.d(javaClass.simpleName, "state: $state")
         }
 
-        override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+        override fun onPageScrolled(
+            position: Int,
+            positionOffset: Float,
+            positionOffsetPixels: Int
+        ) {
 
         }
 
@@ -119,15 +120,69 @@ class CommodityHomeActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, com.simpure.expires.R.layout.activity_home)
-        binding.vpCommodityList.adapter = BoxFragmentAdapter(supportFragmentManager, fragmentList)
+//        binding.vpCommodityList.adapter = BoxFragmentAdapter(supportFragmentManager, fragmentList)
 
 
+        initPlaceNameList()
+
+        initCommodityList(savedInstanceState)
+
+//        commodity = CommodityHomeRepository(
+//            User("qin", 0, 0L, 1L),
+//            listOf(BoxRepository("box", commodityList))
+//        )
+//        binding.homeDTO = commodity
+
+
+        /*if (binding.vpCommodityList.adapter != null) {
+
+            val fragments = arrayListOf(
+                PlaceFragment()
+            )
+            binding.vpCommodityList.adapter = CommodityFragmentAdapter(fragments, supportFragmentManager)
+            lastPosition = -1
+            createIndicators()
+            binding.vpCommodityList.removeOnPageChangeListener(internalPageChangeListener)
+            binding.vpCommodityList.addOnPageChangeListener(internalPageChangeListener)
+            internalPageChangeListener.onPageSelected(binding.vpCommodityList.currentItem)
+        }*/
+//            setContentView(R.layout.activity_home)
+//        mainViewModel = ViewModelProviders.of(this).get(MainActivityViewModel::class.java)
+//        binding.mainViewModel = mainViewModel
+//        binding.setLifecycleOwner(this)
+    }
+
+    private fun initCommodityList(savedInstanceState: Bundle?) {
+
+        if (savedInstanceState == null) {
+            val fragment = PlaceFragment()
+
+            supportFragmentManager.beginTransaction()
+                .add(R.id.fcCommodity, fragment, fragment.TAG).commit()
+        }
+    }
+
+    /** Shows the product detail fragment  */
+    fun showCommodityDetail(commodity: Commodity) {
+
+        val productFragment = CommodityFragment().forCommodity(commodity.id)
+
+        supportFragmentManager
+            .beginTransaction()
+            .addToBackStack("product")
+            .replace(
+                R.id.fcCommodity,
+                productFragment, null
+            ).commit()
+    }
+
+    private fun initPlaceNameList() {
         /**
          * 1. 获取place列表
          * 2. 根据placeList创建CommodityListFragment
          */
         val commodityList = arrayListOf(
-            Commodity("薯条", 10, 0, 1, 3, 2)
+            Commodity(0L, "根","薯条", 10, null, null, 1, null, false, 3, null)
         )
 
         val placeList = arrayListOf(
@@ -147,30 +202,6 @@ class CommodityHomeActivity : BaseActivity() {
         layoutManager.orientation = LinearLayoutManager.HORIZONTAL
         binding.rvLabels.layoutManager = layoutManager
         binding.rvLabels.adapter = PlaceNameAdapter(this, placeList)
-
-//        commodity = CommodityHomeRepository(
-//            User("qin", 0, 0L, 1L),
-//            listOf(BoxRepository("box", commodityList))
-//        )
-//        binding.homeDTO = commodity
-
-
-        if (binding.vpCommodityList.adapter != null) {
-
-            val fragments = arrayListOf(
-                PlaceFragment()
-            )
-            binding.vpCommodityList.adapter = CommodityFragmentAdapter(fragments, supportFragmentManager)
-            lastPosition = -1
-//            createIndicators()
-            binding.vpCommodityList.removeOnPageChangeListener(internalPageChangeListener)
-            binding.vpCommodityList.addOnPageChangeListener(internalPageChangeListener)
-            internalPageChangeListener.onPageSelected(binding.vpCommodityList.currentItem)
-        }
-//            setContentView(R.layout.activity_home)
-//        mainViewModel = ViewModelProviders.of(this).get(MainActivityViewModel::class.java)
-//        binding.mainViewModel = mainViewModel
-//        binding.setLifecycleOwner(this)
     }
 
     fun changeText(view: View) {

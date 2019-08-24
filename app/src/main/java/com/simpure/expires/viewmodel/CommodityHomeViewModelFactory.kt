@@ -1,4 +1,4 @@
-package com.simpure.expires.viewmodels
+package com.simpure.expires.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
