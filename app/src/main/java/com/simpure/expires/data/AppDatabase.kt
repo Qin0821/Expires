@@ -84,7 +84,7 @@ abstract class AppDatabase : RoomDatabase() {
                             addDelay()
                             // Generate the data for pre-population
                             val database = getInstance(appContext, executors)
-                            val products = DataGenerator.generateProducts()
+                            val products = DataGenerator.generateCommodities()
 //                            val comments = DataGenerator.generateCommentsForProducts(commodities)
 
                             insertData(database, products)
@@ -117,9 +117,8 @@ abstract class AppDatabase : RoomDatabase() {
         private val MIGRATION_1_2 = object : Migration(1, 2) {
 
             override fun migrate(database: SupportSQLiteDatabase) {
-                database.execSQL("CREATE VIRTUAL TABLE IF NOT EXISTS `productsFts` USING FTS4(" + "`name` TEXT, `description` TEXT, content=`commodities`)")
-                database.execSQL("INSERT INTO productsFts (`rowid`, `name`, `description`) " + "SELECT `id`, `name`, `description` FROM commodities")
-
+                database.execSQL("CREATE VIRTUAL TABLE IF NOT EXISTS `productsFts` USING FTS4(" + "`name` TEXT, `date` TEXT, content=`commodities`)")
+                database.execSQL("INSERT INTO productsFts (`rowid`, `name`, `date`) " + "SELECT `id`, `name`, `date` FROM commodities")
             }
         }
     }

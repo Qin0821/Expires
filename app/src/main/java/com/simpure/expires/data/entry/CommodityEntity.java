@@ -10,16 +10,16 @@ import com.simpure.expires.model.Commodity;
 @Entity(tableName = "commodities")
 public class CommodityEntity implements Commodity {
     @PrimaryKey
-    private Long id;
+    private int id;
     private String name;
-    private Date date;
+    private Long date;
 
     @Override
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -33,11 +33,11 @@ public class CommodityEntity implements Commodity {
     }
 
     @Override
-    public Date getDate() {
+    public Long getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(Long date) {
         this.date = date;
     }
 
@@ -46,7 +46,7 @@ public class CommodityEntity implements Commodity {
     }
 
     @Ignore
-    public CommodityEntity(long id, String name, Date date) {
+    public CommodityEntity(int id, String name, Long date) {
         this.id = id;
         this.name = name;
         this.date = date;

@@ -38,19 +38,18 @@ public class DataGenerator {
     private static final String[] COMMENTS = new String[]{
             "Comment 1", "Comment 2", "Comment 3", "Comment 4", "Comment 5", "Comment 6"};
 
-    public static List<CommodityEntity> generateProducts() {
-        List<CommodityEntity> products = new ArrayList<>(FIRST.length * SECOND.length);
-        Random rnd = new Random();
+    public static List<CommodityEntity> generateCommodities() {
+        List<CommodityEntity> commodities = new ArrayList<>(FIRST.length * SECOND.length);
         for (int i = 0; i < FIRST.length; i++) {
             for (int j = 0; j < SECOND.length; j++) {
                 CommodityEntity commodity = new CommodityEntity();
                 commodity.setName("Hahaha 成功啦");
-                commodity.setDate(new Date(1L, 2, 3L));
-                commodity.setId(0L);
-                products.add(commodity);
+                commodity.setDate(3L);
+                commodity.setId(0);
+                commodities.add(commodity);
             }
         }
-        return products;
+        return commodities;
     }
 
 //    public static List<CommentEntity> generateCommentsForProducts(

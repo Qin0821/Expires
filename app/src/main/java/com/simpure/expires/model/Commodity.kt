@@ -4,7 +4,7 @@ import com.simpure.expires.data.*
 import com.simpure.expires.data.Commodity
 
 interface Commodity {
-    val id: Long
+    val id: Int
     val name: String
-    val date: Date?
+    val date: Long?
 }

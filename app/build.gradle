@@ -1,8 +1,8 @@
 apply plugin: 'com.android.application'
-
+apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android'
-
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 28
@@ -72,6 +72,9 @@ dependencies {
     implementation project(':zxing-lib')
 
     implementation 'com.blankj:utilcodex:1.25.8'
-}
 
-apply plugin: 'com.google.gms.google-services'
+
+    implementation 'android.arch.persistence.room:runtime:1.1.1'
+    annotationProcessor 'android.arch.persistence.room:compiler:1.1.1'
+    kapt 'android.arch.persistence.room:compiler:1.1.1'
+}

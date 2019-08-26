@@ -86,7 +86,7 @@ class PlaceAdapter(
     }
 
     override fun getItemId(position: Int): Long {
-        return mCommodityList!![position].id
+        return mCommodityList!![position].id.toLong()
     }
 
     class ViewHolder(val binding: ItemCommodityOverviewBinding) :
