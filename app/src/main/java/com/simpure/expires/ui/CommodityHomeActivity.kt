@@ -25,37 +25,7 @@ class CommodityHomeActivity : BaseActivity() {
 
 
     override fun initData() {
-//        fridgeCommodityList = listOf(
-//            CommodityRepository("薯条", "1234567890", 1234567890, 1234567890, 3, CommodityEnum.FRESH),
-//            CommodityRepository("西瓜", "1234567890", 1234567890, 1234567890, 3, CommodityEnum.ALMOST),
-//            CommodityRepository("牛奶", "1234567890", 1234567890, 1234567890, 3, CommodityEnum.EXPIRED),
-//            CommodityRepository("鸡蛋", "1234567890", 1234567890, 1234567890, 3, CommodityEnum.FRESH),
-//            CommodityRepository("紫薯", "1234567890", 1234567890, 1234567890, 3, CommodityEnum.EXPIRED)
-//        )
-//        makeUpsCommodityList = listOf(
-//            CommodityRepository("口红", "1234567890", 1234567890, 1234567890, 3, CommodityEnum.FRESH),
-//            CommodityRepository("乳液", "1234567890", 1234567890, 1234567890, 3, CommodityEnum.ALMOST),
-//            CommodityRepository("卸妆水", "1234567890", 1234567890, 1234567890, 3, CommodityEnum.EXPIRED),
-//            CommodityRepository("精华", "1234567890", 1234567890, 1234567890, 3, CommodityEnum.FRESH),
-//            CommodityRepository("面霜", "1234567890", 1234567890, 1234567890, 3, CommodityEnum.EXPIRED)
-//        )
 
-//        commodity = CommodityHomeRepository(
-//            User("qin", 0, 0L, 1L),
-//            listOf(
-//                BoxRepository("fridge", fridgeCommodityList),
-//                BoxRepository("Make-ups", makeUpsCommodityList)
-//            )
-//        )
-//        binding.homeDTO = commodity
-
-//        commodity.boxes.forEach {
-//
-//        }
-
-//        fragmentList = listOf(
-//            PlaceFragment()
-//        )
     }
 
     override fun initView() {
@@ -165,14 +135,14 @@ class CommodityHomeActivity : BaseActivity() {
     /** Shows the product detail fragment  */
     fun showCommodityDetail(commodity: Commodity) {
 
-        val productFragment = CommodityFragment().forCommodity(commodity.id)
+        val commodityFragment = CommodityFragment().forCommodity(commodity.id)
 
         supportFragmentManager
             .beginTransaction()
-            .addToBackStack("product")
+            .addToBackStack("commodity")
             .replace(
                 R.id.fcCommodity,
-                productFragment, null
+                commodityFragment, null
             ).commit()
     }
 
@@ -181,22 +151,47 @@ class CommodityHomeActivity : BaseActivity() {
          * 1. 获取place列表
          * 2. 根据placeList创建CommodityListFragment
          */
-        val commodityList = arrayListOf(
-            Commodity(0L, "根","薯条", 10, null, null, 1, null, false, 3, null)
+        val fridgeList = arrayListOf(
+            Commodity(10L, "薯条", 10, "根", 1),
+            Commodity(11L, "雪碧", 2, "瓶", 1),
+            Commodity(12L, "鸡腿", 2, "根", 1),
+            Commodity(13L, "排骨", 1, "斤", 1),
+            Commodity(14L, "酸奶", 2, "瓶", 1),
+            Commodity(15L, "西瓜", 1, "个", 1)
         )
+
+        val makeUpsList = arrayListOf(
+            Commodity(20L, "dior", 2, "支", 2),
+            Commodity(21L, "乳液", 1, "瓶", 2),
+            Commodity(22L, "爽肤水", 1, "瓶", 2),
+            Commodity(23L, "项链", 2, "个", 2),
+            Commodity(24L, "手链", 1, "个", 2),
+            Commodity(25L, "tf", 1, "支", 2)
+        )
+
+        val otherList = arrayListOf(
+            Commodity(30L, "dior", 2, "支", 3),
+            Commodity(31L, "乳液", 1, "瓶", 3),
+            Commodity(32L, "爽肤水", 1, "瓶", 3),
+            Commodity(33L, "项链", 2, "个", 3),
+            Commodity(34L, "手链", 1, "个", 3),
+            Commodity(35L, "tf", 1, "支", 3)
+        )
+
+        val commodityList = fridgeList + makeUpsList + otherList
 
         val placeList = arrayListOf(
             Place("All", commodityList, 0),
-            Place("Fridge", commodityList, 0),
-            Place("Make-ups", commodityList, 0),
-            Place("Snacks", commodityList, 0),
-            Place("Icebox", commodityList, 0),
-            Place("Tea table", commodityList, 0),
-            Place("Night table", commodityList, 0),
-            Place("Chest", commodityList, 0),
-            Place("Safe", commodityList, 0),
-            Place("Mirror cabinet", commodityList, 0),
-            Place("Shoe rack", commodityList, 0)
+            Place("Fridge", fridgeList, 1),
+            Place("makeUpsList", makeUpsList, 2),
+            Place("Snacks", otherList, 3),
+            Place("Icebox", otherList, 4),
+            Place("Tea table", otherList, 5),
+            Place("Night table", otherList, 6),
+            Place("Chest", otherList, 7),
+            Place("Safe", otherList, 8),
+            Place("Mirror cabinet", otherList, 9),
+            Place("Shoe rack", otherList, 10)
         )
         val layoutManager = LinearLayoutManager(this)
         layoutManager.orientation = LinearLayoutManager.HORIZONTAL
@@ -204,12 +199,6 @@ class CommodityHomeActivity : BaseActivity() {
         binding.rvLabels.adapter = PlaceNameAdapter(this, placeList)
     }
 
-    fun changeText(view: View) {
-//        binding.homeDTO = CommodityHomeRepository(
-//            User("ting", 0, 0L, 1L),
-//            listOf(BoxRepository("box", fridgeCommodityList))
-//        )
-    }
 
     fun scan(view: View) {
         PermissionUtils.permission(PermissionConstants.CAMERA)

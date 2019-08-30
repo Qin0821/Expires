@@ -11,14 +11,16 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.simpure.expires.R
-import com.simpure.expires.data.Commodity
 import com.simpure.expires.data.entry.CommodityEntity
 import com.simpure.expires.databinding.FragmentPlaceBinding
+import com.simpure.expires.model.Commodity
 import com.simpure.expires.viewmodel.CommodityListViewModel
 
 class PlaceFragment : Fragment() {
 
     val TAG = "ProductListFragment"
+
+    private var mCurrentPlaceId = 0
 
     private var mPlaceAdapter: PlaceAdapter? = null
 
@@ -41,23 +43,16 @@ class PlaceFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         val viewModel = ViewModelProvider(this).get(CommodityListViewModel::class.java)
 
-//        mBinding!!.productsSearchBtn.setOnClickListener(View.OnClickListener {
-//            val query = mBinding!!.productsSearchBox.getText()
-//            if (query == null || query!!.toString().isEmpty()) {
-//                subscribeUi(viewModel.commodities)
-//            }
-//        })
-
         subscribeUi(viewModel.commodities)
     }
 
     private fun subscribeUi(liveData: LiveData<List<CommodityEntity>>) {
         // Update the list when the data changes
         liveData.observe(this,
-            Observer<List<Any>> { myCommodities ->
+            Observer<List<Commodity>> { myCommodities ->
                 if (myCommodities != null) {
                     mBinding!!.isLoading = false
-                    mPlaceAdapter!!.setCommodityList(myCommodities as List<com.simpure.expires.model.Commodity>)
+                    mPlaceAdapter!!.setCommodityList(myCommodities)
                 } else {
                     mBinding!!.isLoading = true
                 }

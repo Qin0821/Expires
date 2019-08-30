@@ -30,11 +30,11 @@ class CommodityListViewModel(application: Application) : AndroidViewModel(applic
         mObservableProducts.value = null
 
         mRepository = (application as BasicApp).repository
-        val products = mRepository.commodities
+        val commodity = mRepository.commodities
 
         // observe the changes of the commodities from the database and forward them
         mObservableProducts.addSource<List<CommodityEntity>>(
-            products
+            commodity
         ) { mObservableProducts.setValue(it) }
     }
 

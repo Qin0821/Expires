@@ -84,10 +84,10 @@ abstract class AppDatabase : RoomDatabase() {
                             addDelay()
                             // Generate the data for pre-population
                             val database = getInstance(appContext, executors)
-                            val products = DataGenerator.generateCommodities()
+                            val commodityList = DataGenerator.generateCommodities()
 //                            val comments = DataGenerator.generateCommentsForProducts(commodities)
 
-                            insertData(database, products)
+                            insertData(database, commodityList)
                             // notify that the database was created and it's ready to be used
                             database.setDatabaseCreated()
                         }
@@ -98,10 +98,10 @@ abstract class AppDatabase : RoomDatabase() {
         }
 
         private fun insertData(
-            database: AppDatabase, products: List<CommodityEntity>
+            database: AppDatabase, commodityList: List<CommodityEntity>
         ) {
             database.runInTransaction {
-                database.commodityDao().insertAll(products)
+                database.commodityDao().insertAll(commodityList)
 //                database.commentDao().insertAll(comments)
             }
         }

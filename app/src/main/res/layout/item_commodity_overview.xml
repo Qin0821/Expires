@@ -42,6 +42,7 @@
                     android:layout_width="80dp"
                     android:layout_height="40dp"
                     android:layout_marginLeft="2dp"
+                    android:layout_marginStart="2dp"
                     android:gravity="center"
                     android:text="128"
                     android:textColor="@color/text_expires_days"
