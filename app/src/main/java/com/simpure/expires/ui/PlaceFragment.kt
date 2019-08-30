@@ -47,7 +47,7 @@ class PlaceFragment : Fragment() {
     }
 
     private fun subscribeUi(liveData: LiveData<List<CommodityEntity>>) {
-        // Update the list when the data changes
+        // 当数据更改时更新列表
         liveData.observe(this,
             Observer<List<Commodity>> { myCommodities ->
                 if (myCommodities != null) {
@@ -56,8 +56,7 @@ class PlaceFragment : Fragment() {
                 } else {
                     mBinding!!.isLoading = true
                 }
-                // espresso does not know how to wait for data binding's loop so we execute changes
-                // sync.
+                // 异步执行更改
                 mBinding!!.executePendingBindings()
             })
     }

@@ -15,7 +15,7 @@ class CommodityListViewModel(application: Application) : AndroidViewModel(applic
 
     private val mRepository: DataRepository
 
-    // MediatorLiveData can observe other LiveData objects and react on their emissions.
+    // MediatorLiveData可以观察其他LiveData对象并对它们的排放做出反应。
     private val mObservableProducts: MediatorLiveData<List<CommodityEntity>> = MediatorLiveData()
 
     /**
@@ -26,13 +26,13 @@ class CommodityListViewModel(application: Application) : AndroidViewModel(applic
 
     init {
 
-        // set by default null, until we get data from the database.
+        // 默认为null，设值后会继续调用的
         mObservableProducts.value = null
 
         mRepository = (application as BasicApp).repository
         val commodity = mRepository.commodities
 
-        // observe the changes of the commodities from the database and forward them
+        //  从数据库订阅，类似selector
         mObservableProducts.addSource<List<CommodityEntity>>(
             commodity
         ) { mObservableProducts.setValue(it) }
