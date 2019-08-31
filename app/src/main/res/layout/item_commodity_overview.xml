@@ -4,13 +4,23 @@
         xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
+        <import type="android.view.View" />
+
+        <import type="com.simpure.expires.data.entry.CommodityEnum" />
+
         <variable
                 name="isLoading"
                 type="boolean" />
 
         <variable
+                name="inSearch"
+                type="boolean" />
+
+        <variable
                 name="commodity"
-                type="com.simpure.expires.model.Commodity" />
+                type="com.simpure.expires.data.entry.CommodityEntity" />
+
         <variable
                 name="callback"
                 type="com.simpure.expires.ui.CommodityClickCallback" />
@@ -19,6 +29,10 @@
     <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="80dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="5dp"
             android:orientation="vertical"
             app:cardCornerRadius="10dp">
 
@@ -33,6 +47,7 @@
                     android:layout_width="8dp"
                     android:layout_height="80dp"
                     android:background="@color/commodity_label_blue"
+                    android:visibility="@{inSearch ? View.VISIBLE : View.GONE }"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -41,11 +56,10 @@
                     android:id="@+id/tvExpireDay"
                     android:layout_width="80dp"
                     android:layout_height="40dp"
-                    android:layout_marginLeft="2dp"
                     android:layout_marginStart="2dp"
                     android:gravity="center"
-                    android:text="128"
-                    android:textColor="@color/text_expires_days"
+                    android:text="@{commodity.calc()}"
+                    android:textColor="@{inSearch ? @color/text_expires_days : commodity.type() == CommodityEnum.RED ? @color/commodity_label_red : commodity.type() == CommodityEnum.YELLOW ? @color/commodity_label_yellow : @color/commodity_label_blue }"
                     android:textSize="34sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@id/label"
@@ -60,7 +74,7 @@
                     android:layout_marginBottom="2dp"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:text="超级超级超级超级超级超级长的宝贝"
+                    android:text="@{commodity.name}"
                     android:textColor="@color/text_expires_days"
                     android:textSize="20sp"
                     app:layout_constraintBottom_toTopOf="@+id/tvCommodityDesc"
@@ -79,7 +93,7 @@
                     android:layout_marginBottom="2dp"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:text="超级超级超级超级超级超级超级超级超级超级超级长的描述"
+                    android:text="@{commodity.formatExpirationDate()}"
                     android:textColor="@color/text_commodity_desc"
                     android:textSize="12sp"
                     app:layout_constraintBottom_toBottomOf="parent"

@@ -11,6 +11,6 @@ import com.simpure.expires.data.entry.CommodityEntity
 @Dao
 interface CommodityHomeDao {
 
-    @Query("SELECT * FROM commodity_home WHERE id = :userId")
-    fun getCommodityList(userId: String): LiveData<List<CommodityEntity>>
+//    @Query("SELECT * FROM commodity_home WHERE id = :userId")
+//    fun getCommodityList(userId: String): LiveData<List<CommodityEntity>>
 }

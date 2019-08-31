@@ -14,33 +14,31 @@
  * limitations under the License.
  */
 
-package com.simpure.expires.data.dao;
+package com.simpure.expires.data.dao
 
-import androidx.lifecycle.LiveData;
-import androidx.room.Dao;
-import androidx.room.Insert;
-import androidx.room.OnConflictStrategy;
-import androidx.room.Query;
+import androidx.lifecycle.LiveData
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
 
-import com.simpure.expires.data.entry.CommodityEntity;
-
-import java.util.List;
+import com.simpure.expires.data.entry.CommodityEntity
 
 @Dao
-public interface CommodityDao {
+interface CommodityDao {
     @Query("SELECT * FROM commodities")
-    LiveData<List<CommodityEntity>> loadAllProducts();
+    fun loadAllCommodities(): LiveData<List<CommodityEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertAll(List<CommodityEntity> commodities);
+    fun insertAll(commodities: List<CommodityEntity>)
 
     @Query("select * from commodities where id = :productId")
-    LiveData<CommodityEntity> loadCommodity(int productId);
+    fun loadCommodity(productId: Int): LiveData<CommodityEntity>
 
     @Query("select * from commodities where id = :productId")
-    CommodityEntity loadCommoditySync(int productId);
+    fun loadCommoditySync(productId: Int): CommodityEntity
 
-//    @Query("SELECT commodities.* FROM commodities JOIN commoditiesFts ON (commodities.id = commoditiesFts.rowid) "
-//        + "WHERE commoditiesFts MATCH :query")
-//    LiveData<List<CommodityEntity>> searchAllProducts(String query);
+    //    @Query("SELECT commodities.* FROM commodities JOIN commoditiesFts ON (commodities.id = commoditiesFts.rowid) "
+    //        + "WHERE commoditiesFts MATCH :query")
+    //    LiveData<List<CommodityEntity>> searchAllProducts(String query);
 }

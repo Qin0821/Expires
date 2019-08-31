@@ -22,7 +22,7 @@ public class DataRepository {
         mDatabase = database;
         mObservableProducts = new MediatorLiveData<>();
 
-        mObservableProducts.addSource(mDatabase.commodityDao().loadAllProducts(),
+        mObservableProducts.addSource(mDatabase.commodityDao().loadAllCommodities(),
                 productEntities -> {
                     if (mDatabase.getDatabaseCreated().getValue() != null) {
                         mObservableProducts.postValue(productEntities);

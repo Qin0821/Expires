@@ -1,7 +1,7 @@
 package com.simpure.expires.data
 
 data class Depository(
-    val name: String,   // ex：commodityName：蒙牛，depositoryName： 伊利
+    val name: String,   // ex：name：蒙牛，depositoryName： 伊利
     val num: Int,
     val barcode: String,
     val productionDate: Long,   // 生产日期

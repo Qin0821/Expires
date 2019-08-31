@@ -7,6 +7,7 @@ import androidx.databinding.DataBindingUtil.inflate
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.simpure.expires.R
+import com.simpure.expires.data.entry.CommodityEntity
 import com.simpure.expires.databinding.ItemCommodityOverviewBinding
 import com.simpure.expires.model.Commodity
 
@@ -24,13 +25,13 @@ class PlaceAdapter(
 
     fun getSelectedPlacePosition() = selectedPlacePosition
 
-    internal var mCommodityList: List<Commodity>? = null
+    internal var mCommodityList: List<CommodityEntity>? = null
 
     init {
         setHasStableIds(true)
     }
 
-    fun setCommodityList(commodityList: List<Commodity>) {
+    fun setCommodityList(commodityList: List<CommodityEntity>) {
         if (mCommodityList == null) {
             mCommodityList = commodityList
             notifyItemRangeInserted(0, commodityList.size)
@@ -56,7 +57,7 @@ class PlaceAdapter(
                     val oldCommodity = mCommodityList!![oldItemPosition]
                     return (newCommodity.id === oldCommodity.id
                             && newCommodity.name == oldCommodity.name
-                            && newCommodity.date === oldCommodity.date)
+                            && newCommodity.expirationDate === oldCommodity.expirationDate)
                 }
             })
             mCommodityList = commodityList

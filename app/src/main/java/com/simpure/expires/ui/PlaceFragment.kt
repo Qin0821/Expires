@@ -49,7 +49,7 @@ class PlaceFragment : Fragment() {
     private fun subscribeUi(liveData: LiveData<List<CommodityEntity>>) {
         // 当数据更改时更新列表
         liveData.observe(this,
-            Observer<List<Commodity>> { myCommodities ->
+            Observer<List<CommodityEntity>> { myCommodities ->
                 if (myCommodities != null) {
                     mBinding!!.isLoading = false
                     mPlaceAdapter!!.setCommodityList(myCommodities)
