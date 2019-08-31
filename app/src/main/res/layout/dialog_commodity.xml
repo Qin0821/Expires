@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="com.simpure.expires.model.CommodityEnum" />
+
+        <variable
+                name="isLoading"
+                type="boolean" />
+
+        <variable
+                name="inSearch"
+                type="boolean" />
+
+        <variable
+                name="commodityDetail"
+                type="com.simpure.expires.model.Commodity" />
+
+        <variable
+                name="callback"
+                type="com.simpure.expires.ui.CommodityClickCallback" />
+    </data>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

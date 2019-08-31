@@ -18,7 +18,9 @@ import android.content.Intent
 import com.blankj.utilcode.constant.PermissionConstants
 import com.blankj.utilcode.util.*
 import com.google.zxing.util.Constant
-import com.simpure.expires.R
+import com.orhanobut.dialogplus.DialogPlus
+import com.simpure.expires.ui.commodity.CommodityAdapter
+import com.simpure.expires.ui.commodity.CommodityHolder
 
 
 class CommodityHomeActivity : BaseActivity() {
@@ -128,14 +130,14 @@ class CommodityHomeActivity : BaseActivity() {
             val fragment = PlaceFragment()
 
             supportFragmentManager.beginTransaction()
-                .add(R.id.fcCommodity, fragment, fragment.TAG).commit()
+                .add(com.simpure.expires.R.id.fcCommodity, fragment, fragment.TAG).commit()
         }
     }
 
     /** Shows the product detail fragment  */
     fun showCommodityDetail(commodity: com.simpure.expires.model.Commodity) {
 
-        val commodityFragment = CommodityFragment().forCommodity(commodity.id)
+        /*val commodityFragment = CommodityFragment().forCommodity(commodity.id)
 
         supportFragmentManager
             .beginTransaction()
@@ -143,7 +145,19 @@ class CommodityHomeActivity : BaseActivity() {
             .replace(
                 R.id.fcCommodity,
                 commodityFragment, null
-            ).commit()
+            ).commit()*/
+
+        val adapter = CommodityAdapter(commodity)
+
+        val dialog = DialogPlus.newDialog(this)
+            .setAdapter(adapter)
+            .setContentHolder(CommodityHolder())
+            .setOnClickListener { dialog, view ->
+
+            }
+            .setExpanded(true)  // This will enable the expand feature, (similar to android L share dialog)
+            .create()
+        dialog.show()
     }
 
     private fun initPlaceNameList() {

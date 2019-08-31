@@ -48,7 +48,7 @@ dependencies {
     implementation 'androidx.work:work-runtime-ktx:2.2.0'
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.46'
     implementation 'androidx.fragment:fragment-ktx:1.2.0-alpha02'
-    implementation 'com.google.firebase:firebase-core:17.1.0'
+    implementation 'com.google.firebase:firebase-core:17.2.0'
 
     // Testing dependencies
     testImplementation 'junit:junit:4.12'
@@ -77,4 +77,6 @@ dependencies {
     implementation 'android.arch.persistence.room:runtime:1.1.1'
     annotationProcessor 'android.arch.persistence.room:compiler:1.1.1'
     kapt 'android.arch.persistence.room:compiler:1.1.1'
+
+    implementation 'com.orhanobut:dialogplus:1.11@aar'
 }
