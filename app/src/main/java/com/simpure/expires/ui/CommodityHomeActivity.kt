@@ -133,7 +133,7 @@ class CommodityHomeActivity : BaseActivity() {
     }
 
     /** Shows the product detail fragment  */
-    fun showCommodityDetail(commodity: Commodity) {
+    fun showCommodityDetail(commodity: com.simpure.expires.model.Commodity) {
 
         val commodityFragment = CommodityFragment().forCommodity(commodity.id)
 

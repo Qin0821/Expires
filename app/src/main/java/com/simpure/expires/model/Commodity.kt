@@ -7,4 +7,12 @@ interface Commodity {
     val id: Int
     val name: String
     val expirationDate: Long
+
+    abstract fun calc(): String
+    abstract fun type(): CommodityEnum
+    abstract fun formatExpirationDate(): String
+}
+
+enum class CommodityEnum {
+    RED, YELLOW, BLUE,
 }

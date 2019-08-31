@@ -25,13 +25,13 @@ class PlaceAdapter(
 
     fun getSelectedPlacePosition() = selectedPlacePosition
 
-    internal var mCommodityList: List<CommodityEntity>? = null
+    internal var mCommodityList: List<Commodity>? = null
 
     init {
         setHasStableIds(true)
     }
 
-    fun setCommodityList(commodityList: List<CommodityEntity>) {
+    fun setCommodityList(commodityList: List<Commodity>) {
         if (mCommodityList == null) {
             mCommodityList = commodityList
             notifyItemRangeInserted(0, commodityList.size)

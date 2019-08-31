@@ -5,6 +5,7 @@ import androidx.room.Ignore
 import androidx.room.PrimaryKey
 
 import com.simpure.expires.model.Commodity
+import com.simpure.expires.model.CommodityEnum
 import com.simpure.expires.utilities.calcExpirationDate
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
@@ -18,11 +19,11 @@ class CommodityEntity : Commodity {
     override var name: String = ""
     override var expirationDate: Long = 0L
 
-    fun calc(): String {
+    override fun calc(): String {
         return expirationDate.calcExpirationDate().toString()
     }
 
-    fun type(): CommodityEnum {
+    override fun type(): CommodityEnum {
         val day = calc().toInt()
         return when {
             day < 0 -> CommodityEnum.RED
@@ -31,7 +32,7 @@ class CommodityEntity : Commodity {
         }
     }
 
-    fun formatExpirationDate(): String {
+    override fun formatExpirationDate(): String {
         val date = DateTime(expirationDate)
         return date.toString(DateTimeFormat.mediumDate())
     }
@@ -53,6 +54,3 @@ class CommodityEntity : Commodity {
     }
 }
 
-enum class CommodityEnum {
-    RED, YELLOW, BLUE,
-}

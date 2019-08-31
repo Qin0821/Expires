@@ -28,10 +28,10 @@ class CommodityFragment : Fragment() {
     }
 
     /** Creates commodity fragment for specific commodity ID  */
-    fun forCommodity(commodityId: Long): CommodityFragment {
+    fun forCommodity(commodityId: Int): CommodityFragment {
         val fragment = CommodityFragment()
         val args = Bundle()
-        args.putLong(KEY_COMMODITY_ID, commodityId)
+        args.putInt(KEY_COMMODITY_ID, commodityId)
         fragment.arguments = args
         return fragment
     }
