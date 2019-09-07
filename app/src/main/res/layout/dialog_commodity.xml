@@ -7,7 +7,7 @@
 
         <import type="android.view.View" />
 
-        <import type="com.simpure.expires.model.CommodityEnum" />
+        <import type="com.simpure.expires.enum.CommodityEnum" />
 
         <variable
                 name="isLoading"
@@ -19,7 +19,7 @@
 
         <variable
                 name="commodityDetail"
-                type="com.simpure.expires.model.Commodity" />
+                type="com.simpure.expires.model.CommodityDetail" />
 
         <variable
                 name="callback"
@@ -30,6 +30,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/bg_half_rounded_rectangle_white_10"
             android:paddingStart="20dp"
             android:paddingEnd="20dp">
 
@@ -45,7 +46,7 @@
                 android:layout_width="7dp"
                 android:layout_height="70dp"
                 android:layout_marginTop="50dp"
-                android:background="@color/commodity_label_blue"
+                android:background="@{commodityDetail.type() == CommodityEnum.EXPIRED ? @drawable/bg_rounded_rectangle_red : commodityDetail.type() == CommodityEnum.ALMOST ? @drawable/bg_rounded_rectangle_yellow : @drawable/bg_rounded_rectangle_blue}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -141,7 +142,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tvCommodityName">

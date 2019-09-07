@@ -38,10 +38,10 @@ class PlaceNameAdapter(private val context: Context, private val placeList: List
 
             tvName.text = placeList[position].name
             if (position == selectedPlacePosition) {
-                tvName.setTextColor(context.getCompatColor(R.color.text_place_select))
+                tvName.setTextColor(context.getCompatColor(R.color.text_expires_days))
                 tvName.textSize = 36f
             } else {
-                tvName.setTextColor(context.getCompatColor(R.color.text_place))
+                tvName.setTextColor(context.getCompatColor(R.color.bg_comm_action))
                 tvName.textSize = 20f
             }
         }

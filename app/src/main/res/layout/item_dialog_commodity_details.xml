@@ -44,14 +44,14 @@
                 android:layout_height="20dp"
                 android:layout_weight="1"
                 android:text="Place"
-                android:textColor="@color/text_place"
+                android:textColor="@color/bg_comm_action"
                 android:textSize="17sp" />
 
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="20dp"
                 android:text="11 / 5 / 2020"
-                android:textColor="@color/text_place"
+                android:textColor="@color/bg_comm_action"
                 android:textSize="17sp" />
     </LinearLayout>
 
@@ -74,14 +74,14 @@
                 android:layout_height="20dp"
                 android:layout_weight="1"
                 android:text="Label"
-                android:textColor="@color/text_place"
+                android:textColor="@color/bg_comm_action"
                 android:textSize="17sp" />
 
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="20dp"
                 android:text="Fridge"
-                android:textColor="@color/text_place"
+                android:textColor="@color/bg_comm_action"
                 android:textSize="17sp" />
     </LinearLayout>
 </LinearLayout>

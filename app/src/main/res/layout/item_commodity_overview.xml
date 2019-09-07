@@ -7,7 +7,7 @@
 
         <import type="android.view.View" />
 
-        <import type="com.simpure.expires.model.CommodityEnum" />
+        <import type="com.simpure.expires.enum.CommodityEnum" />
 
         <variable
                 name="isLoading"
@@ -47,8 +47,9 @@
             <View
                     android:id="@+id/label"
                     android:layout_width="8dp"
-                    android:layout_height="80dp"
-                    android:background="@color/commodity_label_blue"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="8dp"
+                    android:background="@{commodity.type() == CommodityEnum.EXPIRED ? @drawable/bg_rounded_rectangle_red : commodity.type() == CommodityEnum.ALMOST ? @drawable/bg_rounded_rectangle_yellow : @drawable/bg_rounded_rectangle_blue}"
                     android:visibility="@{inSearch ? View.VISIBLE : View.GONE }"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -61,10 +62,10 @@
                     android:layout_marginStart="2dp"
                     android:gravity="center"
                     android:text="@{commodity.calc()}"
-                    android:textColor="@{inSearch ? @color/text_expires_days : commodity.type() == CommodityEnum.RED ? @color/commodity_label_red : commodity.type() == CommodityEnum.YELLOW ? @color/commodity_label_yellow : @color/commodity_label_blue }"
+                    android:textColor="@{inSearch ? @color/text_expires_days : commodity.type() == CommodityEnum.EXPIRED ? @color/commodity_label_red : commodity.type() == CommodityEnum.ALMOST ? @color/commodity_label_yellow : @color/commodity_label_blue }"
                     android:textSize="34sp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/label"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
             <TextView

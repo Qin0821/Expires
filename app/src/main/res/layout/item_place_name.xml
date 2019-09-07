@@ -9,7 +9,7 @@
             android:id="@+id/tvName"
             android:text="default"
             android:textSize="20sp"
-            android:textColor="@color/text_place"
+            android:textColor="@color/bg_comm_action"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginStart="20dp"

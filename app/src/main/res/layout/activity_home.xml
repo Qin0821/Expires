@@ -39,7 +39,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="44dp"
                     android:layout_margin="10dp"
-                    android:background="@drawable/bg_white_radius5">
+                    android:background="@drawable/bg_rounded_rectangle_white_5">
 
                 <TextView
                         android:layout_width="wrap_content"

@@ -22,14 +22,14 @@
                 android:layout_height="20dp"
                 android:layout_weight="1"
                 android:text="Expire Date"
-                android:textColor="@color/text_place"
+                android:textColor="@color/bg_comm_action"
                 android:textSize="17sp" />
 
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="20dp"
                 android:text="11 / 5 / 2020"
-                android:textColor="@color/text_place"
+                android:textColor="@color/bg_comm_action"
                 android:textSize="17sp" />
     </LinearLayout>
 
@@ -51,14 +51,14 @@
                 android:layout_height="20dp"
                 android:layout_weight="1"
                 android:text="Amount"
-                android:textColor="@color/text_place"
+                android:textColor="@color/bg_comm_action"
                 android:textSize="17sp" />
 
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="20dp"
                 android:text="3"
-                android:textColor="@color/text_place"
+                android:textColor="@color/bg_comm_action"
                 android:textSize="17sp" />
     </LinearLayout>
 </LinearLayout>

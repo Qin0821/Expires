@@ -1,7 +1,6 @@
 package com.simpure.expires.model
 
-import com.simpure.expires.data.*
-import com.simpure.expires.data.Commodity
+import com.simpure.expires.enum.CommodityEnum
 
 interface Commodity {
     val id: Int
@@ -13,6 +12,3 @@ interface Commodity {
     abstract fun formatExpirationDate(): String
 }
 
-enum class CommodityEnum {
-    RED, YELLOW, BLUE,
-}

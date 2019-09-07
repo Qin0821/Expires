@@ -5,19 +5,23 @@
     <color name="colorAccent">#D81B60</color>
 
     <color name="white">#ffffff</color>
+    <color name="appBg">#F7F7F7</color>
+    <color name="line">#E6E6E6</color>
+    <color name="searchHint">#D8D8D8</color>
+    <color name="line1">#CCCCCC</color>
+    <color name="bg_comm_action">#B3B3B3</color>
+    <color name="text_commodity_desc">#999999</color>
+    <color name="text_expires_days">#222222</color>
     <color name="transparency">#00000000</color>
 
     <color name="commodity_label_red">#F54949</color>
+    <color name="line2">#FF4D4D</color>
     <color name="commodity_label_yellow">#EBC509</color>
+    <color name="line3">#FFC300</color>
+    <color name="line4">#19B2FF</color>
     <color name="commodity_label_blue">#1A8CFF</color>
+    <color name="line5">#1570CC</color>
 
-    <color name="text_expires_days">#222222</color>
-    <color name="text_commodity_desc">#999999</color>
-    <color name="text_place">#B3B3B3</color>
     <color name="text_place_select">#222222</color>
 
-    <color name="appBg">#F7F7F7</color>
-    <color name="searchHint">#D8D8D8</color>
-    <color name="line">#E6E6E6</color>
-    <color name="bg_comm_action">#B3B3B3</color>
 </resources>
