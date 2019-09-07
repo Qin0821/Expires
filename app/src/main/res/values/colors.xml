@@ -19,4 +19,5 @@
     <color name="appBg">#F7F7F7</color>
     <color name="searchHint">#D8D8D8</color>
     <color name="line">#E6E6E6</color>
+    <color name="bg_comm_action">#B3B3B3</color>
 </resources>

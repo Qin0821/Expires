@@ -29,9 +29,138 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp">
+
+        <View
+                android:layout_width="40dp"
+                android:layout_height="3dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+                android:id="@+id/commodityLabel"
+                android:layout_width="7dp"
+                android:layout_height="70dp"
+                android:layout_marginTop="50dp"
+                android:background="@color/commodity_label_blue"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
 
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="80dp"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="@id/commodityLabel"
+                app:layout_constraintStart_toEndOf="@id/commodityLabel">
+
+            <TextView
+                    android:id="@+id/tvExpireNum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginBottom="6dp"
+                    android:includeFontPadding="false"
+                    android:text="2376"
+                    android:textColor="@color/text_expires_days"
+                    android:textSize="50sp"
+                    app:layout_constraintBottom_toTopOf="@id/tvExpireUnit"
+                    app:layout_constraintStart_toEndOf="@id/commodityLabel"
+                    app:layout_constraintTop_toTopOf="@id/commodityLabel" />
+
+            <TextView
+                    android:id="@+id/tvExpireUnit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="24dp"
+                    android:layout_marginStart="10dp"
+                    android:text="days left"
+                    android:textColor="@color/text_expires_days"
+                    android:textSize="20sp"
+                    app:layout_constraintBottom_toBottomOf="@id/commodityLabel"
+                    app:layout_constraintStart_toEndOf="@id/commodityLabel"
+                    app:layout_constraintTop_toBottomOf="@id/tvExpireNum" />
+        </LinearLayout>
+
+        <TextView
+                android:id="@+id/tvCommodityName"
+                android:layout_width="wrap_content"
+                android:layout_height="28dp"
+                android:layout_marginTop="30dp"
+                android:includeFontPadding="false"
+                android:text="Lay's Poppables"
+                android:textColor="@color/text_expires_days"
+                android:textSize="24sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/commodityLabel" />
+
+        <LinearLayout
+                android:layout_width="37dp"
+                android:layout_height="20dp"
+                android:background="@drawable/bg_rounded_rectangle_gray"
+                android:gravity="center"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="@id/tvCommodityName"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tvCommodityName">
+
+            <TextView
+                    android:id="@+id/tvX"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="2dp"
+                    android:includeFontPadding="false"
+                    android:text="&#10005;"
+                    android:textColor="@color/white"
+                    android:textSize="11sp" />
+
+            <TextView
+                    android:id="@+id/tvCommodityNum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:text="3"
+                    android:textColor="@color/white"
+                    android:textSize="17sp" />
+        </LinearLayout>
+
+        <!--<androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvCommodityDetail"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvCommodityName" />-->
+
+        <LinearLayout
+                android:id="@+id/llCommDetail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvCommodityName">
+
+            <include layout="@layout/item_dialog_commodity_consuming" />
+
+            <include layout="@layout/item_dialog_commodity_line" />
+
+            <include layout="@layout/item_dialog_commodity_inventories" />
+
+            <include layout="@layout/item_dialog_commodity_line" />
+
+            <include layout="@layout/item_dialog_commodity_details" />
+
+            <include layout="@layout/item_dialog_commodity_line" />
+
+            <include layout="@layout/item_dialog_commodity_barcode" />
+
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

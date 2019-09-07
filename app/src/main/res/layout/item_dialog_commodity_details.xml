@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp">
+
+
+        <TextView
+                android:id="@+id/tvCommPropTitle"
+                android:layout_width="0dp"
+                android:layout_height="24dp"
+                android:layout_weight="1"
+                android:includeFontPadding="false"
+                android:text="Details"
+                android:textColor="@color/line"
+                android:textSize="20sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp">
+
+        <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginEnd="10dp"
+                android:src="@color/commodity_label_blue" />
+
+        <TextView
+                android:layout_width="0dp"
+                android:layout_height="20dp"
+                android:layout_weight="1"
+                android:text="Place"
+                android:textColor="@color/text_place"
+                android:textSize="17sp" />
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:text="11 / 5 / 2020"
+                android:textColor="@color/text_place"
+                android:textSize="17sp" />
+    </LinearLayout>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:visibility="gone">
+
+        <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginEnd="10dp"
+                android:src="@color/commodity_label_blue" />
+
+        <TextView
+                android:layout_width="0dp"
+                android:layout_height="20dp"
+                android:layout_weight="1"
+                android:text="Label"
+                android:textColor="@color/text_place"
+                android:textSize="17sp" />
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:text="Fridge"
+                android:textColor="@color/text_place"
+                android:textSize="17sp" />
+    </LinearLayout>
+</LinearLayout>

@@ -11,10 +11,7 @@ import com.simpure.expires.data.entry.CommodityEntity
 import com.simpure.expires.databinding.ItemCommodityOverviewBinding
 import com.simpure.expires.model.Commodity
 
-class PlaceAdapter(
-    private val context: Context,
-    private val mCommodityClickCallback: CommodityClickCallback
-) :
+class PlaceAdapter(private val mCommodityClickCallback: CommodityClickCallback) :
     RecyclerView.Adapter<PlaceAdapter.ViewHolder>() {
 
     private var selectedPlacePosition = 0

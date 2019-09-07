@@ -1,0 +1,6 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+        android:shape="rectangle">
+    <!--定义颜色-->
+    <solid android:color="@color/bg_comm_action" />
+    <corners android:radius="10dp" />
+</shape>

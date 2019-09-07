@@ -21,19 +21,17 @@ class CommodityAdapter(
     private val commodity: Commodity
 ) : BaseAdapter() {
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-        val binding: DialogCommodityBinding
-        if (convertView == null) {
-            binding = inflate(
+        val binding: DialogCommodityBinding = if (convertView == null) {
+            inflate(
                 LayoutInflater.from(parent!!.context),
                 R.layout.dialog_commodity,
                 parent,
                 false
             )
         } else {
-            binding = getBinding(convertView)!!
+            getBinding(convertView)!!
         }
         binding.setVariable(BR.commodity, commodity)
-
 
         return binding.root
     }

@@ -33,7 +33,7 @@ class PlaceFragment : Fragment() {
     ): View? {
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_place, container, false)
 
-        mPlaceAdapter = PlaceAdapter(context!!, mCommodityClickCallback)
+        mPlaceAdapter = PlaceAdapter(mCommodityClickCallback)
         mBinding!!.rvCommodityList.adapter = mPlaceAdapter
 
         return mBinding!!.root
