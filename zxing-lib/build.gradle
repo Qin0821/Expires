@@ -22,7 +22,7 @@ android {
             multiDexEnabled = true
         }
         debug {
-            minifyEnabled = true
+            minifyEnabled = false
         }
     }
 

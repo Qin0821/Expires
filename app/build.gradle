@@ -13,11 +13,18 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        //only package english translations, and xxhdpi resources
+        resConfigs("en", "xxhdpi")
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            applicationIdSuffix = kotlin_version
+            versionNameSuffix = kotlin_version
+            multiDexEnabled = false
         }
     }
     dataBinding {
@@ -33,6 +40,11 @@ android {
             jvmTarget = "1.8"
         }
     }
+
+    // Disable PNG Crunching
+    if (project.hasProperty('devBuild')){
+        aaptOptions.cruncherEnabled = false
+    }
 }
 
 dependencies {
@@ -44,7 +56,7 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment-ktx:2.1.0'
     implementation 'androidx.navigation:navigation-ui-ktx:2.1.0'
     implementation 'androidx.room:room-runtime:2.1.0'
-    annotationProcessor 'androidx.room:room-compiler:2.1.0'
+    kapt 'androidx.room:room-compiler:2.1.0'
     implementation 'androidx.work:work-runtime-ktx:2.2.0'
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.46'
     implementation 'androidx.fragment:fragment-ktx:1.2.0-alpha04'
