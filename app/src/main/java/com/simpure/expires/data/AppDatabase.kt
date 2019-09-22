@@ -13,19 +13,22 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import com.simpure.expires.AppExecutors
 import com.simpure.expires.data.dao.CommodityDao
 import com.simpure.expires.data.dao.CommodityHomeDao
+import com.simpure.expires.data.dao.UserDao
 import com.simpure.expires.data.entry.CommodityEntity
+import com.simpure.expires.data.entry.UserEntity
 
 /**
  * The Room database for this app
  */
 @Database(
-    entities = [CommodityHome::class, CommodityEntity::class],
+    entities = [UserEntity::class, CommodityHome::class, CommodityEntity::class],
     version = 1,
     exportSchema = false
 )
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
 
+    abstract fun userDao(): UserDao
     abstract fun commodityDao(): CommodityDao
     abstract fun commodityHomeDao(): CommodityHomeDao
 
@@ -84,10 +87,11 @@ abstract class AppDatabase : RoomDatabase() {
                             addDelay()
                             // Generate the data for pre-population
                             val database = getInstance(appContext, executors)
+                            val user = DataGenerator.generateUser()
                             val commodityList = DataGenerator.generateCommodities()
 //                            val comments = DataGenerator.generateCommentsForProducts(commodities)
 
-                            insertData(database, commodityList)
+                            insertData(database, user, commodityList)
                             // notify that the database was created and it's ready to be used
                             database.setDatabaseCreated()
                         }
@@ -98,9 +102,10 @@ abstract class AppDatabase : RoomDatabase() {
         }
 
         private fun insertData(
-            database: AppDatabase, commodityList: List<CommodityEntity>
+            database: AppDatabase, userEntity: UserEntity, commodityList: List<CommodityEntity>
         ) {
             database.runInTransaction {
+                database.userDao().insertAll(userEntity)
                 database.commodityDao().insertAll(commodityList)
 //                database.commentDao().insertAll(comments)
             }

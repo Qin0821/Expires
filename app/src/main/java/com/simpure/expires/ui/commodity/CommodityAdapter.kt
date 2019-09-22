@@ -27,7 +27,7 @@ class CommodityAdapter(
             } else {
                 getBinding(convertView)!!
             }
-        binding.setVariable(BR.commodity, commodity)
+        binding.setVariable(BR.commodityDetail, commodity)
 
         return binding.root
     }

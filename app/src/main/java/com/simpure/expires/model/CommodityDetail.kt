@@ -3,7 +3,7 @@ package com.simpure.expires.model
 import com.simpure.expires.data.*
 import com.simpure.expires.enum.CommodityEnum
 
-interface CommodityDetail {
+interface CommodityDetail : Commodity {
 
     val unit: String
     val place: String
@@ -16,11 +16,4 @@ interface CommodityDetail {
     val usedList: List<CommodityDetail>?
     val disable: Boolean
 
-    val id: Int
-    val name: String
-    val expirationDate: Long
-
-    fun calc(): String
-    fun type(): String
-    fun formatExpirationDate(): String
 }

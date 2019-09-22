@@ -15,12 +15,15 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.zxing.util.Constant.REQ_QR_CODE
 import com.google.zxing.activity.CaptureActivity
 import android.content.Intent
+import androidx.lifecycle.ViewModelProvider
 import com.blankj.utilcode.constant.PermissionConstants
 import com.blankj.utilcode.util.*
 import com.google.zxing.util.Constant
 import com.orhanobut.dialogplus.DialogPlus
 import com.simpure.expires.ui.commodity.CommodityAdapter
 import com.simpure.expires.ui.commodity.CommodityHolder
+import com.simpure.expires.utilities.toast
+import com.simpure.expires.viewmodel.UserViewModel
 
 
 class CommodityHomeActivity : BaseActivity() {
@@ -39,7 +42,7 @@ class CommodityHomeActivity : BaseActivity() {
     private lateinit var commodity: CommodityHomeRepository
     private lateinit var fragmentList: List<Fragment>
 
-    private lateinit var binding: ActivityHomeBinding
+    private lateinit var mBinding: ActivityHomeBinding
     private lateinit var navController: NavController
 
 
@@ -91,8 +94,8 @@ class CommodityHomeActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, com.simpure.expires.R.layout.activity_home)
-//        binding.vpCommodityList.adapter = BoxFragmentAdapter(supportFragmentManager, fragmentList)
+        mBinding = DataBindingUtil.setContentView(this, com.simpure.expires.R.layout.activity_home)
+//        mBinding.vpCommodityList.adapter = BoxFragmentAdapter(supportFragmentManager, fragmentList)
 
 
         initPlaceNameList()
@@ -103,26 +106,37 @@ class CommodityHomeActivity : BaseActivity() {
 //            User("qin", 0, 0L, 1L),
 //            listOf(BoxRepository("box", commodityList))
 //        )
-//        binding.homeDTO = commodity
+//        mBinding.homeDTO = commodity
 
 
-        /*if (binding.vpCommodityList.adapter != null) {
+        /*if (mBinding.vpCommodityList.adapter != null) {
 
             val fragments = arrayListOf(
                 PlaceFragment()
             )
-            binding.vpCommodityList.adapter = CommodityFragmentAdapter(fragments, supportFragmentManager)
+            mBinding.vpCommodityList.adapter = CommodityFragmentAdapter(fragments, supportFragmentManager)
             lastPosition = -1
             createIndicators()
-            binding.vpCommodityList.removeOnPageChangeListener(internalPageChangeListener)
-            binding.vpCommodityList.addOnPageChangeListener(internalPageChangeListener)
-            internalPageChangeListener.onPageSelected(binding.vpCommodityList.currentItem)
+            mBinding.vpCommodityList.removeOnPageChangeListener(internalPageChangeListener)
+            mBinding.vpCommodityList.addOnPageChangeListener(internalPageChangeListener)
+            internalPageChangeListener.onPageSelected(mBinding.vpCommodityList.currentItem)
         }*/
 //            setContentView(R.layout.activity_home)
 //        mainViewModel = ViewModelProviders.of(this).get(MainActivityViewModel::class.java)
-//        binding.mainViewModel = mainViewModel
-//        binding.setLifecycleOwner(this)
+//        mBinding.mainViewModel = mainViewModel
+//        mBinding.setLifecycleOwner(this)
+
+        initViewModel()
     }
+
+    val userId = 1398762
+    private fun initViewModel() {
+        val factory = UserViewModel.Factory(application, userId)
+
+        val model = ViewModelProvider(this, factory).get(UserViewModel::class.java)
+        mBinding.userViewModel = model
+    }
+
 
     private fun initCommodityList(savedInstanceState: Bundle?) {
 
@@ -209,8 +223,8 @@ class CommodityHomeActivity : BaseActivity() {
         )
         val layoutManager = LinearLayoutManager(this)
         layoutManager.orientation = LinearLayoutManager.HORIZONTAL
-        binding.rvLabels.layoutManager = layoutManager
-        binding.rvLabels.adapter = PlaceNameAdapter(this, placeList)
+        mBinding.rvLabels.layoutManager = layoutManager
+        mBinding.rvLabels.adapter = PlaceNameAdapter(this, placeList)
     }
 
 
@@ -248,7 +262,7 @@ class CommodityHomeActivity : BaseActivity() {
         if (requestCode == Constant.REQ_QR_CODE && resultCode == RESULT_OK) {
             val bundle = data?.extras
             val scanResult = bundle?.getString(Constant.INTENT_EXTRA_KEY_QR_SCAN)
-            binding.btScan.text = scanResult
+            mBinding.btScan.text = scanResult
         }
     }
 }

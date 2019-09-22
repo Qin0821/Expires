@@ -5,6 +5,7 @@ import androidx.lifecycle.MediatorLiveData;
 
 import com.simpure.expires.data.AppDatabase;
 import com.simpure.expires.data.entry.CommodityEntity;
+import com.simpure.expires.data.entry.UserEntity;
 
 import java.util.List;
 
@@ -52,6 +53,9 @@ public class DataRepository {
         return mDatabase.commodityDao().loadCommodity(productId);
     }
 
+    public LiveData<UserEntity> loadUser(int userId) {
+        return mDatabase.userDao().loadByIds(userId);
+    }
 //    public LiveData<List<CommentEntity>> loadComments(final int productId) {
 //        return mDatabase.commentDao().loadComments(productId);
 //    }
