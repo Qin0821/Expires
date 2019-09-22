@@ -7,7 +7,11 @@
 
         <import type="android.view.View" />
 
-        <import type="com.simpure.expires.enum.CommodityEnum" />
+        <import type="com.simpure.expires.data.CommodityType" />
+
+        <import type="com.simpure.expires.model.CommodityDetail" />
+
+        <import type="com.simpure.expires.ui.CommodityClickCallback" />
 
         <variable
                 name="isLoading"
@@ -19,11 +23,11 @@
 
         <variable
                 name="commodityDetail"
-                type="com.simpure.expires.model.CommodityDetail" />
+                type="CommodityDetail" />
 
         <variable
                 name="callback"
-                type="com.simpure.expires.ui.CommodityClickCallback" />
+                type="CommodityClickCallback" />
     </data>
 
 
@@ -46,7 +50,7 @@
                 android:layout_width="7dp"
                 android:layout_height="70dp"
                 android:layout_marginTop="50dp"
-                android:background="@{commodityDetail.type() == CommodityEnum.EXPIRED ? @drawable/bg_rounded_rectangle_red : commodityDetail.type() == CommodityEnum.ALMOST ? @drawable/bg_rounded_rectangle_yellow : @drawable/bg_rounded_rectangle_blue}"
+                android:background="@{commodityDetail.type() == CommodityType.EXPIRED ? @drawable/bg_rounded_rectangle_red : commodityDetail.type() == CommodityType.ALMOST ? @drawable/bg_rounded_rectangle_yellow : @drawable/bg_rounded_rectangle_blue}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 

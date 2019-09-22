@@ -3,7 +3,7 @@ package com.simpure.expires.data.entry
 import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.PrimaryKey
-import com.simpure.expires.enum.CommodityEnum
+import com.simpure.expires.data.CommodityType
 
 import com.simpure.expires.model.Commodity
 import com.simpure.expires.utilities.calcExpirationDate
@@ -16,17 +16,18 @@ class CommodityEntity : Commodity {
     override var id: Int = 0
     override var name: String = ""
     override var expirationDate: Long = 0L
+//    override var type: String = calcType()
 
     override fun calc(): String {
         return expirationDate.calcExpirationDate().toString()
     }
 
-    override fun type(): CommodityEnum {
+    override fun type(): String {
         val day = calc().toInt()
         return when {
-            day < 0 -> CommodityEnum.EXPIRED
-            day <= 10 -> CommodityEnum.ALMOST
-            else -> CommodityEnum.FRESH
+            day < 0 -> CommodityType.EXPIRED
+            day <= 10 -> CommodityType.ALMOST
+            else -> CommodityType.FRESH
         }
     }
 

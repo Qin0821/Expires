@@ -3,10 +3,8 @@ package com.simpure.expires.data.entry
 import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.PrimaryKey
+import com.simpure.expires.data.CommodityType
 import com.simpure.expires.data.InUse
-import com.simpure.expires.enum.CommodityEnum
-
-import com.simpure.expires.model.Commodity
 import com.simpure.expires.model.CommodityDetail
 import com.simpure.expires.model.Inventory
 import com.simpure.expires.utilities.calcExpirationDate
@@ -46,12 +44,12 @@ class CommodityDetailEntity : CommodityDetail {
         return expirationDate.calcExpirationDate().toString()
     }
 
-    override fun type(): CommodityEnum {
+    override fun type(): String {
         val day = calc().toInt()
         return when {
-            day < 0 -> CommodityEnum.EXPIRED
-            day <= 10 -> CommodityEnum.ALMOST
-            else -> CommodityEnum.FRESH
+            day < 0 -> CommodityType.EXPIRED
+            day <= 10 -> CommodityType.ALMOST
+            else -> CommodityType.FRESH
         }
     }
 
@@ -63,17 +61,17 @@ class CommodityDetailEntity : CommodityDetail {
 
     constructor() {}
 
-    @Ignore
-    constructor(id: Int, name: String, expirationDate: Long) {
-        this.id = id
-        this.name = name
-        this.expirationDate = expirationDate
-    }
-
-    constructor(commodity: Commodity) {
-        this.id = commodity.id
-        this.name = commodity.name
-        this.expirationDate = commodity.expirationDate
-    }
+//    @Ignore
+//    constructor(id: Int, name: String, expirationDate: Long) {
+//        this.id = id
+//        this.name = name
+//        this.expirationDate = expirationDate
+//    }
+//
+//    constructor(commodity: Commodity) {
+//        this.id = commodity.id
+//        this.name = commodity.name
+//        this.expirationDate = commodity.expirationDate
+//    }
 }
 

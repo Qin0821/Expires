@@ -6,8 +6,9 @@
     <data>
 
         <import type="android.view.View" />
-
-        <import type="com.simpure.expires.enum.CommodityEnum" />
+        <import type="com.simpure.expires.data.CommodityType" />
+        <import type="com.simpure.expires.model.Commodity" />
+        <import type="com.simpure.expires.ui.CommodityClickCallback" />
 
         <variable
                 name="isLoading"
@@ -19,11 +20,11 @@
 
         <variable
                 name="commodity"
-                type="com.simpure.expires.model.Commodity" />
+                type="Commodity" />
 
         <variable
                 name="callback"
-                type="com.simpure.expires.ui.CommodityClickCallback" />
+                type="CommodityClickCallback" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -49,7 +50,7 @@
                     android:layout_width="8dp"
                     android:layout_height="40dp"
                     android:layout_marginStart="8dp"
-                    android:background="@{commodity.type() == CommodityEnum.EXPIRED ? @drawable/bg_rounded_rectangle_red : commodity.type() == CommodityEnum.ALMOST ? @drawable/bg_rounded_rectangle_yellow : @drawable/bg_rounded_rectangle_blue}"
+                    android:background="@{commodity.type() == CommodityType.EXPIRED ? @drawable/bg_rounded_rectangle_red : commodity.type() == CommodityType.ALMOST ? @drawable/bg_rounded_rectangle_yellow : @drawable/bg_rounded_rectangle_blue}"
                     android:visibility="@{inSearch ? View.VISIBLE : View.GONE }"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -62,7 +63,7 @@
                     android:layout_marginStart="2dp"
                     android:gravity="center"
                     android:text="@{commodity.calc()}"
-                    android:textColor="@{inSearch ? @color/text_expires_days : commodity.type() == CommodityEnum.EXPIRED ? @color/commodity_label_red : commodity.type() == CommodityEnum.ALMOST ? @color/commodity_label_yellow : @color/commodity_label_blue }"
+                    android:textColor="@{inSearch ? @color/text_expires_days : commodity.type() == CommodityType.EXPIRED ? @color/commodity_label_red : commodity.type() == CommodityType.ALMOST ? @color/commodity_label_yellow : @color/commodity_label_blue }"
                     android:textSize="34sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

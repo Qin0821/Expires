@@ -6,9 +6,10 @@ interface Commodity {
     val id: Int
     val name: String
     val expirationDate: Long
+//    val type: String
 
-    abstract fun calc(): String
-    abstract fun type(): CommodityEnum
-    abstract fun formatExpirationDate(): String
+    fun calc(): String
+    fun type(): String
+    fun formatExpirationDate(): String
 }
 
