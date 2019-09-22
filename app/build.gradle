@@ -22,8 +22,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         debug {
-            applicationIdSuffix = kotlin_version
-            versionNameSuffix = kotlin_version
             multiDexEnabled = false
         }
     }
