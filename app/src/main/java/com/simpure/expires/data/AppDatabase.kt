@@ -55,7 +55,7 @@ abstract class AppDatabase : RoomDatabase() {
         private var sInstance: AppDatabase? = null
 
         @VisibleForTesting
-        val DATABASE_NAME = "basic-sample-db"
+        val DATABASE_NAME = "expires-db"
 
         fun getInstance(context: Context, executors: AppExecutors): AppDatabase {
             if (sInstance == null) {
@@ -97,12 +97,15 @@ abstract class AppDatabase : RoomDatabase() {
                         }
                     }
                 })
-                .addMigrations(MIGRATION_1_2)
+                .fallbackToDestructiveMigration()
+//                .addMigrations(MIGRATION_1_2) todo 保留用户数据
                 .build()
         }
 
         private fun insertData(
-            database: AppDatabase, userEntity: UserEntity, commodityList: List<CommodityEntity>
+            database: AppDatabase,
+            userEntity: List<UserEntity>,
+            commodityList: List<CommodityEntity>
         ) {
             database.runInTransaction {
                 database.userDao().insertAll(userEntity)

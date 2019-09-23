@@ -13,7 +13,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.simpure.expires.R
 import com.simpure.expires.data.entry.CommodityEntity
 import com.simpure.expires.databinding.FragmentPlaceBinding
-import com.simpure.expires.model.Commodity
 import com.simpure.expires.viewmodel.CommodityListViewModel
 
 class PlaceFragment : Fragment() {

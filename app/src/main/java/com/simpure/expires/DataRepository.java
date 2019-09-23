@@ -17,16 +17,24 @@ public class DataRepository {
     private static DataRepository sInstance;
 
     private final AppDatabase mDatabase;
-    private MediatorLiveData<List<CommodityEntity>> mObservableProducts;
+    private MediatorLiveData<List<CommodityEntity>> mObservableCommodities;
+    private MediatorLiveData<List<UserEntity>> mObservableUsers;
 
     private DataRepository(final AppDatabase database) {
         mDatabase = database;
-        mObservableProducts = new MediatorLiveData<>();
-
-        mObservableProducts.addSource(mDatabase.commodityDao().loadAllCommodities(),
-                productEntities -> {
+        mObservableCommodities = new MediatorLiveData<>();
+        mObservableCommodities.addSource(mDatabase.commodityDao().loadAllCommodities(),
+                commodityEntities -> {
                     if (mDatabase.getDatabaseCreated().getValue() != null) {
-                        mObservableProducts.postValue(productEntities);
+                        mObservableCommodities.postValue(commodityEntities);
+                    }
+                });
+
+        mObservableUsers = new MediatorLiveData<>();
+        mObservableUsers.addSource(mDatabase.userDao().getAllUser(),
+                userEntities -> {
+                    if (mDatabase.getDatabaseCreated().getValue() != null) {
+                        mObservableUsers.postValue(userEntities);
                     }
                 });
     }
@@ -46,7 +54,11 @@ public class DataRepository {
      * Get the list of commodities from the database and get notified when the data changes.
      */
     public LiveData<List<CommodityEntity>> getCommodities() {
-        return mObservableProducts;
+        return mObservableCommodities;
+    }
+
+    public LiveData<List<UserEntity>> getAllUser() {
+        return mObservableUsers;
     }
 
     public LiveData<CommodityEntity> loadCommodities(final int productId) {

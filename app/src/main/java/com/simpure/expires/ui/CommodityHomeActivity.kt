@@ -1,12 +1,9 @@
 package com.simpure.expires.ui
 
+import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
-import androidx.navigation.NavController
-import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import com.simpure.expires.data.*
 import com.simpure.expires.databinding.ActivityHomeBinding
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,14 +12,24 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.zxing.util.Constant.REQ_QR_CODE
 import com.google.zxing.activity.CaptureActivity
 import android.content.Intent
+import android.os.PersistableBundle
+import android.util.AttributeSet
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.get
 import com.blankj.utilcode.constant.PermissionConstants
 import com.blankj.utilcode.util.*
 import com.google.zxing.util.Constant
 import com.orhanobut.dialogplus.DialogPlus
+import com.simpure.expires.BasicApp
+import com.simpure.expires.R
+import com.simpure.expires.data.entry.UserEntity
 import com.simpure.expires.ui.commodity.CommodityAdapter
 import com.simpure.expires.ui.commodity.CommodityHolder
 import com.simpure.expires.utilities.toast
+import com.simpure.expires.viewmodel.CommodityListViewModel
 import com.simpure.expires.viewmodel.UserViewModel
 
 
@@ -37,104 +44,39 @@ class CommodityHomeActivity : BaseActivity() {
 
     }
 
-    private lateinit var fridgeCommodityList: List<CommodityRepository>
-    private lateinit var makeUpsCommodityList: List<CommodityRepository>
-    private lateinit var commodity: CommodityHomeRepository
-    private lateinit var fragmentList: List<Fragment>
-
     private lateinit var mBinding: ActivityHomeBinding
-    private lateinit var navController: NavController
-
-
-    private var lastPosition = -1
-
-
-    private val internalPageChangeListener = object : OnPageChangeListener {
-        override fun onPageScrollStateChanged(state: Int) {
-            Log.d(javaClass.simpleName, "state: $state")
-        }
-
-        override fun onPageScrolled(
-            position: Int,
-            positionOffset: Float,
-            positionOffsetPixels: Int
-        ) {
-
-        }
-
-        override fun onPageSelected(position: Int) {
-            /*if (vpCommodityList.adapter == null || vpCommodityList.adapter.count <= 0) return
-
-            if (mAnimatorIn.isRunning()) {
-                mAnimatorIn.end()
-                mAnimatorIn.cancel()
-            }
-
-            if (mAnimatorOut.isRunning()) {
-                mAnimatorOut.end()
-                mAnimatorOut.cancel()
-            }
-
-            val currentIndicator: View
-            if (mLastPosition >= 0 && (currentIndicator = getChildAt(mLastPosition)) != null) {//页面离开屏幕时指示器动画
-                currentIndicator.setBackgroundResource(mIndicatorUnselectedBackgroundResId)
-                mAnimatorIn.setTarget(currentIndicator)
-                mAnimatorIn.start()
-            }
-
-            val selectedIndicator = getChildAt(position)
-            if (selectedIndicator != null) {//页面进入屏幕时指示器动画
-                selectedIndicator!!.setBackgroundResource(mIndicatorBackgroundResId)
-                mAnimatorOut.setTarget(selectedIndicator)
-                mAnimatorOut.start()
-            }
-            lastPosition = position*/
-        }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mBinding = DataBindingUtil.setContentView(this, com.simpure.expires.R.layout.activity_home)
-//        mBinding.vpCommodityList.adapter = BoxFragmentAdapter(supportFragmentManager, fragmentList)
-
+        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_home)
 
         initPlaceNameList()
 
         initCommodityList(savedInstanceState)
 
-//        commodity = CommodityHomeRepository(
-//            User("qin", 0, 0L, 1L),
-//            listOf(BoxRepository("box", commodityList))
-//        )
-//        mBinding.homeDTO = commodity
+    }
 
-
-        /*if (mBinding.vpCommodityList.adapter != null) {
-
-            val fragments = arrayListOf(
-                PlaceFragment()
-            )
-            mBinding.vpCommodityList.adapter = CommodityFragmentAdapter(fragments, supportFragmentManager)
-            lastPosition = -1
-            createIndicators()
-            mBinding.vpCommodityList.removeOnPageChangeListener(internalPageChangeListener)
-            mBinding.vpCommodityList.addOnPageChangeListener(internalPageChangeListener)
-            internalPageChangeListener.onPageSelected(mBinding.vpCommodityList.currentItem)
-        }*/
-//            setContentView(R.layout.activity_home)
-//        mainViewModel = ViewModelProviders.of(this).get(MainActivityViewModel::class.java)
-//        mBinding.mainViewModel = mainViewModel
-//        mBinding.setLifecycleOwner(this)
-
+    override fun onStart() {
+        super.onStart()
         initViewModel()
     }
 
     val userId = 1398762
+    private val mObservableUsers: MediatorLiveData<List<UserEntity>> = MediatorLiveData()
     private fun initViewModel() {
-        val factory = UserViewModel.Factory(application, userId)
+        val viewModel = ViewModelProvider(this).get(UserViewModel::class.java)
+        subscribeUi(viewModel.commodities)
+    }
 
-        val model = ViewModelProvider(this, factory).get(UserViewModel::class.java)
-        mBinding.userViewModel = model
+    private fun subscribeUi(liveData: LiveData<List<UserEntity>>) {
+        liveData.observe(this,
+            Observer { user ->
+                if (user != null) {
+                    toast(user.toString())
+                } else {
+                    toast("user is empty")
+                }
+            })
     }
 
 
@@ -144,22 +86,12 @@ class CommodityHomeActivity : BaseActivity() {
             val fragment = PlaceFragment()
 
             supportFragmentManager.beginTransaction()
-                .add(com.simpure.expires.R.id.fcCommodity, fragment, fragment.TAG).commit()
+                .add(R.id.fcCommodity, fragment, fragment.TAG).commit()
         }
     }
 
     /** Shows the product detail fragment  */
     fun showCommodityDetail(commodity: com.simpure.expires.model.Commodity) {
-
-        /*val commodityFragment = CommodityFragment().forCommodity(commodity.id)
-
-        supportFragmentManager
-            .beginTransaction()
-            .addToBackStack("commodity")
-            .replace(
-                R.id.fcCommodity,
-                commodityFragment, null
-            ).commit()*/
 
         val adapter = CommodityAdapter(commodity)
 

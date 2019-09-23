@@ -13,9 +13,9 @@
                 name="commodityHomeActivity"
                 type="com.simpure.expires.ui.CommodityHomeActivity" />
 
-        <variable
-                name="userViewModel"
-                type="com.simpure.expires.viewmodel.UserViewModel" />
+<!--        <variable-->
+<!--                name="userViewModel"-->
+<!--                type="com.simpure.expires.viewmodel.UserViewModel" />-->
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -142,7 +142,7 @@
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:gravity="center"
-                        android:text="@{userViewModel.user.name}" />
+                        android:text="userViewModel.user.name" />
             </RelativeLayout>
 
         </LinearLayout>

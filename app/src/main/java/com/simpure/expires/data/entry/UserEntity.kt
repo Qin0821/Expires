@@ -10,69 +10,38 @@ import com.simpure.expires.data.User
 
 @Entity(tableName = "user")
 @TypeConverters(Converters::class)
-class UserEntity {
-    @PrimaryKey
+class UserEntity(
     // 用户id
-    var id: Int = 0
+    @PrimaryKey var id: Int = 0,
     // 唯一标识
-    var uuid: String? = null
+    var uuid: String = "",
     // 用户名
-    var name: String = ""
-    var token: String = ""
+    var name: String = "Guest",
+    var token: String = "",
     // 注册时间
-    var createTime: Long = 0L
+    var createTime: Long = 0L,
     // vip剩余时长
-    var vipTime: Long = 0L
+    var vipTime: Long = 0L,
     // 免打扰时间
-    var notNotifyTime: List<String>? = null
+    var notNotifyTime: List<String>? = null,
     // 提醒方式
-    var notify: User.NotifyWay? = null
+    var notify: User.NotifyWay = User.NotifyWay(
+        app = true,
+        email = true,
+        message = true
+    ),
     // 所在group id列表
-    var groupIdList: List<String>? = null
+    var groupIdList: List<String>? = null,
     // ui风格（正常、黑暗）
-    var uiStyle: String = "normal"
+    var uiStyle: String = "normal",
     // email
-    var email: String = ""
+    var email: String = "",
     // 注册手机号
-    var phone: Long = 0L
+    var phone: Long = 0L,
     // 性别 male female
-    var sex: String = "male"
-    var age: Int = 0
+    var sex: String = "male",
+    var age: Int = 0,
     // 头像
     var portrait: String? = null
-
-    constructor(
-        id: Int = 0,
-        uuid: String = "",
-        name: String = "Guest",
-        token: String = "",
-        createTime: Long = 0L,
-        vipTime: Long = 0L,
-        notNotifyTime: List<String>? = null,
-        notify: User.NotifyWay = User.NotifyWay(app = true, email = true, message = true),
-        groupIdList: List<String>? = null,
-        uiStyle: String = "normal",
-        email: String = "",
-        phone: Long = 0L,
-        sex: String = "male",
-        age: Int = 0,
-        portrait: String? = null
-    ) {
-        this.id = id
-        this.uuid = uuid
-        this.name = name
-        this.token = token
-        this.createTime = createTime
-        this.vipTime = vipTime
-        this.notNotifyTime = notNotifyTime
-        this.notify = notify
-        this.groupIdList = groupIdList
-        this.uiStyle = uiStyle
-        this.email = email
-        this.phone = phone
-        this.sex = sex
-        this.age = age
-        this.portrait = portrait
-    }
-}
+)
 

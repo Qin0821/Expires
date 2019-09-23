@@ -25,29 +25,21 @@ import org.joda.time.DateTime
  */
 object DataGenerator {
 
-    fun generateUser(): UserEntity {
+    fun generateUser(): List<UserEntity> {
         val createTime = DateTime().minusDays(21).millis
-        return UserEntity(
-            id = 1398762,
-            age = 18,
-            name = "皮卡婷",
-            phone = 15538307252,
-            createTime = createTime,
-            email = "liuqin0821@gmail.com"
+        return listOf(
+            UserEntity(
+                id = 1398762,
+                age = 18,
+                name = "皮卡婷",
+                phone = 15538307252,
+                createTime = createTime,
+                email = "liuqin0821@gmail.com"
+            )
         )
     }
 
     fun generateCommodities(): List<CommodityEntity> {
-        /*val commodities = ArrayList<CommodityEntity>(FIRST.size * SECOND.size)
-        for (i in FIRST.indices) {
-            for (j in SECOND.indices) {
-                val commodity = CommodityEntity()
-                commodity.setName("Hahaha 成功啦")
-                commodity.setExpirationDate(3L)
-                commodity.setId(0)
-                commodities.add(commodity)
-            }
-        }*/
         val nowDate = DateTime()
 
         val fridgeList = arrayListOf(
@@ -72,24 +64,4 @@ object DataGenerator {
 
         return commodityList
     }
-
-    //    public static List<CommentEntity> generateCommentsForProducts(
-    //            final List<CommodityEntity> commodities) {
-    //        List<CommentEntity> comments = new ArrayList<>();
-    //        Random rnd = new Random();
-    //
-    //        for (Product product : commodities) {
-    //            int commentsNumber = rnd.nextInt(5) + 1;
-    //            for (int i = 0; i < commentsNumber; i++) {
-    //                CommentEntity comment = new CommentEntity();
-    //                comment.setProductId(product.getId());
-    //                comment.setText(COMMENTS[i] + " for " + product.getName());
-    //                comment.setPostedAt(new Date(System.currentTimeMillis()
-    //                        - TimeUnit.DAYS.toMillis(commentsNumber - i) + TimeUnit.HOURS.toMillis(i)));
-    //                comments.add(comment);
-    //            }
-    //        }
-    //
-    //        return comments;
-    //    }
 }
