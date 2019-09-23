@@ -1,7 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
-apply plugin: 'com.google.gms.google-services'
 apply plugin: 'kotlin-kapt'
 
 android {
@@ -12,16 +11,17 @@ android {
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
+        flavorDimensions "version"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         //only package english translations, and xxhdpi resources
-        resConfigs("en", "xxhdpi")
+//        resConfigs("en", "xxhdpi")
 
         javaCompileOptions {
             annotationProcessorOptions {
                 arguments = [
-                        "room.schemaLocation":"$projectDir/schemas".toString(),
-                        "room.incremental":"true",
-                        "room.expandProjection":"true"]
+                        "room.schemaLocation"  : "$projectDir/schemas".toString(),
+                        "room.incremental"     : "true",
+                        "room.expandProjection": "true"]
             }
         }
     }
@@ -32,6 +32,16 @@ android {
         }
         debug {
             multiDexEnabled = false
+
+            // Disable Multi APK
+            splits.abi.enable = false
+            splits.density.enable = false
+
+            // Disable PNG Crunching
+            aaptOptions.cruncherEnabled = false
+
+            // Disable Updating Build ID
+            ext.alwaysUpdateBuildId = false
         }
     }
     dataBinding {
@@ -49,8 +59,16 @@ android {
     }
 
     // Disable PNG Crunching
-    if (project.hasProperty('devBuild')){
+    if (project.hasProperty('devBuild')) {
         aaptOptions.cruncherEnabled = false
+    }
+
+    productFlavors {
+        dev {
+            dimension "version"
+            // 可能是
+            resConfigs("en", "xxhdpi")
+        }
     }
 }
 
@@ -100,7 +118,8 @@ dependencies {
     def room_version = "2.2.0-rc01"
 
     implementation "androidx.room:room-runtime:$room_version"
-    annotationProcessor "androidx.room:room-compiler:$room_version" // For Kotlin use kapt instead of annotationProcessor
+    annotationProcessor "androidx.room:room-compiler:$room_version"
+    // For Kotlin use kapt instead of annotationProcessor
     // optional - Kotlin Extensions and Coroutines support for Room
     implementation "androidx.room:room-ktx:$room_version"
     // optional - RxJava support for Room
