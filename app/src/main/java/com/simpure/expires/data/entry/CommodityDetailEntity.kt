@@ -13,6 +13,8 @@ import org.joda.time.format.DateTimeFormat
 
 @Entity(tableName = "commodities")
 class CommodityDetailEntity : CommodityDetail {
+    override val usedIdList: List<String>
+        get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
     @PrimaryKey
     override var id: Int = 0
     override val name: String
@@ -35,8 +37,6 @@ class CommodityDetailEntity : CommodityDetail {
         get() = null
     override val unboxingDuration: Long
         get() = 0
-    override val usedList: List<CommodityDetail>?
-        get() = null
     override val disable: Boolean
         get() = false
 

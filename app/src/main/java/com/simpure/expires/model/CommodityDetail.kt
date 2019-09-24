@@ -13,7 +13,7 @@ interface CommodityDetail : Commodity {
     val amount: Int
     val inUse: InUse?
     val unboxingDuration: Long
-    val usedList: List<CommodityDetail>?
+    val usedIdList: List<String>
     val disable: Boolean
 
 }

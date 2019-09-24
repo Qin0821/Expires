@@ -10,7 +10,7 @@ import com.simpure.expires.data.User
 
 @Entity(tableName = "user")
 @TypeConverters(Converters::class)
-class UserEntity(
+class UserEntity constructor(
     // 用户id
     @PrimaryKey var id: Int = 0,
     // 唯一标识

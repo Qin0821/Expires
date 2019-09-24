@@ -3,10 +3,11 @@ package com.simpure.expires.data.entry
 import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.PrimaryKey
+import androidx.room.TypeConverters
 import com.simpure.expires.data.CommodityType
+import com.simpure.expires.data.Converters
 import com.simpure.expires.data.InUse
 
-import com.simpure.expires.model.Commodity
 import com.simpure.expires.model.CommodityDetail
 import com.simpure.expires.model.Inventory
 import com.simpure.expires.utilities.calcExpirationDate
@@ -14,49 +15,22 @@ import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
 
 @Entity(tableName = "commodities")
-class CommodityEntity @Ignore constructor(
+@TypeConverters(Converters::class)
+class CommodityEntity constructor(
     @PrimaryKey
-    override var id: Int, override var name: String, override var expirationDate: Long,
-    
+    override var id: Int,
+    override var name: String,
+    override var expirationDate: Long,
+    override val unit: String = "",
+    override val place: String = "",
+    override val labels: List<String> = listOf(),
+    override val barcode: String = "",
+    override val inventories: List<Inventory> = listOf(),
+    override val amount: Int = 0,
+    override val inUse: InUse = InUse(),
+    override val usedIdList: List<String> = listOf(),
+    override val unboxingDuration: Long = 0L,
+    override val disable: Boolean = false
 ) : CommodityDetail {
-    override val unit: String
-        get() = ""
-    override val place: String
-        get() = ""
-    override val labels: List<String>
-        get() = listOf()
-    override val barcode: String
-        get() = ""
-    override val inventories: List<Inventory>
-        get() = listOf()
-    override val amount: Int
-        get() = 0
-    override val inUse: InUse
-        get() = InUse()
-    override val unboxingDuration: Long
-        get() = 0L
-    override val usedList: List<CommodityDetail>
-        get() = listOf()
-    override val disable: Boolean
-        get() = false
-
-    override fun calc(): String {
-        return expirationDate.calcExpirationDate().toString()
-    }
-
-    override fun type(): String {
-        val day = calc().toInt()
-        return when {
-            day < 0 -> CommodityType.EXPIRED
-            day <= 10 -> CommodityType.ALMOST
-            else -> CommodityType.FRESH
-        }
-    }
-
-    override fun formatExpirationDate(): String {
-        val date = DateTime(expirationDate)
-        return date.toString(DateTimeFormat.mediumDate())
-    }
 
 }
-
