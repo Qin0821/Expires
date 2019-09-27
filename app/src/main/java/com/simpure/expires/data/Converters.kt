@@ -27,7 +27,7 @@ class Converters {
 
     @TypeConverter
     fun listToString(list: List<String>?): String {
-        if (list === null) return ""
+        if (list === null || list.isEmpty()) return ""
 
         val str = StringBuilder(list[0])
         list.forEach {
@@ -38,6 +38,7 @@ class Converters {
 
     @TypeConverter
     fun stringToNotifyWay(value: String): User.NotifyWay {
+        if (value.isNullOrEmpty()) return User.NotifyWay()
         val wayArray = value.split(";")
         return User.NotifyWay(
             wayArray[0].toBoolean(),
@@ -48,12 +49,12 @@ class Converters {
 
     @TypeConverter
     fun notifyWayToString(way: User.NotifyWay): String {
-        return "${way.app},${way.email},${way.message}"
+        return "${way.app};${way.email};${way.message}"
     }
 
     @TypeConverter
     fun inventoryToString(inventoryList: List<Inventory>): String {
-        if (inventoryList.isEmpty()) return ""
+        if (inventoryList === null || inventoryList.isEmpty()) return ""
 
         var result = ""
         for (inventory in inventoryList) {
@@ -65,6 +66,9 @@ class Converters {
 
     @TypeConverter
     fun stringToInventory(value: String): List<Inventory> {
+        if (value.isNullOrEmpty()) {
+            return listOf(Inventory())
+        }
         val inventoryStringArray = value.split("\n")
         val result = inventoryStringArray.map {
             Inventory(it[0].toString(), it[1].toString(), it[2].toInt())
@@ -79,6 +83,7 @@ class Converters {
 
     @TypeConverter
     fun stringToInUse(value: String): InUse {
+        if (value.isNullOrEmpty()) return InUse()
         val inUseStr = value.split(";")
         return InUse(inUseStr[0].toInt(), inUseStr[1].toLong(), inUseStr[2].toLong())
     }

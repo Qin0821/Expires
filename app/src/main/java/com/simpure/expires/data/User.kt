@@ -21,11 +21,11 @@ data class User(
     val vipTime: Long,
     val createTime: Long,
     val quietTime: String  // 免打扰时间
-    ) {
+) {
     data class NotifyWay(
-        val app: Boolean,
-        val email: Boolean,
-        val message: Boolean
+        val app: Boolean = true,
+        val email: Boolean = true,
+        val message: Boolean = true
     ) {
 
     }

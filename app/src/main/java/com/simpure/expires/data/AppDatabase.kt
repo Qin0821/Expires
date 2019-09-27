@@ -83,8 +83,6 @@ abstract class AppDatabase : RoomDatabase() {
                     override fun onCreate(db: SupportSQLiteDatabase) {
                         super.onCreate(db)
                         executors.diskIO().execute {
-                            // Add a delay to simulate a long-running operation
-                            addDelay()
                             // Generate the data for pre-population
                             val database = getInstance(appContext, executors)
                             val user = DataGenerator.generateUser()
@@ -112,14 +110,6 @@ abstract class AppDatabase : RoomDatabase() {
                 database.commodityDao().insertAll(commodityList)
 //                database.commentDao().insertAll(comments)
             }
-        }
-
-        private fun addDelay() {
-            try {
-                Thread.sleep(4000)
-            } catch (ignored: InterruptedException) {
-            }
-
         }
 
         private val MIGRATION_1_2 = object : Migration(1, 2) {
