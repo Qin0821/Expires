@@ -16,8 +16,8 @@
 
 package com.simpure.expires.ui;
 
-import com.simpure.expires.model.Commodity;
+import com.simpure.expires.model.CommodityModel;
 
 public interface CommodityClickCallback {
-    void onClick(Commodity commodity);
+    void onClick(CommodityModel commodity);
 }

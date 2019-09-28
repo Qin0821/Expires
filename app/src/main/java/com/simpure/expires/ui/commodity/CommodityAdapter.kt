@@ -8,12 +8,16 @@ import androidx.databinding.DataBindingUtil.getBinding
 import androidx.recyclerview.widget.RecyclerView
 import com.simpure.expires.R
 import androidx.databinding.DataBindingUtil.inflate
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.simpure.expires.BR
 import com.simpure.expires.databinding.DialogCommodityBinding
-import com.simpure.expires.model.Commodity
+import com.simpure.expires.ui.CommodityHomeActivity
+import com.simpure.expires.viewmodel.CommodityDetailViewModel
 
 class CommodityAdapter(
-    private val commodity: Commodity
+    private val activity: CommodityHomeActivity,
+    private val commodityId: Int
 ) : BaseAdapter() {
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         val binding: DialogCommodityBinding =
@@ -27,14 +31,20 @@ class CommodityAdapter(
             } else {
                 getBinding(convertView)!!
             }
-        binding.setVariable(BR.commodityDetail, commodity)
+
+//        val factory = CommodityDetailViewModel.Factory(activity.application, commodityId)
+//        val model = ViewModelProvider(activity, factory).get(CommodityDetailViewModel::class.java)
+        val viewModel = ViewModelProvider(activity).get(CommodityDetailViewModel::class.java)
+        viewModel.commodityDetail.observe(activity, Observer {
+            binding.setVariable(BR.commodityDetail, it)
+        })
 
         return binding.root
     }
 
-    override fun getItem(position: Int): Any = commodity
+    override fun getItem(position: Int): Any = commodityId
 
-    override fun getItemId(position: Int): Long = 0L
+    override fun getItemId(position: Int): Long = commodityId.toLong()
 
     override fun getCount(): Int = 1
 

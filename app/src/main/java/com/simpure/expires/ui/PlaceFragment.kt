@@ -11,9 +11,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.simpure.expires.R
-import com.simpure.expires.data.entry.CommodityEntity
+import com.simpure.expires.data.entity.CommodityEntity
 import com.simpure.expires.databinding.FragmentPlaceBinding
-import com.simpure.expires.viewmodel.CommodityListViewModel
+import com.simpure.expires.model.CommodityModel
+import com.simpure.expires.viewmodel.CommoditySummaryViewModel
 
 class PlaceFragment : Fragment() {
 
@@ -40,15 +41,15 @@ class PlaceFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        val viewModel = ViewModelProvider(this).get(CommodityListViewModel::class.java)
+        val viewModel = ViewModelProvider(this).get(CommoditySummaryViewModel::class.java)
 
         subscribeUi(viewModel.commodities)
     }
 
-    private fun subscribeUi(liveData: LiveData<List<CommodityEntity>>) {
+    private fun subscribeUi(liveData: LiveData<List<CommodityModel>>) {
         // 当数据更改时更新列表
         liveData.observe(this,
-            Observer<List<CommodityEntity>> { myCommodities ->
+            Observer<List<CommodityModel>> { myCommodities ->
                 if (myCommodities != null) {
                     mBinding!!.isLoading = false
                     mPlaceAdapter!!.setCommodityList(myCommodities)
@@ -62,7 +63,7 @@ class PlaceFragment : Fragment() {
 
     private val mCommodityClickCallback = CommodityClickCallback { commodity ->
         if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
-            (activity as CommodityHomeActivity).showCommodityDetail(commodity)
+            (activity as CommodityHomeActivity).showCommodityDetail(commodity.id)
         }
     }
 

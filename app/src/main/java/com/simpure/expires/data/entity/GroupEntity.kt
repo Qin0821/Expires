@@ -1,4 +1,4 @@
-package com.simpure.expires.data.entry
+package com.simpure.expires.data.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

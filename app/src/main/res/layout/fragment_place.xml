@@ -11,7 +11,7 @@
 
         <variable
                 name="placeViewModel"
-                type="com.simpure.expires.viewmodel.CommodityListViewModel" />
+                type="com.simpure.expires.viewmodel.CommoditySummaryViewModel" />
     </data>
 
     <RelativeLayout

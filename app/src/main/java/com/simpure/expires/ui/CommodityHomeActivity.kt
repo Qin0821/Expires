@@ -1,6 +1,5 @@
 package com.simpure.expires.ui
 
-import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.databinding.DataBindingUtil
@@ -12,24 +11,20 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.zxing.util.Constant.REQ_QR_CODE
 import com.google.zxing.activity.CaptureActivity
 import android.content.Intent
-import android.os.PersistableBundle
-import android.util.AttributeSet
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.get
 import com.blankj.utilcode.constant.PermissionConstants
 import com.blankj.utilcode.util.*
 import com.google.zxing.util.Constant
 import com.orhanobut.dialogplus.DialogPlus
 import com.simpure.expires.BasicApp
 import com.simpure.expires.R
-import com.simpure.expires.data.entry.UserEntity
+import com.simpure.expires.data.entity.UserEntity
 import com.simpure.expires.ui.commodity.CommodityAdapter
 import com.simpure.expires.ui.commodity.CommodityHolder
 import com.simpure.expires.utilities.toast
-import com.simpure.expires.viewmodel.CommodityListViewModel
 import com.simpure.expires.viewmodel.UserViewModel
 
 
@@ -71,8 +66,8 @@ class CommodityHomeActivity : BaseActivity() {
     private fun subscribeUi(liveData: LiveData<List<UserEntity>>) {
         liveData.observe(this,
             Observer { user ->
-                if (user != null) {
-                    toast(user.toString())
+                if (!user.isNullOrEmpty()) {
+                    toast(user[0].name)
                 } else {
                     toast("user is empty")
                 }
@@ -91,9 +86,9 @@ class CommodityHomeActivity : BaseActivity() {
     }
 
     /** Shows the product detail fragment  */
-    fun showCommodityDetail(commodity: com.simpure.expires.model.Commodity) {
+    fun showCommodityDetail(commodityId: Int) {
 
-        val adapter = CommodityAdapter(commodity)
+        val adapter = CommodityAdapter(this, commodityId)
 
         val dialog = DialogPlus.newDialog(this)
             .setAdapter(adapter)

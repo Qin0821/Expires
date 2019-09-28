@@ -22,7 +22,8 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 
-import com.simpure.expires.data.entry.CommodityEntity
+import com.simpure.expires.data.entity.CommodityEntity
+import com.simpure.expires.model.CommodityModel
 
 @Dao
 interface CommodityDao {
@@ -32,11 +33,14 @@ interface CommodityDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(commodities: List<CommodityEntity>)
 
-    @Query("select * from commodities where id = :productId")
-    fun loadCommodity(productId: Int): LiveData<CommodityEntity>
+    @Query("select * from commodities where id = :commodityId")
+    fun loadCommodity(commodityId: Int): LiveData<CommodityEntity>
 
     @Query("select * from commodities where id = :productId")
     fun loadCommoditySync(productId: Int): CommodityEntity
+
+    @Query("SELECT id, name, date FROM commodities")
+    fun loadAllCommoditiesSummary(): LiveData<List<CommodityModel>>
 
     //    @Query("SELECT commodities.* FROM commodities JOIN commoditiesFts ON (commodities.id = commoditiesFts.rowid) "
     //        + "WHERE commoditiesFts MATCH :query")

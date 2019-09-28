@@ -2,7 +2,7 @@ package com.simpure.expires.data.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.simpure.expires.data.entry.UserEntity
+import com.simpure.expires.data.entity.UserEntity
 
 @Dao
 interface UserDao {

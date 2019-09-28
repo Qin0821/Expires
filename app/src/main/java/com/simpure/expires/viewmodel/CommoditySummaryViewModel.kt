@@ -6,22 +6,23 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import com.simpure.expires.BasicApp
 import com.simpure.expires.DataRepository
-import com.simpure.expires.data.entry.CommodityEntity
+import com.simpure.expires.data.entity.CommodityEntity
+import com.simpure.expires.model.CommodityModel
 
 /**
  * The ViewModel for PlaceFragment
  */
-class CommodityListViewModel(application: Application) : AndroidViewModel(application) {
+class CommoditySummaryViewModel(application: Application) : AndroidViewModel(application) {
 
     private val mRepository: DataRepository
 
     // MediatorLiveData可以观察其他LiveData对象并对它们的排放做出反应。
-    private val mObservableCommodities: MediatorLiveData<List<CommodityEntity>> = MediatorLiveData()
+    private val mObservableCommodities: MediatorLiveData<List<CommodityModel>> = MediatorLiveData()
 
     /**
      * Expose the LiveData Products query so the UI can observe it.
      */
-    val commodities: LiveData<List<CommodityEntity>>
+    val commodities: LiveData<List<CommodityModel>>
         get() = mObservableCommodities
 
     init {
@@ -30,15 +31,11 @@ class CommodityListViewModel(application: Application) : AndroidViewModel(applic
         mObservableCommodities.value = null
 
         mRepository = (application as BasicApp).repository
-        val commodity = mRepository.commodities
+        val commodity = mRepository.commoditiesSummary
 
         //  从数据库订阅，类似selector
-        mObservableCommodities.addSource<List<CommodityEntity>>(commodity) {
+        mObservableCommodities.addSource<List<CommodityModel>>(commodity) {
             mObservableCommodities.setValue(it)
         }
     }
-
-//    fun searchProducts(query: String): LiveData<List<CommodityEntity>> {
-//        return mRepository.searchCommodities(query)
-//    }
 }

@@ -1,16 +1,13 @@
 package com.simpure.expires.ui
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.databinding.DataBindingUtil.inflate
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.simpure.expires.R
-import com.simpure.expires.data.entry.CommodityEntity
 import com.simpure.expires.databinding.ItemCommodityOverviewBinding
-import com.simpure.expires.model.Commodity
+import com.simpure.expires.model.CommodityModel
 
 class PlaceAdapter(private val mCommodityClickCallback: CommodityClickCallback) :
     RecyclerView.Adapter<PlaceAdapter.ViewHolder>() {
@@ -23,13 +20,13 @@ class PlaceAdapter(private val mCommodityClickCallback: CommodityClickCallback) 
 
     fun getSelectedPlacePosition() = selectedPlacePosition
 
-    internal var mCommodityList: List<Commodity>? = null
+    internal var mCommodityList: List<CommodityModel>? = null
 
     init {
         setHasStableIds(true)
     }
 
-    fun setCommodityList(commodityList: List<Commodity>) {
+    fun setCommodityList(commodityList: List<CommodityModel>) {
         if (mCommodityList == null) {
             mCommodityList = commodityList
             notifyItemRangeInserted(0, commodityList.size)
@@ -55,7 +52,7 @@ class PlaceAdapter(private val mCommodityClickCallback: CommodityClickCallback) 
                     val oldCommodity = mCommodityList!![oldItemPosition]
                     return (newCommodity.id === oldCommodity.id
                             && newCommodity.name == oldCommodity.name
-                            && newCommodity.expirationDate === oldCommodity.expirationDate)
+                            && newCommodity.date === oldCommodity.date)
                 }
             })
             mCommodityList = commodityList

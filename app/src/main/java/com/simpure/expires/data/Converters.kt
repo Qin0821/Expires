@@ -2,6 +2,7 @@ package com.simpure.expires.data
 
 import androidx.room.TypeConverter
 import com.simpure.expires.model.Inventory
+import kotlinx.coroutines.delay
 import java.util.Date
 
 /**
@@ -17,6 +18,21 @@ class Converters {
     @TypeConverter
     fun toTimestamp(date: Date?): Long? {
         return date?.time
+    }
+
+    @TypeConverter
+    fun stringToExpiresDate(value: String): ExpiresDate {
+        if (value.isEmpty()) return ExpiresDate()
+        val dateArray = value.split(";")
+        return ExpiresDate(
+            dateArray[0].toLong(),
+            dateArray[1].toInt()
+        )
+    }
+
+    @TypeConverter
+    fun expiresDateToString(date: ExpiresDate): String {
+        return "${date.productionDate};${date.expiryDate}"
     }
 
 
@@ -38,7 +54,7 @@ class Converters {
 
     @TypeConverter
     fun stringToNotifyWay(value: String): User.NotifyWay {
-        if (value.isNullOrEmpty()) return User.NotifyWay()
+        if (value.isEmpty()) return User.NotifyWay()
         val wayArray = value.split(";")
         return User.NotifyWay(
             wayArray[0].toBoolean(),
@@ -54,7 +70,7 @@ class Converters {
 
     @TypeConverter
     fun inventoryToString(inventoryList: List<Inventory>): String {
-        if (inventoryList === null || inventoryList.isEmpty()) return ""
+        if (inventoryList.isEmpty()) return ""
 
         var result = ""
         for (inventory in inventoryList) {
@@ -66,7 +82,7 @@ class Converters {
 
     @TypeConverter
     fun stringToInventory(value: String): List<Inventory> {
-        if (value.isNullOrEmpty()) {
+        if (value.isEmpty()) {
             return listOf(Inventory())
         }
         val inventoryStringArray = value.split("\n")
@@ -76,15 +92,4 @@ class Converters {
         return result
     }
 
-    @TypeConverter
-    fun inUseToString(inUse: InUse): String {
-        return "${inUse.num};${inUse.date};${inUse.unboxingDate}"
-    }
-
-    @TypeConverter
-    fun stringToInUse(value: String): InUse {
-        if (value.isNullOrEmpty()) return InUse()
-        val inUseStr = value.split(";")
-        return InUse(inUseStr[0].toInt(), inUseStr[1].toLong(), inUseStr[2].toLong())
-    }
 }

@@ -6,8 +6,7 @@ data class Commodity(
     val num: Int,
     val unit: String,
     val placeId: Long,      // placeId也是标签的一种，但具有唯一性
-    val date: Date? = null,
-    val inUse: InUse? = null,
+    val date: ExpiresDate? = null,
     val stockList: List<Stock>? = null,
     val unboxingDuration: Long = 0,
     val usedList: List<Commodity>? = null,

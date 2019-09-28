@@ -16,8 +16,8 @@
 
 package com.simpure.expires.data
 
-import com.simpure.expires.data.entry.CommodityEntity
-import com.simpure.expires.data.entry.UserEntity
+import com.simpure.expires.data.entity.CommodityEntity
+import com.simpure.expires.data.entity.UserEntity
 import org.joda.time.DateTime
 
 /**
@@ -43,21 +43,31 @@ object DataGenerator {
         val nowDate = DateTime()
 
         val fridgeList = arrayListOf(
-            CommodityEntity(10, "薯条", nowDate.minusDays(2).millis),
-            CommodityEntity(11, "雪碧", nowDate.plusHours(4).millis),
-            CommodityEntity(12, "鸡腿", nowDate.plusDays(3).millis),
-            CommodityEntity(13, "排骨", nowDate.plusDays(7).millis),
-            CommodityEntity(14, "酸奶", nowDate.plusDays(30).millis),
-            CommodityEntity(15, "老干妈", nowDate.plusDays(180).millis)
+            CommodityEntity(
+                10,
+                "薯条",
+                ExpiresDate(nowDate.minusDays(7).millis, 3),
+                20,
+                "根",
+                "fridge",
+                listOf("food", "delicious", "yellow"),
+                "6955725010589",
+                DateTime.now().millis
+            ),
+            CommodityEntity(11, "雪碧", ExpiresDate(nowDate.minusDays(15).millis, 15)),
+            CommodityEntity(12, "鸡腿", ExpiresDate(nowDate.minusDays(15).millis, 18)),
+            CommodityEntity(13, "排骨", ExpiresDate(nowDate.minusDays(0).millis, 7)),
+            CommodityEntity(14, "酸奶", ExpiresDate(nowDate.minusDays(160).millis, 180)),
+            CommodityEntity(15, "老干妈", ExpiresDate(nowDate.minusDays(60).millis, 180))
         )
 
         val makeUpsList = arrayListOf(
-            CommodityEntity(20, "dior", nowDate.plusYears(1).millis),
-            CommodityEntity(21, "乳液", nowDate.plusMonths(6).millis),
-            CommodityEntity(22, "爽肤水", nowDate.plusDays(30).millis),
-            CommodityEntity(23, "项链", nowDate.plusYears(100).millis),
-            CommodityEntity(24, "手链", nowDate.plusYears(100).millis),
-            CommodityEntity(25, "tf", nowDate.plusYears(1).millis)
+            CommodityEntity(20, "dior", ExpiresDate(nowDate.minusDays(60).millis, 180)),
+            CommodityEntity(21, "乳液", ExpiresDate(nowDate.minusDays(60).millis, 180)),
+            CommodityEntity(22, "爽肤水", ExpiresDate(nowDate.minusDays(60).millis, 180)),
+            CommodityEntity(23, "项链", ExpiresDate(nowDate.minusDays(60).millis, 180)),
+            CommodityEntity(24, "手链", ExpiresDate(nowDate.minusDays(60).millis, 180)),
+            CommodityEntity(25, "tf", ExpiresDate(nowDate.minusDays(60).millis, 180))
         )
 
         val commodityList = fridgeList + makeUpsList

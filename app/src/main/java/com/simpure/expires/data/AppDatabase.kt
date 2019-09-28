@@ -14,8 +14,8 @@ import com.simpure.expires.AppExecutors
 import com.simpure.expires.data.dao.CommodityDao
 import com.simpure.expires.data.dao.CommodityHomeDao
 import com.simpure.expires.data.dao.UserDao
-import com.simpure.expires.data.entry.CommodityEntity
-import com.simpure.expires.data.entry.UserEntity
+import com.simpure.expires.data.entity.CommodityEntity
+import com.simpure.expires.data.entity.UserEntity
 
 /**
  * The Room database for this app

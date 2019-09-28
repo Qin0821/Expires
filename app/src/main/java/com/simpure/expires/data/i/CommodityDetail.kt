@@ -1,7 +1,6 @@
-package com.simpure.expires.model
+package com.simpure.expires.data.i
 
-import com.simpure.expires.data.*
-import com.simpure.expires.enum.CommodityEnum
+import com.simpure.expires.model.Inventory
 
 interface CommodityDetail : Commodity {
 
@@ -11,7 +10,6 @@ interface CommodityDetail : Commodity {
     val barcode: String
     val inventories: List<Inventory>?
     val amount: Int
-    val inUse: InUse?
     val unboxingDuration: Long
     val usedIdList: List<String>
     val disable: Boolean

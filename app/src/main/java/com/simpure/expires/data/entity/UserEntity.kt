@@ -1,10 +1,8 @@
-package com.simpure.expires.data.entry
+package com.simpure.expires.data.entity
 
 import androidx.room.Entity
-import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
-import com.simpure.expires.data.CommodityType
 import com.simpure.expires.data.Converters
 import com.simpure.expires.data.User
 

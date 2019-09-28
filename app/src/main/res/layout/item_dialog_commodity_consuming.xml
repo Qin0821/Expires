@@ -1,157 +1,167 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+                name="commodityDetail"
+                type="com.simpure.expires.data.entity.CommodityEntity" />
+    </data>
 
     <LinearLayout
-            android:id="@+id/layoutConsume"
-            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp">
+            android:layout_width="match_parent"
+            android:orientation="vertical">
 
-        <TextView
-                android:id="@+id/tvCommPropTitle"
-                android:layout_width="0dp"
-                android:layout_height="24dp"
-                android:layout_weight="1"
-                android:includeFontPadding="false"
-                android:text="Consuming"
-                android:textColor="@color/line"
-                android:textSize="20sp" />
+        <LinearLayout
+                android:id="@+id/layoutConsume"
+                android:gravity="center_vertical"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp">
 
-        <TextView
-                android:id="@+id/tvCommAction"
-                android:layout_width="wrap_content"
-                android:layout_height="22dp"
-                android:layout_marginStart="10dp"
-                android:background="@drawable/bg_rounded_rectangle_deep_gray"
-                android:gravity="center"
-                android:includeFontPadding="false"
-                android:paddingStart="10dp"
-                android:paddingEnd="10dp"
-                android:text="Clear"
-                android:textColor="@color/white" />
+            <TextView
+                    android:id="@+id/tvCommPropTitle"
+                    android:includeFontPadding="false"
+                    android:layout_height="24dp"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:text="Consuming"
+                    android:textColor="@color/line"
+                    android:textSize="20sp" />
+
+            <TextView
+                    android:id="@+id/tvCommAction"
+                    android:background="@drawable/bg_rounded_rectangle_deep_gray"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:layout_height="22dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_width="wrap_content"
+                    android:paddingEnd="10dp"
+                    android:paddingStart="10dp"
+                    android:text="Clear"
+                    android:textColor="@color/white" />
+
+        </LinearLayout>
+
+        <LinearLayout
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp">
+
+            <ImageView
+                    android:layout_height="20dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_width="20dp"
+                    android:src="@color/commodity_label_blue" />
+
+            <TextView
+                    android:layout_height="20dp"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:text="Expire Date"
+                    android:textColor="@color/bg_comm_action"
+                    android:textSize="17sp" />
+
+            <TextView
+                    android:layout_height="20dp"
+                    android:layout_width="wrap_content"
+                    android:text="@{commodityDetail.formatExpirationDate()}"
+                    android:textColor="@color/bg_comm_action"
+                    android:textSize="17sp" />
+        </LinearLayout>
+
+        <LinearLayout
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp">
+
+            <ImageView
+                    android:layout_height="20dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_width="20dp"
+                    android:src="@color/commodity_label_blue" />
+
+            <TextView
+                    android:layout_height="20dp"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:text="Production Date"
+                    android:textColor="@color/bg_comm_action"
+                    android:textSize="17sp" />
+
+            <TextView
+                    android:layout_height="20dp"
+                    android:layout_width="wrap_content"
+                    android:text="@{commodityDetail.formatProductionDate()}"
+                    android:textColor="@color/bg_comm_action"
+                    android:textSize="17sp" />
+        </LinearLayout>
+
+        <LinearLayout
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp">
+
+            <ImageView
+                    android:layout_height="20dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_width="20dp"
+                    android:src="@color/commodity_label_blue" />
+
+            <TextView
+                    android:layout_height="20dp"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:text="Expiring In"
+                    android:textColor="@color/bg_comm_action"
+                    android:textSize="17sp" />
+
+            <TextView
+                    android:layout_height="20dp"
+                    android:layout_width="wrap_content"
+                    android:text="@{String.valueOf(commodityDetail.date.expiryDate)}"
+                    android:textColor="@color/bg_comm_action"
+                    android:textSize="17sp" />
+        </LinearLayout>
+
+        <LinearLayout
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp">
+
+            <ImageView
+                    android:layout_height="20dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_width="20dp"
+                    android:src="@color/commodity_label_blue" />
+
+            <TextView
+                    android:layout_height="20dp"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:text="Amount"
+                    android:textColor="@color/bg_comm_action"
+                    android:textSize="17sp" />
+
+            <TextView
+                    android:layout_height="20dp"
+                    android:layout_width="wrap_content"
+                    android:text="@{String.valueOf(commodityDetail.amount)}"
+                    android:textColor="@color/bg_comm_action"
+                    android:textSize="17sp" />
+        </LinearLayout>
 
     </LinearLayout>
-
-    <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp">
-
-        <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_marginEnd="10dp"
-                android:src="@color/commodity_label_blue" />
-
-        <TextView
-                android:layout_width="0dp"
-                android:layout_height="20dp"
-                android:layout_weight="1"
-                android:text="Expire Date"
-                android:textColor="@color/bg_comm_action"
-                android:textSize="17sp" />
-
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="20dp"
-                android:text="11 / 5 / 2020"
-                android:textColor="@color/bg_comm_action"
-                android:textSize="17sp" />
-    </LinearLayout>
-
-    <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp">
-
-        <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_marginEnd="10dp"
-                android:src="@color/commodity_label_blue" />
-
-        <TextView
-                android:layout_width="0dp"
-                android:layout_height="20dp"
-                android:layout_weight="1"
-                android:text="Production Date"
-                android:textColor="@color/bg_comm_action"
-                android:textSize="17sp" />
-
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="20dp"
-                android:text="11 / 5 / 2019"
-                android:textColor="@color/bg_comm_action"
-                android:textSize="17sp" />
-    </LinearLayout>
-
-    <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp">
-
-        <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_marginEnd="10dp"
-                android:src="@color/commodity_label_blue" />
-
-        <TextView
-                android:layout_width="0dp"
-                android:layout_height="20dp"
-                android:layout_weight="1"
-                android:text="Expiring In"
-                android:textColor="@color/bg_comm_action"
-                android:textSize="17sp" />
-
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="20dp"
-                android:text="365days"
-                android:textColor="@color/bg_comm_action"
-                android:textSize="17sp" />
-    </LinearLayout>
-
-    <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp">
-
-        <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_marginEnd="10dp"
-                android:src="@color/commodity_label_blue" />
-
-        <TextView
-                android:layout_width="0dp"
-                android:layout_height="20dp"
-                android:layout_weight="1"
-                android:text="Amount"
-                android:textColor="@color/bg_comm_action"
-                android:textSize="17sp" />
-
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="20dp"
-                android:text="3"
-                android:textColor="@color/bg_comm_action"
-                android:textSize="17sp" />
-    </LinearLayout>
-
-</LinearLayout>
+</layout>

@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.simpure.expires.databinding.FragmentPlaceBinding
 import com.simpure.expires.utilities.InjectorUtils
-import com.simpure.expires.viewmodel.CommodityListViewModel
+import com.simpure.expires.viewmodel.CommoditySummaryViewModel
 
 class CommodityFragment : Fragment() {
 
@@ -16,7 +16,7 @@ class CommodityFragment : Fragment() {
     private val KEY_COMMODITY_ID = "product_id"
 
 
-    private val viewModel: CommodityListViewModel by viewModels {
+    private val viewModel: CommoditySummaryViewModel by viewModels {
         InjectorUtils.provideCommodityHomeViewModelFactory(requireContext())
     }
 
