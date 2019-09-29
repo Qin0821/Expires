@@ -35,6 +35,7 @@ class CommodityAdapter(
 //        val factory = CommodityDetailViewModel.Factory(activity.application, commodityId)
 //        val model = ViewModelProvider(activity, factory).get(CommodityDetailViewModel::class.java)
         val viewModel = ViewModelProvider(activity).get(CommodityDetailViewModel::class.java)
+        viewModel.setCommodityId(commodityId)
         viewModel.commodityDetail.observe(activity, Observer {
             binding.setVariable(BR.commodityDetail, it)
         })

@@ -29,7 +29,7 @@ class UserViewModel(application: Application) : AndroidViewModel(application) {
 
         //  从数据库订阅，类似selector
         mObservableUsers.addSource(allUser) {
-            mObservableUsers.setValue(it)
+            mObservableUsers.value = it
         }
     }
 }

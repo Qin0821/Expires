@@ -30,13 +30,14 @@ class DataRepository private constructor(private val mDatabase: AppDatabase) {
 
     init {
 
-        mObservableCommodities.addSource(
+        // no used
+        /*mObservableCommodities.addSource(
             mDatabase.commodityDao().loadAllCommodities()
         ) { commodityEntities ->
             if (mDatabase.databaseCreated.value != null) {
                 mObservableCommodities.postValue(commodityEntities)
             }
-        }
+        }*/
 
         mObservableCommoditiesSummary = MediatorLiveData()
         mObservableCommoditiesSummary.addSource(
