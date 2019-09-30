@@ -6,6 +6,16 @@
         <variable
                 name="commodityDetail"
                 type="com.simpure.expires.data.entity.CommodityEntity" />
+
+        <variable
+                name="expirationDate"
+                type="String" />
+        <variable
+                name="productionDate"
+                type="String" />
+        <variable
+                name="amount"
+                type="String" />
     </data>
 
     <LinearLayout
@@ -71,7 +81,7 @@
             <TextView
                     android:layout_height="20dp"
                     android:layout_width="wrap_content"
-                    android:text="@{commodityDetail.formatExpirationDate()}"
+                    android:text="@{expirationDate}"
                     android:textColor="@color/bg_comm_action"
                     android:textSize="17sp" />
         </LinearLayout>
@@ -100,7 +110,7 @@
             <TextView
                     android:layout_height="20dp"
                     android:layout_width="wrap_content"
-                    android:text="@{commodityDetail.formatProductionDate()}"
+                    android:text="@{productionDate}"
                     android:textColor="@color/bg_comm_action"
                     android:textSize="17sp" />
         </LinearLayout>
@@ -158,7 +168,7 @@
             <TextView
                     android:layout_height="20dp"
                     android:layout_width="wrap_content"
-                    android:text="@{String.valueOf(commodityDetail.amount)}"
+                    android:text="@{amount}"
                     android:textColor="@color/bg_comm_action"
                     android:textSize="17sp" />
         </LinearLayout>

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:bind="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -150,19 +151,33 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tvCommodityName">
 
-            <include layout="@layout/item_dialog_commodity_consuming" />
+            <include
+                    layout="@layout/item_dialog_commodity_consuming"
+                    bind:commodityDetail="@{commodityDetail}" />
 
-            <include layout="@layout/item_dialog_commodity_line" />
+            <include
+                    layout="@layout/item_dialog_commodity_line"
+                    bind:commodityDetail="@{commodityDetail}" />
 
-            <include layout="@layout/item_dialog_commodity_inventories" />
+            <include
+                    layout="@layout/item_dialog_commodity_inventories"
+                    bind:commodityDetail="@{commodityDetail}" />
 
-            <include layout="@layout/item_dialog_commodity_line" />
+            <include
+                    layout="@layout/item_dialog_commodity_line"
+                    bind:commodityDetail="@{commodityDetail}" />
 
-            <include layout="@layout/item_dialog_commodity_details" />
+            <include
+                    layout="@layout/item_dialog_commodity_details"
+                    bind:commodityDetail="@{commodityDetail}" />
 
-            <include layout="@layout/item_dialog_commodity_line" />
+            <include
+                    layout="@layout/item_dialog_commodity_line"
+                    bind:commodityDetail="@{commodityDetail}" />
 
-            <include layout="@layout/item_dialog_commodity_barcode" />
+            <include
+                    layout="@layout/item_dialog_commodity_barcode"
+                    bind:commodityDetail="@{commodityDetail}" />
 
         </LinearLayout>
 
