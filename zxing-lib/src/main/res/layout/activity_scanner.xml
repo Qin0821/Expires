@@ -31,7 +31,7 @@
                 app:result_point_color="@color/result_point_color"/>
 
         <ImageButton
-                android:id="@+id/btn_flash"
+                android:id="@+id/btFlash"
                 android:layout_width="40dip"
                 android:layout_height="40dip"
                 android:layout_gravity="bottom|center_horizontal"

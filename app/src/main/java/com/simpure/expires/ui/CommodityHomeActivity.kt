@@ -19,7 +19,6 @@ import com.blankj.utilcode.constant.PermissionConstants
 import com.blankj.utilcode.util.*
 import com.google.zxing.util.Constant
 import com.orhanobut.dialogplus.DialogPlus
-import com.simpure.expires.BasicApp
 import com.simpure.expires.R
 import com.simpure.expires.data.entity.UserEntity
 import com.simpure.expires.ui.commodity.CommodityAdapter
@@ -186,7 +185,7 @@ class CommodityHomeActivity : BaseActivity() {
         super.onActivityResult(requestCode, resultCode, data)
 
         // 扫描结果回调
-        if (requestCode == Constant.REQ_QR_CODE && resultCode == RESULT_OK) {
+        if (requestCode == REQ_QR_CODE && resultCode == RESULT_OK) {
             val bundle = data?.extras
             val scanResult = bundle?.getString(Constant.INTENT_EXTRA_KEY_QR_SCAN)
             mBinding.btScan.text = scanResult
