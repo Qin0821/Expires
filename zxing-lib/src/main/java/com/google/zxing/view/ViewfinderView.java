@@ -169,6 +169,8 @@ public final class ViewfinderView extends View {
 
     //绘制文本
     private void drawTextInfo(Canvas canvas, Rect frame) {
+        if (null == labelText || labelText.isEmpty()) return;
+
         paint.setColor(labelTextColor);
         paint.setTextSize(labelTextSize);
         paint.setTextAlign(Paint.Align.CENTER);

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
     <FrameLayout
             android:layout_width="match_parent"
@@ -13,33 +13,43 @@
                 android:id="@+id/scanner_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_gravity="center"/>
+                android:layout_gravity="center" />
 
         <com.google.zxing.view.ViewfinderView
-                android:id="@+id/viewfinder_content"
+                android:id="@+id/vvFinder"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:corner_color="@color/corner_color"
                 app:frame_color="@color/viewfinder_frame"
-                app:label_text="@string/layout_focus_qrcode"
-                app:label_text_color="@color/note_text_color"
-                app:label_text_margin_top="8dip"
-                app:label_text_size="16sp"
                 app:laser_color="@color/laser_color"
                 app:mask_color="@color/viewfinder_mask"
                 app:result_color="@color/result_view"
-                app:result_point_color="@color/result_point_color"/>
+                app:result_point_color="@color/result_point_color" />
+        <!--                app:label_text="@string/layout_turn_light_on"-->
+        <!--                app:label_text_color="@color/note_text_color"-->
+        <!--                app:label_text_margin_top="70dip"-->
+        <!--                app:label_text_size="14sp"-->
 
         <ImageButton
                 android:id="@+id/btFlash"
                 android:layout_width="40dip"
                 android:layout_height="40dip"
                 android:layout_gravity="bottom|center_horizontal"
-                android:layout_marginBottom="30dip"
-                android:background="?attr/selectableItemBackground"
+                android:layout_marginBottom="270dip"
+                android:background="@color/transparent"
                 android:padding="6dip"
                 android:scaleType="centerInside"
-                android:src="@drawable/flash_off"/>
+                android:src="@drawable/flash_off" />
+
+        <TextView
+                android:id="@+id/tvFlash"
+                android:layout_gravity="bottom|center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/layout_turn_light_on"
+                android:textColor="@color/note_text_color"
+                android:layout_marginBottom="250dp"
+                android:textSize="14sp" />
     </FrameLayout>
 
     <RelativeLayout
@@ -56,7 +66,7 @@
                 android:layout_height="30dp"
                 android:layout_alignParentBottom="true"
                 android:scaleType="centerCrop"
-                android:src="@drawable/btn_back"/>
+                android:src="@drawable/btn_back" />
 
         <ImageButton
                 android:id="@+id/ibAlbum"
@@ -66,7 +76,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
                 android:scaleType="centerCrop"
-                android:textColor="@android:color/white"/>
+                android:textColor="@android:color/white" />
     </RelativeLayout>
 
 </RelativeLayout>

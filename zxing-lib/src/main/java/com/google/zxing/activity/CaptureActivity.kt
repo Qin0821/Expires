@@ -17,8 +17,6 @@ import android.view.SurfaceHolder
 import android.view.SurfaceHolder.Callback
 import android.view.SurfaceView
 import android.view.View
-import android.widget.Button
-import android.widget.ImageButton
 import android.widget.Toast
 
 import androidx.appcompat.app.AppCompatActivity
@@ -96,11 +94,13 @@ class CaptureActivity : AppCompatActivity(), Callback {
             }
             isFlashOn = if (isFlashOn) {
                 // 关闭闪光灯
-                btFlash!!.setImageResource(R.drawable.flash_off)
+                btFlash?.setImageResource(R.drawable.flash_off)
+                tvFlash.setText(R.string.layout_turn_light_on)
                 false
             } else {
                 // 开启闪光灯
-                btFlash!!.setImageResource(R.drawable.flash_on)
+                btFlash?.setImageResource(R.drawable.flash_on)
+                tvFlash.setText(R.string.layout_turn_light_off)
                 true
             }
         } catch (e: Exception) {
@@ -118,7 +118,7 @@ class CaptureActivity : AppCompatActivity(), Callback {
             .init()
 
         CameraManager.init(application)
-        viewfinderView = findViewById(R.id.viewfinder_content)
+        viewfinderView = findViewById(R.id.vvFinder)
         ibBack.setOnClickListener { finish() }
         btFlash.setOnClickListener(flashListener)
         ibAlbum.setOnClickListener(albumOnClick)
