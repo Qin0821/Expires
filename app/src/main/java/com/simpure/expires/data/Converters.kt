@@ -20,7 +20,7 @@ class Converters {
         return date?.time
     }
 
-    @TypeConverter
+    /*@TypeConverter
     fun stringToExpiresDate(value: String): ExpiresDate {
         if (value.isEmpty()) return ExpiresDate()
         val dateArray = value.split(";")
@@ -33,7 +33,7 @@ class Converters {
     @TypeConverter
     fun expiresDateToString(date: ExpiresDate): String {
         return "${date.productionDate};${date.expiryDate}"
-    }
+    }*/
 
 
     @TypeConverter
@@ -74,10 +74,12 @@ class Converters {
 
         var result = ""
         for (inventory in inventoryList) {
+            val value =
+                "${inventory.id};${inventory.amount};${inventory.unit};${inventory.barcode};${inventory.productionDate};${inventory.expiryDate}"
             result = if (result.isEmpty()) {
-                "${inventory.barcode};${inventory.unit};${inventory.amount}"
+                value
             } else {
-                "$result\n${inventory.barcode};${inventory.unit};${inventory.amount}"
+                "$result\n$value"
             }
         }
         return result
@@ -91,7 +93,14 @@ class Converters {
         val inventoryStringArray = value.split("\n")
         val result = inventoryStringArray.map {
             val inventoryArray = it.split(";")
-            Inventory(inventoryArray[0], inventoryArray[1], inventoryArray[2].toInt())
+            Inventory(
+                inventoryArray[0].toInt(),
+                inventoryArray[1].toInt(),
+                inventoryArray[2],
+                inventoryArray[3],
+                inventoryArray[4].toLong(),
+                inventoryArray[5].toInt()
+            )
         }
         return result
     }

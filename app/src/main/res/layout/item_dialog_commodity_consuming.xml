@@ -14,10 +14,6 @@
         <variable
                 name="productionDate"
                 type="String" />
-
-        <variable
-                name="amount"
-                type="String" />
     </data>
 
     <LinearLayout
@@ -141,7 +137,7 @@
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"
-                    android:text="@{String.valueOf(commodityDetail.date.expiryDate)}"
+                    android:text="@{String.valueOf(commodityDetail.expiryDate)}"
                     android:textColor="@color/bg_comm_action"
                     android:textSize="17sp" />
         </LinearLayout>
@@ -170,7 +166,7 @@
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"
-                    android:text="@{amount}"
+                    android:text="@{String.valueOf(commodityDetail.amount)}"
                     android:textColor="@color/bg_comm_action"
                     android:textSize="17sp" />
         </LinearLayout>

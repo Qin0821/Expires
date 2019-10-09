@@ -43,9 +43,9 @@
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"
-                    android:text="@{expirationDate}"
                     android:textColor="@color/bg_comm_action"
                     android:textSize="17sp" />
+<!--                    android:text="@{inventory.getExpirationDate()}"-->
         </LinearLayout>
 
         <LinearLayout
@@ -72,7 +72,7 @@
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"
-                    android:text="@{amount}"
+                    android:text="@{String.valueOf(inventory.amount)}"
                     android:textColor="@color/bg_comm_action"
                     android:textSize="17sp" />
         </LinearLayout>

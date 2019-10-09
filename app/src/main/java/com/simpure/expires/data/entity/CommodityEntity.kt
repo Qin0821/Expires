@@ -15,7 +15,8 @@ class CommodityEntity constructor(
     @PrimaryKey
     override var id: Int,
     override var name: String,
-    override var date: ExpiresDate,
+    override var productionDate: Long,
+    override var expiryDate: Int,
     override val amount: Int = 0,
     override val unit: String = "",
     override val place: String = "",

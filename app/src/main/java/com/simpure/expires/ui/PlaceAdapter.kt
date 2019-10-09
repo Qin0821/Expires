@@ -41,7 +41,7 @@ class PlaceAdapter(private val mCommodityClickCallback: CommodityClickCallback) 
                 }
 
                 override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-                    return mCommodityList!![oldItemPosition].id === commodityList[newItemPosition].id
+                    return mCommodityList!![oldItemPosition].id == commodityList[newItemPosition].id
                 }
 
                 override fun areContentsTheSame(
@@ -50,9 +50,10 @@ class PlaceAdapter(private val mCommodityClickCallback: CommodityClickCallback) 
                 ): Boolean {
                     val newCommodity = commodityList[newItemPosition]
                     val oldCommodity = mCommodityList!![oldItemPosition]
-                    return (newCommodity.id === oldCommodity.id
+                    return (newCommodity.id == oldCommodity.id
                             && newCommodity.name == oldCommodity.name
-                            && newCommodity.date === oldCommodity.date)
+                            && newCommodity.productionDate == oldCommodity.productionDate
+                            && newCommodity.expiryDate == oldCommodity.expiryDate)
                 }
             })
             mCommodityList = commodityList

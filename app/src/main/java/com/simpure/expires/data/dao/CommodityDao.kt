@@ -39,7 +39,7 @@ interface CommodityDao {
     @Query("select * from commodities where id = :commodityId")
     fun loadCommoditySync(commodityId: Int): CommodityEntity
 
-    @Query("SELECT id, name, date FROM commodities")
+    @Query("SELECT id, name, productionDate, expiryDate FROM commodities")
     fun loadAllCommoditiesSummary(): LiveData<List<CommodityModel>>
 
     //    @Query("SELECT commodities.* FROM commodities JOIN commoditiesFts ON (commodities.id = commoditiesFts.rowid) "

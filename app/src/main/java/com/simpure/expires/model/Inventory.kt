@@ -1,10 +1,14 @@
 package com.simpure.expires.model
 
-data class Inventory(
-    val barcode: String = "",
-    val unit: String = "",
-    val amount: Int = 0
+import com.simpure.expires.data.ExpiresDate
 
-) {
+data class Inventory(
+    val id: Int = 0,
+    val amount: Int = 0,
+    val unit: String = "",
+    val barcode: String = "",
+    override var productionDate: Long = 0L,
+    override var expiryDate: Int = 0
+) : ExpiresDate {
 
 }
