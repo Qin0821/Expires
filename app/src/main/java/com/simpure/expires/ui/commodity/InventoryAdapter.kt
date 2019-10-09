@@ -17,6 +17,7 @@ class InventoryAdapter(/*private val mCommodityClickCallback: CommodityClickCall
 
     fun setInventoryList(inventoryList: List<Inventory>) {
         mInventoryList = inventoryList
+        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

@@ -38,14 +38,19 @@ class CommodityAdapter(
         val viewModel = ViewModelProvider(activity).get(CommodityDetailViewModel::class.java)
         viewModel.setCommodityId(commodityId)
         viewModel.commodityDetail.observe(activity, Observer {
+            if (null == it) return@Observer
+
             binding.setVariable(BR.commodityDetail, it)
 
-            with(binding.itemInventories.rvInventories) {
-                layoutManager = LinearLayoutManager(parent!!.context)
-                if (null == adapter) {
-                    adapter = InventoryAdapter()
+            if (!it.inventories.isNullOrEmpty()) {
+                with(binding.itemInventories.rvInventories) {
+                    if (null == layoutManager)
+                        layoutManager = LinearLayoutManager(parent!!.context)
+                    if (null == adapter)
+                        adapter = InventoryAdapter()
+
+                    (adapter as InventoryAdapter).setInventoryList(it.inventories)
                 }
-                adapter.setInventoryList(it.inventories)
             }
         })
 

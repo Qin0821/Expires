@@ -55,7 +55,7 @@
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_marginEnd="10dp"
-                    android:src="@color/commodity_label_blue" />
+                    android:src="@mipmap/outlined" />
 
             <TextView
                     android:layout_width="0dp"
@@ -85,7 +85,7 @@
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_marginEnd="10dp"
-                    android:src="@color/commodity_label_blue" />
+                    android:src="@mipmap/label" />
 
             <TextView
                     android:layout_width="0dp"

@@ -10,164 +10,166 @@
         <variable
                 name="expirationDate"
                 type="String" />
+
         <variable
                 name="productionDate"
                 type="String" />
+
         <variable
                 name="amount"
                 type="String" />
     </data>
 
     <LinearLayout
-            android:layout_height="wrap_content"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
         <LinearLayout
                 android:id="@+id/layoutConsume"
-                android:gravity="center_vertical"
-                android:layout_height="wrap_content"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:paddingBottom="10dp"
-                android:paddingTop="10dp">
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp">
 
             <TextView
                     android:id="@+id/tvCommPropTitle"
-                    android:includeFontPadding="false"
+                    android:layout_width="0dp"
                     android:layout_height="24dp"
                     android:layout_weight="1"
-                    android:layout_width="0dp"
+                    android:includeFontPadding="false"
                     android:text="Consuming"
                     android:textColor="@color/line"
                     android:textSize="20sp" />
 
             <TextView
                     android:id="@+id/tvCommAction"
+                    android:layout_width="wrap_content"
+                    android:layout_height="22dp"
+                    android:layout_marginStart="10dp"
                     android:background="@drawable/bg_rounded_rectangle_deep_gray"
                     android:gravity="center"
                     android:includeFontPadding="false"
-                    android:layout_height="22dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_width="wrap_content"
-                    android:paddingEnd="10dp"
                     android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
                     android:text="Clear"
                     android:textColor="@color/white" />
 
         </LinearLayout>
 
         <LinearLayout
-                android:layout_height="wrap_content"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:paddingBottom="5dp"
-                android:paddingTop="5dp">
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp">
 
             <ImageView
+                    android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_marginEnd="10dp"
-                    android:layout_width="20dp"
-                    android:src="@color/commodity_label_blue" />
+                    android:src="@mipmap/expiry_date" />
 
             <TextView
+                    android:layout_width="0dp"
                     android:layout_height="20dp"
                     android:layout_weight="1"
-                    android:layout_width="0dp"
                     android:text="Expire Date"
                     android:textColor="@color/bg_comm_action"
                     android:textSize="17sp" />
 
             <TextView
-                    android:layout_height="20dp"
                     android:layout_width="wrap_content"
+                    android:layout_height="20dp"
                     android:text="@{expirationDate}"
                     android:textColor="@color/bg_comm_action"
                     android:textSize="17sp" />
         </LinearLayout>
 
         <LinearLayout
-                android:layout_height="wrap_content"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:paddingBottom="5dp"
-                android:paddingTop="5dp">
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp">
 
             <ImageView
+                    android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_marginEnd="10dp"
-                    android:layout_width="20dp"
-                    android:src="@color/commodity_label_blue" />
+                    android:src="@mipmap/production_date" />
 
             <TextView
+                    android:layout_width="0dp"
                     android:layout_height="20dp"
                     android:layout_weight="1"
-                    android:layout_width="0dp"
                     android:text="Production Date"
                     android:textColor="@color/bg_comm_action"
                     android:textSize="17sp" />
 
             <TextView
-                    android:layout_height="20dp"
                     android:layout_width="wrap_content"
+                    android:layout_height="20dp"
                     android:text="@{productionDate}"
                     android:textColor="@color/bg_comm_action"
                     android:textSize="17sp" />
         </LinearLayout>
 
         <LinearLayout
-                android:layout_height="wrap_content"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:paddingBottom="5dp"
-                android:paddingTop="5dp">
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp">
 
             <ImageView
+                    android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_marginEnd="10dp"
-                    android:layout_width="20dp"
-                    android:src="@color/commodity_label_blue" />
+                    android:src="@mipmap/expiring_in" />
 
             <TextView
+                    android:layout_width="0dp"
                     android:layout_height="20dp"
                     android:layout_weight="1"
-                    android:layout_width="0dp"
                     android:text="Expiring In"
                     android:textColor="@color/bg_comm_action"
                     android:textSize="17sp" />
 
             <TextView
-                    android:layout_height="20dp"
                     android:layout_width="wrap_content"
+                    android:layout_height="20dp"
                     android:text="@{String.valueOf(commodityDetail.date.expiryDate)}"
                     android:textColor="@color/bg_comm_action"
                     android:textSize="17sp" />
         </LinearLayout>
 
         <LinearLayout
-                android:layout_height="wrap_content"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:paddingBottom="5dp"
-                android:paddingTop="5dp">
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp">
 
             <ImageView
+                    android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_marginEnd="10dp"
-                    android:layout_width="20dp"
-                    android:src="@color/commodity_label_blue" />
+                    android:src="@mipmap/amount" />
 
             <TextView
+                    android:layout_width="0dp"
                     android:layout_height="20dp"
                     android:layout_weight="1"
-                    android:layout_width="0dp"
                     android:text="Amount"
                     android:textColor="@color/bg_comm_action"
                     android:textSize="17sp" />
 
             <TextView
-                    android:layout_height="20dp"
                     android:layout_width="wrap_content"
+                    android:layout_height="20dp"
                     android:text="@{amount}"
                     android:textColor="@color/bg_comm_action"
                     android:textSize="17sp" />

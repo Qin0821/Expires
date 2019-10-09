@@ -188,7 +188,7 @@ class CommodityHomeActivity : BaseActivity() {
         if (requestCode == REQ_QR_CODE && resultCode == RESULT_OK) {
             val bundle = data?.extras
             val scanResult = bundle?.getString(Constant.INTENT_EXTRA_KEY_QR_SCAN)
-            mBinding.btScan.text = scanResult
+            mBinding.btInventories.text = scanResult
         }
     }
 }

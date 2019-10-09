@@ -74,8 +74,11 @@ class Converters {
 
         var result = ""
         for (inventory in inventoryList) {
-
-            result = "$result\n${inventory.barcode};${inventory.unit};${inventory.amount}"
+            result = if (result.isEmpty()) {
+                "${inventory.barcode};${inventory.unit};${inventory.amount}"
+            } else {
+                "$result\n${inventory.barcode};${inventory.unit};${inventory.amount}"
+            }
         }
         return result
     }
@@ -87,7 +90,8 @@ class Converters {
         }
         val inventoryStringArray = value.split("\n")
         val result = inventoryStringArray.map {
-            Inventory(it[0].toString(), it[1].toString(), it[2].toInt())
+            val inventoryArray = it.split(";")
+            Inventory(inventoryArray[0], inventoryArray[1], inventoryArray[2].toInt())
         }
         return result
     }

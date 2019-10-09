@@ -18,6 +18,7 @@ package com.simpure.expires.data
 
 import com.simpure.expires.data.entity.CommodityEntity
 import com.simpure.expires.data.entity.UserEntity
+import com.simpure.expires.model.Inventory
 import org.joda.time.DateTime
 
 /**
@@ -52,7 +53,8 @@ object DataGenerator {
                 "fridge",
                 listOf("food", "delicious", "yellow"),
                 "6955725010589",
-                DateTime.now().millis
+                DateTime.now().millis,
+                listOf(Inventory("WYT5201314", "根", 52))
             ),
             CommodityEntity(11, "雪碧", ExpiresDate(nowDate.minusDays(15).millis, 15)),
             CommodityEntity(12, "鸡腿", ExpiresDate(nowDate.minusDays(15).millis, 18)),

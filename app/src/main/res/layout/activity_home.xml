@@ -13,9 +13,9 @@
                 name="commodityHomeActivity"
                 type="com.simpure.expires.ui.CommodityHomeActivity" />
 
-<!--        <variable-->
-<!--                name="userViewModel"-->
-<!--                type="com.simpure.expires.viewmodel.UserViewModel" />-->
+        <!--        <variable-->
+        <!--                name="userViewModel"-->
+        <!--                type="com.simpure.expires.viewmodel.UserViewModel" />-->
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -108,12 +108,12 @@
                     android:gravity="center">
 
                 <Button
-                        android:id="@+id/btScan"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
+                        android:id="@+id/btInventories"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:background="@mipmap/inventories"
                         android:gravity="center"
-                        android:onClick="scan"
-                        android:text="scan" />
+                        android:onClick="scan" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -123,12 +123,12 @@
                     android:gravity="center">
 
                 <Button
-                        android:id="@+id/btScan1"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
+                        android:id="@+id/btConsuming"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:background="@mipmap/consuming"
                         android:gravity="center"
-                        android:onClick="scan"
-                        android:text="two" />
+                        android:onClick="scan" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -138,11 +138,11 @@
                     android:gravity="center">
 
                 <Button
-                        android:id="@+id/btScan2"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:gravity="center"
-                        android:text="userViewModel.user.name" />
+                        android:id="@+id/btEdit"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:background="@mipmap/edit"
+                        android:gravity="center" />
             </RelativeLayout>
 
         </LinearLayout>
