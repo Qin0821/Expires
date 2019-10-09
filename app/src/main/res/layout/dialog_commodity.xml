@@ -161,6 +161,7 @@
 
             <include
                     layout="@layout/item_dialog_commodity_inventories"
+                    android:id="@+id/itemInventories"
                     bind:commodityDetail="@{commodityDetail}" />
 
             <include

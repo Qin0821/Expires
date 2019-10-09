@@ -1,42 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="vertical">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+                name="commodityDetail"
+                type="com.simpure.expires.data.entity.CommodityEntity" />
+
+        <variable
+                name="expirationDate"
+                type="String" />
+        <variable
+                name="productionDate"
+                type="String" />
+        <variable
+                name="amount"
+                type="String" />
+    </data>
 
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp">
+            android:gravity="center"
+            android:orientation="vertical">
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp">
+
+            <TextView
+                    android:id="@+id/tvCommPropTitle"
+                    android:layout_width="0dp"
+                    android:layout_height="24dp"
+                    android:layout_weight="1"
+                    android:includeFontPadding="false"
+                    android:text="Barcode"
+                    android:textColor="@color/line"
+                    android:textSize="20sp" />
+        </LinearLayout>
+
+        <ImageView
+                android:id="@+id/ivBarcode"
+                android:layout_width="320dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:src="@color/commodity_label_blue" />
 
         <TextView
-                android:id="@+id/tvCommPropTitle"
-                android:layout_width="0dp"
-                android:layout_height="24dp"
-                android:layout_weight="1"
-                android:includeFontPadding="false"
-                android:text="Barcode"
-                android:textColor="@color/line"
-                android:textSize="20sp" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:text="Thank for your use"
+                android:visibility="gone"
+                android:textColor="@color/bg_comm_action" />
+
     </LinearLayout>
-
-    <ImageView
-            android:layout_width="320dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:src="@color/commodity_label_blue" />
-
-    <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:text="Thank for your use"
-            android:textColor="@color/bg_comm_action" />
-
-</LinearLayout>
+</layout>

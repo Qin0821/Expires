@@ -10,6 +10,7 @@ import com.simpure.expires.R
 import androidx.databinding.DataBindingUtil.inflate
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.simpure.expires.BR
 import com.simpure.expires.databinding.DialogCommodityBinding
 import com.simpure.expires.ui.CommodityHomeActivity
@@ -38,7 +39,16 @@ class CommodityAdapter(
         viewModel.setCommodityId(commodityId)
         viewModel.commodityDetail.observe(activity, Observer {
             binding.setVariable(BR.commodityDetail, it)
+
+            with(binding.itemInventories.rvInventories) {
+                layoutManager = LinearLayoutManager(parent!!.context)
+                if (null == adapter) {
+                    adapter = InventoryAdapter()
+                }
+                adapter.setInventoryList(it.inventories)
+            }
         })
+
 
         return binding.root
     }

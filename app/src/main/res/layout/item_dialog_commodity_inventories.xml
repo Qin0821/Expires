@@ -1,53 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+                name="commodityDetail"
+                type="com.simpure.expires.data.entity.CommodityEntity" />
+
+    </data>
 
     <LinearLayout
-            android:id="@+id/layoutConsume"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp">
+            android:orientation="vertical">
+
+        <LinearLayout
+                android:id="@+id/layoutConsume"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp">
 
 
-        <TextView
-                android:id="@+id/tvCommPropTitle"
-                android:layout_width="0dp"
-                android:layout_height="24dp"
-                android:layout_weight="1"
-                android:includeFontPadding="false"
-                android:text="Inventories"
-                android:textColor="@color/line"
-                android:textSize="20sp" />
+            <TextView
+                    android:id="@+id/tvCommPropTitle"
+                    android:layout_width="0dp"
+                    android:layout_height="24dp"
+                    android:layout_weight="1"
+                    android:includeFontPadding="false"
+                    android:text="Inventories"
+                    android:textColor="@color/line"
+                    android:textSize="20sp" />
 
-        <ImageView
-                android:id="@+id/ivCommAction"
-                android:layout_width="36dp"
-                android:layout_height="22dp"
-                android:layout_marginStart="10dp"
-                android:background="@drawable/bg_rounded_rectangle_deep_gray" />
+            <ImageView
+                    android:id="@+id/ivCommAction"
+                    android:layout_width="36dp"
+                    android:layout_height="22dp"
+                    android:layout_marginStart="10dp"
+                    android:background="@drawable/bg_rounded_rectangle_deep_gray" />
 
-        <TextView
-                android:id="@+id/tvCommAction"
-                android:layout_width="wrap_content"
-                android:layout_height="22dp"
-                android:layout_marginStart="10dp"
-                android:background="@drawable/bg_rounded_rectangle_deep_gray"
-                android:gravity="center"
-                android:includeFontPadding="false"
-                android:paddingStart="10dp"
-                android:paddingEnd="10dp"
-                android:text="Throw"
-                android:textColor="@color/white" />
+            <TextView
+                    android:id="@+id/tvCommAction"
+                    android:layout_width="wrap_content"
+                    android:layout_height="22dp"
+                    android:layout_marginStart="10dp"
+                    android:background="@drawable/bg_rounded_rectangle_deep_gray"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:text="Throw"
+                    android:textColor="@color/white" />
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvInventories"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
     </LinearLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvInventories"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-</LinearLayout>
+</layout>
