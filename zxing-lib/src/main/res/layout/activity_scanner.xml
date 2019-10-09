@@ -54,7 +54,7 @@
 
     <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="80dp"
+            android:layout_height="60dp"
             android:background="#b3000000"
             android:paddingStart="12dp"
             android:paddingEnd="12dp"
@@ -62,19 +62,22 @@
 
         <ImageButton
                 android:id="@+id/ibBack"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
                 android:layout_alignParentBottom="true"
                 android:scaleType="centerCrop"
-                android:src="@drawable/btn_back" />
+                android:background="@color/transparent"
+                android:src="@drawable/arrow_left_gray" />
 
         <ImageButton
                 android:id="@+id/ibAlbum"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
+                android:background="@color/transparent"
+                android:src="@drawable/book_open_gray"
                 android:scaleType="centerCrop"
                 android:textColor="@android:color/white" />
     </RelativeLayout>
