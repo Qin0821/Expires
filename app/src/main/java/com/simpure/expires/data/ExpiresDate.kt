@@ -15,8 +15,7 @@ interface ExpiresDate {
     fun getExpirationDate(): Long {
         return try {
             val productionDate = DateTime(productionDate)
-            productionDate.plusDays(expiryDate)
-            productionDate.millis
+            productionDate.plusDays(expiryDate).millis
         } catch (e: Exception) {
             0L
         }

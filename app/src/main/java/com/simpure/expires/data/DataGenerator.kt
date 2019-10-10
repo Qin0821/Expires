@@ -60,9 +60,25 @@ object DataGenerator {
                         11,
                         52,
                         "根",
-                        "WYT5201314",
                         nowDate.minusDays(2).millis,
-                        3
+                        3,
+                        "WYT5201314"
+                    ),
+                    Inventory(
+                        12,
+                        30,
+                        "根",
+                        nowDate.minusDays(1).millis,
+                        3,
+                        "WYT5201314"
+                    ),
+                    Inventory(
+                        12,
+                        40,
+                        "根",
+                        nowDate.millis,
+                        3,
+                        "WYT5201314"
                     )
                 )
             ),

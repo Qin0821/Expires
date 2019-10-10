@@ -6,9 +6,9 @@ data class Inventory(
     val id: Int = 0,
     val amount: Int = 0,
     val unit: String = "",
-    val barcode: String = "",
     override var productionDate: Long = 0L,
-    override var expiryDate: Int = 0
+    override var expiryDate: Int = 0,
+    val barcode: String = ""
 ) : ExpiresDate {
 
 }

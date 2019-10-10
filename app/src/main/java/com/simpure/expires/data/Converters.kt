@@ -97,9 +97,9 @@ class Converters {
                 inventoryArray[0].toInt(),
                 inventoryArray[1].toInt(),
                 inventoryArray[2],
-                inventoryArray[3],
                 inventoryArray[4].toLong(),
-                inventoryArray[5].toInt()
+                inventoryArray[5].toInt(),
+                inventoryArray[3]
             )
         }
         return result
