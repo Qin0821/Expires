@@ -11,10 +11,14 @@ import androidx.databinding.DataBindingUtil.inflate
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.zxing.util.BarcodeGenerator
 import com.simpure.expires.BR
+import com.simpure.expires.data.entity.CommodityEntity
 import com.simpure.expires.databinding.DialogCommodityBinding
 import com.simpure.expires.ui.CommodityHomeActivity
+import com.simpure.expires.utilities.toast
 import com.simpure.expires.viewmodel.CommodityDetailViewModel
+import kotlin.concurrent.thread
 
 class CommodityAdapter(
     private val activity: CommodityHomeActivity,
@@ -42,20 +46,57 @@ class CommodityAdapter(
 
             binding.setVariable(BR.commodityDetail, it)
 
-            if (!it.inventories.isNullOrEmpty()) {
-                with(binding.itemInventories.rvInventories) {
-                    if (null == layoutManager)
-                        layoutManager = LinearLayoutManager(parent!!.context)
-                    if (null == adapter)
-                        adapter = InventoryAdapter()
-
-                    (adapter as InventoryAdapter).setInventoryList(it.inventories)
-                }
-            }
+            showInventories(it, binding, parent)
+            showBarcode(it, binding, parent)
         })
 
 
         return binding.root
+    }
+
+    private fun showInventories(
+        it: CommodityEntity,
+        binding: DialogCommodityBinding,
+        parent: ViewGroup?
+    ) {
+        if (!it.inventories.isNullOrEmpty()) {
+            with(binding.itemInventories.rvInventories) {
+                if (null == layoutManager)
+                    layoutManager = LinearLayoutManager(parent!!.context)
+                if (null == adapter)
+                    adapter = InventoryAdapter()
+
+                (adapter as InventoryAdapter).setInventoryList(it.inventories)
+            }
+        }
+    }
+
+    private fun showBarcode(
+        it: CommodityEntity,
+        binding: DialogCommodityBinding,
+        parent: ViewGroup?
+    ) {
+        if (it.barcode.isNotEmpty()) {
+            thread {
+                with(binding.itemBarcode.ivBarcode) {
+                    val barcodeBitmap =
+                        BarcodeGenerator.getBarcodeImage(it.barcode, this.width, this.height)
+                    activity.runOnUiThread {
+                        // 上面的width和height会莫名其妙变成0导致这里报错
+                        // 先不处理
+                        // 如果app在其他地方必须用到sd卡读取权限
+                        // 这里做sd卡的缓存
+                        // 如果没有必要的sd卡权限，这里做成存数据库
+                        // http://ddrv.cn/a/119750
+//                        if (null == barcodeBitmap) {
+//                            parent!!.context.toast("条形码解析失败")
+//                        }
+                        this.setImageBitmap(barcodeBitmap)
+                    }
+                }
+            }
+
+        }
     }
 
     override fun getItem(position: Int): Any = commodityId

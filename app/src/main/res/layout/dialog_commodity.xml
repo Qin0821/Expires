@@ -160,8 +160,8 @@
                     bind:commodityDetail="@{commodityDetail}" />
 
             <include
-                    layout="@layout/item_dialog_commodity_inventories"
                     android:id="@+id/itemInventories"
+                    layout="@layout/item_dialog_commodity_inventories"
                     bind:commodityDetail="@{commodityDetail}" />
 
             <include
@@ -177,6 +177,7 @@
                     bind:commodityDetail="@{commodityDetail}" />
 
             <include
+                    android:id="@+id/itemBarcode"
                     layout="@layout/item_dialog_commodity_barcode"
                     bind:commodityDetail="@{commodityDetail}" />
 

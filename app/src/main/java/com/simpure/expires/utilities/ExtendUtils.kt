@@ -2,6 +2,7 @@ package com.simpure.expires.utilities
 
 import android.content.Context
 import android.os.Build
+import android.os.Looper
 import android.widget.Toast
 import org.joda.time.DateTime
 import org.joda.time.Days
@@ -29,5 +30,9 @@ fun Long.calcExpirationDate(): Int {
 }
 
 fun Context.toast(message: String, duration: Int = Toast.LENGTH_SHORT) {
-    return Toast.makeText(this, message, duration).show()
+//    if (Looper.myLooper() == null) {
+//        Looper.prepare()
+//    }
+    Toast.makeText(this, message, duration).show()
+//    Looper.loop()
 }
