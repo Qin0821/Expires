@@ -15,16 +15,20 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.work.impl.Schedulers
 import com.blankj.utilcode.constant.PermissionConstants
 import com.blankj.utilcode.util.*
 import com.google.zxing.util.Constant
 import com.orhanobut.dialogplus.DialogPlus
 import com.simpure.expires.R
+import com.simpure.expires.api.SignInApiService
 import com.simpure.expires.data.entity.UserEntity
 import com.simpure.expires.ui.commodity.CommodityAdapter
 import com.simpure.expires.ui.commodity.CommodityHolder
 import com.simpure.expires.utilities.toast
 import com.simpure.expires.viewmodel.UserViewModel
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
 
 
 class CommodityHomeActivity : BaseActivity() {
@@ -154,7 +158,7 @@ class CommodityHomeActivity : BaseActivity() {
     }
 
 
-    fun scan(view: View) {
+    fun goInventories(view: View) {
         PermissionUtils.permission(PermissionConstants.CAMERA)
             .rationale { shouldRequest -> ToastUtils.showShort(shouldRequest.toString()) }
             .callback(object : PermissionUtils.FullCallback {
@@ -178,6 +182,27 @@ class CommodityHomeActivity : BaseActivity() {
             })
             .theme { activity -> ScreenUtils.setFullScreen(activity) }
             .request()
+
+    }
+
+    val signInApiService by lazy {
+        SignInApiService.create()
+    }
+    var disposable: Disposable? = null
+
+    fun goConsuming(view: View) {
+        disposable =
+            signInApiService.scanQRCode(50)
+                .subscribeOn(io.reactivex.schedulers.Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    { result ->
+                        this.toast(result.toString())
+                    },
+                    { error ->
+                        this.toast(error.toString())
+                    }
+                )
 
     }
 
