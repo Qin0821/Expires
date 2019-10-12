@@ -11,16 +11,16 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.zxing.util.Constant.REQ_QR_CODE
 import com.google.zxing.activity.CaptureActivity
 import android.content.Intent
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.work.impl.Schedulers
 import com.blankj.utilcode.constant.PermissionConstants
 import com.blankj.utilcode.util.*
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.zxing.util.Constant
 import com.orhanobut.dialogplus.DialogPlus
-import com.simpure.expires.R
 import com.simpure.expires.api.SignInApiService
 import com.simpure.expires.data.entity.UserEntity
 import com.simpure.expires.ui.commodity.CommodityAdapter
@@ -29,6 +29,9 @@ import com.simpure.expires.utilities.toast
 import com.simpure.expires.viewmodel.UserViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
+import kotlinx.android.synthetic.main.dialog_commodity.*
+import android.util.Log
+import com.simpure.expires.R
 
 
 class CommodityHomeActivity : BaseActivity() {
@@ -47,6 +50,52 @@ class CommodityHomeActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_home)
+        if (!::bottomSheetBehavior.isInitialized) {
+            bottomSheetBehavior = BottomSheetBehavior.from(bottomSheetLayout)
+            bottomSheetBehavior.setBottomSheetCallback(object :
+                BottomSheetBehavior.BottomSheetCallback() {
+                override fun onSlide(bottomSheet: View, slideOffset: Float) {
+
+                }
+
+                override fun onStateChanged(bottomSheet: View, newState: Int) {
+                    if (newState == BottomSheetBehavior.STATE_EXPANDED) {
+//                            bottomSheetHeading.setText(getString(R.string.text_collapse_me))
+                    } else {
+//                            bottomSheetHeading.setText(getString(R.string.text_expand_me))
+                    }
+                    // Check Logs to see how bottom sheets behaves
+                    when (newState) {
+                        BottomSheetBehavior.STATE_COLLAPSED -> Log.e(
+                            "Bottom Sheet Behaviour",
+                            "STATE_COLLAPSED"
+                        )
+                        BottomSheetBehavior.STATE_DRAGGING -> Log.e(
+                            "Bottom Sheet Behaviour",
+                            "STATE_DRAGGING"
+                        )
+                        BottomSheetBehavior.STATE_HALF_EXPANDED -> Log.e(
+                            "Bottom Sheet Behaviour",
+                            "STATE_HALF_EXPANDED"
+                        )
+                        BottomSheetBehavior.STATE_EXPANDED -> Log.e(
+                            "Bottom Sheet Behaviour",
+                            "STATE_EXPANDED"
+                        )
+                        BottomSheetBehavior.STATE_HIDDEN -> Log.e(
+                            "Bottom Sheet Behaviour",
+                            "STATE_HIDDEN"
+                        )
+                        BottomSheetBehavior.STATE_SETTLING -> Log.e(
+                            "Bottom Sheet Behaviour",
+                            "STATE_SETTLING"
+                        )
+                    }
+                }
+
+            })
+            bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+        }
 
         initPlaceNameList()
 
@@ -84,24 +133,29 @@ class CommodityHomeActivity : BaseActivity() {
             val fragment = PlaceFragment()
 
             supportFragmentManager.beginTransaction()
-                .add(R.id.fcCommodity, fragment, fragment.TAG).commit()
+                .add(com.simpure.expires.R.id.fcCommodity, fragment, fragment.TAG).commit()
         }
     }
 
+    private lateinit var bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>
+
     /** Shows the product detail fragment  */
-    fun showCommodityDetail(commodityId: Int) {
+    fun showCommodityDetail(commodityId: Int, sheetVersion: Boolean = true) {
 
-        val adapter = CommodityAdapter(this, commodityId)
+        if (sheetVersion) {
 
-        val dialog = DialogPlus.newDialog(this)
-            .setAdapter(adapter)
-            .setContentHolder(CommodityHolder())
-            .setOnClickListener { dialog, view ->
+            bottomSheetBehavior.state = BottomSheetBehavior.STATE_HALF_EXPANDED
+        } else {
+            val adapter = CommodityAdapter(this, commodityId)
 
-            }
-            .setExpanded(true)  // This will enable the expand feature, (similar to android L share dialog)
-            .create()
-        dialog.show()
+            val dialog = DialogPlus.newDialog(this)
+                .setAdapter(adapter)
+                .setContentHolder(CommodityHolder())
+                .setOnClickListener { dialog, view -> }
+                .setExpanded(true)  // This will enable the expand feature, (similar to android L share dialog)
+                .create()
+            dialog.show()
+        }
     }
 
     private fun initPlaceNameList() {

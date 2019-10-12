@@ -33,11 +33,15 @@
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/bottomSheetLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/bg_half_rounded_rectangle_white_10"
             android:paddingStart="20dp"
-            android:paddingEnd="20dp">
+            android:paddingEnd="20dp"
+            app:behavior_hideable="true"
+            app:behavior_peekHeight="200dp"
+            app:layout_behavior="@string/bottom_sheet_behavior">
 
         <View
                 android:layout_width="40dp"

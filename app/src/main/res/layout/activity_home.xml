@@ -18,134 +18,149 @@
         <!--                type="com.simpure.expires.viewmodel.UserViewModel" />-->
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/appBg"
-            tools:context=".ui.CommodityHomeActivity">
+            android:layout_height="match_parent">
 
-        <LinearLayout
-                android:id="@+id/relativeLayout"
+        <!-- Main content -->
+        <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                android:layout_height="match_parent"
+                android:background="@color/appBg"
+                tools:context=".ui.CommodityHomeActivity">
 
-            <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rvLabels"
+            <LinearLayout
+                    android:id="@+id/relativeLayout"
                     android:layout_width="match_parent"
-                    android:layout_height="80dp"
-                    android:layout_gravity="bottom" />
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
-            <RelativeLayout
+                <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvLabels"
+                        android:layout_width="match_parent"
+                        android:layout_height="80dp"
+                        android:layout_gravity="bottom" />
+
+                <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="44dp"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/bg_rounded_rectangle_white_5">
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:background="@color/transparency"
+                            android:text="@string/search"
+                            android:textColor="@color/searchHint"
+                            android:textSize="16sp" />
+                </RelativeLayout>
+
+                <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/line" />
+            </LinearLayout>
+
+            <androidx.viewpager.widget.ViewPager
+                    android:id="@+id/vpCommodityList"
                     android:layout_width="match_parent"
-                    android:layout_height="44dp"
-                    android:layout_margin="10dp"
-                    android:background="@drawable/bg_rounded_rectangle_white_5">
+                    android:layout_height="0dp"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/relativeLayout"
+                    app:layout_constraintVertical_weight="1" />
 
-                <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:background="@color/transparency"
-                        android:text="@string/search"
-                        android:textColor="@color/searchHint"
-                        android:textSize="16sp" />
-            </RelativeLayout>
+            <androidx.fragment.app.FragmentContainerView
+                    android:id="@+id/fcCommodity"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toTopOf="@id/line"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/relativeLayout"
+                    app:layout_constraintVertical_weight="1" />
+
 
             <View
+                    android:id="@+id/line"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@color/line" />
-        </LinearLayout>
+                    android:background="@color/line"
+                    app:layout_constraintBottom_toTopOf="@id/llBottomNavigation"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
 
-        <androidx.viewpager.widget.ViewPager
-                android:id="@+id/vpCommodityList"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:visibility="gone"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/relativeLayout"
-                app:layout_constraintVertical_weight="1" />
+            <LinearLayout
+                    android:id="@+id/llBottomNavigation"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent">
 
-        <androidx.fragment.app.FragmentContainerView
-                android:id="@+id/fcCommodity"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:orientation="horizontal"
-                app:layout_constraintBottom_toTopOf="@id/line"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/relativeLayout"
-                app:layout_constraintVertical_weight="1" />
+                <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center">
+
+                    <Button
+                            android:id="@+id/btInventories"
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:background="@mipmap/inventories"
+                            android:gravity="center"
+                            android:onClick="goInventories" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center">
+
+                    <Button
+                            android:id="@+id/btConsuming"
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:background="@mipmap/consuming"
+                            android:gravity="center"
+                            android:onClick="goConsuming" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center">
+
+                    <Button
+                            android:id="@+id/btEdit"
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:background="@mipmap/edit"
+                            android:gravity="center" />
+                </RelativeLayout>
+
+            </LinearLayout>
 
 
-        <View
-                android:id="@+id/line"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/line"
-                app:layout_constraintBottom_toTopOf="@id/llBottomNavigation"
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- Bottom sheet content -->
+        <include
+                layout="@layout/dialog_commodity"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-        <LinearLayout
-                android:id="@+id/llBottomNavigation"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:orientation="horizontal"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent">
-
-            <RelativeLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center">
-
-                <Button
-                        android:id="@+id/btInventories"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:background="@mipmap/inventories"
-                        android:gravity="center"
-                        android:onClick="goInventories" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center">
-
-                <Button
-                        android:id="@+id/btConsuming"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:background="@mipmap/consuming"
-                        android:gravity="center"
-                        android:onClick="goConsuming" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center">
-
-                <Button
-                        android:id="@+id/btEdit"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:background="@mipmap/edit"
-                        android:gravity="center" />
-            </RelativeLayout>
-
-        </LinearLayout>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
