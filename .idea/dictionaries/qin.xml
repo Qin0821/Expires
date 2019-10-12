@@ -1,6 +1,8 @@
 <component name="ProjectDictionaryState">
   <dictionary name="qin">
     <words>
+      <w>coroutines</w>
+      <w>kapt</w>
       <w>recyclerview</w>
       <w>simpure</w>
       <w>viewmodel</w>

@@ -82,7 +82,7 @@ dependencies {
     implementation 'androidx.navigation:navigation-ui-ktx:2.1.0'
     implementation 'androidx.work:work-runtime-ktx:2.2.0'
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.46'
-    implementation 'androidx.fragment:fragment-ktx:1.2.0-alpha04'
+    implementation 'androidx.fragment:fragment-ktx:1.2.0-beta01'
     implementation 'com.google.firebase:firebase-core:17.2.0'
 
     // Testing dependencies
@@ -90,7 +90,7 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.46'
-    implementation 'androidx.recyclerview:recyclerview:1.1.0-beta04'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0-beta05'
     // https://github.com/yarolegovich/DiscreteScrollView
     implementation 'com.yarolegovich:discrete-scrollview:1.4.9'
     implementation 'jp.wasabeef:recyclerview-animators:3.0.0'
@@ -115,10 +115,10 @@ dependencies {
 
     implementation 'com.orhanobut:dialogplus:1.11@aar'
 
-    def room_version = "2.2.0-rc01"
+    def room_version = "2.2.0"
 
     implementation "androidx.room:room-runtime:$room_version"
-    annotationProcessor "androidx.room:room-compiler:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
     // For Kotlin use kapt instead of annotationProcessor
     // optional - Kotlin Extensions and Coroutines support for Room
     implementation "androidx.room:room-ktx:$room_version"
@@ -133,5 +133,5 @@ dependencies {
     implementation "com.squareup.retrofit2:adapter-rxjava2:2.3.0"
     implementation "com.squareup.retrofit2:converter-gson:2.3.0"
 
-    implementation "io.reactivex.rxjava2:rxandroid:2.0.1"
+    implementation "io.reactivex.rxjava2:rxandroid:2.0.2"
 }
