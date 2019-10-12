@@ -40,7 +40,7 @@
             android:paddingStart="20dp"
             android:paddingEnd="20dp"
             app:behavior_hideable="true"
-            app:behavior_peekHeight="200dp"
+            app:behavior_peekHeight="349dp"
             app:layout_behavior="@string/bottom_sheet_behavior">
 
         <View

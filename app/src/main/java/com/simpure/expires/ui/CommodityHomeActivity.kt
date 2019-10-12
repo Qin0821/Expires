@@ -11,11 +11,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.zxing.util.Constant.REQ_QR_CODE
 import com.google.zxing.activity.CaptureActivity
 import android.content.Intent
+import android.text.Layout
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.blankj.utilcode.constant.PermissionConstants
 import com.blankj.utilcode.util.*
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -31,7 +28,17 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.dialog_commodity.*
 import android.util.Log
+import android.view.ViewGroup
+import androidx.lifecycle.*
+import com.google.zxing.util.BarcodeGenerator
+import com.simpure.expires.BR
 import com.simpure.expires.R
+import com.simpure.expires.data.entity.CommodityEntity
+import com.simpure.expires.databinding.DialogCommodityBinding
+import com.simpure.expires.ui.commodity.InventoryAdapter
+import com.simpure.expires.viewmodel.CommodityDetailViewModel
+import kotlinx.android.synthetic.main.activity_home.*
+import kotlin.concurrent.thread
 
 
 class CommodityHomeActivity : BaseActivity() {
@@ -50,8 +57,26 @@ class CommodityHomeActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_home)
+
+        initPlaceNameList()
+
+        initCommodityList(savedInstanceState)
+
+    }
+
+    override fun onPostCreate(savedInstanceState: Bundle?) {
+        super.onPostCreate(savedInstanceState)
+
+        initBottomSheet()
+    }
+
+    private fun initBottomSheet() {
         if (!::bottomSheetBehavior.isInitialized) {
-            bottomSheetBehavior = BottomSheetBehavior.from(bottomSheetLayout)
+            viewShadow.setOnClickListener {
+                bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+                viewShadow.visibility = View.GONE
+            }
+            bottomSheetBehavior = BottomSheetBehavior.from(itemCommodity)
             bottomSheetBehavior.setBottomSheetCallback(object :
                 BottomSheetBehavior.BottomSheetCallback() {
                 override fun onSlide(bottomSheet: View, slideOffset: Float) {
@@ -60,46 +85,71 @@ class CommodityHomeActivity : BaseActivity() {
 
                 override fun onStateChanged(bottomSheet: View, newState: Int) {
                     if (newState == BottomSheetBehavior.STATE_EXPANDED) {
-//                            bottomSheetHeading.setText(getString(R.string.text_collapse_me))
+                        //                            bottomSheetHeading.setText(getString(R.string.text_collapse_me))
                     } else {
-//                            bottomSheetHeading.setText(getString(R.string.text_expand_me))
+                        //                            bottomSheetHeading.setText(getString(R.string.text_expand_me))
                     }
                     // Check Logs to see how bottom sheets behaves
                     when (newState) {
-                        BottomSheetBehavior.STATE_COLLAPSED -> Log.e(
-                            "Bottom Sheet Behaviour",
-                            "STATE_COLLAPSED"
-                        )
-                        BottomSheetBehavior.STATE_DRAGGING -> Log.e(
-                            "Bottom Sheet Behaviour",
-                            "STATE_DRAGGING"
-                        )
-                        BottomSheetBehavior.STATE_HALF_EXPANDED -> Log.e(
-                            "Bottom Sheet Behaviour",
-                            "STATE_HALF_EXPANDED"
-                        )
-                        BottomSheetBehavior.STATE_EXPANDED -> Log.e(
-                            "Bottom Sheet Behaviour",
-                            "STATE_EXPANDED"
-                        )
-                        BottomSheetBehavior.STATE_HIDDEN -> Log.e(
-                            "Bottom Sheet Behaviour",
-                            "STATE_HIDDEN"
-                        )
-                        BottomSheetBehavior.STATE_SETTLING -> Log.e(
-                            "Bottom Sheet Behaviour",
-                            "STATE_SETTLING"
-                        )
+                        BottomSheetBehavior.STATE_COLLAPSED -> {
+                            Log.e(
+                                "Bottom Sheet Behaviour",
+                                "STATE_COLLAPSED"
+                            )
+                            viewShadow.visibility = View.VISIBLE
+
+                        }
+                        BottomSheetBehavior.STATE_DRAGGING -> {
+                            Log.e(
+                                "Bottom Sheet Behaviour",
+                                "STATE_DRAGGING"
+                            )
+                            viewShadow.visibility = View.VISIBLE
+                        }
+                        BottomSheetBehavior.STATE_HALF_EXPANDED -> {
+                            Log.e(
+                                "Bottom Sheet Behaviour",
+                                "STATE_HALF_EXPANDED"
+                            )
+                            viewShadow.visibility = View.VISIBLE
+                        }
+                        BottomSheetBehavior.STATE_EXPANDED -> {
+                            Log.e(
+                                "Bottom Sheet Behaviour",
+                                "STATE_EXPANDED"
+                            )
+                            viewShadow.visibility = View.VISIBLE
+                        }
+                        BottomSheetBehavior.STATE_HIDDEN -> {
+                            Log.e(
+                                "Bottom Sheet Behaviour",
+                                "STATE_HIDDEN"
+                            )
+                            viewShadow.visibility = View.GONE
+                        }
+                        BottomSheetBehavior.STATE_SETTLING -> {
+                            Log.e(
+                                "Bottom Sheet Behaviour",
+                                "STATE_SETTLING"
+                            )
+                            viewShadow.visibility = View.VISIBLE
+                        }
                     }
                 }
 
             })
             bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
         }
+        viewModel = ViewModelProvider(this).get(CommodityDetailViewModel::class.java)
 
-        initPlaceNameList()
+        viewModel.commodityDetail.observe(this, Observer {
+            if (null == it) return@Observer
 
-        initCommodityList(savedInstanceState)
+            mBinding.setVariable(BR.commodityDetail, it)
+
+            showInventories(it)
+            showBarcode(it)
+        })
 
     }
 
@@ -133,18 +183,60 @@ class CommodityHomeActivity : BaseActivity() {
             val fragment = PlaceFragment()
 
             supportFragmentManager.beginTransaction()
-                .add(com.simpure.expires.R.id.fcCommodity, fragment, fragment.TAG).commit()
+                .add(R.id.fcCommodity, fragment, fragment.TAG).commit()
         }
     }
 
-    private lateinit var bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>
+    private fun showInventories(it: CommodityEntity) {
+        if (!it.inventories.isNullOrEmpty()) {
+            with(mBinding.itemCommodity.itemInventories.rvInventories) {
+                if (null == layoutManager)
+                    layoutManager = LinearLayoutManager(this@CommodityHomeActivity)
+                if (null == adapter)
+                    adapter = InventoryAdapter()
+
+                (adapter as InventoryAdapter).setInventoryList(it.inventories)
+            }
+        }
+    }
+
+    private fun showBarcode(it: CommodityEntity) {
+        if (it.barcode.isNotEmpty()) {
+            thread {
+                with(mBinding.itemCommodity.itemBarcode.ivBarcode) {
+                    val barcodeBitmap =
+                        BarcodeGenerator.getBarcodeImage(it.barcode, this.width, this.height)
+                    runOnUiThread {
+                        // 上面的width和height会莫名其妙变成0导致这里报错
+                        // 先不处理
+                        // 如果app在其他地方必须用到sd卡读取权限
+                        // 这里做sd卡的缓存
+                        // 如果没有必要的sd卡权限，这里做成存数据库
+                        // http://ddrv.cn/a/119750
+//                        if (null == barcodeBitmap) {
+//                            parent!!.context.toast("条形码解析失败")
+//                        }
+                        this.setImageBitmap(barcodeBitmap)
+                    }
+                }
+            }
+
+        }
+    }
+
+    private lateinit var bottomSheetBehavior: BottomSheetBehavior<View>
+    private lateinit var viewModel: CommodityDetailViewModel
 
     /** Shows the product detail fragment  */
     fun showCommodityDetail(commodityId: Int, sheetVersion: Boolean = true) {
 
         if (sheetVersion) {
-
-            bottomSheetBehavior.state = BottomSheetBehavior.STATE_HALF_EXPANDED
+            viewModel.setCommodityId(commodityId)
+            bottomSheetBehavior.state = when (bottomSheetBehavior.state) {
+                BottomSheetBehavior.STATE_HIDDEN -> BottomSheetBehavior.STATE_COLLAPSED
+                BottomSheetBehavior.STATE_COLLAPSED or BottomSheetBehavior.STATE_EXPANDED -> BottomSheetBehavior.STATE_HIDDEN
+                else -> BottomSheetBehavior.STATE_COLLAPSED
+            }
         } else {
             val adapter = CommodityAdapter(this, commodityId)
 

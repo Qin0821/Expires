@@ -13,6 +13,7 @@
     <color name="text_commodity_desc">#999999</color>
     <color name="text_expires_days">#222222</color>
     <color name="transparency">#00000000</color>
+    <color name="transparency_50">#80000000</color>
 
     <color name="commodity_label_red">#F54949</color>
     <color name="line2">#FF4D4D</color>

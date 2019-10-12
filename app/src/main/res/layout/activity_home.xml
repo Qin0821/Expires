@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:bind="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -13,6 +14,9 @@
                 name="commodityHomeActivity"
                 type="com.simpure.expires.ui.CommodityHomeActivity" />
 
+        <variable
+                name="commodityDetail"
+                type="com.simpure.expires.data.entity.CommodityEntity" />
         <!--        <variable-->
         <!--                name="userViewModel"-->
         <!--                type="com.simpure.expires.viewmodel.UserViewModel" />-->
@@ -101,6 +105,7 @@
                     android:id="@+id/llBottomNavigation"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
+                    android:baselineAligned="false"
                     android:orientation="horizontal"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
@@ -152,15 +157,28 @@
 
             </LinearLayout>
 
+            <View
+                    android:id="@+id/viewShadow"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/transparency_50"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <!-- Bottom sheet content -->
         <include
+                android:id="@+id/itemCommodity"
                 layout="@layout/dialog_commodity"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                bind:commodityDetail="@{commodityDetail}" />
+
+        <!-- Bottom sheet content -->
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </layout>
