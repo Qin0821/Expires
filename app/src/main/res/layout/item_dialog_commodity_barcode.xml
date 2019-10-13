@@ -10,9 +10,11 @@
         <variable
                 name="expirationDate"
                 type="String" />
+
         <variable
                 name="productionDate"
                 type="String" />
+
         <variable
                 name="amount"
                 type="String" />
@@ -52,12 +54,13 @@
                 android:src="@color/commodity_label_blue" />
 
         <TextView
+                android:id="@+id/tvBarcode"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
                 android:text="Thank for your use"
-                android:visibility="gone"
-                android:textColor="@color/bg_comm_action" />
+                android:textColor="@color/bg_comm_action"
+                android:textSize="17sp" />
 
     </LinearLayout>
 </layout>

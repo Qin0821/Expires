@@ -15,14 +15,6 @@
         <import type="com.simpure.expires.ui.CommodityClickCallback" />
 
         <variable
-                name="isLoading"
-                type="boolean" />
-
-        <variable
-                name="inSearch"
-                type="boolean" />
-
-        <variable
                 name="commodityDetail"
                 type="CommodityEntity" />
 
@@ -42,164 +34,70 @@
             app:behavior_peekHeight="324dp"
             app:layout_behavior="@string/bottom_sheet_behavior">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/bottomSheetLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:paddingStart="20dp"
-                android:paddingEnd="20dp">
-
-            <View
-                    android:id="@+id/drag1"
-                    android:layout_width="40dp"
-                    android:layout_height="3dp"
-                    android:layout_marginTop="10dp"
-                    android:background="#E0E0E0"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-            <View
-                    android:layout_width="40dp"
-                    android:layout_height="3dp"
-                    android:layout_marginTop="2dp"
-                    android:background="#E0E0E0"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/drag1" />
-
-            <View
-                    android:id="@+id/commodityLabel"
-                    android:layout_width="7dp"
-                    android:layout_height="70dp"
-                    android:layout_marginTop="43dp"
-                    android:background="@{commodityDetail.type() == CommodityType.EXPIRED ? @drawable/bg_rounded_rectangle_red : commodityDetail.type() == CommodityType.ALMOST ? @drawable/bg_rounded_rectangle_yellow : @drawable/bg_rounded_rectangle_blue}"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-
-            <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="82dp"
-                    android:orientation="vertical"
-                    app:layout_constraintBottom_toBottomOf="@id/commodityLabel"
-                    app:layout_constraintStart_toEndOf="@id/commodityLabel">
-
-                <TextView
-                        android:id="@+id/tvExpireNum"
-                        android:layout_width="wrap_content"
-                        android:layout_height="51dp"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginBottom="2dp"
-                        android:includeFontPadding="false"
-                        android:text="@{commodityDetail.calc()}"
-                        android:textColor="@color/text_expires_days"
-                        android:textSize="50sp"
-                        app:layout_constraintBottom_toTopOf="@id/tvExpireUnit"
-                        app:layout_constraintStart_toEndOf="@id/commodityLabel"
-                        app:layout_constraintTop_toTopOf="@id/commodityLabel" />
-
-                <TextView
-                        android:id="@+id/tvExpireUnit"
-                        android:layout_width="wrap_content"
-                        android:layout_height="29dp"
-                        android:layout_marginStart="10dp"
-                        android:text="days left"
-                        android:textColor="@color/text_expires_days"
-                        android:textSize="20sp"
-                        app:layout_constraintBottom_toBottomOf="@id/commodityLabel"
-                        app:layout_constraintStart_toEndOf="@id/commodityLabel"
-                        app:layout_constraintTop_toBottomOf="@id/tvExpireNum" />
-            </LinearLayout>
-
-            <TextView
-                    android:id="@+id/tvCommodityName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="28dp"
-                    android:layout_marginTop="30dp"
-                    android:includeFontPadding="false"
-                    android:text="@{commodityDetail.name}"
-                    android:textColor="@color/text_expires_days"
-                    android:textSize="24sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/commodityLabel" />
-
-            <LinearLayout
-                    android:layout_width="37dp"
-                    android:layout_height="20dp"
-                    android:background="@drawable/bg_rounded_rectangle_gray"
-                    android:gravity="center"
-                    android:orientation="horizontal"
-                    app:layout_constraintBottom_toBottomOf="@id/tvCommodityName"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/tvCommodityName">
-
-                <TextView
-                        android:id="@+id/tvX"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="2dp"
-                        android:includeFontPadding="false"
-                        android:text="&#10005;"
-                        android:textColor="@color/white"
-                        android:textSize="11sp" />
-
-                <TextView
-                        android:id="@+id/tvCommodityNum"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:includeFontPadding="false"
-                        android:text="@{String.valueOf(commodityDetail.amount)}"
-                        android:textColor="@color/white"
-                        android:textSize="17sp" />
-            </LinearLayout>
-
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <LinearLayout
-                android:id="@+id/llCommDetail"
+        <com.simpure.expires.view.scrollview.ExpiresScrollView
+                android:id="@+id/svCommodity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_above="@id/itemNavigation"
-                android:layout_below="@id/bottomSheetLayout"
-                android:orientation="vertical"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp">
+                android:layout_alignParentTop="true">
 
-            <include
-                    android:id="@+id/itemConsuming"
-                    layout="@layout/item_dialog_commodity_consuming"
-                    bind:commodityDetail="@{commodityDetail}" />
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
-            <include
-                    layout="@layout/item_dialog_commodity_line"
-                    bind:commodityDetail="@{commodityDetail}" />
+                <include
+                        android:id="@+id/itemCommodityHead"
+                        layout="@layout/item_commodity_head"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        bind:commodityDetail="@{commodityDetail}" />
 
-            <include
-                    android:id="@+id/itemInventories"
-                    layout="@layout/item_dialog_commodity_inventories"
-                    bind:commodityDetail="@{commodityDetail}" />
+                <LinearLayout
+                        android:id="@+id/llCommDetail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="20dp">
 
-            <include
-                    layout="@layout/item_dialog_commodity_line"
-                    bind:commodityDetail="@{commodityDetail}" />
+                    <include
+                            android:id="@+id/itemConsuming"
+                            layout="@layout/item_dialog_commodity_consuming"
+                            bind:commodityDetail="@{commodityDetail}" />
 
-            <include
-                    layout="@layout/item_dialog_commodity_details"
-                    bind:commodityDetail="@{commodityDetail}" />
+                    <include
+                            layout="@layout/item_dialog_commodity_line"
+                            bind:commodityDetail="@{commodityDetail}" />
 
-            <include
-                    layout="@layout/item_dialog_commodity_line"
-                    bind:commodityDetail="@{commodityDetail}" />
+                    <include
+                            android:id="@+id/itemInventories"
+                            layout="@layout/item_dialog_commodity_inventories"
+                            bind:commodityDetail="@{commodityDetail}" />
 
-            <include
-                    android:id="@+id/itemBarcode"
-                    layout="@layout/item_dialog_commodity_barcode"
-                    bind:commodityDetail="@{commodityDetail}" />
+                    <include
+                            layout="@layout/item_dialog_commodity_line"
+                            bind:commodityDetail="@{commodityDetail}" />
 
-        </LinearLayout>
+                    <include
+                            layout="@layout/item_dialog_commodity_details"
+                            bind:commodityDetail="@{commodityDetail}" />
+
+                    <include
+                            layout="@layout/item_dialog_commodity_line"
+                            bind:commodityDetail="@{commodityDetail}" />
+
+                    <include
+                            android:id="@+id/itemBarcode"
+                            layout="@layout/item_dialog_commodity_barcode"
+                            bind:commodityDetail="@{commodityDetail}" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </com.simpure.expires.view.scrollview.ExpiresScrollView>
+
 
         <include
                 android:id="@+id/itemNavigation"

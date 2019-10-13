@@ -61,10 +61,19 @@ class CommodityAdapter(
     ) {
         if (!it.inventories.isNullOrEmpty()) {
             with(binding.itemInventories.rvInventories) {
-                if (null == layoutManager)
-                    layoutManager = LinearLayoutManager(parent!!.context)
-                if (null == adapter)
+                if (null == layoutManager) {
+                    layoutManager = object : LinearLayoutManager(
+                        parent!!.context,
+                        VERTICAL, false
+                    ) {
+                        override fun canScrollVertically(): Boolean = false
+                    }
+                    this.layoutManager = layoutManager
+                }
+                if (null == adapter) {
+                    this.isNestedScrollingEnabled = false
                     adapter = InventoryAdapter()
+                }
 
                 (adapter as InventoryAdapter).setInventoryList(it.inventories)
             }

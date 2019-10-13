@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="com.simpure.expires.data.CommodityType" />
+
+        <variable
+                name="commodityDetail"
+                type="com.simpure.expires.data.entity.CommodityEntity" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/bottomSheetLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp">
+
+        <View
+                android:id="@+id/drag1"
+                android:layout_width="40dp"
+                android:layout_height="3dp"
+                android:layout_marginTop="10dp"
+                android:background="#E0E0E0"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+                android:layout_width="40dp"
+                android:layout_height="3dp"
+                android:layout_marginTop="2dp"
+                android:background="#E0E0E0"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/drag1" />
+
+        <View
+                android:id="@+id/commodityLabel"
+                android:layout_width="7dp"
+                android:layout_height="70dp"
+                android:layout_marginTop="43dp"
+                android:background="@{commodityDetail.type() == CommodityType.EXPIRED ? @drawable/bg_rounded_rectangle_red : commodityDetail.type() == CommodityType.ALMOST ? @drawable/bg_rounded_rectangle_yellow : @drawable/bg_rounded_rectangle_blue}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="82dp"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="@id/commodityLabel"
+                app:layout_constraintStart_toEndOf="@id/commodityLabel">
+
+            <TextView
+                    android:id="@+id/tvExpireNum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="51dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginBottom="2dp"
+                    android:includeFontPadding="false"
+                    android:text="@{commodityDetail.calc()}"
+                    android:textColor="@color/text_expires_days"
+                    android:textSize="50sp"
+                    app:layout_constraintBottom_toTopOf="@id/tvExpireUnit"
+                    app:layout_constraintStart_toEndOf="@id/commodityLabel"
+                    app:layout_constraintTop_toTopOf="@id/commodityLabel" />
+
+            <TextView
+                    android:id="@+id/tvExpireUnit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="29dp"
+                    android:layout_marginStart="10dp"
+                    android:text="days left"
+                    android:textColor="@color/text_expires_days"
+                    android:textSize="20sp"
+                    app:layout_constraintBottom_toBottomOf="@id/commodityLabel"
+                    app:layout_constraintStart_toEndOf="@id/commodityLabel"
+                    app:layout_constraintTop_toBottomOf="@id/tvExpireNum" />
+        </LinearLayout>
+
+        <TextView
+                android:id="@+id/tvCommodityName"
+                android:layout_width="wrap_content"
+                android:layout_height="28dp"
+                android:layout_marginTop="30dp"
+                android:includeFontPadding="false"
+                android:text="@{commodityDetail.name}"
+                android:textColor="@color/text_expires_days"
+                android:textSize="24sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/commodityLabel" />
+
+        <LinearLayout
+                android:layout_width="37dp"
+                android:layout_height="20dp"
+                android:background="@drawable/bg_rounded_rectangle_gray"
+                android:gravity="center"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="@id/tvCommodityName"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tvCommodityName">
+
+            <TextView
+                    android:id="@+id/tvX"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="2dp"
+                    android:includeFontPadding="false"
+                    android:text="&#10005;"
+                    android:textColor="@color/white"
+                    android:textSize="11sp" />
+
+            <TextView
+                    android:id="@+id/tvCommodityNum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:text="@{String.valueOf(commodityDetail.amount)}"
+                    android:textColor="@color/white"
+                    android:textSize="17sp" />
+        </LinearLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

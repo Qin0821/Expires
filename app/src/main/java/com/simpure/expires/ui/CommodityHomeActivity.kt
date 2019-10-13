@@ -26,6 +26,7 @@ import com.simpure.expires.viewmodel.UserViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import android.util.Log
+import android.view.KeyEvent
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import androidx.lifecycle.*
@@ -34,8 +35,11 @@ import com.simpure.expires.BR
 import com.simpure.expires.R
 import com.simpure.expires.data.entity.CommodityEntity
 import com.simpure.expires.ui.commodity.InventoryAdapter
+import com.simpure.expires.view.scrollview.ExpiresScrollView
+import com.simpure.expires.view.scrollview.ScrollViewListener
 import com.simpure.expires.viewmodel.CommodityDetailViewModel
 import kotlinx.android.synthetic.main.activity_home.*
+import kotlinx.android.synthetic.main.dialog_commodity.*
 import kotlinx.android.synthetic.main.dialog_commodity.view.*
 import kotlinx.android.synthetic.main.item_dialog_commodity_consuming.view.*
 import kotlin.concurrent.thread
@@ -100,6 +104,9 @@ class CommodityHomeActivity : BaseActivity() {
     var lastX = 0f
     var lastY = 0f
 
+    private var isScrollToStart = true
+    private var justExpanded = false
+
     private fun initBottomSheet() {
         if (!::bottomSheetBehavior.isInitialized) {
             viewShadow.setOnClickListener {
@@ -144,6 +151,19 @@ class CommodityHomeActivity : BaseActivity() {
 
                             viewShadow.visibility = View.VISIBLE
 
+                            // 在全屏状态，scrollview顶部不可见时，屏蔽sheet滑动事件
+                            Log.e(javaClass.simpleName, "justExpanded: $justExpanded")
+                            if (justExpanded) {
+                                if (isScrollToStart) {
+                                    Log.e(javaClass.simpleName, "isScrollToStart: $isScrollToStart")
+                                    // 可以滑
+//                                    bottomSheetBehavior.isHideable = true
+                                    bottomSheetBehavior.state = BottomSheetBehavior.STATE_DRAGGING
+                                } else {
+                                    // bu
+                                    bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+                                }
+                            }
                         }
                         BottomSheetBehavior.STATE_HALF_EXPANDED -> {
                             Log.e(
@@ -158,7 +178,6 @@ class CommodityHomeActivity : BaseActivity() {
                             )
                             viewShadow.visibility = View.VISIBLE
 
-                            viewShadow.visibility = View.VISIBLE
 //                            val lp = LinearLayout.LayoutParams(
 //                                LinearLayout.LayoutParams.MATCH_PARENT,
 //                                0,
@@ -166,7 +185,7 @@ class CommodityHomeActivity : BaseActivity() {
 //                            )
 //                            itemCommodity.llCommDetail.layoutParams = lp
 
-
+                            justExpanded = true
                         }
                         BottomSheetBehavior.STATE_HIDDEN -> {
                             Log.e(
@@ -189,6 +208,25 @@ class CommodityHomeActivity : BaseActivity() {
             })
             bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
 
+            svCommodity.setScrollViewListener(object : ScrollViewListener {
+                override fun onScrollChanged(
+                    scrollView: ExpiresScrollView,
+                    x: Int,
+                    y: Int,
+                    oldX: Int,
+                    oldY: Int
+                ) {
+                    isScrollToStart =
+                        if (svCommodity.scrollY == 0) {
+//                            bottomSheetBehavior.isHideable = true
+//                            bottomSheetBehavior.state
+//                            bottomSheetBehavior.state = BottomSheetBehavior.STATE_DRAGGING
+                            true
+                        } else {
+                            false
+                        }
+                }
+            })
             /*itemCommodity.setOnTouchListener { v, event ->
                 when (event.action) {
                     MotionEvent.ACTION_DOWN -> {
@@ -330,10 +368,19 @@ class CommodityHomeActivity : BaseActivity() {
     private fun showInventories(it: CommodityEntity) {
         if (!it.inventories.isNullOrEmpty()) {
             with(mBinding.itemCommodity.itemInventories.rvInventories) {
-                if (null == layoutManager)
-                    layoutManager = LinearLayoutManager(this@CommodityHomeActivity)
-                if (null == adapter)
+                if (null == layoutManager) {
+                    layoutManager = object : LinearLayoutManager(
+                        this@CommodityHomeActivity,
+                        VERTICAL, false
+                    ) {
+                        override fun canScrollVertically(): Boolean = false
+                    }
+                    this.layoutManager = layoutManager
+                }
+                if (null == adapter) {
+                    this.isNestedScrollingEnabled = false
                     adapter = InventoryAdapter()
+                }
 
                 (adapter as InventoryAdapter).setInventoryList(it.inventories)
             }
@@ -473,7 +520,7 @@ class CommodityHomeActivity : BaseActivity() {
 
     }
 
-    val signInApiService by lazy {
+    private val signInApiService by lazy {
         SignInApiService.create()
     }
     var disposable: Disposable? = null
@@ -492,6 +539,17 @@ class CommodityHomeActivity : BaseActivity() {
                     }
                 )
 
+    }
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (bottomSheetBehavior.state != BottomSheetBehavior.STATE_HIDDEN) {
+                bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+            }
+            return false
+        } else {
+            return super.onKeyDown(keyCode, event)
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
