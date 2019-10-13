@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="57dp"
+        android:orientation="vertical">
+
+    <View
+            android:id="@+id/line"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/line" />
+
+    <LinearLayout
+            android:id="@+id/llBottomNavigation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:baselineAligned="false"
+            android:orientation="horizontal">
+
+        <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center">
+
+            <Button
+                    android:id="@+id/btInventories"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:background="@mipmap/inventories"
+                    android:gravity="center"
+                    android:onClick="goInventories" />
+        </RelativeLayout>
+
+        <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center">
+
+            <Button
+                    android:id="@+id/btConsuming"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:background="@mipmap/consuming"
+                    android:gravity="center"
+                    android:onClick="goConsuming" />
+        </RelativeLayout>
+
+        <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center">
+
+            <Button
+                    android:id="@+id/btEdit"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:background="@mipmap/edit"
+                    android:gravity="center" />
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

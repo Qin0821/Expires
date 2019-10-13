@@ -1,5 +1,6 @@
 package com.simpure.expires.ui
 
+import android.animation.ValueAnimator
 import android.os.Bundle
 import android.view.View
 import androidx.databinding.DataBindingUtil
@@ -11,12 +12,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.zxing.util.Constant.REQ_QR_CODE
 import com.google.zxing.activity.CaptureActivity
 import android.content.Intent
-import android.text.Layout
-import androidx.constraintlayout.widget.ConstraintLayout
+import android.graphics.Rect
 import com.blankj.utilcode.constant.PermissionConstants
 import com.blankj.utilcode.util.*
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.zxing.util.Constant
 import com.orhanobut.dialogplus.DialogPlus
 import com.simpure.expires.api.SignInApiService
 import com.simpure.expires.data.entity.UserEntity
@@ -26,18 +25,19 @@ import com.simpure.expires.utilities.toast
 import com.simpure.expires.viewmodel.UserViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
-import kotlinx.android.synthetic.main.dialog_commodity.*
 import android.util.Log
-import android.view.ViewGroup
+import android.widget.LinearLayout
+import android.widget.RelativeLayout
 import androidx.lifecycle.*
 import com.google.zxing.util.BarcodeGenerator
 import com.simpure.expires.BR
 import com.simpure.expires.R
 import com.simpure.expires.data.entity.CommodityEntity
-import com.simpure.expires.databinding.DialogCommodityBinding
 import com.simpure.expires.ui.commodity.InventoryAdapter
 import com.simpure.expires.viewmodel.CommodityDetailViewModel
 import kotlinx.android.synthetic.main.activity_home.*
+import kotlinx.android.synthetic.main.dialog_commodity.view.*
+import kotlinx.android.synthetic.main.item_dialog_commodity_consuming.view.*
 import kotlin.concurrent.thread
 
 
@@ -70,6 +70,36 @@ class CommodityHomeActivity : BaseActivity() {
         initBottomSheet()
     }
 
+
+    private fun executeAnimation(height: Int, llt: LinearLayout) {
+        if (height < 0) return
+        var p: Int = 0
+        var s: Int = 0
+        if (llt.height != 0) {
+            p = height
+            s = 0
+        } else {
+            s = height
+            p = 0
+        }
+
+        val lp = llt.layoutParams as LinearLayout.LayoutParams
+        val animator = ValueAnimator.ofInt(p, s)
+
+        // 此方法会随用户的点击而调用, 所以不要用内部类的形式创建, 我这里只是节省代码量, 增加阅读性(捂脸)
+        animator.addUpdateListener { animation ->
+            val animatedValue: Int = animation.animatedValue as Int
+            lp.height = animatedValue
+            llt.layoutParams = lp
+        }
+
+        animator.duration = 500
+        animator.start()
+    }
+
+    var lastX = 0f
+    var lastY = 0f
+
     private fun initBottomSheet() {
         if (!::bottomSheetBehavior.isInitialized) {
             viewShadow.setOnClickListener {
@@ -80,15 +110,10 @@ class CommodityHomeActivity : BaseActivity() {
             bottomSheetBehavior.setBottomSheetCallback(object :
                 BottomSheetBehavior.BottomSheetCallback() {
                 override fun onSlide(bottomSheet: View, slideOffset: Float) {
-
+                    setCommodityHeight(slideOffset)
                 }
 
                 override fun onStateChanged(bottomSheet: View, newState: Int) {
-                    if (newState == BottomSheetBehavior.STATE_EXPANDED) {
-                        //                            bottomSheetHeading.setText(getString(R.string.text_collapse_me))
-                    } else {
-                        //                            bottomSheetHeading.setText(getString(R.string.text_expand_me))
-                    }
                     // Check Logs to see how bottom sheets behaves
                     when (newState) {
                         BottomSheetBehavior.STATE_COLLAPSED -> {
@@ -98,20 +123,33 @@ class CommodityHomeActivity : BaseActivity() {
                             )
                             viewShadow.visibility = View.VISIBLE
 
+                            if (collapsedHeight == 0) {
+                                val rect = Rect()
+                                itemCommodity.getLocalVisibleRect(rect)
+                                collapsedHeight = rect.bottom
+                            }
+                            setCommodityHeight(0f)
+
+                            itemCommodity.itemConsuming.layoutConsume.visibility = View.GONE
                         }
                         BottomSheetBehavior.STATE_DRAGGING -> {
                             Log.e(
                                 "Bottom Sheet Behaviour",
                                 "STATE_DRAGGING"
                             )
+
+                            itemCommodity.itemConsuming.layoutConsume.visibility = View.VISIBLE
+
+//                                val lp = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0, 1.0f)
+
                             viewShadow.visibility = View.VISIBLE
+
                         }
                         BottomSheetBehavior.STATE_HALF_EXPANDED -> {
                             Log.e(
                                 "Bottom Sheet Behaviour",
                                 "STATE_HALF_EXPANDED"
                             )
-                            viewShadow.visibility = View.VISIBLE
                         }
                         BottomSheetBehavior.STATE_EXPANDED -> {
                             Log.e(
@@ -119,6 +157,16 @@ class CommodityHomeActivity : BaseActivity() {
                                 "STATE_EXPANDED"
                             )
                             viewShadow.visibility = View.VISIBLE
+
+                            viewShadow.visibility = View.VISIBLE
+//                            val lp = LinearLayout.LayoutParams(
+//                                LinearLayout.LayoutParams.MATCH_PARENT,
+//                                0,
+//                                1.0f
+//                            )
+//                            itemCommodity.llCommDetail.layoutParams = lp
+
+
                         }
                         BottomSheetBehavior.STATE_HIDDEN -> {
                             Log.e(
@@ -132,6 +180,7 @@ class CommodityHomeActivity : BaseActivity() {
                                 "Bottom Sheet Behaviour",
                                 "STATE_SETTLING"
                             )
+//                            itemCommodity.itemConsuming.vsConsumingTitle.visibility = View.GONE
                             viewShadow.visibility = View.VISIBLE
                         }
                     }
@@ -139,6 +188,59 @@ class CommodityHomeActivity : BaseActivity() {
 
             })
             bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+
+            /*itemCommodity.setOnTouchListener { v, event ->
+                when (event.action) {
+                    MotionEvent.ACTION_DOWN -> {
+                        lastX = event.x
+                        lastY = event.y
+                    }
+                    MotionEvent.ACTION_MOVE -> {
+
+                        val yDistance = event.y - lastY
+
+                        Log.e(javaClass.simpleName, itemCommodity.height.toString())
+
+//                        val dx = event.rawX - lastX
+//                        val dy = event.rawY - lastY
+//
+//                        val left = (v.left + dx).toInt()
+//                        val top = (v.top + dy).toInt()
+//                        val right = (v.right + dx).toInt()
+//                        val bottom = (v.bottom + dy).toInt()
+//
+//                        v.layout(left, top, right, bottom)
+//                        lastX = event.rawX
+//                        lastY = event.rawY
+
+//                        val localRect = Rect()
+//                        v.getLocalVisibleRect(localRect)
+//
+//                        val h = localRect.bottom - ConvertUtils.dp2px(224f)
+                        setCommodityHeight(yDistance)
+
+                        *//*val imgRect = Rect();
+                        val focusItemParams = LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.MATCH_PARENT,
+                            LinearLayout.LayoutParams.WRAP_CONTENT
+                        );
+                        selected.getGlobalVisibleRect(imgRect);
+
+                        focusItemParams.leftMargin = imgRect.left;
+                        focusItemParams.topMargin = imgRect.top;
+                        focusItemParams.width = imgRect.width();
+                        focusItemParams.height = imgRect.height();
+                        selected.getLocationInWindow(viewPosition);
+                        focusView.setLayoutParams(focusItemParams);//focusView为你需要设置位置的VIEW*//*
+                    }
+                    MotionEvent.ACTION_UP -> {
+                    }
+                    else -> {
+
+                    }
+                }
+                return@setOnTouchListener true
+            }*/
         }
         viewModel = ViewModelProvider(this).get(CommodityDetailViewModel::class.java)
 
@@ -151,6 +253,44 @@ class CommodityHomeActivity : BaseActivity() {
             showBarcode(it)
         })
 
+    }
+
+    var collapsedHeight = 0
+
+    private fun setCommodityHeight(slideOffset: Float) {
+        if (bottomSheetBehavior.state == BottomSheetBehavior.STATE_EXPANDED) return
+
+        val extensibleHeight = itemCommodity.height - collapsedHeight
+
+        /*val minHeight = ConvertUtils.dp2px(100f)
+        val height =
+            if (slideOffset > 0) {
+                (slideOffset * extensibleHeight).toInt() + minHeight
+            } else minHeight
+        val lp = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            height
+        )
+        itemCommodity.llCommDetail.layoutParams = lp*/
+
+
+        val marginBottomHeight = if (slideOffset > 0) {
+            ((1 - slideOffset) * extensibleHeight).toInt()
+        } else extensibleHeight
+        val lp = RelativeLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT
+        )
+        lp.setMargins(0, 0, 0, marginBottomHeight + 40)
+        lp.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM)
+        itemCommodity.itemNavigation.layoutParams = lp
+
+        Log.e(javaClass.simpleName, "h: $marginBottomHeight")
+//        Log.e(javaClass.simpleName, "itemCommodity.height: ${itemCommodity.height}")
+        val rect = Rect()
+        itemCommodity.getLocalVisibleRect(rect)
+        Log.e(javaClass.simpleName, "rect: $rect")
+        Log.e(javaClass.simpleName, "slideOffset: $slideOffset")
     }
 
     override fun onStart() {
@@ -233,7 +373,9 @@ class CommodityHomeActivity : BaseActivity() {
         if (sheetVersion) {
             viewModel.setCommodityId(commodityId)
             bottomSheetBehavior.state = when (bottomSheetBehavior.state) {
-                BottomSheetBehavior.STATE_HIDDEN -> BottomSheetBehavior.STATE_COLLAPSED
+                BottomSheetBehavior.STATE_HIDDEN -> {
+                    BottomSheetBehavior.STATE_COLLAPSED
+                }
                 BottomSheetBehavior.STATE_COLLAPSED or BottomSheetBehavior.STATE_EXPANDED -> BottomSheetBehavior.STATE_HIDDEN
                 else -> BottomSheetBehavior.STATE_COLLAPSED
             }
@@ -357,9 +499,9 @@ class CommodityHomeActivity : BaseActivity() {
 
         // 扫描结果回调
         if (requestCode == REQ_QR_CODE && resultCode == RESULT_OK) {
-            val bundle = data?.extras
-            val scanResult = bundle?.getString(Constant.INTENT_EXTRA_KEY_QR_SCAN)
-            mBinding.btInventories.text = scanResult
+//            val bundle = data?.extras
+//            val scanResult = bundle?.getString(Constant.INTENT_EXTRA_KEY_QR_SCAN)
+//            mBinding.btInventories.text = scanResult
         }
     }
 }
