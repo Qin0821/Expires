@@ -136,4 +136,6 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxandroid:2.0.2"
 
     implementation 'com.android.support:design:28.1.1'
+
+    implementation 'com.lxj:xpopup:1.8.10-x'
 }

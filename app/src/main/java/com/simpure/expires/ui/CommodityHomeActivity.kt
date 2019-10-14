@@ -27,6 +27,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import android.util.Log
 import android.view.KeyEvent
+import android.view.MotionEvent
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import androidx.lifecycle.*
@@ -217,17 +218,10 @@ class CommodityHomeActivity : BaseActivity() {
                     oldY: Int
                 ) {
                     isScrollToStart =
-                        if (svCommodity.scrollY == 0) {
-//                            bottomSheetBehavior.isHideable = true
-//                            bottomSheetBehavior.state
-//                            bottomSheetBehavior.state = BottomSheetBehavior.STATE_DRAGGING
-                            true
-                        } else {
-                            false
-                        }
+                        svCommodity.scrollY == 0
                 }
             })
-            /*itemCommodity.setOnTouchListener { v, event ->
+            itemCommodity.setOnTouchListener { v, event ->
                 when (event.action) {
                     MotionEvent.ACTION_DOWN -> {
                         lastX = event.x
@@ -254,10 +248,10 @@ class CommodityHomeActivity : BaseActivity() {
 //                        val localRect = Rect()
 //                        v.getLocalVisibleRect(localRect)
 //
-//                        val h = localRect.bottom - ConvertUtils.dp2px(224f)
+//                        val h = localRect.bottom - ConvertUtils.dp2px(224f)*/
                         setCommodityHeight(yDistance)
 
-                        *//*val imgRect = Rect();
+                        /*val imgRect = Rect();
                         val focusItemParams = LinearLayout.LayoutParams(
                             LinearLayout.LayoutParams.MATCH_PARENT,
                             LinearLayout.LayoutParams.WRAP_CONTENT
@@ -269,7 +263,7 @@ class CommodityHomeActivity : BaseActivity() {
                         focusItemParams.width = imgRect.width();
                         focusItemParams.height = imgRect.height();
                         selected.getLocationInWindow(viewPosition);
-                        focusView.setLayoutParams(focusItemParams);//focusView为你需要设置位置的VIEW*//*
+                        focusView.setLayoutParams(focusItemParams);//focusView为你需要设置位置的VIEW*/
                     }
                     MotionEvent.ACTION_UP -> {
                     }
@@ -278,7 +272,7 @@ class CommodityHomeActivity : BaseActivity() {
                     }
                 }
                 return@setOnTouchListener true
-            }*/
+            }
         }
         viewModel = ViewModelProvider(this).get(CommodityDetailViewModel::class.java)
 
