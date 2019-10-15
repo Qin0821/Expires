@@ -25,5 +25,6 @@
     <color name="line5">#1570CC</color>
 
     <color name="text_place_select">#222222</color>
+    <color name="bg_drag">#E0E0E0</color>
 
 </resources>

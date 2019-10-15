@@ -28,86 +28,92 @@
             android:id="@+id/layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/bg_half_rounded_rectangle_white_10"
-            android:orientation="vertical"
+            android:paddingTop="40dp"
             app:behavior_hideable="true"
-            app:behavior_peekHeight="324dp"
+            app:behavior_peekHeight="364dp"
             app:layout_behavior="@string/bottom_sheet_behavior">
 
-        <com.simpure.expires.view.scrollview.ExpiresScrollView
-                android:id="@+id/svCommodity"
+        <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_above="@id/itemNavigation"
-                android:layout_alignParentTop="true"
-                android:overScrollMode="never"
-                android:scrollbars="none">
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_half_rounded_rectangle_white_10">
 
-            <LinearLayout
+            <com.simpure.expires.view.scrollview.ExpiresScrollView
+                    android:id="@+id/svCommodity"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                <include
-                        android:id="@+id/itemCommodityHead"
-                        layout="@layout/item_commodity_head"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        bind:commodityDetail="@{commodityDetail}" />
+                    android:layout_above="@id/itemNavigation"
+                    android:layout_alignParentTop="true"
+                    android:overScrollMode="never"
+                    android:scrollbars="none">
 
                 <LinearLayout
-                        android:id="@+id/llCommDetail"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:paddingLeft="20dp"
-                        android:paddingRight="20dp">
+                        android:orientation="vertical">
 
                     <include
-                            android:id="@+id/itemConsuming"
-                            layout="@layout/item_dialog_commodity_consuming"
+                            android:id="@+id/itemCommodityHead"
+                            layout="@layout/item_commodity_head"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
                             bind:commodityDetail="@{commodityDetail}" />
 
-                    <include
-                            layout="@layout/item_dialog_commodity_line"
-                            bind:commodityDetail="@{commodityDetail}" />
+                    <LinearLayout
+                            android:id="@+id/llCommDetail"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:paddingLeft="20dp"
+                            android:paddingRight="20dp">
 
-                    <include
-                            android:id="@+id/itemInventories"
-                            layout="@layout/item_dialog_commodity_inventories"
-                            bind:commodityDetail="@{commodityDetail}" />
+                        <include
+                                android:id="@+id/itemConsuming"
+                                layout="@layout/item_dialog_commodity_consuming"
+                                bind:commodityDetail="@{commodityDetail}" />
 
-                    <include
-                            layout="@layout/item_dialog_commodity_line"
-                            bind:commodityDetail="@{commodityDetail}" />
+                        <include
+                                layout="@layout/item_dialog_commodity_line"
+                                bind:commodityDetail="@{commodityDetail}" />
 
-                    <include
-                            layout="@layout/item_dialog_commodity_details"
-                            bind:commodityDetail="@{commodityDetail}" />
+                        <include
+                                android:id="@+id/itemInventories"
+                                layout="@layout/item_dialog_commodity_inventories"
+                                bind:commodityDetail="@{commodityDetail}" />
 
-                    <include
-                            layout="@layout/item_dialog_commodity_line"
-                            bind:commodityDetail="@{commodityDetail}" />
+                        <include
+                                layout="@layout/item_dialog_commodity_line"
+                                bind:commodityDetail="@{commodityDetail}" />
 
-                    <include
-                            android:id="@+id/itemBarcode"
-                            layout="@layout/item_dialog_commodity_barcode"
-                            bind:commodityDetail="@{commodityDetail}" />
+                        <include
+                                layout="@layout/item_dialog_commodity_details"
+                                bind:commodityDetail="@{commodityDetail}" />
+
+                        <include
+                                layout="@layout/item_dialog_commodity_line"
+                                bind:commodityDetail="@{commodityDetail}" />
+
+                        <include
+                                android:id="@+id/itemBarcode"
+                                layout="@layout/item_dialog_commodity_barcode"
+                                bind:commodityDetail="@{commodityDetail}" />
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
-            </LinearLayout>
-
-        </com.simpure.expires.view.scrollview.ExpiresScrollView>
+            </com.simpure.expires.view.scrollview.ExpiresScrollView>
 
 
-        <include
-                android:id="@+id/itemNavigation"
-                layout="@layout/item_navigation"
-                android:layout_width="match_parent"
-                android:layout_height="57dp"
-                android:layout_alignParentBottom="true"
-                app:layout_constraintBottom_toBottomOf="parent" />
+            <include
+                    android:id="@+id/itemNavigation"
+                    layout="@layout/item_navigation"
+                    android:layout_width="match_parent"
+                    android:layout_height="57dp"
+                    android:layout_alignParentBottom="true"
+                    app:layout_constraintBottom_toBottomOf="parent" />
+        </RelativeLayout>
     </RelativeLayout>
+
 
 </layout>
