@@ -3,6 +3,7 @@ package com.simpure.expires.ui
 import android.content.Intent
 import android.os.Bundle
 import android.os.SystemClock
+import android.view.View
 import androidx.databinding.DataBindingUtil
 import com.blankj.utilcode.constant.PermissionConstants
 import com.blankj.utilcode.util.*
@@ -15,6 +16,10 @@ import com.simpure.expires.utilities.MODEL_EXPIRES
 import com.simpure.expires.utilities.MODEL_SCAN
 
 class SplashActivity : BaseActivity() {
+    override fun onClick(v: View?) {
+
+
+    }
 
     override fun initData() {
         val spInstance = SPUtils.getInstance()
