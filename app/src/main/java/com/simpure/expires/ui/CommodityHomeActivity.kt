@@ -28,6 +28,7 @@ import io.reactivex.disposables.Disposable
 import android.util.Log
 import android.view.KeyEvent
 import android.view.MotionEvent
+import android.view.animation.AnimationUtils
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import androidx.lifecycle.*
@@ -167,7 +168,7 @@ class CommodityHomeActivity : BaseActivity() {
                             }
                             setCommodityHeight(0f)
 
-                            itemCommodity.itemConsuming.layoutConsume.visibility = View.GONE
+//                            itemCommodity.itemConsuming.layoutConsume.visibility = View.GONE
                         }
                         BottomSheetBehavior.STATE_DRAGGING -> {
                             Log.e(
@@ -175,8 +176,7 @@ class CommodityHomeActivity : BaseActivity() {
                                 "STATE_DRAGGING"
                             )
 
-                            itemCommodity.itemConsuming.layoutConsume.visibility = View.VISIBLE
-
+//                            itemCommodity.itemConsuming.layoutConsume.visibility = View.VISIBLE
 //                                val lp = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0, 1.0f)
 
                             viewShadow.visibility = View.VISIBLE
@@ -321,7 +321,17 @@ class CommodityHomeActivity : BaseActivity() {
     private fun setCommodityHeight(slideOffset: Float) {
         if (bottomSheetBehavior.state == BottomSheetBehavior.STATE_EXPANDED) return
 
-        val extensibleHeight = itemCommodity.height - collapsedHeight
+
+        val height = if (slideOffset > 0) {
+            (slideOffset * ConvertUtils.dp2px(44f)).toInt()
+        } else 0
+        val lpC = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            height
+        )
+//        itemCommodity.itemConsuming.layoutConsume.visibility =
+//            if (ConvertUtils.px2dp(height.toFloat()) < 20) View.INVISIBLE else View.VISIBLE
+        itemCommodity.itemConsuming.layoutConsume.layoutParams = lpC
 
         /*val minHeight = ConvertUtils.dp2px(100f)
         val height =
@@ -334,6 +344,7 @@ class CommodityHomeActivity : BaseActivity() {
         )
         itemCommodity.llCommDetail.layoutParams = lp*/
 
+        val extensibleHeight = itemCommodity.height - collapsedHeight
 
         val marginBottomHeight = if (slideOffset > 0) {
             ((1 - slideOffset) * extensibleHeight).toInt()
@@ -346,11 +357,13 @@ class CommodityHomeActivity : BaseActivity() {
         lp.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM)
         itemCommodity.itemNavigation.layoutParams = lp
 
-        Log.e(javaClass.simpleName, "h: $marginBottomHeight")
+//        Log.e(javaClass.simpleName, "h: $marginBottomHeight")
 //        Log.e(javaClass.simpleName, "itemCommodity.height: ${itemCommodity.height}")
         val rect = Rect()
         itemCommodity.getLocalVisibleRect(rect)
-        Log.e(javaClass.simpleName, "rect: $rect")
+//        Log.e(javaClass.simpleName, "rect: $rect")
+        Log.e(javaClass.simpleName, "height: $height")
+        Log.e(javaClass.simpleName, "height: ${ConvertUtils.px2dp(height.toFloat())}")
         Log.e(javaClass.simpleName, "slideOffset: $slideOffset")
     }
 
