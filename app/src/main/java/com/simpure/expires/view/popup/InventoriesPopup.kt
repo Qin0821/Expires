@@ -1,11 +1,11 @@
-package com.simpure.expires.view.scrollview
+package com.simpure.expires.view.popup
 
 import android.content.Context
 import com.lxj.xpopup.core.PositionPopupView
 import com.lxj.xpopup.util.XPopupUtils
 import com.simpure.expires.R
 
-class ClearPopup(context: Context) : PositionPopupView(context) {
+class InventoriesPopup(context: Context, type: String) : PositionPopupView(context) {
 
     override fun getImplLayoutId(): Int {
         return R.layout.popup_clear
@@ -14,4 +14,5 @@ class ClearPopup(context: Context) : PositionPopupView(context) {
     override fun getPopupWidth(): Int {
         return XPopupUtils.getWindowWidth(context)
     }
+
 }

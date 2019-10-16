@@ -28,19 +28,20 @@ import io.reactivex.disposables.Disposable
 import android.util.Log
 import android.view.KeyEvent
 import android.view.MotionEvent
-import android.view.animation.AnimationUtils
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import androidx.lifecycle.*
 import com.google.zxing.util.BarcodeGenerator
 import com.lxj.xpopup.XPopup
+import com.lxj.xpopup.core.PositionPopupView
 import com.lxj.xpopup.enums.PopupAnimation
 import com.simpure.expires.BR
 import com.simpure.expires.R
 import com.simpure.expires.data.entity.CommodityEntity
 import com.simpure.expires.ui.commodity.InventoryAdapter
 import com.simpure.expires.utilities.getCompatColor
-import com.simpure.expires.view.scrollview.ClearPopup
+import com.simpure.expires.view.popup.ConsumingPopup
+import com.simpure.expires.view.popup.InventoriesPopup
 import com.simpure.expires.view.scrollview.ExpiresScrollView
 import com.simpure.expires.view.scrollview.ScrollViewListener
 import com.simpure.expires.viewmodel.CommodityDetailViewModel
@@ -49,6 +50,7 @@ import kotlinx.android.synthetic.main.dialog_commodity.*
 import kotlinx.android.synthetic.main.dialog_commodity.view.*
 import kotlinx.android.synthetic.main.item_dialog_commodity_consuming.*
 import kotlinx.android.synthetic.main.item_dialog_commodity_consuming.view.*
+import kotlinx.android.synthetic.main.item_dialog_commodity_inventories.*
 import kotlin.concurrent.thread
 
 
@@ -56,23 +58,29 @@ class CommodityHomeActivity : BaseActivity() {
 
     override fun onClick(v: View?) {
         when (v) {
-            tvCommAction -> {
-                val location = IntArray(2)
-                tvCommAction.getLocationInWindow(location)
-                showClearWindow(location[1])
+            tvCommClear -> {
+                showEditPopup(v!!, ConsumingPopup(this))
+            }
+            ivInventoriesTopping -> {
+                showEditPopup(v!!, InventoriesPopup(this, "topping"))
+            }
+            tvInventoriesThrow -> {
+                showEditPopup(v!!, InventoriesPopup(this, "throw"))
             }
         }
     }
 
-    private fun showClearWindow(offsetY: Int) {
+    private fun showEditPopup(view: View, popup: PositionPopupView) {
+        val location = IntArray(2)
+        tvInventoriesThrow.getLocationInWindow(location)
 
         XPopup.setShadowBgColor(getCompatColor(R.color.transparency_90))
 
         XPopup
             .Builder(this)
             .popupAnimation(PopupAnimation.ScaleAlphaFromCenter)
-            .offsetY(offsetY)
-            .asCustom(ClearPopup(this))
+            .offsetY(location[1])
+            .asCustom(popup)
             .show()
 
     }
@@ -91,7 +99,9 @@ class CommodityHomeActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_home)
-        mBinding.itemCommodity.itemConsuming.tvCommAction.setOnClickListener(this)
+        mBinding.itemCommodity.itemConsuming.tvCommClear.setOnClickListener(this)
+        mBinding.itemCommodity.itemInventories.ivInventoriesTopping.setOnClickListener(this)
+        mBinding.itemCommodity.itemInventories.tvInventoriesThrow.setOnClickListener(this)
 
         initPlaceNameList()
 

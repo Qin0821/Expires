@@ -16,7 +16,6 @@ import com.simpure.expires.BR
 import com.simpure.expires.data.entity.CommodityEntity
 import com.simpure.expires.databinding.DialogCommodityBinding
 import com.simpure.expires.ui.CommodityHomeActivity
-import com.simpure.expires.utilities.toast
 import com.simpure.expires.viewmodel.CommodityDetailViewModel
 import kotlin.concurrent.thread
 
