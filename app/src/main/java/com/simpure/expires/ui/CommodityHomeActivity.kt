@@ -95,9 +95,9 @@ class CommodityHomeActivity : BaseActivity() {
     fun startSearch(view: View) {
         // view width
         val translateAnimation = AnimationUtils.loadAnimation(this, R.anim.translate_left)
-        mBinding.itemSearch.ivSearch.startAnimation(translateAnimation)
-        mBinding.itemSearch.tvSearchCancel.fadeIn()
-        mBinding.itemSearch.tvSearch.fadeOut()
+//        mBinding.itemSearch.ivSearch.startAnimation(translateAnimation)
+//        mBinding.itemSearch.tvSearchCancel.fadeIn()
+//        mBinding.itemSearch.tvSearch.fadeOut()
 //131 184
 // 145 24
 //        val anim = ValueAnimator.ofInt(ConvertUtils.dp2px(131f), ConvertUtils.dp2px(10f))
@@ -126,20 +126,20 @@ class CommodityHomeActivity : BaseActivity() {
 
     fun cancelSearch() {
         // view width
-        mBinding.itemSearch.rlSearch
-        val translateAnimation = AnimationUtils.loadAnimation(this, R.anim.translate_right)
-        mBinding.itemSearch.ivSearch.startAnimation(translateAnimation)
-        mBinding.itemSearch.tvSearchCancel.fadeOut()
-        mBinding.itemSearch.tvSearch.fadeIn()
+//        mBinding.itemSearch.rlSearch
+//        val translateAnimation = AnimationUtils.loadAnimation(this, R.anim.translate_right)
+//        mBinding.itemSearch.ivSearch.startAnimation(translateAnimation)
+//        mBinding.itemSearch.tvSearchCancel.fadeOut()
+//        mBinding.itemSearch.tvSearch.fadeIn()
 
-        val lp = mBinding.itemSearch.rlSearch.layoutParams as RelativeLayout.LayoutParams
-        val rlAnim = ValueAnimator.ofInt(ConvertUtils.dp2px(265f), ConvertUtils.dp2px(322f))
-        rlAnim.duration = 360
-        rlAnim.addUpdateListener {
-            val currentValue = it.animatedValue
-            lp.width = currentValue as Int
-            mBinding.itemSearch.rlSearch.layoutParams = lp
-        }
+//        val lp = mBinding.itemSearch.rlSearch.layoutParams as RelativeLayout.LayoutParams
+//        val rlAnim = ValueAnimator.ofInt(ConvertUtils.dp2px(265f), ConvertUtils.dp2px(322f))
+//        rlAnim.duration = 360
+//        rlAnim.addUpdateListener {
+//            val currentValue = it.animatedValue
+//            lp.width = currentValue as Int
+//            mBinding.itemSearch.rlSearch.layoutParams = lp
+//        }
     }
 
     private fun showEditPopup(view: View, popup: PositionPopupView) {
@@ -171,11 +171,13 @@ class CommodityHomeActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_home)
+        setActivityTheme(mBinding.relativeLayout)
+
         mBinding.itemCommodity.itemConsuming.tvCommClear.setOnClickListener(this)
         mBinding.itemCommodity.itemInventories.ivInventoriesTopping.setOnClickListener(this)
         mBinding.itemCommodity.itemInventories.tvInventoriesThrow.setOnClickListener(this)
-        mBinding.itemSearch.rlSearch.setOnClickListener(this)
-        mBinding.itemSearch.tvSearchCancel.setOnClickListener(this)
+//        mBinding.itemSearch.rlSearch.setOnClickListener(this)
+//        mBinding.itemSearch.tvSearchCancel.setOnClickListener(this)
         mBinding.itemNavigation.ivInventories.setOnClickListener(this)
         mBinding.itemNavigation.ivConsuming.setOnClickListener(this)
         mBinding.itemNavigation.ivEdit.setOnClickListener(this)
@@ -587,8 +589,8 @@ class CommodityHomeActivity : BaseActivity() {
         )
         val layoutManager = LinearLayoutManager(this)
         layoutManager.orientation = LinearLayoutManager.HORIZONTAL
-        mBinding.rvLabels.layoutManager = layoutManager
-        mBinding.rvLabels.adapter = PlaceNameAdapter(this, placeList)
+//        mBinding.rvLabels.layoutManager = layoutManager
+//        mBinding.rvLabels.adapter = PlaceNameAdapter(this, placeList)
     }
 
 
