@@ -55,6 +55,8 @@ import kotlinx.android.synthetic.main.dialog_commodity.view.*
 import kotlinx.android.synthetic.main.item_dialog_commodity_consuming.*
 import kotlinx.android.synthetic.main.item_dialog_commodity_consuming.view.*
 import kotlinx.android.synthetic.main.item_dialog_commodity_inventories.*
+import kotlinx.android.synthetic.main.item_navigation.*
+import kotlinx.android.synthetic.main.item_navigation.view.*
 import kotlinx.android.synthetic.main.item_search.*
 import kotlin.concurrent.thread
 
@@ -71,6 +73,15 @@ class CommodityHomeActivity : BaseActivity() {
             }
             tvInventoriesThrow -> {
                 showEditPopup(v!!, InventoriesPopup(this, "throw"))
+            }
+            ivInventories -> {
+                this@CommodityHomeActivity.toast("ivInventories")
+            }
+            ivConsuming -> {
+                this@CommodityHomeActivity.toast("ivConsuming")
+            }
+            ivEdit -> {
+                this@CommodityHomeActivity.toast("ivEdit")
             }
             rlSearch -> {
                 startSearch(v!!)
@@ -104,7 +115,7 @@ class CommodityHomeActivity : BaseActivity() {
             lp.width = currentValue as Int
             view.layoutParams = lp
         }
-        rlAnim.start()
+//        rlAnim.start()
 
         val animSet = AnimatorSet()
         animSet.play(rlAnim)
@@ -120,6 +131,15 @@ class CommodityHomeActivity : BaseActivity() {
         mBinding.itemSearch.ivSearch.startAnimation(translateAnimation)
         mBinding.itemSearch.tvSearchCancel.fadeOut()
         mBinding.itemSearch.tvSearch.fadeIn()
+
+        val lp = mBinding.itemSearch.rlSearch.layoutParams as RelativeLayout.LayoutParams
+        val rlAnim = ValueAnimator.ofInt(ConvertUtils.dp2px(265f), ConvertUtils.dp2px(322f))
+        rlAnim.duration = 360
+        rlAnim.addUpdateListener {
+            val currentValue = it.animatedValue
+            lp.width = currentValue as Int
+            mBinding.itemSearch.rlSearch.layoutParams = lp
+        }
     }
 
     private fun showEditPopup(view: View, popup: PositionPopupView) {
@@ -156,6 +176,9 @@ class CommodityHomeActivity : BaseActivity() {
         mBinding.itemCommodity.itemInventories.tvInventoriesThrow.setOnClickListener(this)
         mBinding.itemSearch.rlSearch.setOnClickListener(this)
         mBinding.itemSearch.tvSearchCancel.setOnClickListener(this)
+        mBinding.itemNavigation.ivInventories.setOnClickListener(this)
+        mBinding.itemNavigation.ivConsuming.setOnClickListener(this)
+        mBinding.itemNavigation.ivEdit.setOnClickListener(this)
 
         initPlaceNameList()
 
@@ -395,7 +418,7 @@ class CommodityHomeActivity : BaseActivity() {
         )
         lp.setMargins(0, 0, 0, marginBottomHeight + 40)
         lp.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM)
-        itemCommodity.itemNavigation.layoutParams = lp
+        itemCommodity.itemCommodityNavigation.layoutParams = lp
 
 //        Log.e(javaClass.simpleName, "h: $marginBottomHeight")
 //        Log.e(javaClass.simpleName, "itemCommodity.height: ${itemCommodity.height}")

@@ -42,7 +42,7 @@
                     android:id="@+id/svCommodity"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_above="@id/itemNavigation"
+                    android:layout_above="@id/itemCommodityNavigation"
                     android:layout_alignParentTop="true"
                     android:overScrollMode="never"
                     android:scrollbars="none">
@@ -106,7 +106,7 @@
 
 
             <include
-                    android:id="@+id/itemNavigation"
+                    android:id="@+id/itemCommodityNavigation"
                     layout="@layout/item_navigation"
                     android:layout_width="match_parent"
                     android:layout_height="57dp"
@@ -114,6 +114,4 @@
                     app:layout_constraintBottom_toBottomOf="parent" />
         </RelativeLayout>
     </RelativeLayout>
-
-
 </layout>

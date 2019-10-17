@@ -1,67 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="57dp"
-        android:orientation="vertical">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:bind="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        
+        <variable
+                name="type"
+                type="Integer" />
+    </data>
 
-    <View
-            android:id="@+id/line"
+    <LinearLayout 
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/line" />
+            android:layout_height="57dp"
+            android:orientation="vertical">
 
-    <LinearLayout
-            android:id="@+id/llBottomNavigation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:baselineAligned="false"
-            android:orientation="horizontal">
+        <View
+                android:id="@+id/line"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/line" />
 
-        <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center">
+        <LinearLayout
+                android:id="@+id/llBottomNavigation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:baselineAligned="false"
+                android:orientation="horizontal">
 
-            <Button
-                    android:id="@+id/btInventories"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:background="@mipmap/inventories"
-                    android:gravity="center"
-                    android:onClick="goInventories" />
-        </RelativeLayout>
+            <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center">
 
-        <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center">
+                <ImageView
+                        android:id="@+id/ivInventories"
+                        android:layout_width="52dp"
+                        android:layout_height="32dp"
+                        android:gravity="center"
+                        android:onClick="goInventories"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="10dp"
+                        android:src="@mipmap/inventories" />
+            </RelativeLayout>
 
-            <Button
-                    android:id="@+id/btConsuming"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:background="@mipmap/consuming"
-                    android:gravity="center"
-                    android:onClick="goConsuming" />
-        </RelativeLayout>
+            <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center">
 
-        <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center">
+                <ImageView
+                        android:id="@+id/ivConsuming"
+                        android:layout_width="52dp"
+                        android:layout_height="32dp"
+                        android:gravity="center"
+                        android:onClick="goConsuming"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="10dp"
+                        android:src="@mipmap/consuming" />
+            </RelativeLayout>
 
-            <Button
-                    android:id="@+id/btEdit"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:background="@mipmap/edit"
-                    android:gravity="center" />
-        </RelativeLayout>
+            <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center">
 
+                <ImageView
+                        android:id="@+id/ivEdit"
+                        android:layout_width="52dp"
+                        android:layout_height="32dp"
+                        android:gravity="center"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="10dp"
+                        android:src="@mipmap/edit" />
+            </RelativeLayout>
+        </LinearLayout>
     </LinearLayout>
-
-</LinearLayout>
+</layout>
