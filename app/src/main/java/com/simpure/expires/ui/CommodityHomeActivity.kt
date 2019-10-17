@@ -1,5 +1,6 @@
 package com.simpure.expires.ui
 
+import android.animation.AnimatorSet
 import android.animation.ValueAnimator
 import android.os.Bundle
 import android.view.View
@@ -28,6 +29,7 @@ import io.reactivex.disposables.Disposable
 import android.util.Log
 import android.view.KeyEvent
 import android.view.MotionEvent
+import android.view.animation.AnimationUtils
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import androidx.lifecycle.*
@@ -39,6 +41,8 @@ import com.simpure.expires.BR
 import com.simpure.expires.R
 import com.simpure.expires.data.entity.CommodityEntity
 import com.simpure.expires.ui.commodity.InventoryAdapter
+import com.simpure.expires.utilities.fadeIn
+import com.simpure.expires.utilities.fadeOut
 import com.simpure.expires.utilities.getCompatColor
 import com.simpure.expires.view.popup.ConsumingPopup
 import com.simpure.expires.view.popup.InventoriesPopup
@@ -51,6 +55,7 @@ import kotlinx.android.synthetic.main.dialog_commodity.view.*
 import kotlinx.android.synthetic.main.item_dialog_commodity_consuming.*
 import kotlinx.android.synthetic.main.item_dialog_commodity_consuming.view.*
 import kotlinx.android.synthetic.main.item_dialog_commodity_inventories.*
+import kotlinx.android.synthetic.main.item_search.*
 import kotlin.concurrent.thread
 
 
@@ -67,7 +72,54 @@ class CommodityHomeActivity : BaseActivity() {
             tvInventoriesThrow -> {
                 showEditPopup(v!!, InventoriesPopup(this, "throw"))
             }
+            rlSearch -> {
+                startSearch(v!!)
+            }
+            tvSearchCancel -> {
+                cancelSearch()
+            }
         }
+    }
+
+    fun startSearch(view: View) {
+        // view width
+        val translateAnimation = AnimationUtils.loadAnimation(this, R.anim.translate_left)
+        mBinding.itemSearch.ivSearch.startAnimation(translateAnimation)
+        mBinding.itemSearch.tvSearchCancel.fadeIn()
+        mBinding.itemSearch.tvSearch.fadeOut()
+//131 184
+// 145 24
+//        val anim = ValueAnimator.ofInt(ConvertUtils.dp2px(131f), ConvertUtils.dp2px(10f))
+        val lp = view.layoutParams as RelativeLayout.LayoutParams
+        val tvAnim = ValueAnimator.ofInt(ConvertUtils.dp2px(145f), ConvertUtils.dp2px(24f))
+        tvAnim.duration = 360
+        tvAnim.addUpdateListener {
+            val currentValue = it.animatedValue
+
+        }
+        val rlAnim = ValueAnimator.ofInt(ConvertUtils.dp2px(332f), ConvertUtils.dp2px(265f))
+        rlAnim.duration = 360
+        rlAnim.addUpdateListener {
+            val currentValue = it.animatedValue
+            lp.width = currentValue as Int
+            view.layoutParams = lp
+        }
+        rlAnim.start()
+
+        val animSet = AnimatorSet()
+        animSet.play(rlAnim)
+//            .with()
+        animSet.duration = 360
+        animSet.start()
+    }
+
+    fun cancelSearch() {
+        // view width
+        mBinding.itemSearch.rlSearch
+        val translateAnimation = AnimationUtils.loadAnimation(this, R.anim.translate_right)
+        mBinding.itemSearch.ivSearch.startAnimation(translateAnimation)
+        mBinding.itemSearch.tvSearchCancel.fadeOut()
+        mBinding.itemSearch.tvSearch.fadeIn()
     }
 
     private fun showEditPopup(view: View, popup: PositionPopupView) {
@@ -102,6 +154,8 @@ class CommodityHomeActivity : BaseActivity() {
         mBinding.itemCommodity.itemConsuming.tvCommClear.setOnClickListener(this)
         mBinding.itemCommodity.itemInventories.ivInventoriesTopping.setOnClickListener(this)
         mBinding.itemCommodity.itemInventories.tvInventoriesThrow.setOnClickListener(this)
+        mBinding.itemSearch.rlSearch.setOnClickListener(this)
+        mBinding.itemSearch.tvSearchCancel.setOnClickListener(this)
 
         initPlaceNameList()
 
@@ -162,13 +216,8 @@ class CommodityHomeActivity : BaseActivity() {
                 }
 
                 override fun onStateChanged(bottomSheet: View, newState: Int) {
-                    // Check Logs to see how bottom sheets behaves
                     when (newState) {
                         BottomSheetBehavior.STATE_COLLAPSED -> {
-                            Log.e(
-                                "Bottom Sheet Behaviour",
-                                "STATE_COLLAPSED"
-                            )
                             viewShadow.visibility = View.VISIBLE
 
                             if (collapsedHeight == 0) {
@@ -181,10 +230,6 @@ class CommodityHomeActivity : BaseActivity() {
 //                            itemCommodity.itemConsuming.layoutConsume.visibility = View.GONE
                         }
                         BottomSheetBehavior.STATE_DRAGGING -> {
-                            Log.e(
-                                "Bottom Sheet Behaviour",
-                                "STATE_DRAGGING"
-                            )
 
 //                            itemCommodity.itemConsuming.layoutConsume.visibility = View.VISIBLE
 //                                val lp = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0, 1.0f)
@@ -206,16 +251,8 @@ class CommodityHomeActivity : BaseActivity() {
                             }
                         }
                         BottomSheetBehavior.STATE_HALF_EXPANDED -> {
-                            Log.e(
-                                "Bottom Sheet Behaviour",
-                                "STATE_HALF_EXPANDED"
-                            )
                         }
                         BottomSheetBehavior.STATE_EXPANDED -> {
-                            Log.e(
-                                "Bottom Sheet Behaviour",
-                                "STATE_EXPANDED"
-                            )
                             viewShadow.visibility = View.VISIBLE
 
 //                            val lp = LinearLayout.LayoutParams(
@@ -228,17 +265,9 @@ class CommodityHomeActivity : BaseActivity() {
                             justExpanded = true
                         }
                         BottomSheetBehavior.STATE_HIDDEN -> {
-                            Log.e(
-                                "Bottom Sheet Behaviour",
-                                "STATE_HIDDEN"
-                            )
                             viewShadow.visibility = View.GONE
                         }
                         BottomSheetBehavior.STATE_SETTLING -> {
-                            Log.e(
-                                "Bottom Sheet Behaviour",
-                                "STATE_SETTLING"
-                            )
 //                            itemCommodity.itemConsuming.vsConsumingTitle.visibility = View.GONE
                             viewShadow.visibility = View.VISIBLE
                         }
@@ -341,6 +370,7 @@ class CommodityHomeActivity : BaseActivity() {
         )
 //        itemCommodity.itemConsuming.layoutConsume.visibility =
 //            if (ConvertUtils.px2dp(height.toFloat()) < 20) View.INVISIBLE else View.VISIBLE
+        itemCommodity.itemConsuming.layoutConsume.alpha = (slideOffset - 1)
         itemCommodity.itemConsuming.layoutConsume.layoutParams = lpC
 
         /*val minHeight = ConvertUtils.dp2px(100f)

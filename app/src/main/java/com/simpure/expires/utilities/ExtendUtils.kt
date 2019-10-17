@@ -1,8 +1,11 @@
 package com.simpure.expires.utilities
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.content.Context
 import android.os.Build
 import android.os.Looper
+import android.view.View
 import android.widget.Toast
 import org.joda.time.DateTime
 import org.joda.time.Days
@@ -26,7 +29,7 @@ fun Long.calcExpirationDate(): Int {
     val calcTime = DateTime(this)
     val nowDate = DateTime()
 
-    return Days.daysBetween(nowDate, calcTime).getDays();
+    return Days.daysBetween(nowDate, calcTime).days
 }
 
 fun Context.toast(message: String, duration: Int = Toast.LENGTH_SHORT) {
@@ -35,4 +38,27 @@ fun Context.toast(message: String, duration: Int = Toast.LENGTH_SHORT) {
 //    }
     Toast.makeText(this, message, duration).show()
 //    Looper.loop()
+}
+
+fun View.fadeIn(listener: Animator.AnimatorListener? = null) {
+    this.apply {
+        alpha = 0f
+        visibility = View.VISIBLE
+
+        animate()
+            .alpha(1f)
+            .setDuration(360)
+            .setListener(listener)
+    }
+}
+
+fun View.fadeOut() {
+    this.animate()
+        .alpha(0f)
+        .setDuration(360)
+        .setListener(object : AnimatorListenerAdapter() {
+            override fun onAnimationEnd(animation: Animator?) {
+                this@fadeOut.visibility = View.GONE
+            }
+        })
 }
