@@ -86,17 +86,18 @@
                             android:layout_weight="1"
                             android:background="@drawable/bg_rounded_rectangle_white_6"
                             android:gravity="center"
-                            android:text="All"
+                            android:text="@string/all"
                             android:textColor="@color/text_expires_days"
                             android:textSize="17sp" />
 
                     <TextView
+                            android:id="@+id/tvPlace"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:width="0dp"
                             android:gravity="center"
-                            android:text="Fridge"
+                            android:text="@string/all"
                             android:textColor="@color/bg_comm_action"
                             android:textSize="17sp" />
                 </LinearLayout>

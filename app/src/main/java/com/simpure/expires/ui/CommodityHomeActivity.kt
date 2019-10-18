@@ -164,6 +164,17 @@ class CommodityHomeActivity : BaseActivity() {
 
     override fun initView() {
 
+        mBinding.tvPlace.setOnTouchListener { v, event ->
+            when (event.action) {
+                KeyEvent.ACTION_UP -> {
+
+                }
+                KeyEvent.ACTION_DOWN -> {
+
+                }
+                
+            }
+        }
     }
 
     private lateinit var mBinding: ActivityHomeBinding
