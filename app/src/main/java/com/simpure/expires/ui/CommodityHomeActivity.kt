@@ -2,6 +2,7 @@ package com.simpure.expires.ui
 
 import android.animation.AnimatorSet
 import android.animation.ValueAnimator
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import androidx.databinding.DataBindingUtil
@@ -35,8 +36,10 @@ import android.widget.RelativeLayout
 import androidx.lifecycle.*
 import com.google.zxing.util.BarcodeGenerator
 import com.lxj.xpopup.XPopup
+import com.lxj.xpopup.core.BasePopupView
 import com.lxj.xpopup.core.PositionPopupView
 import com.lxj.xpopup.enums.PopupAnimation
+import com.lxj.xpopup.interfaces.SimpleCallback
 import com.simpure.expires.BR
 import com.simpure.expires.R
 import com.simpure.expires.data.entity.CommodityEntity
@@ -46,6 +49,7 @@ import com.simpure.expires.utilities.fadeOut
 import com.simpure.expires.utilities.getCompatColor
 import com.simpure.expires.view.popup.ConsumingPopup
 import com.simpure.expires.view.popup.InventoriesPopup
+import com.simpure.expires.view.popup.PlacePopup
 import com.simpure.expires.view.scrollview.ExpiresScrollView
 import com.simpure.expires.view.scrollview.ScrollViewListener
 import com.simpure.expires.viewmodel.CommodityDetailViewModel
@@ -142,19 +146,28 @@ class CommodityHomeActivity : BaseActivity() {
 //        }
     }
 
-    private fun showEditPopup(view: View, popup: PositionPopupView) {
+    private lateinit var xPopup: BasePopupView
+
+    private fun showEditPopup(
+        view: View,
+        popup: PositionPopupView,
+        callback: SimpleCallback? = null,
+        backgroundRes: Int = R.color.transparency_90
+    ) {
         val location = IntArray(2)
-        tvInventoriesThrow.getLocationInWindow(location)
+        view.getLocationInWindow(location)
+//        tvInventoriesThrow.getLocationInWindow(location)
 
-        XPopup.setShadowBgColor(getCompatColor(R.color.transparency_90))
+        XPopup.setShadowBgColor(getCompatColor(backgroundRes))
 
-        XPopup
-            .Builder(this)
-            .popupAnimation(PopupAnimation.ScaleAlphaFromCenter)
-            .offsetY(location[1])
-            .asCustom(popup)
-            .show()
-
+        xPopup =
+            XPopup
+                .Builder(this)
+                .popupAnimation(PopupAnimation.ScaleAlphaFromCenter)
+                .offsetY(location[1])
+                .setPopupCallback(callback)
+                .asCustom(popup)
+                .show()
     }
 
 
@@ -163,22 +176,11 @@ class CommodityHomeActivity : BaseActivity() {
     }
 
     override fun initView() {
-
-        mBinding.tvPlace.setOnTouchListener { v, event ->
-            when (event.action) {
-                KeyEvent.ACTION_UP -> {
-
-                }
-                KeyEvent.ACTION_DOWN -> {
-
-                }
-                
-            }
-        }
     }
 
     private lateinit var mBinding: ActivityHomeBinding
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_home)
@@ -193,10 +195,75 @@ class CommodityHomeActivity : BaseActivity() {
         mBinding.itemNavigation.ivConsuming.setOnClickListener(this)
         mBinding.itemNavigation.ivEdit.setOnClickListener(this)
 
+        mBinding.tvPlace.setOnTouchListener { v, event ->
+            when (event.action) {
+                KeyEvent.ACTION_UP -> {
+                    toast("up")
+                    xPopup.dismiss()
+                }
+                KeyEvent.ACTION_DOWN -> {
+                    toast("down")
+                    showPlacePopup(
+                        mBinding.tvPlace,
+                        mPlaceList
+                    )
+                }
+                else -> {
+
+                }
+            }
+            return@setOnTouchListener true
+        }
+
         initPlaceNameList()
 
         initCommodityList(savedInstanceState)
 
+    }
+
+    private fun showPlacePopup(
+        view: View,
+        placeList: List<Place>
+    ) {
+        val location = IntArray(2)
+        view.getLocationInWindow(location)
+
+        XPopup.setShadowBgColor(getCompatColor(R.color.transparency))
+        val placePopup = PlacePopup(this)
+        placePopup.setPlaceList(placeList)
+
+        xPopup =
+            XPopup
+                .Builder(this)
+                .popupAnimation(PopupAnimation.ScaleAlphaFromCenter)
+                .offsetX(location[0] - ConvertUtils.dp2px(14f))
+                .offsetY(location[1] - ConvertUtils.dp2px(10f))
+                .setPopupCallback(object : SimpleCallback() {
+                    override fun onCreated() {
+                        super.onCreated()
+                    }
+
+                    override fun beforeShow() {
+                        super.beforeShow()
+                    }
+
+                    override fun onShow() {
+                        super.onShow()
+
+                    }
+
+                    override fun onDismiss() {
+                        super.onDismiss()
+
+                    }
+
+                    //如果你自己想拦截返回按键事件，则重写这个方法，返回true即可
+                    override fun onBackPressed(): Boolean {
+                        return true; //默认返回false
+                    }
+                })
+                .asCustom(placePopup)
+                .show()
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
@@ -551,6 +618,8 @@ class CommodityHomeActivity : BaseActivity() {
         }
     }
 
+    private lateinit var mPlaceList: List<Place>
+
     private fun initPlaceNameList() {
         /**
          * 1. 获取place列表
@@ -585,7 +654,7 @@ class CommodityHomeActivity : BaseActivity() {
 
         val commodityList = fridgeList + makeUpsList + otherList
 
-        val placeList = arrayListOf(
+        mPlaceList = arrayListOf(
             Place("All", commodityList, 0),
             Place("Fridge", fridgeList, 1),
             Place("makeUpsList", makeUpsList, 2),
