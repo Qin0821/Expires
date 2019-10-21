@@ -8,6 +8,7 @@
     <color name="black">#000000</color>
     <color name="appBg">#F7F7F7</color>
     <color name="line">#E6E6E6</color>
+    <color name="placeNameBg">#F2F2F2</color>
     <color name="searchHint">#D8D8D8</color>
     <color name="line1">#CCCCCC</color>
     <color name="bg_comm_action">#B3B3B3</color>

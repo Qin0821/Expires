@@ -2,10 +2,13 @@ package com.simpure.expires.ui
 
 import android.content.Context
 import android.graphics.Typeface
+import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
+import androidx.databinding.DataBindingUtil
 import androidx.databinding.DataBindingUtil.inflate
 import androidx.recyclerview.widget.RecyclerView
 import com.simpure.expires.BR
@@ -19,7 +22,7 @@ class PlaceNameAdapter(private val context: Context) :
     RecyclerView.Adapter<PlaceNameAdapter.ViewHolder>() {
 
     private var selectedPlacePosition = 0
-    private lateinit var mSelectedName: String
+    private var mSelectedPosition = -1
     private lateinit var mPlaceList: List<Place>
 
     fun setSelectedPlace(position: Int) {
@@ -28,8 +31,11 @@ class PlaceNameAdapter(private val context: Context) :
 
     fun getSelectedPlacePosition() = selectedPlacePosition
 
-    fun setSelectedName(selectName: String) {
-        mSelectedName = selectName
+    fun setSelectedPosition(position: Int) {
+        Log.e(javaClass.simpleName, position.toString())
+        mSelectedPosition = position
+
+        notifyDataSetChanged()
     }
 
     fun setPlaceList(placeList: List<Place>) {
@@ -38,10 +44,10 @@ class PlaceNameAdapter(private val context: Context) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding: ItemPlaceNameBinding = inflate(
-            LayoutInflater.from(parent.context), R.layout.item_place_name,
+            LayoutInflater.from(context), R.layout.item_place_name,
             parent, false
         )
-        return ViewHolder(binding)
+        return ViewHolder(binding.root)
     }
 
     override fun getItemCount(): Int {
@@ -49,37 +55,33 @@ class PlaceNameAdapter(private val context: Context) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-
-        with(holder.binding) {
-
-            setVariable(
-                BR.isSelected,
-                mPlaceList[position].name == mSelectedName
-            )
+        val binding = DataBindingUtil.getBinding<ItemPlaceNameBinding>(holder.itemView)
+        with(binding!!) {
 
             setVariable(BR.placeName, mPlaceList[position].name)
-
-            tvName.text = mPlaceList[position].name
-            if (position == selectedPlacePosition) {
-                tvName.setTextColor(context.getCompatColor(R.color.text_expires_days))
-                tvName.textSize = 36f
-            } else {
-                tvName.setTextColor(context.getCompatColor(R.color.bg_comm_action))
-                tvName.textSize = 20f
-            }
+            setVariable(
+                BR.isSelected,
+                position == mSelectedPosition
+            )
 
             executePendingBindings()
         }
     }
 
-    class ViewHolder(val binding: ItemPlaceNameBinding) : RecyclerView.ViewHolder(binding.root)
+    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
-    @BindingAdapter("isSelected")
-    fun setBold(view: TextView, isSelected: Boolean) {
-        if (isSelected) {
-            view.setTypeface(null, Typeface.BOLD)
-        } else {
-            view.setTypeface(null, Typeface.NORMAL)
+    object PlaceNameBinds {
+        @BindingAdapter("isSelected")
+        @JvmStatic
+        fun setBold(view: TextView, isSelected: Boolean) {
+            if (isSelected) {
+                view.setBackgroundResource(R.drawable.bg_rounded_rectangle_gray_6)
+                view.setTypeface(null, Typeface.BOLD)
+            } else {
+                view.background = null
+                view.setTypeface(null, Typeface.NORMAL)
+            }
         }
     }
+
 }

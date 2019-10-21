@@ -44,8 +44,6 @@ import com.simpure.expires.BR
 import com.simpure.expires.R
 import com.simpure.expires.data.entity.CommodityEntity
 import com.simpure.expires.ui.commodity.InventoryAdapter
-import com.simpure.expires.utilities.fadeIn
-import com.simpure.expires.utilities.fadeOut
 import com.simpure.expires.utilities.getCompatColor
 import com.simpure.expires.view.popup.ConsumingPopup
 import com.simpure.expires.view.popup.InventoriesPopup
@@ -60,7 +58,6 @@ import kotlinx.android.synthetic.main.item_dialog_commodity_consuming.*
 import kotlinx.android.synthetic.main.item_dialog_commodity_consuming.view.*
 import kotlinx.android.synthetic.main.item_dialog_commodity_inventories.*
 import kotlinx.android.synthetic.main.item_navigation.*
-import kotlinx.android.synthetic.main.item_navigation.view.*
 import kotlinx.android.synthetic.main.item_search.*
 import kotlin.concurrent.thread
 
@@ -146,7 +143,7 @@ class CommodityHomeActivity : BaseActivity() {
 //        }
     }
 
-    private lateinit var xPopup: BasePopupView
+    private lateinit var mPlaceNamePopup: BasePopupView
 
     private fun showEditPopup(
         view: View,
@@ -160,7 +157,7 @@ class CommodityHomeActivity : BaseActivity() {
 
         XPopup.setShadowBgColor(getCompatColor(backgroundRes))
 
-        xPopup =
+        mPlaceNamePopup =
             XPopup
                 .Builder(this)
                 .popupAnimation(PopupAnimation.ScaleAlphaFromCenter)
@@ -180,6 +177,8 @@ class CommodityHomeActivity : BaseActivity() {
 
     private lateinit var mBinding: ActivityHomeBinding
 
+    private var mSelectPlace: Place? = null
+
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -194,19 +193,27 @@ class CommodityHomeActivity : BaseActivity() {
         mBinding.itemNavigation.ivInventories.setOnClickListener(this)
         mBinding.itemNavigation.ivConsuming.setOnClickListener(this)
         mBinding.itemNavigation.ivEdit.setOnClickListener(this)
+        mBinding.setVariable(BR.placeName, mSelectPlace?.name)
 
         mBinding.tvPlace.setOnTouchListener { v, event ->
             when (event.action) {
-                KeyEvent.ACTION_UP -> {
-                    toast("up")
-                    xPopup.dismiss()
-                }
-                KeyEvent.ACTION_DOWN -> {
+                MotionEvent.ACTION_DOWN -> {
                     toast("down")
                     showPlacePopup(
                         mBinding.tvPlace,
                         mPlaceList
                     )
+                }
+                MotionEvent.ACTION_MOVE -> {
+                    val moveX = event.rawX
+                    val moveY = event.rawY
+                    mPlacePopup.setMoveXY(moveX, moveY)
+                }
+                MotionEvent.ACTION_UP -> {
+                    toast("up")
+                    mPlaceNamePopup.dismiss()
+                    // todo 改为databinding
+                    mSelectPlace = mPlacePopup.getSelectPlace()
                 }
                 else -> {
 
@@ -221,6 +228,8 @@ class CommodityHomeActivity : BaseActivity() {
 
     }
 
+    private lateinit var mPlacePopup: PlacePopup
+
     private fun showPlacePopup(
         view: View,
         placeList: List<Place>
@@ -229,10 +238,13 @@ class CommodityHomeActivity : BaseActivity() {
         view.getLocationInWindow(location)
 
         XPopup.setShadowBgColor(getCompatColor(R.color.transparency))
-        val placePopup = PlacePopup(this)
-        placePopup.setPlaceList(placeList)
+        mPlacePopup = PlacePopup(this)
+        mPlacePopup.setPlaceList(placeList)
 
-        xPopup =
+        Log.e(javaClass.simpleName, (location[0] - ConvertUtils.dp2px(14f)).toString())
+        Log.e(javaClass.simpleName, (location[1] - ConvertUtils.dp2px(10f)).toString())
+
+        mPlaceNamePopup =
             XPopup
                 .Builder(this)
                 .popupAnimation(PopupAnimation.ScaleAlphaFromCenter)
@@ -245,11 +257,21 @@ class CommodityHomeActivity : BaseActivity() {
 
                     override fun beforeShow() {
                         super.beforeShow()
+                        val xLimit = arrayOf(
+                            location[0] - ConvertUtils.dp2px(14f),
+                            location[0] - ConvertUtils.dp2px(14f) + ConvertUtils.dp2px(176f)
+                        )
+                        val yLimit = arrayOf(
+                            location[1] - ConvertUtils.dp2px(10f),
+                            location[1] - ConvertUtils.dp2px(10f) + ConvertUtils.dp2px(188f)
+                        )
+                        Log.e(javaClass.simpleName, "x0: ${xLimit[0]}, x1: ${xLimit[1]}")
+                        Log.e(javaClass.simpleName, "y0: ${yLimit[0]}, y1: ${yLimit[1]}")
+                        mPlacePopup.setMoveLimit(xLimit, yLimit)
                     }
 
                     override fun onShow() {
                         super.onShow()
-
                     }
 
                     override fun onDismiss() {
@@ -262,7 +284,7 @@ class CommodityHomeActivity : BaseActivity() {
                         return true; //默认返回false
                     }
                 })
-                .asCustom(placePopup)
+                .asCustom(mPlacePopup)
                 .show()
     }
 

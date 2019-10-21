@@ -17,6 +17,10 @@
         <variable
                 name="commodityDetail"
                 type="com.simpure.expires.data.entity.CommodityEntity" />
+
+        <variable
+                name="placeName"
+                type="String" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -97,7 +101,7 @@
                             android:layout_weight="1"
                             android:width="0dp"
                             android:gravity="center"
-                            android:text="@string/all"
+                            android:text="@{placeName}"
                             android:textColor="@color/bg_comm_action"
                             android:textSize="17sp" />
                 </LinearLayout>
