@@ -82,7 +82,7 @@ dependencies {
     implementation 'androidx.navigation:navigation-ui-ktx:2.1.0'
     implementation 'androidx.work:work-runtime-ktx:2.2.0'
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.46'
-    implementation 'androidx.fragment:fragment-ktx:1.2.0-beta01'
+    implementation 'androidx.fragment:fragment-ktx:1.2.0-beta02'
     implementation 'com.google.firebase:firebase-core:17.2.0'
 
     // Testing dependencies

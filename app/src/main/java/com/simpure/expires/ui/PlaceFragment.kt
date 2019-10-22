@@ -11,9 +11,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.simpure.expires.R
-import com.simpure.expires.data.entity.CommodityEntity
 import com.simpure.expires.databinding.FragmentPlaceBinding
-import com.simpure.expires.model.CommodityModel
+import com.simpure.expires.model.CommoditySummaryModel
 import com.simpure.expires.viewmodel.CommoditySummaryViewModel
 
 class PlaceFragment : Fragment() {
@@ -25,6 +24,8 @@ class PlaceFragment : Fragment() {
     private var mPlaceAdapter: PlaceAdapter? = null
 
     private var mBinding: FragmentPlaceBinding? = null
+
+    private lateinit var mCommoditySummaryViewModel: CommoditySummaryViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,32 +40,39 @@ class PlaceFragment : Fragment() {
         return mBinding!!.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        val viewModel = ViewModelProvider(this).get(CommoditySummaryViewModel::class.java)
-
-        subscribeUi(viewModel.commodities)
-    }
-
-    private fun subscribeUi(liveData: LiveData<List<CommodityModel>>) {
-        // 当数据更改时更新列表
-        liveData.observe(this,
-            Observer<List<CommodityModel>> { myCommodities ->
-                if (myCommodities != null) {
-                    mBinding!!.isLoading = false
-                    mPlaceAdapter!!.setCommodityList(myCommodities)
-                } else {
-                    mBinding!!.isLoading = true
-                }
-                // 异步执行更改
-                mBinding!!.executePendingBindings()
-            })
-    }
-
     private val mCommodityClickCallback = CommodityClickCallback { commodity ->
         if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
             (activity as CommodityHomeActivity).showCommodityDetail(commodity.id)
         }
     }
 
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        subscribeUi()
+    }
+
+    private fun subscribeUi() {
+        mCommoditySummaryViewModel =
+            ViewModelProvider(this).get(CommoditySummaryViewModel::class.java)
+        mCommoditySummaryViewModel.commodities.observe(this, Observer {
+
+            executePendingBindings(it)
+        })
+    }
+
+    private fun executePendingBindings(placeSummaryList: List<CommoditySummaryModel>?) {
+        // 当数据更改时更新列表
+        if (placeSummaryList.isNullOrEmpty()) {
+            mBinding!!.isLoading = true
+        } else {
+            mBinding!!.isLoading = false
+            mPlaceAdapter!!.setCommodityList(placeSummaryList)
+        }
+        // 异步执行更改
+        mBinding!!.executePendingBindings()
+    }
+
+    fun setCommoditiesSummary(placeSummaryList: List<CommoditySummaryModel>) {
+        executePendingBindings(placeSummaryList)
+    }
 }

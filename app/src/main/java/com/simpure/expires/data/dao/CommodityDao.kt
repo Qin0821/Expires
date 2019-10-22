@@ -23,7 +23,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 
 import com.simpure.expires.data.entity.CommodityEntity
-import com.simpure.expires.model.CommodityModel
+import com.simpure.expires.model.CommoditySummaryModel
 
 @Dao
 interface CommodityDao {
@@ -40,7 +40,11 @@ interface CommodityDao {
     fun loadCommoditySync(commodityId: Int): CommodityEntity
 
     @Query("SELECT id, name, productionDate, expiryDate FROM commodities")
-    fun loadAllCommoditiesSummary(): LiveData<List<CommodityModel>>
+    fun loadAllCommoditiesSummary(): LiveData<List<CommoditySummaryModel>>
+
+    @Query("SELECT id, name, productionDate, expiryDate FROM commodities where place = :placeName")
+    fun loadCommoditiesSummaryByName(placeName: String): LiveData<List<CommoditySummaryModel>>
+    // todo 返回为null 看一下
 
     //    @Query("SELECT commodities.* FROM commodities JOIN commoditiesFts ON (commodities.id = commoditiesFts.rowid) "
     //        + "WHERE commoditiesFts MATCH :query")

@@ -18,11 +18,8 @@ import android.graphics.Rect
 import com.blankj.utilcode.constant.PermissionConstants
 import com.blankj.utilcode.util.*
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.orhanobut.dialogplus.DialogPlus
 import com.simpure.expires.api.SignInApiService
 import com.simpure.expires.data.entity.UserEntity
-import com.simpure.expires.ui.commodity.CommodityAdapter
-import com.simpure.expires.ui.commodity.CommodityHolder
 import com.simpure.expires.utilities.toast
 import com.simpure.expires.viewmodel.UserViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -51,6 +48,7 @@ import com.simpure.expires.view.popup.PlacePopup
 import com.simpure.expires.view.scrollview.ExpiresScrollView
 import com.simpure.expires.view.scrollview.ScrollViewListener
 import com.simpure.expires.viewmodel.CommodityDetailViewModel
+import com.simpure.expires.viewmodel.CommodityHome2ViewModel
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.dialog_commodity.*
 import kotlinx.android.synthetic.main.dialog_commodity.view.*
@@ -198,7 +196,6 @@ class CommodityHomeActivity : BaseActivity() {
         mBinding.tvPlace.setOnTouchListener { v, event ->
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
-                    toast("down")
                     showPlacePopup(
                         mBinding.tvPlace,
                         mPlaceList
@@ -210,10 +207,15 @@ class CommodityHomeActivity : BaseActivity() {
                     mPlacePopup.setMoveXY(moveX, moveY)
                 }
                 MotionEvent.ACTION_UP -> {
-                    toast("up")
                     mPlaceNamePopup.dismiss()
-                    // todo 改为databinding
                     mSelectPlace = mPlacePopup.getSelectPlace()
+
+                    try {
+                        mBinding.setVariable(BR.placeName, mSelectPlace!!.name)
+                        mCommodityHomeViewModel.setPlaceName(mSelectPlace!!.name)
+                    } catch (e: Exception) {
+                        Log.e(javaClass.simpleName, "can not get name from empty place")
+                    }
                 }
                 else -> {
 
@@ -226,6 +228,19 @@ class CommodityHomeActivity : BaseActivity() {
 
         initCommodityList(savedInstanceState)
 
+        initCommodityHome()
+    }
+
+    private lateinit var mCommodityHomeViewModel: CommodityHome2ViewModel
+
+    private fun initCommodityHome() {
+
+        mCommodityHomeViewModel = ViewModelProvider(this).get(CommodityHome2ViewModel::class.java)
+        mCommodityHomeViewModel.commodityHome.observe(this, Observer {
+            if (null == it) return@Observer
+
+            placeFragment.setCommoditiesSummary(it.commoditySummaryList)
+        })
     }
 
     private lateinit var mPlacePopup: PlacePopup
@@ -328,13 +343,13 @@ class CommodityHomeActivity : BaseActivity() {
     private var justExpanded = false
 
     private fun initBottomSheet() {
-        if (!::bottomSheetBehavior.isInitialized) {
+        if (!::mBottomSheetBehavior.isInitialized) {
             viewShadow.setOnClickListener {
-                bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+                mBottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
                 viewShadow.visibility = View.GONE
             }
-            bottomSheetBehavior = BottomSheetBehavior.from(itemCommodity)
-            bottomSheetBehavior.setBottomSheetCallback(object :
+            mBottomSheetBehavior = BottomSheetBehavior.from(itemCommodity)
+            mBottomSheetBehavior.setBottomSheetCallback(object :
                 BottomSheetBehavior.BottomSheetCallback() {
                 override fun onSlide(bottomSheet: View, slideOffset: Float) {
                     setCommodityHeight(slideOffset)
@@ -352,12 +367,9 @@ class CommodityHomeActivity : BaseActivity() {
                             }
                             setCommodityHeight(0f)
 
-//                            itemCommodity.itemConsuming.layoutConsume.visibility = View.GONE
                         }
                         BottomSheetBehavior.STATE_DRAGGING -> {
 
-//                            itemCommodity.itemConsuming.layoutConsume.visibility = View.VISIBLE
-//                                val lp = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0, 1.0f)
 
                             viewShadow.visibility = View.VISIBLE
 
@@ -367,11 +379,11 @@ class CommodityHomeActivity : BaseActivity() {
                                 if (isScrollToStart) {
                                     Log.e(javaClass.simpleName, "isScrollToStart: $isScrollToStart")
                                     // 可以滑
-//                                    bottomSheetBehavior.isHideable = true
-                                    bottomSheetBehavior.state = BottomSheetBehavior.STATE_DRAGGING
+//                                    mBottomSheetBehavior.isHideable = true
+                                    mBottomSheetBehavior.state = BottomSheetBehavior.STATE_DRAGGING
                                 } else {
                                     // bu
-                                    bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+                                    mBottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
                                 }
                             }
                         }
@@ -380,27 +392,19 @@ class CommodityHomeActivity : BaseActivity() {
                         BottomSheetBehavior.STATE_EXPANDED -> {
                             viewShadow.visibility = View.VISIBLE
 
-//                            val lp = LinearLayout.LayoutParams(
-//                                LinearLayout.LayoutParams.MATCH_PARENT,
-//                                0,
-//                                1.0f
-//                            )
-//                            itemCommodity.llCommDetail.layoutParams = lp
-
                             justExpanded = true
                         }
                         BottomSheetBehavior.STATE_HIDDEN -> {
                             viewShadow.visibility = View.GONE
                         }
                         BottomSheetBehavior.STATE_SETTLING -> {
-//                            itemCommodity.itemConsuming.vsConsumingTitle.visibility = View.GONE
                             viewShadow.visibility = View.VISIBLE
                         }
                     }
                 }
 
             })
-            bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+            mBottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
 
             svCommodity.setScrollViewListener(object : ScrollViewListener {
                 override fun onScrollChanged(
@@ -426,52 +430,23 @@ class CommodityHomeActivity : BaseActivity() {
 
                         Log.e(javaClass.simpleName, itemCommodity.height.toString())
 
-//                        val dx = event.rawX - lastX
-//                        val dy = event.rawY - lastY
-//
-//                        val left = (v.left + dx).toInt()
-//                        val top = (v.top + dy).toInt()
-//                        val right = (v.right + dx).toInt()
-//                        val bottom = (v.bottom + dy).toInt()
-//
-//                        v.layout(left, top, right, bottom)
-//                        lastX = event.rawX
-//                        lastY = event.rawY
-
-//                        val localRect = Rect()
-//                        v.getLocalVisibleRect(localRect)
-//
-//                        val h = localRect.bottom - ConvertUtils.dp2px(224f)*/
                         setCommodityHeight(yDistance)
-
-                        /*val imgRect = Rect();
-                        val focusItemParams = LinearLayout.LayoutParams(
-                            LinearLayout.LayoutParams.MATCH_PARENT,
-                            LinearLayout.LayoutParams.WRAP_CONTENT
-                        );
-                        selected.getGlobalVisibleRect(imgRect);
-
-                        focusItemParams.leftMargin = imgRect.left;
-                        focusItemParams.topMargin = imgRect.top;
-                        focusItemParams.width = imgRect.width();
-                        focusItemParams.height = imgRect.height();
-                        selected.getLocationInWindow(viewPosition);
-                        focusView.setLayoutParams(focusItemParams);//focusView为你需要设置位置的VIEW*/
                     }
                     MotionEvent.ACTION_UP -> {
                     }
                     else -> {
-
                     }
                 }
                 return@setOnTouchListener true
             }
         }
-        viewModel = ViewModelProvider(this).get(CommodityDetailViewModel::class.java)
+        mCommodityDetailViewModel =
+            ViewModelProvider(this).get(CommodityDetailViewModel::class.java)
 
-        viewModel.commodityDetail.observe(this, Observer {
+        mCommodityDetailViewModel.commodityDetail.observe(this, Observer {
             if (null == it) return@Observer
 
+            // 给 commodity sheet 设置数据
             mBinding.setVariable(BR.commodityDetail, it)
 
             showInventories(it)
@@ -483,7 +458,7 @@ class CommodityHomeActivity : BaseActivity() {
     var collapsedHeight = 0
 
     private fun setCommodityHeight(slideOffset: Float) {
-        if (bottomSheetBehavior.state == BottomSheetBehavior.STATE_EXPANDED) return
+        if (mBottomSheetBehavior.state == BottomSheetBehavior.STATE_EXPANDED) return
 
 
         val height = if (slideOffset > 0) {
@@ -547,22 +522,23 @@ class CommodityHomeActivity : BaseActivity() {
     private fun subscribeUi(liveData: LiveData<List<UserEntity>>) {
         liveData.observe(this,
             Observer { user ->
-                if (!user.isNullOrEmpty()) {
-                    toast(user[0].name)
-                } else {
-                    toast("user is empty")
-                }
+                //                if (!user.isNullOrEmpty()) {
+//                    toast(user[0].name)
+//                } else {
+//                    toast("user is empty")
+//                }
             })
     }
 
+    val placeFragment = PlaceFragment()
 
     private fun initCommodityList(savedInstanceState: Bundle?) {
 
         if (savedInstanceState == null) {
-            val fragment = PlaceFragment()
+
 
             supportFragmentManager.beginTransaction()
-                .add(R.id.fcCommodity, fragment, fragment.TAG).commit()
+                .add(R.id.fcCommodity, placeFragment, placeFragment.TAG).commit()
         }
     }
 
@@ -612,32 +588,33 @@ class CommodityHomeActivity : BaseActivity() {
         }
     }
 
-    private lateinit var bottomSheetBehavior: BottomSheetBehavior<View>
-    private lateinit var viewModel: CommodityDetailViewModel
+    private lateinit var mBottomSheetBehavior: BottomSheetBehavior<View>
+    private lateinit var mCommodityDetailViewModel
+            : CommodityDetailViewModel
 
-    /** Shows the product detail fragment  */
+    /** Shows the product detail placeFragment  */
     fun showCommodityDetail(commodityId: Int, sheetVersion: Boolean = true) {
 
-        if (sheetVersion) {
-            viewModel.setCommodityId(commodityId)
-            bottomSheetBehavior.state = when (bottomSheetBehavior.state) {
-                BottomSheetBehavior.STATE_HIDDEN -> {
-                    BottomSheetBehavior.STATE_COLLAPSED
-                }
-                BottomSheetBehavior.STATE_COLLAPSED or BottomSheetBehavior.STATE_EXPANDED -> BottomSheetBehavior.STATE_HIDDEN
-                else -> BottomSheetBehavior.STATE_COLLAPSED
+//        if (sheetVersion) {
+        mCommodityDetailViewModel.setCommodityId(commodityId)
+        mBottomSheetBehavior.state = when (mBottomSheetBehavior.state) {
+            BottomSheetBehavior.STATE_HIDDEN -> {
+                BottomSheetBehavior.STATE_COLLAPSED
             }
-        } else {
-            val adapter = CommodityAdapter(this, commodityId)
-
-            val dialog = DialogPlus.newDialog(this)
-                .setAdapter(adapter)
-                .setContentHolder(CommodityHolder())
-                .setOnClickListener { dialog, view -> }
-                .setExpanded(true)  // This will enable the expand feature, (similar to android L share dialog)
-                .create()
-            dialog.show()
+            BottomSheetBehavior.STATE_COLLAPSED or BottomSheetBehavior.STATE_EXPANDED -> BottomSheetBehavior.STATE_HIDDEN
+            else -> BottomSheetBehavior.STATE_COLLAPSED
         }
+//        } else {
+//            val adapter = CommodityAdapter(this, commodityId)
+//
+//            val dialog = DialogPlus.newDialog(this)
+//                .setAdapter(adapter)
+//                .setContentHolder(CommodityHolder())
+//                .setOnClickListener { dialog, view -> }
+//                .setExpanded(true)  // This will enable the expand feature, (similar to android L share dialog)
+//                .create()
+//            dialog.show()
+//        }
     }
 
     private lateinit var mPlaceList: List<Place>
@@ -689,8 +666,8 @@ class CommodityHomeActivity : BaseActivity() {
             Place("Mirror cabinet", otherList, 9),
             Place("Shoe rack", otherList, 10)
         )
-        val layoutManager = LinearLayoutManager(this)
-        layoutManager.orientation = LinearLayoutManager.HORIZONTAL
+//        val layoutManager = LinearLayoutManager(this)
+//        layoutManager.orientation = LinearLayoutManager.HORIZONTAL
 //        mBinding.rvLabels.layoutManager = layoutManager
 //        mBinding.rvLabels.adapter = PlaceNameAdapter(this, placeList)
     }
@@ -746,8 +723,8 @@ class CommodityHomeActivity : BaseActivity() {
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            if (bottomSheetBehavior.state != BottomSheetBehavior.STATE_HIDDEN) {
-                bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+            if (mBottomSheetBehavior.state != BottomSheetBehavior.STATE_HIDDEN) {
+                mBottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
             }
             return false
         } else {

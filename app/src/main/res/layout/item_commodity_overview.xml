@@ -7,7 +7,7 @@
 
         <import type="android.view.View" />
         <import type="com.simpure.expires.data.CommodityType" />
-        <import type="com.simpure.expires.model.CommodityModel" />
+        <import type="com.simpure.expires.model.CommoditySummaryModel" />
         <import type="com.simpure.expires.ui.CommodityClickCallback" />
 
         <variable
@@ -20,7 +20,7 @@
 
         <variable
                 name="commodity"
-                type="CommodityModel" />
+                type="CommoditySummaryModel" />
 
         <variable
                 name="callback"

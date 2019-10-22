@@ -14,7 +14,6 @@ class CommodityRepository(
     }
 
 
-
     companion object {
 
         // For Singleton instantiation

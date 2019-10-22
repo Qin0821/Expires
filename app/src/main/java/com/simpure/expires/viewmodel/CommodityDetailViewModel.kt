@@ -9,9 +9,9 @@ import kotlin.properties.Delegates
 
 class CommodityDetailViewModel(application: Application) : AndroidViewModel(application) {
 
-    private var mCommodityId by Delegates.notNull<Int>()
+//    private var mCommodityId by Delegates.notNull<Int>()
 
-    private val mRepository: DataRepository
+    private val mRepository: DataRepository = (application as BasicApp).repository
 
     private val mObservableCommodityDetail: MediatorLiveData<CommodityEntity> =
         MediatorLiveData()
@@ -19,20 +19,14 @@ class CommodityDetailViewModel(application: Application) : AndroidViewModel(appl
     val commodityDetail: LiveData<CommodityEntity>
         get() = mObservableCommodityDetail
 
+
     init {
         mObservableCommodityDetail.value = null
-
-        mRepository = (application as BasicApp).repository
     }
+
 
     fun setCommodityId(commodityId: Int) {
-        mCommodityId = commodityId
-        initCommodity(commodityId)
-    }
-
-    private fun initCommodity(commodityId: Int) {
-        val commodityDetailList = mRepository.loadCommodity(commodityId)
-        mObservableCommodityDetail.addSource(commodityDetailList) {
+        mObservableCommodityDetail.addSource(mRepository.loadCommodity(commodityId)) {
             mObservableCommodityDetail.value = it
         }
     }

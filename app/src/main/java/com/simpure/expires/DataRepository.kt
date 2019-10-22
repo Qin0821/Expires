@@ -6,14 +6,15 @@ import androidx.lifecycle.MediatorLiveData
 import com.simpure.expires.data.AppDatabase
 import com.simpure.expires.data.entity.CommodityEntity
 import com.simpure.expires.data.entity.UserEntity
-import com.simpure.expires.model.CommodityModel
+import com.simpure.expires.model.CommodityHomeModel
+import com.simpure.expires.model.CommoditySummaryModel
 
 /**
  * Repository handling the work with commodities and comments.
  */
 class DataRepository private constructor(private val mDatabase: AppDatabase) {
     private val mObservableCommodities: MediatorLiveData<List<CommodityEntity>> = MediatorLiveData()
-    private val mObservableCommoditiesSummary: MediatorLiveData<List<CommodityModel>>
+    private val mObservableCommoditiesSummary: MediatorLiveData<List<CommoditySummaryModel>>
     private val mObservableUsers: MediatorLiveData<List<UserEntity>>
 
     /**
@@ -22,7 +23,7 @@ class DataRepository private constructor(private val mDatabase: AppDatabase) {
     val commodities: LiveData<List<CommodityEntity>>
         get() = mObservableCommodities
 
-    val commoditiesSummary: LiveData<List<CommodityModel>>
+    val allCommoditySummary: LiveData<List<CommoditySummaryModel>>
         get() = mObservableCommoditiesSummary
 
     val allUser: LiveData<List<UserEntity>>
@@ -42,9 +43,9 @@ class DataRepository private constructor(private val mDatabase: AppDatabase) {
         mObservableCommoditiesSummary = MediatorLiveData()
         mObservableCommoditiesSummary.addSource(
             mDatabase.commodityDao().loadAllCommoditiesSummary()
-        ) { commodityModel ->
+        ) { commoditySummaryList ->
             if (mDatabase.databaseCreated.value != null) {
-                mObservableCommoditiesSummary.postValue(commodityModel)
+                mObservableCommoditiesSummary.postValue(commoditySummaryList)
             }
         }
 
@@ -60,6 +61,10 @@ class DataRepository private constructor(private val mDatabase: AppDatabase) {
 
     fun loadCommodity(commodityId: Int): LiveData<CommodityEntity> {
         return mDatabase.commodityDao().loadCommodity(commodityId)
+    }
+
+    fun loadCommodityHomeByPlace(place: String): LiveData<List<CommoditySummaryModel>> {
+        return mDatabase.commodityDao().loadCommoditiesSummaryByName(place)
     }
 
     companion object {

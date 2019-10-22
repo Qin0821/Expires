@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.simpure.expires.R
 import com.simpure.expires.databinding.ItemCommodityOverviewBinding
-import com.simpure.expires.model.CommodityModel
+import com.simpure.expires.model.CommoditySummaryModel
 
 class PlaceAdapter(private val mCommodityClickCallback: CommodityClickCallback) :
     RecyclerView.Adapter<PlaceAdapter.ViewHolder>() {
@@ -20,43 +20,43 @@ class PlaceAdapter(private val mCommodityClickCallback: CommodityClickCallback) 
 
     fun getSelectedPlacePosition() = selectedPlacePosition
 
-    internal var mCommodityList: List<CommodityModel>? = null
+    internal var mCommoditySummaryList: List<CommoditySummaryModel>? = null
 
     init {
         setHasStableIds(true)
     }
 
-    fun setCommodityList(commodityList: List<CommodityModel>) {
-        if (mCommodityList == null) {
-            mCommodityList = commodityList
-            notifyItemRangeInserted(0, commodityList.size)
+    fun setCommodityList(commoditySummaryList: List<CommoditySummaryModel>) {
+        if (mCommoditySummaryList == null) {
+            mCommoditySummaryList = commoditySummaryList
+            notifyItemRangeInserted(0, commoditySummaryList.size)
         } else {
             val result = DiffUtil.calculateDiff(object : DiffUtil.Callback() {
                 override fun getOldListSize(): Int {
-                    return mCommodityList!!.size
+                    return mCommoditySummaryList!!.size
                 }
 
                 override fun getNewListSize(): Int {
-                    return commodityList.size
+                    return commoditySummaryList.size
                 }
 
                 override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-                    return mCommodityList!![oldItemPosition].id == commodityList[newItemPosition].id
+                    return mCommoditySummaryList!![oldItemPosition].id == commoditySummaryList[newItemPosition].id
                 }
 
                 override fun areContentsTheSame(
                     oldItemPosition: Int,
                     newItemPosition: Int
                 ): Boolean {
-                    val newCommodity = commodityList[newItemPosition]
-                    val oldCommodity = mCommodityList!![oldItemPosition]
+                    val newCommodity = commoditySummaryList[newItemPosition]
+                    val oldCommodity = mCommoditySummaryList!![oldItemPosition]
                     return (newCommodity.id == oldCommodity.id
                             && newCommodity.name == oldCommodity.name
                             && newCommodity.productionDate == oldCommodity.productionDate
                             && newCommodity.expiryDate == oldCommodity.expiryDate)
                 }
             })
-            mCommodityList = commodityList
+            mCommoditySummaryList = commoditySummaryList
             result.dispatchUpdatesTo(this)
         }
     }
@@ -71,16 +71,16 @@ class PlaceAdapter(private val mCommodityClickCallback: CommodityClickCallback) 
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.binding.commodity = mCommodityList!![position]
+        holder.binding.commodity = mCommoditySummaryList!![position]
         holder.binding.executePendingBindings()
     }
 
     override fun getItemCount(): Int {
-        return if (mCommodityList == null) 0 else mCommodityList!!.size
+        return if (mCommoditySummaryList == null) 0 else mCommoditySummaryList!!.size
     }
 
     override fun getItemId(position: Int): Long {
-        return mCommodityList!![position].id.toLong()
+        return mCommoditySummaryList!![position].id.toLong()
     }
 
     class ViewHolder(val binding: ItemCommodityOverviewBinding) :
