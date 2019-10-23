@@ -6,7 +6,6 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import androidx.databinding.DataBindingUtil
-import com.simpure.expires.data.*
 import com.simpure.expires.databinding.ActivityHomeBinding
 import androidx.recyclerview.widget.LinearLayoutManager
 
@@ -38,8 +37,10 @@ import com.lxj.xpopup.core.PositionPopupView
 import com.lxj.xpopup.enums.PopupAnimation
 import com.lxj.xpopup.interfaces.SimpleCallback
 import com.simpure.expires.BR
+import com.simpure.expires.BasicApp
 import com.simpure.expires.R
 import com.simpure.expires.data.entity.CommodityEntity
+import com.simpure.expires.data.entity.GroupEntity
 import com.simpure.expires.ui.commodity.InventoryAdapter
 import com.simpure.expires.utilities.getCompatColor
 import com.simpure.expires.view.popup.ConsumingPopup
@@ -175,7 +176,9 @@ class CommodityHomeActivity : BaseActivity() {
 
     private lateinit var mBinding: ActivityHomeBinding
 
-    private var mSelectPlace: Place? = null
+    private lateinit var mSelectPlace: String
+    private lateinit var mPlaceList: List<String>
+
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -191,7 +194,6 @@ class CommodityHomeActivity : BaseActivity() {
         mBinding.itemNavigation.ivInventories.setOnClickListener(this)
         mBinding.itemNavigation.ivConsuming.setOnClickListener(this)
         mBinding.itemNavigation.ivEdit.setOnClickListener(this)
-        mBinding.setVariable(BR.placeName, mSelectPlace?.name)
 
         mBinding.tvPlace.setOnTouchListener { v, event ->
             when (event.action) {
@@ -211,8 +213,8 @@ class CommodityHomeActivity : BaseActivity() {
                     mSelectPlace = mPlacePopup.getSelectPlace()
 
                     try {
-                        mBinding.setVariable(BR.placeName, mSelectPlace!!.name)
-                        mCommodityHomeViewModel.setPlaceName(mSelectPlace!!.name)
+                        mBinding.setVariable(BR.placeName, mSelectPlace)
+                        mCommodityHomeViewModel.setPlaceName(mSelectPlace)
                     } catch (e: Exception) {
                         Log.e(javaClass.simpleName, "can not get name from empty place")
                     }
@@ -224,16 +226,21 @@ class CommodityHomeActivity : BaseActivity() {
             return@setOnTouchListener true
         }
 
-        initPlaceNameList()
-
         initCommodityList(savedInstanceState)
 
-        initCommodityHome()
     }
 
     private lateinit var mCommodityHomeViewModel: CommodityHome2ViewModel
 
-    private fun initCommodityHome() {
+    private fun initGroupHome(group: GroupEntity) {
+
+        if (!::mSelectPlace.isInitialized) {
+            mSelectPlace = group.placeList[0]
+            mBinding.setVariable(BR.placeName, mSelectPlace)
+        }
+        if (!::mPlaceList.isInitialized) mPlaceList = group.placeList
+
+
 
         mCommodityHomeViewModel = ViewModelProvider(this).get(CommodityHome2ViewModel::class.java)
         mCommodityHomeViewModel.commodityHome.observe(this, Observer {
@@ -247,7 +254,7 @@ class CommodityHomeActivity : BaseActivity() {
 
     private fun showPlacePopup(
         view: View,
-        placeList: List<Place>
+        placeList: List<String>
     ) {
         val location = IntArray(2)
         view.getLocationInWindow(location)
@@ -509,25 +516,41 @@ class CommodityHomeActivity : BaseActivity() {
 
     override fun onStart() {
         super.onStart()
-        initViewModel()
+        initUserViewModel()
     }
 
     val userId = 1398762
     private val mObservableUsers: MediatorLiveData<List<UserEntity>> = MediatorLiveData()
-    private fun initViewModel() {
+    private fun initUserViewModel() {
         val viewModel = ViewModelProvider(this).get(UserViewModel::class.java)
-        subscribeUi(viewModel.commodities)
+        viewModel.setUserId(userId)
+        viewModel.commodities.observe(this,
+            Observer { user ->
+                if (null != user) {
+                    toast(user.name)
+                    getUserGroup(user.groupIdList)
+                } else {
+                    toast("user is empty")
+                }
+            })
     }
 
-    private fun subscribeUi(liveData: LiveData<List<UserEntity>>) {
-        liveData.observe(this,
-            Observer { user ->
-                //                if (!user.isNullOrEmpty()) {
-//                    toast(user[0].name)
-//                } else {
-//                    toast("user is empty")
-//                }
-            })
+    private val mObservableGroup: MediatorLiveData<GroupEntity> = MediatorLiveData()
+
+    private fun getUserGroup(groupIdList: List<String>) {
+
+        if (groupIdList.isNotEmpty()) {
+            // 目前不存在多group情况
+//            val group = (application as BasicApp).repository.loadGroupById(groupIdList[0])
+            val group = (application as BasicApp).repository.allGroup
+
+            mObservableGroup.addSource(group) {
+
+//                initGroupHome(it)
+                Log.e(javaClass.simpleName, it.toString())
+            }
+
+        }
     }
 
     val placeFragment = PlaceFragment()
@@ -616,62 +639,6 @@ class CommodityHomeActivity : BaseActivity() {
 //            dialog.show()
 //        }
     }
-
-    private lateinit var mPlaceList: List<Place>
-
-    private fun initPlaceNameList() {
-        /**
-         * 1. 获取place列表
-         * 2. 根据placeList创建CommodityListFragment
-         */
-        val fridgeList = arrayListOf(
-            Commodity(10L, "薯条", 10, "根", 1),
-            Commodity(11L, "雪碧", 2, "瓶", 1),
-            Commodity(12L, "鸡腿", 2, "根", 1),
-            Commodity(13L, "排骨", 1, "斤", 1),
-            Commodity(14L, "酸奶", 2, "瓶", 1),
-            Commodity(15L, "西瓜", 1, "个", 1)
-        )
-
-        val makeUpsList = arrayListOf(
-            Commodity(20L, "dior", 2, "支", 2),
-            Commodity(21L, "乳液", 1, "瓶", 2),
-            Commodity(22L, "爽肤水", 1, "瓶", 2),
-            Commodity(23L, "项链", 2, "个", 2),
-            Commodity(24L, "手链", 1, "个", 2),
-            Commodity(25L, "tf", 1, "支", 2)
-        )
-
-        val otherList = arrayListOf(
-            Commodity(30L, "dior", 2, "支", 3),
-            Commodity(31L, "乳液", 1, "瓶", 3),
-            Commodity(32L, "爽肤水", 1, "瓶", 3),
-            Commodity(33L, "项链", 2, "个", 3),
-            Commodity(34L, "手链", 1, "个", 3),
-            Commodity(35L, "tf", 1, "支", 3)
-        )
-
-        val commodityList = fridgeList + makeUpsList + otherList
-
-        mPlaceList = arrayListOf(
-            Place("All", commodityList, 0),
-            Place("Fridge", fridgeList, 1),
-            Place("makeUpsList", makeUpsList, 2),
-            Place("Snacks", otherList, 3),
-            Place("Icebox", otherList, 4),
-            Place("Tea table", otherList, 5),
-            Place("Night table", otherList, 6),
-            Place("Chest", otherList, 7),
-            Place("Safe", otherList, 8),
-            Place("Mirror cabinet", otherList, 9),
-            Place("Shoe rack", otherList, 10)
-        )
-//        val layoutManager = LinearLayoutManager(this)
-//        layoutManager.orientation = LinearLayoutManager.HORIZONTAL
-//        mBinding.rvLabels.layoutManager = layoutManager
-//        mBinding.rvLabels.adapter = PlaceNameAdapter(this, placeList)
-    }
-
 
     fun goInventories(view: View) {
         PermissionUtils.permission(PermissionConstants.CAMERA)

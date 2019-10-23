@@ -21,7 +21,7 @@ class UserEntity(
     // vip剩余时长
     var vipTime: Long = 0L,
     // 免打扰时间
-    var notNotifyTime: List<String>? = null,
+    var notNotifyTime: List<String> = listOf(),
     // 提醒方式
     var notify: User.NotifyWay = User.NotifyWay(
         app = true,
@@ -29,7 +29,7 @@ class UserEntity(
         message = true
     ),
     // 所在group id列表
-    var groupIdList: List<String>? = null,
+    var groupIdList: List<String> = listOf(),
     // ui风格（正常、黑暗）
     var uiStyle: String = "normal",
     // email

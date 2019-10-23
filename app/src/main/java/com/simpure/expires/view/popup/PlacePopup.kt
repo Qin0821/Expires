@@ -16,15 +16,15 @@ import kotlinx.android.synthetic.main.popup_place.view.*
 class PlacePopup(activity: CommodityHomeActivity) : PositionPopupView(activity) {
 
     private var mActivity: CommodityHomeActivity = activity
-    private lateinit var mPlaceList: List<Place>
+    private lateinit var mPlaceList: List<String>
     private lateinit var mAdapter: PlaceNameAdapter
 
     private lateinit var xLimit: Array<Int>
     private lateinit var yLimit: Array<Int>
 
-    private var mSelectedPlace: Place? = null
+    private lateinit var mSelectedPlace: String
 
-    fun setPlaceList(placeList: List<Place>) {
+    fun setPlaceList(placeList: List<String>) {
         mPlaceList = placeList
         if (!::mAdapter.isInitialized) {
             val layoutManager = LinearLayoutManager(mActivity)
@@ -66,7 +66,9 @@ class PlacePopup(activity: CommodityHomeActivity) : PositionPopupView(activity) 
 
     }
 
-    fun getSelectPlace() = mSelectedPlace
+    fun getSelectPlace(): String {
+        return if (::mSelectedPlace.isInitialized) mSelectedPlace else ""
+    }
 
     override fun getImplLayoutId(): Int {
         return R.layout.popup_place

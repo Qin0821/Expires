@@ -13,15 +13,17 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import com.simpure.expires.AppExecutors
 import com.simpure.expires.data.dao.CommodityDao
 import com.simpure.expires.data.dao.CommodityHomeDao
+import com.simpure.expires.data.dao.GroupDao
 import com.simpure.expires.data.dao.UserDao
 import com.simpure.expires.data.entity.CommodityEntity
+import com.simpure.expires.data.entity.GroupEntity
 import com.simpure.expires.data.entity.UserEntity
 
 /**
  * The Room database for this app
  */
 @Database(
-    entities = [UserEntity::class, CommodityHome::class, CommodityEntity::class],
+    entities = [UserEntity::class, GroupEntity::class, CommodityHome::class, CommodityEntity::class],
     version = 1,
     exportSchema = false
 )
@@ -29,6 +31,7 @@ import com.simpure.expires.data.entity.UserEntity
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun userDao(): UserDao
+    abstract fun groupDao(): GroupDao
     abstract fun commodityDao(): CommodityDao
     abstract fun commodityHomeDao(): CommodityHomeDao
 
@@ -86,10 +89,11 @@ abstract class AppDatabase : RoomDatabase() {
                             // Generate the data for pre-population
                             val database = getInstance(appContext, executors)
                             val user = DataGenerator.generateUser()
+                            val group = DataGenerator.generateGroup()
                             val commodityList = DataGenerator.generateCommodities()
 //                            val comments = DataGenerator.generateCommentsForProducts(commodities)
 
-                            insertData(database, user, commodityList)
+                            insertData(database, user, group, commodityList)
                             // notify that the database was created and it's ready to be used
                             database.setDatabaseCreated()
                         }
@@ -103,10 +107,12 @@ abstract class AppDatabase : RoomDatabase() {
         private fun insertData(
             database: AppDatabase,
             userEntity: List<UserEntity>,
+            groupEntity: List<GroupEntity>,
             commodityList: List<CommodityEntity>
         ) {
             database.runInTransaction {
                 database.userDao().insertAll(userEntity)
+                database.groupDao().insertAll(groupEntity)
                 database.commodityDao().insertAll(commodityList)
 //                database.commentDao().insertAll(comments)
             }

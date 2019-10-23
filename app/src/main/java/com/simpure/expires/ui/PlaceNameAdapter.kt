@@ -23,7 +23,7 @@ class PlaceNameAdapter(private val context: Context) :
 
     private var selectedPlacePosition = 0
     private var mSelectedPosition = -1
-    private lateinit var mPlaceList: List<Place>
+    private lateinit var mPlaceList: List<String>
 
     fun setSelectedPlace(position: Int) {
         this.selectedPlacePosition = position
@@ -38,7 +38,7 @@ class PlaceNameAdapter(private val context: Context) :
         notifyDataSetChanged()
     }
 
-    fun setPlaceList(placeList: List<Place>) {
+    fun setPlaceList(placeList: List<String>) {
         mPlaceList = placeList
     }
 
@@ -58,7 +58,7 @@ class PlaceNameAdapter(private val context: Context) :
         val binding = DataBindingUtil.getBinding<ItemPlaceNameBinding>(holder.itemView)
         with(binding!!) {
 
-            setVariable(BR.placeName, mPlaceList[position].name)
+            setVariable(BR.placeName, mPlaceList[position])
             setVariable(
                 BR.isSelected,
                 position == mSelectedPosition

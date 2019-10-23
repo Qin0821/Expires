@@ -5,8 +5,8 @@ import androidx.lifecycle.MediatorLiveData
 
 import com.simpure.expires.data.AppDatabase
 import com.simpure.expires.data.entity.CommodityEntity
+import com.simpure.expires.data.entity.GroupEntity
 import com.simpure.expires.data.entity.UserEntity
-import com.simpure.expires.model.CommodityHomeModel
 import com.simpure.expires.model.CommoditySummaryModel
 
 /**
@@ -16,6 +16,7 @@ class DataRepository private constructor(private val mDatabase: AppDatabase) {
     private val mObservableCommodities: MediatorLiveData<List<CommodityEntity>> = MediatorLiveData()
     private val mObservableCommoditiesSummary: MediatorLiveData<List<CommoditySummaryModel>>
     private val mObservableUsers: MediatorLiveData<List<UserEntity>>
+    private val mObservableGroups: MediatorLiveData<List<GroupEntity>>
 
     /**
      * Get the list of commodities from the database and get notified when the data changes.
@@ -28,6 +29,9 @@ class DataRepository private constructor(private val mDatabase: AppDatabase) {
 
     val allUser: LiveData<List<UserEntity>>
         get() = mObservableUsers
+
+    val allGroup: LiveData<List<GroupEntity>>
+        get() = mObservableGroups
 
     init {
 
@@ -57,6 +61,23 @@ class DataRepository private constructor(private val mDatabase: AppDatabase) {
                 mObservableUsers.postValue(userEntities)
             }
         }
+
+        mObservableGroups = MediatorLiveData()
+        mObservableGroups.addSource(
+            mDatabase.groupDao().getAllGroup()
+        ) { userEntities ->
+            if (mDatabase.databaseCreated.value != null) {
+                mObservableGroups.postValue(userEntities)
+            }
+        }
+    }
+
+    fun loadUserById(id: Int): LiveData<UserEntity> {
+        return mDatabase.userDao().loadUserByIds(id)
+    }
+
+    fun loadGroupById(id: String): LiveData<GroupEntity> {
+        return mDatabase.groupDao().loadGroupById(id)
     }
 
     fun loadCommodity(commodityId: Int): LiveData<CommodityEntity> {

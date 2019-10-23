@@ -8,7 +8,6 @@ import com.simpure.expires.BasicApp
 import com.simpure.expires.DataRepository
 import com.simpure.expires.model.CommodityHomeModel
 import com.simpure.expires.ui.CommodityHomeActivity
-import kotlin.properties.Delegates
 
 /**
  * The ViewModel for [CommodityHomeActivity]
@@ -24,14 +23,24 @@ class CommodityHome2ViewModel(application: Application) : AndroidViewModel(appli
     val commodityHome: LiveData<CommodityHomeModel>
         get() = mObservableCommodityHome
 
+    private lateinit var mCommodityHomeModel: CommodityHomeModel
 
     init {
         mObservableCommodityHome.value = null
+        mObservableCommodityHome.addSource(mRepository.allCommoditySummary) {
+            mCommodityHomeModel = CommodityHomeModel("All", it, mutableMapOf("All" to it))
+            mObservableCommodityHome.value = mCommodityHomeModel
+        }
     }
 
-    fun setPlaceName(placeName: String) {
-        mObservableCommodityHome.addSource(mRepository.loadCommodityHomeByPlace(placeName)) {
-            mObservableCommodityHome.value = CommodityHomeModel(placeName, it)
+    fun setPlaceName(place: String) {
+        mObservableCommodityHome.addSource(mRepository.loadCommodityHomeByPlace(place)) {
+            mCommodityHomeModel.apply {
+                placeName = place
+                commoditySummaryList = it
+                placeMap[place] = it
+            }
+            mObservableCommodityHome.value = mCommodityHomeModel
         }
     }
 

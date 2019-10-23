@@ -33,17 +33,18 @@ interface CommodityDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(commodities: List<CommodityEntity>)
 
-    @Query("select * from commodities where id = :commodityId")
+    @Query("SELECT * FROM commodities WHERE id = :commodityId")
     fun loadCommodity(commodityId: Int): LiveData<CommodityEntity>
 
-    @Query("select * from commodities where id = :commodityId")
+    @Query("SELECT * FROM commodities WHERE id = :commodityId")
     fun loadCommoditySync(commodityId: Int): CommodityEntity
 
-    @Query("SELECT id, name, productionDate, expiryDate FROM commodities")
+    @Query("SELECT id, name, productionDate, expiryDate, place  FROM commodities")
     fun loadAllCommoditiesSummary(): LiveData<List<CommoditySummaryModel>>
 
-    @Query("SELECT id, name, productionDate, expiryDate FROM commodities where place = :placeName")
-    fun loadCommoditiesSummaryByName(placeName: String): LiveData<List<CommoditySummaryModel>>
+    @Query("SELECT id, name, productionDate, expiryDate, place FROM commodities WHERE place LIKE :place")
+//    @Query("SELECT id, name, productionDate, expiryDate FROM commodities where place = :place")
+    fun loadCommoditiesSummaryByName(place: String): LiveData<List<CommoditySummaryModel>>
     // todo 返回为null 看一下
 
     //    @Query("SELECT commodities.* FROM commodities JOIN commoditiesFts ON (commodities.id = commoditiesFts.rowid) "

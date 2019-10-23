@@ -10,8 +10,8 @@ interface UserDao {
     @Query("SELECT * FROM user")
     fun getAllUser(): LiveData<List<UserEntity>>
 
-    @Query("SELECT * FROM user WHERE id= :userId")
-    fun loadByIds(userId: Int): LiveData<UserEntity>
+    @Query("SELECT * FROM user WHERE id=:id")
+    fun loadUserByIds(id: Int): LiveData<UserEntity>
 
 //    @Query("SELECT * FROM user WHERE first_name LIKE :first AND " + "last_name LIKE :last LIMIT 1")
 //    fun findByName(first: String, last: String): User
