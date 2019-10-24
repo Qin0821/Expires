@@ -89,6 +89,11 @@ class CommodityHomeActivity : BaseActivity() {
             tvSearchCancel -> {
                 cancelSearch()
             }
+            tvAll -> {
+                mBinding.setVariable(BR.placeName, mSelectPlace)
+                mBinding.setVariable(BR.notAll, false)
+                mCommodityHomeViewModel.setPlaceName("All")
+            }
         }
     }
 
@@ -195,6 +200,7 @@ class CommodityHomeActivity : BaseActivity() {
         mBinding.itemNavigation.ivConsuming.setOnClickListener(this)
         mBinding.itemNavigation.ivEdit.setOnClickListener(this)
 
+        mBinding.tvAll.setOnClickListener(this)
         mBinding.tvPlace.setOnTouchListener { v, event ->
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
@@ -210,10 +216,12 @@ class CommodityHomeActivity : BaseActivity() {
                 }
                 MotionEvent.ACTION_UP -> {
                     mPlaceNamePopup.dismiss()
-                    mSelectPlace = mPlacePopup.getSelectPlace()
+                    mSelectPlace =
+                        if (mPlacePopup.getSelectPlace().isEmpty()) mSelectPlace else mPlacePopup.getSelectPlace()
 
                     try {
                         mBinding.setVariable(BR.placeName, mSelectPlace)
+                        mBinding.setVariable(BR.notAll, true)
                         mCommodityHomeViewModel.setPlaceName(mSelectPlace)
                     } catch (e: Exception) {
                         Log.e(javaClass.simpleName, "can not get name from empty place")
@@ -237,6 +245,7 @@ class CommodityHomeActivity : BaseActivity() {
         if (!::mSelectPlace.isInitialized) {
             mSelectPlace = group.placeList[0]
             mBinding.setVariable(BR.placeName, mSelectPlace)
+            mBinding.setVariable(BR.notAll, false)
         }
         if (!::mPlaceList.isInitialized) mPlaceList = group.placeList
 
@@ -542,13 +551,21 @@ class CommodityHomeActivity : BaseActivity() {
         if (groupIdList.isNotEmpty()) {
             // 目前不存在多group情况
 //            val group = (application as BasicApp).repository.loadGroupById(groupIdList[0])
-            val group = (application as BasicApp).repository.allGroup
+            thread {
 
-            mObservableGroup.addSource(group) {
-
-//                initGroupHome(it)
-                Log.e(javaClass.simpleName, it.toString())
+                val group =
+                    (application as BasicApp).database.groupDao().loadGroupById(groupIdList[0])
+                runOnUiThread {
+                    initGroupHome(group)
+                }
             }
+
+//            mObservableGroup.value = null
+//            mObservableGroup.addSource(group) {
+//
+////                initGroupHome(it)
+//                Log.e(javaClass.simpleName, it.toString())
+//            }
 
         }
     }

@@ -46,8 +46,8 @@ class Converters {
         if (list === null || list.isEmpty()) return ""
 
         val str = StringBuilder(list[0])
-        list.forEach {
-            str.append("\n").append(it)
+        list.forEachIndexed { index, s ->
+            if (index > 0) str.append("\n").append(s)
         }
         return str.toString()
     }

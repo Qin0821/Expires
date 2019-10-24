@@ -14,9 +14,10 @@ import com.simpure.expires.model.CommoditySummaryModel
  */
 class DataRepository private constructor(private val mDatabase: AppDatabase) {
     private val mObservableCommodities: MediatorLiveData<List<CommodityEntity>> = MediatorLiveData()
-    private val mObservableCommoditiesSummary: MediatorLiveData<List<CommoditySummaryModel>>
-    private val mObservableUsers: MediatorLiveData<List<UserEntity>>
-    private val mObservableGroups: MediatorLiveData<List<GroupEntity>>
+    private val mObservableCommoditiesSummary: MediatorLiveData<List<CommoditySummaryModel>> =
+        MediatorLiveData()
+    private val mObservableUsers: MediatorLiveData<List<UserEntity>> = MediatorLiveData()
+    private val mObservableGroups: MediatorLiveData<List<GroupEntity>> = MediatorLiveData()
 
     /**
      * Get the list of commodities from the database and get notified when the data changes.
@@ -44,7 +45,6 @@ class DataRepository private constructor(private val mDatabase: AppDatabase) {
             }
         }*/
 
-        mObservableCommoditiesSummary = MediatorLiveData()
         mObservableCommoditiesSummary.addSource(
             mDatabase.commodityDao().loadAllCommoditiesSummary()
         ) { commoditySummaryList ->
@@ -53,7 +53,6 @@ class DataRepository private constructor(private val mDatabase: AppDatabase) {
             }
         }
 
-        mObservableUsers = MediatorLiveData()
         mObservableUsers.addSource(
             mDatabase.userDao().getAllUser()
         ) { userEntities ->
@@ -62,23 +61,24 @@ class DataRepository private constructor(private val mDatabase: AppDatabase) {
             }
         }
 
-        mObservableGroups = MediatorLiveData()
-        mObservableGroups.addSource(
-            mDatabase.groupDao().getAllGroup()
-        ) { userEntities ->
-            if (mDatabase.databaseCreated.value != null) {
-                mObservableGroups.postValue(userEntities)
-            }
-        }
+
+//        val dao = mDatabase.groupDao().getAllGroup()
+//        mObservableGroups.addSource(
+//            dao
+//        ) { userEntities ->
+//            if (mDatabase.databaseCreated.value != null) {
+//                mObservableGroups.postValue(userEntities)
+//            }
+//        }
     }
 
     fun loadUserById(id: Int): LiveData<UserEntity> {
         return mDatabase.userDao().loadUserByIds(id)
     }
 
-    fun loadGroupById(id: String): LiveData<GroupEntity> {
-        return mDatabase.groupDao().loadGroupById(id)
-    }
+//    fun loadGroupById(id: String): LiveData<GroupEntity> {
+//        return mDatabase.groupDao().loadGroupById(id)
+//    }
 
     fun loadCommodity(commodityId: Int): LiveData<CommodityEntity> {
         return mDatabase.commodityDao().loadCommodity(commodityId)

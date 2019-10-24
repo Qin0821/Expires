@@ -8,10 +8,10 @@ import com.simpure.expires.data.entity.GroupEntity
 interface GroupDao {
 
     @Query("SELECT * FROM `group`")
-    fun getAllGroup(): LiveData<List<GroupEntity>>
+    fun getAllGroup(): List<GroupEntity>
 
     @Query("SELECT * FROM `group` WHERE id=:id")
-    fun loadGroupById(id: String): LiveData<GroupEntity>
+    fun loadGroupById(id: String): GroupEntity
 
 //    @Query("SELECT * FROM user WHERE first_name LIKE :first AND " + "last_name LIKE :last LIMIT 1")
 //    fun findByName(first: String, last: String): User

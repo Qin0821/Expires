@@ -34,13 +34,22 @@ class CommodityHome2ViewModel(application: Application) : AndroidViewModel(appli
     }
 
     fun setPlaceName(place: String) {
-        mObservableCommodityHome.addSource(mRepository.loadCommodityHomeByPlace(place)) {
+
+        if (place == "All") {
             mCommodityHomeModel.apply {
-                placeName = place
-                commoditySummaryList = it
-                placeMap[place] = it
+                placeName = "All"
+                commoditySummaryList = placeMap["All"]!!
             }
             mObservableCommodityHome.value = mCommodityHomeModel
+        } else {
+            mObservableCommodityHome.addSource(mRepository.loadCommodityHomeByPlace(place)) {
+                mCommodityHomeModel.apply {
+                    placeName = place
+                    commoditySummaryList = it
+                    placeMap[place] = it
+                }
+                mObservableCommodityHome.value = mCommodityHomeModel
+            }
         }
     }
 

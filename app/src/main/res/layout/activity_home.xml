@@ -21,6 +21,10 @@
         <variable
                 name="placeName"
                 type="String" />
+
+        <variable
+                name="notAll"
+                type="Boolean" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -85,10 +89,11 @@
                         android:padding="2dp">
 
                     <TextView
+                            android:id="@+id/tvAll"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:background="@drawable/bg_rounded_rectangle_white_6"
+                            android:background='@{!notAll ? @drawable/bg_rounded_rectangle_white_6 : null}'
                             android:gravity="center"
                             android:text="@string/all"
                             android:textColor="@color/text_expires_days"
@@ -100,6 +105,7 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:width="0dp"
+                            android:background='@{notAll ? @drawable/bg_rounded_rectangle_white_6 : null}'
                             android:gravity="center"
                             android:text="@{placeName}"
                             android:textColor="@color/bg_comm_action"
