@@ -1,7 +1,10 @@
 package com.simpure.expires.ui
 
+import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -14,6 +17,8 @@ import com.simpure.expires.R
 import com.simpure.expires.databinding.FragmentPlaceBinding
 import com.simpure.expires.model.CommoditySummaryModel
 import com.simpure.expires.viewmodel.CommoditySummaryViewModel
+import kotlinx.android.synthetic.main.activity_home.*
+import java.util.*
 
 class PlaceFragment : Fragment() {
 
@@ -23,7 +28,7 @@ class PlaceFragment : Fragment() {
 
     private var mPlaceAdapter: PlaceAdapter? = null
 
-    private var mBinding: FragmentPlaceBinding? = null
+    private lateinit var mBinding: FragmentPlaceBinding
 
     private lateinit var mCommoditySummaryViewModel: CommoditySummaryViewModel
 
@@ -35,9 +40,9 @@ class PlaceFragment : Fragment() {
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_place, container, false)
 
         mPlaceAdapter = PlaceAdapter(mCommodityClickCallback)
-        mBinding!!.rvCommodityList.adapter = mPlaceAdapter
+        mBinding.rvCommodityList.adapter = mPlaceAdapter
 
-        return mBinding!!.root
+        return mBinding.root
     }
 
     private val mCommodityClickCallback = CommodityClickCallback { commodity ->
@@ -63,16 +68,21 @@ class PlaceFragment : Fragment() {
     private fun executePendingBindings(placeSummaryList: List<CommoditySummaryModel>?) {
         // 当数据更改时更新列表
         if (placeSummaryList.isNullOrEmpty()) {
-            mBinding!!.isLoading = true
+            mBinding.isLoading = true
         } else {
-            mBinding!!.isLoading = false
+            mBinding.isLoading = false
             mPlaceAdapter!!.setCommodityList(placeSummaryList)
         }
         // 异步执行更改
-        mBinding!!.executePendingBindings()
+        mBinding.executePendingBindings()
     }
 
     fun setCommoditiesSummary(placeSummaryList: List<CommoditySummaryModel>) {
         executePendingBindings(placeSummaryList)
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    fun setCommodityListTouchListener(listener: View.OnTouchListener) {
+        mBinding.rvCommodityList.setOnTouchListener(listener)
     }
 }

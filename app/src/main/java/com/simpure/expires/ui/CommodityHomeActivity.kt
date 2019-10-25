@@ -3,6 +3,7 @@ package com.simpure.expires.ui
 import android.animation.AnimatorSet
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.databinding.DataBindingUtil
@@ -14,6 +15,7 @@ import com.google.zxing.util.Constant.REQ_QR_CODE
 import com.google.zxing.activity.CaptureActivity
 import android.content.Intent
 import android.graphics.Rect
+import android.util.AttributeSet
 import com.blankj.utilcode.constant.PermissionConstants
 import com.blankj.utilcode.util.*
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -29,6 +31,7 @@ import android.view.MotionEvent
 import android.view.animation.AnimationUtils
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
+import android.widget.TextView
 import androidx.lifecycle.*
 import com.google.zxing.util.BarcodeGenerator
 import com.lxj.xpopup.XPopup
@@ -518,14 +521,36 @@ class CommodityHomeActivity : BaseActivity() {
         val rect = Rect()
         itemCommodity.getLocalVisibleRect(rect)
 //        Log.e(javaClass.simpleName, "rect: $rect")
-        Log.e(javaClass.simpleName, "height: $height")
-        Log.e(javaClass.simpleName, "height: ${ConvertUtils.px2dp(height.toFloat())}")
-        Log.e(javaClass.simpleName, "slideOffset: $slideOffset")
+//        Log.e(javaClass.simpleName, "height: $height")
+//        Log.e(javaClass.simpleName, "height: ${ConvertUtils.px2dp(height.toFloat())}")
+//        Log.e(javaClass.simpleName, "slideOffset: $slideOffset")
     }
 
+    var lastCommodityListY = 0f
     override fun onStart() {
         super.onStart()
         initUserViewModel()
+
+        placeFragment.setCommodityListTouchListener(View.OnTouchListener { v, event ->
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    lastCommodityListY = event.y
+                }
+                MotionEvent.ACTION_MOVE   -> {
+
+                    val yDistance = event.y - lastCommodityListY
+
+                    Log.e(javaClass.simpleName, itemCommodity.height.toString())
+                    homeTopAnim(yDistance)
+
+                }
+                MotionEvent.ACTION_UP -> {
+                }
+                else -> {
+                }
+            }
+            return@OnTouchListener true
+        })
     }
 
     val userId = 1398762
@@ -703,6 +728,12 @@ class CommodityHomeActivity : BaseActivity() {
                     }
                 )
 
+    }
+
+    fun homeTopAnim(yDistance: Float) {
+        mBinding.tvAppName.textSize = 16 * yDistance / ConvertUtils.dp2px(78f) + 16f
+
+        mBinding.ivHomeSearch
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
