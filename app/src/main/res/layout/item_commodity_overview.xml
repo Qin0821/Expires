@@ -6,8 +6,11 @@
     <data>
 
         <import type="android.view.View" />
+
         <import type="com.simpure.expires.data.CommodityType" />
+
         <import type="com.simpure.expires.model.CommoditySummaryModel" />
+
         <import type="com.simpure.expires.ui.CommodityClickCallback" />
 
         <variable
@@ -40,73 +43,67 @@
             app:cardCornerRadius="10dp">
 
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-
-            <View
-                    android:id="@+id/label"
-                    android:layout_width="8dp"
-                    android:layout_height="40dp"
-                    android:layout_marginStart="8dp"
-                    android:background="@{commodity.type() == CommodityType.EXPIRED ? @drawable/bg_rounded_rectangle_red : commodity.type() == CommodityType.ALMOST ? @drawable/bg_rounded_rectangle_yellow : @drawable/bg_rounded_rectangle_blue}"
-                    android:visibility="@{inSearch ? View.VISIBLE : View.GONE }"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                    android:id="@+id/tvExpireDay"
-                    android:layout_width="80dp"
-                    android:layout_height="40dp"
-                    android:layout_marginStart="2dp"
-                    android:gravity="center"
-                    android:text="@{commodity.calc()}"
-                    android:textColor="@{inSearch ? @color/text_expires_days : commodity.type() == CommodityType.EXPIRED ? @color/commodity_label_red : commodity.type() == CommodityType.ALMOST ? @color/commodity_label_yellow : @color/commodity_label_blue }"
-                    android:textSize="34sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                android:layout_height="match_parent"
+                android:paddingStart="15dp"
+                android:paddingTop="10dp"
+                android:paddingEnd="10dp"
+                android:paddingBottom="10dp">
 
             <TextView
                     android:id="@+id/tvCommodityName"
-                    android:layout_width="0dp"
-                    android:layout_height="24dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginBottom="2dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:text="@{commodity.name}"
                     android:textColor="@color/text_expires_days"
-                    android:textSize="20sp"
-                    app:layout_constraintBottom_toTopOf="@+id/tvCommodityDesc"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_weight="1"
-                    app:layout_constraintStart_toEndOf="@id/tvExpireDay"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_chainStyle="packed" />
+                    android:textSize="20sp" />
 
             <TextView
                     android:id="@+id/tvCommodityDesc"
-                    android:layout_width="0dp"
-                    android:layout_height="14dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginBottom="2dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentBottom="true"
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:text="@{commodity.formatExpirationDate()}"
                     android:textColor="@color/text_commodity_desc"
-                    android:textSize="12sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_weight="1"
-                    app:layout_constraintStart_toEndOf="@id/tvExpireDay"
-                    app:layout_constraintTop_toBottomOf="@+id/tvCommodityName" />
+                    android:textSize="14sp" />
 
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:orientation="horizontal">
+
+                <TextView
+                        android:id="@+id/tvExpireDay"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="2dp"
+                        android:gravity="center"
+                        android:text="@{commodity.calc()}"
+                        android:textColor="@{inSearch ? @color/text_expires_days : commodity.type() == CommodityType.EXPIRED ? @color/commodity_label_red : commodity.type() == CommodityType.ALMOST ? @color/commodity_label_yellow : @color/commodity_label_blue }"
+                        android:textSize="20sp" />
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="days"
+                        android:textColor="@color/text_commodity_desc"
+                        android:textSize="12sp" />
+            </LinearLayout>
+
+        </RelativeLayout>
     </androidx.cardview.widget.CardView>
 </layout>

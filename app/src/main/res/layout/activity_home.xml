@@ -97,7 +97,7 @@
                             android:background='@{!notAll ? @drawable/bg_rounded_rectangle_white_6 : null}'
                             android:gravity="center"
                             android:text="@string/all"
-                            android:textColor="@color/text_expires_days"
+                            android:textColor="@{!notAll ? @color/text_expires_days : @color/bg_comm_action}"
                             android:textSize="17sp" />
 
                     <TextView
@@ -109,7 +109,7 @@
                             android:background='@{notAll ? @drawable/bg_rounded_rectangle_white_6 : null}'
                             android:gravity="center"
                             android:text="@{placeName}"
-                            android:textColor="@color/bg_comm_action"
+                            android:textColor="@{!notAll ? @color/bg_comm_action : @color/text_expires_days}"
                             android:textSize="17sp" />
                 </LinearLayout>
 
