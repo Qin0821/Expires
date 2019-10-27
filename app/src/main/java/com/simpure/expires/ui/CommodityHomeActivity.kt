@@ -32,6 +32,7 @@ import android.view.animation.AnimationUtils
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.*
 import com.google.zxing.util.BarcodeGenerator
 import com.lxj.xpopup.XPopup
@@ -49,6 +50,7 @@ import com.simpure.expires.utilities.getCompatColor
 import com.simpure.expires.view.popup.ConsumingPopup
 import com.simpure.expires.view.popup.InventoriesPopup
 import com.simpure.expires.view.popup.PlacePopup
+import com.simpure.expires.view.recycleView.CommodityHomeRecycleViewActionDownListener
 import com.simpure.expires.view.scrollview.ExpiresScrollView
 import com.simpure.expires.view.scrollview.ScrollViewListener
 import com.simpure.expires.viewmodel.CommodityDetailViewModel
@@ -192,7 +194,7 @@ class CommodityHomeActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_home)
-        setActivityTheme(mBinding.relativeLayout)
+        setActivityTheme(mBinding.rlCommodityHome)
 
         mBinding.itemCommodity.itemConsuming.tvCommClear.setOnClickListener(this)
         mBinding.itemCommodity.itemInventories.ivInventoriesTopping.setOnClickListener(this)
@@ -531,17 +533,31 @@ class CommodityHomeActivity : BaseActivity() {
         super.onStart()
         initUserViewModel()
 
-        placeFragment.setCommodityListTouchListener(View.OnTouchListener { v, event ->
+        val onActionDown = object :
+            CommodityHomeRecycleViewActionDownListener {
+            override fun onActionDown(event: MotionEvent) {
+                lastCommodityListY = event.y
+                Log.e(javaClass.simpleName, "ACTION_DOWN -------------- $lastCommodityListY")
+
+            }
+        }
+
+        val onTouchListener = View.OnTouchListener { v, event ->
+            Log.e(javaClass.simpleName, event.action.toString())
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
                     lastCommodityListY = event.y
+                    Log.e(
+                        javaClass.simpleName,
+                        "ACTION_DOWN -------------- $lastCommodityListY"
+                    )
                 }
-                MotionEvent.ACTION_MOVE   -> {
+                MotionEvent.ACTION_MOVE -> {
 
                     val yDistance = event.y - lastCommodityListY
+                    Log.e(javaClass.simpleName, "yDistance : $yDistance")
 
-                    Log.e(javaClass.simpleName, itemCommodity.height.toString())
-                    homeTopAnim(yDistance)
+                    return@OnTouchListener homeTopAnim(yDistance)
 
                 }
                 MotionEvent.ACTION_UP -> {
@@ -549,8 +565,10 @@ class CommodityHomeActivity : BaseActivity() {
                 else -> {
                 }
             }
-            return@OnTouchListener true
-        })
+            return@OnTouchListener false
+        }
+
+        placeFragment.setCommodityListTouchListener(onTouchListener)
     }
 
     val userId = 1398762
@@ -730,10 +748,55 @@ class CommodityHomeActivity : BaseActivity() {
 
     }
 
-    fun homeTopAnim(yDistance: Float) {
-        mBinding.tvAppName.textSize = 16 * yDistance / ConvertUtils.dp2px(78f) + 16f
+    fun homeTopAnim(yDistance: Float): Boolean {
 
-        mBinding.ivHomeSearch
+        val maxHeight = ConvertUtils.dp2px(78f)
+        val minHeight = ConvertUtils.dp2px(32f)
+
+        val currentHeight = mBinding.rlCommodityHomeTop.height
+        val isTopItem = !placeFragment.getCommodityListRecycleView().canScrollVertically(-1)
+        val isBottomItem = !placeFragment.getCommodityListRecycleView().canScrollVertically(1)
+
+        when {
+            currentHeight == minHeight && yDistance < 0 -> return false
+            currentHeight == minHeight && yDistance > 0 && !isTopItem -> return false
+            isBottomItem && isTopItem -> return false
+        }
+
+        Log.e(javaClass.simpleName, isTopItem.toString())
+        val newHeight = (currentHeight + yDistance).toInt()
+        val showHeight: Int = when {
+            newHeight > maxHeight -> {
+                maxHeight
+            }
+            newHeight < minHeight -> {
+                minHeight
+            }
+            else -> newHeight
+        }
+
+//        Log.e(javaClass.simpleName, "maxHeight : $maxHeight")
+//        Log.e(javaClass.simpleName, "minHeight : $minHeight")
+//        Log.e(javaClass.simpleName, "currentHeight : $currentHeight")
+//        Log.e(javaClass.simpleName, "newHeight : $newHeight")
+//        Log.e(javaClass.simpleName, "showHeight : $showHeight")
+//        Log.e(javaClass.simpleName, "--------------")
+
+        val lp = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            showHeight
+        )
+        mBinding.rlCommodityHomeTop.layoutParams = lp
+
+        Log.e(
+            javaClass.simpleName,
+            "showHeight - minHeight : ${ConvertUtils.px2dp((showHeight - minHeight).toFloat())}"
+        )
+        Log.e(javaClass.simpleName, "--------------")
+        mBinding.tvAppName.textSize =
+            ConvertUtils.px2dp(((showHeight - minHeight).toFloat())) * 16 / 46 + 16f
+
+        return true
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {

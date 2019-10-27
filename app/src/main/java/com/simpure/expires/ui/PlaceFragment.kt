@@ -2,23 +2,21 @@ package com.simpure.expires.ui
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.RecyclerView
 import com.simpure.expires.R
 import com.simpure.expires.databinding.FragmentPlaceBinding
 import com.simpure.expires.model.CommoditySummaryModel
+import com.simpure.expires.view.recycleView.CommodityHomeRecycleViewActionDownListener
 import com.simpure.expires.viewmodel.CommoditySummaryViewModel
-import kotlinx.android.synthetic.main.activity_home.*
-import java.util.*
+import java.lang.Exception
 
 class PlaceFragment : Fragment() {
 
@@ -41,8 +39,19 @@ class PlaceFragment : Fragment() {
 
         mPlaceAdapter = PlaceAdapter(mCommodityClickCallback)
         mBinding.rvCommodityList.adapter = mPlaceAdapter
+        setMaxFlingVelocity(mBinding.rvCommodityList)
 
         return mBinding.root
+    }
+
+    private fun setMaxFlingVelocity(recycleView: RecyclerView) {
+        try {
+            val field = RecyclerView::class.java.getDeclaredField("mMaxFlingVelocity");
+            field.isAccessible = true
+            field.set(recycleView, 4000)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     private val mCommodityClickCallback = CommodityClickCallback { commodity ->
@@ -81,8 +90,15 @@ class PlaceFragment : Fragment() {
         executePendingBindings(placeSummaryList)
     }
 
+    fun getCommodityListRecycleView() = mBinding.rvCommodityList
+
     @SuppressLint("ClickableViewAccessibility")
-    fun setCommodityListTouchListener(listener: View.OnTouchListener) {
-        mBinding.rvCommodityList.setOnTouchListener(listener)
+    fun setCommodityListTouchListener(
+        onTouchListener: View.OnTouchListener,
+        onActionDown: CommodityHomeRecycleViewActionDownListener? = null
+    ) {
+//        mBinding.rvCommodityList.dispatchTouchEvent()
+//        mBinding.rvCommodityList.setActionDownListener(onActionDown)
+        mBinding.rvCommodityList.setOnTouchListener(onTouchListener)
     }
 }
