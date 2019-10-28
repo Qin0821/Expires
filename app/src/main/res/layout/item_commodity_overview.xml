@@ -46,10 +46,10 @@
         <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:paddingStart="15dp"
+                android:paddingStart="20dp"
                 android:paddingTop="10dp"
                 android:paddingEnd="10dp"
-                android:paddingBottom="10dp">
+                android:paddingBottom="9dp">
 
             <TextView
                     android:id="@+id/tvCommodityName"
@@ -61,7 +61,8 @@
                     android:maxLines="1"
                     android:text="@{commodity.name}"
                     android:textColor="@color/text_expires_days"
-                    android:textSize="20sp" />
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
 
             <TextView
                     android:id="@+id/tvCommodityDesc"
@@ -73,7 +74,16 @@
                     android:maxLines="1"
                     android:text="@{commodity.formatExpirationDate()}"
                     android:textColor="@color/text_commodity_desc"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+            <ImageView
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="5dp"
+                    android:src="@mipmap/inventory_alerts" />
 
 
             <LinearLayout
@@ -87,11 +97,11 @@
                         android:id="@+id/tvExpireDay"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="2dp"
                         android:gravity="center"
                         android:text="@{commodity.calc()}"
                         android:textColor="@{inSearch ? @color/text_expires_days : commodity.type() == CommodityType.EXPIRED ? @color/commodity_label_red : commodity.type() == CommodityType.ALMOST ? @color/commodity_label_yellow : @color/commodity_label_blue }"
-                        android:textSize="20sp" />
+                        android:textSize="26sp"
+                        android:textStyle="bold" />
 
                 <TextView
                         android:layout_width="wrap_content"
@@ -101,7 +111,7 @@
                         android:maxLines="1"
                         android:text="days"
                         android:textColor="@color/text_commodity_desc"
-                        android:textSize="12sp" />
+                        android:textSize="14sp" />
             </LinearLayout>
 
         </RelativeLayout>
