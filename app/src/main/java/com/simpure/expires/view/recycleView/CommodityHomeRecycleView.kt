@@ -23,7 +23,7 @@ class CommodityHomeRecycleView : RecyclerView {
 //        Log.e("CommodityHomeActivity", "onInterceptTouchEvent -------------- ${e!!.action}")
         if (e!!.action == MotionEvent.ACTION_DOWN) {
 //            mActionDownListener.onActionDown(e)
-            return true
+            return false
         }
         return super.onInterceptTouchEvent(e)
     }

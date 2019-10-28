@@ -46,7 +46,10 @@ import com.simpure.expires.R
 import com.simpure.expires.data.entity.CommodityEntity
 import com.simpure.expires.data.entity.GroupEntity
 import com.simpure.expires.ui.commodity.InventoryAdapter
+import com.simpure.expires.ui.search.SearchActivity
+import com.simpure.expires.ui.setting.SettingActivity
 import com.simpure.expires.utilities.getCompatColor
+import com.simpure.expires.utilities.startAct
 import com.simpure.expires.view.popup.ConsumingPopup
 import com.simpure.expires.view.popup.InventoriesPopup
 import com.simpure.expires.view.popup.PlacePopup
@@ -86,7 +89,7 @@ class CommodityHomeActivity : BaseActivity() {
                 this@CommodityHomeActivity.toast("ivConsuming")
             }
             ivEdit -> {
-                this@CommodityHomeActivity.toast("ivEdit")
+                startAct(Intent(this, SettingActivity::class.java))
             }
             rlSearch -> {
                 startSearch(v!!)
@@ -98,6 +101,9 @@ class CommodityHomeActivity : BaseActivity() {
                 mBinding.setVariable(BR.placeName, mSelectPlace)
                 mBinding.setVariable(BR.notAll, false)
                 mCommodityHomeViewModel.setPlaceName("All")
+            }
+            ivHomeSearch -> {
+                startAct(Intent(this, SearchActivity::class.java))
             }
         }
     }
@@ -204,6 +210,7 @@ class CommodityHomeActivity : BaseActivity() {
         mBinding.itemNavigation.ivInventories.setOnClickListener(this)
         mBinding.itemNavigation.ivConsuming.setOnClickListener(this)
         mBinding.itemNavigation.ivEdit.setOnClickListener(this)
+        mBinding.ivHomeSearch.setOnClickListener(this)
 
         mBinding.tvAll.setOnClickListener(this)
         mBinding.tvPlace.setOnTouchListener { v, event ->
@@ -687,17 +694,6 @@ class CommodityHomeActivity : BaseActivity() {
             BottomSheetBehavior.STATE_COLLAPSED or BottomSheetBehavior.STATE_EXPANDED -> BottomSheetBehavior.STATE_HIDDEN
             else -> BottomSheetBehavior.STATE_COLLAPSED
         }
-//        } else {
-//            val adapter = CommodityAdapter(this, commodityId)
-//
-//            val dialog = DialogPlus.newDialog(this)
-//                .setAdapter(adapter)
-//                .setContentHolder(CommodityHolder())
-//                .setOnClickListener { dialog, view -> }
-//                .setExpanded(true)  // This will enable the expand feature, (similar to android L share dialog)
-//                .create()
-//            dialog.show()
-//        }
     }
 
     fun goInventories(view: View) {

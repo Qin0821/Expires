@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimary">#00C2A1</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
 
@@ -22,6 +22,12 @@
     <color name="line2">#FF4D4D</color>
     <color name="commodity_label_yellow">#EBC509</color>
     <color name="line3">#FFC300</color>
+    <color name="account">#FFAA00</color>
+    <color name="catagories">#00AAFF</color>
+    <color name="notifications">#20C200</color>
+    <color name="shareApp">#00CCCC</color>
+    <color name="rateUs">#735CE6</color>
+    <color name="sendFeedback">#FF5C5C</color>
     <color name="line4">#19B2FF</color>
     <color name="commodity_label_blue">#1A8CFF</color>
     <color name="line5">#1570CC</color>
