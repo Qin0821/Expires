@@ -71,42 +71,6 @@ import kotlin.concurrent.thread
 
 class CommodityHomeActivity : BaseActivity() {
 
-    override fun onClick(v: View?) {
-        when (v) {
-            tvCommClear -> {
-                showEditPopup(v!!, ConsumingPopup(this))
-            }
-            ivInventoriesTopping -> {
-                showEditPopup(v!!, InventoriesPopup(this, "topping"))
-            }
-            tvInventoriesThrow -> {
-                showEditPopup(v!!, InventoriesPopup(this, "throw"))
-            }
-            ivInventories -> {
-                this@CommodityHomeActivity.toast("ivInventories")
-            }
-            ivConsuming -> {
-                this@CommodityHomeActivity.toast("ivConsuming")
-            }
-            ivEdit -> {
-                startAct(Intent(this, SettingActivity::class.java))
-            }
-            rlSearch -> {
-                startSearch(v!!)
-            }
-            tvSearchCancel -> {
-                cancelSearch()
-            }
-            tvAll -> {
-                mBinding.setVariable(BR.placeName, mSelectPlace)
-                mBinding.setVariable(BR.notAll, false)
-                mCommodityHomeViewModel.setPlaceName("All")
-            }
-            ivHomeSearch -> {
-                startAct(Intent(this, SearchActivity::class.java))
-            }
-        }
-    }
 
     fun startSearch(view: View) {
         // view width
@@ -182,10 +146,10 @@ class CommodityHomeActivity : BaseActivity() {
                 .show()
     }
 
-
     override fun initData() {
 
     }
+
 
     override fun initView() {
     }
@@ -193,9 +157,8 @@ class CommodityHomeActivity : BaseActivity() {
     private lateinit var mBinding: ActivityHomeBinding
 
     private lateinit var mSelectPlace: String
+
     private lateinit var mPlaceList: List<String>
-
-
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -249,6 +212,7 @@ class CommodityHomeActivity : BaseActivity() {
         initCommodityList(savedInstanceState)
 
     }
+
 
     private lateinit var mCommodityHomeViewModel: CommodityHome2ViewModel
 
@@ -337,7 +301,6 @@ class CommodityHomeActivity : BaseActivity() {
         initBottomSheet()
     }
 
-
     private fun executeAnimation(height: Int, llt: LinearLayout) {
         if (height < 0) return
         var p: Int = 0
@@ -364,12 +327,13 @@ class CommodityHomeActivity : BaseActivity() {
         animator.start()
     }
 
+
     var lastX = 0f
+
     var lastY = 0f
-
     private var isScrollToStart = true
-    private var justExpanded = false
 
+    private var justExpanded = false
     private fun initBottomSheet() {
         if (!::mBottomSheetBehavior.isInitialized) {
             viewShadow.setOnClickListener {
@@ -536,6 +500,7 @@ class CommodityHomeActivity : BaseActivity() {
     }
 
     var lastCommodityListY = 0f
+
     override fun onStart() {
         super.onStart()
         initUserViewModel()
@@ -579,6 +544,7 @@ class CommodityHomeActivity : BaseActivity() {
     }
 
     val userId = 1398762
+
     private val mObservableUsers: MediatorLiveData<List<UserEntity>> = MediatorLiveData()
     private fun initUserViewModel() {
         val viewModel = ViewModelProvider(this).get(UserViewModel::class.java)
@@ -744,7 +710,7 @@ class CommodityHomeActivity : BaseActivity() {
 
     }
 
-    fun homeTopAnim(yDistance: Float): Boolean {
+    private fun homeTopAnim(yDistance: Float): Boolean {
 
         val maxHeight = ConvertUtils.dp2px(78f)
         val minHeight = ConvertUtils.dp2px(32f)
@@ -795,14 +761,51 @@ class CommodityHomeActivity : BaseActivity() {
         return true
     }
 
+    override fun onClick(v: View?) {
+        when (v) {
+            tvCommClear -> {
+                showEditPopup(v!!, ConsumingPopup(this))
+            }
+            ivInventoriesTopping -> {
+                showEditPopup(v!!, InventoriesPopup(this, "topping"))
+            }
+            tvInventoriesThrow -> {
+                showEditPopup(v!!, InventoriesPopup(this, "throw"))
+            }
+            ivInventories -> {
+                this@CommodityHomeActivity.toast("ivInventories")
+            }
+            ivConsuming -> {
+                this@CommodityHomeActivity.toast("ivConsuming")
+            }
+            ivEdit -> {
+                startAct(Intent(this, SettingActivity::class.java))
+            }
+            rlSearch -> {
+                startSearch(v!!)
+            }
+            tvSearchCancel -> {
+                cancelSearch()
+            }
+            tvAll -> {
+                mBinding.setVariable(BR.placeName, mSelectPlace)
+                mBinding.setVariable(BR.notAll, false)
+                mCommodityHomeViewModel.setPlaceName("All")
+            }
+            ivHomeSearch -> {
+                startAct(Intent(this, SearchActivity::class.java))
+            }
+        }
+    }
+
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
+        return if (keyCode == KeyEvent.KEYCODE_BACK) {
             if (mBottomSheetBehavior.state != BottomSheetBehavior.STATE_HIDDEN) {
                 mBottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
             }
-            return false
+            false
         } else {
-            return super.onKeyDown(keyCode, event)
+            super.onKeyDown(keyCode, event)
         }
     }
 

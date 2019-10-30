@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Looper
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import org.joda.time.DateTime
@@ -30,6 +31,16 @@ fun Context.toast(message: String, duration: Int = Toast.LENGTH_SHORT) {
 
 fun Context.startAct(intent: Intent) {
     this.startActivity(intent)
+}
+
+fun Any.log(tag: String, level: Int = Log.ERROR) {
+    when (level) {
+        Log.VERBOSE -> Log.v(tag, this.toString())
+        Log.INFO -> Log.i(tag, this.toString())
+        Log.DEBUG -> Log.d(tag, this.toString())
+        Log.WARN -> Log.w(tag, this.toString())
+        Log.ERROR -> Log.e(tag, this.toString())
+    }
 }
 
 fun Long.getIntervalDays(otherDay: Long) {
