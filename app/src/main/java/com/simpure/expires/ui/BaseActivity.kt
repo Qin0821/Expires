@@ -16,8 +16,8 @@ abstract class BaseActivity : LogActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
 
 
-        initData()
-        initView()
+//        initData()
+//        initView()
     }
 
     protected fun setActivityTheme(topView: View? = null) {
@@ -33,7 +33,7 @@ abstract class BaseActivity : LogActivity(), View.OnClickListener {
     }
 
 
-    abstract fun initData()
-    abstract fun initView()
+//    abstract fun initData()
+//    abstract fun initView()
 
 }

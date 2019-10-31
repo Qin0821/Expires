@@ -21,22 +21,18 @@ class SplashActivity : BaseActivity() {
 
     }
 
-    override fun initData() {
-        val spInstance = SPUtils.getInstance()
-        spInstance.put(APP_MODEL, MODEL_SCAN)
-
-        appModel = spInstance.getString(APP_MODEL)
-    }
-
-    override fun initView() {
-    }
-
     private lateinit var appModel: String
     private lateinit var mBinding: ActivitySplashBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_splash)
+
+        val spInstance = SPUtils.getInstance()
+        spInstance.put(APP_MODEL, MODEL_SCAN)
+
+        appModel = spInstance.getString(APP_MODEL)
+
 
         when (appModel) {
             MODEL_EXPIRES -> {

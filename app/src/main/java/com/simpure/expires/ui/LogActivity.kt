@@ -6,8 +6,6 @@ import android.os.PersistableBundle
 import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import com.gyf.immersionbar.ktx.immersionBar
-import com.simpure.expires.R
 import com.simpure.expires.utilities.log
 
 abstract class LogActivity : AppCompatActivity(), View.OnClickListener {
@@ -27,14 +25,6 @@ abstract class LogActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     /**
-     * @desc onCreate彻底执行完毕，做最后的初始化工作
-     */
-    override fun onPostCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
-        "onPostCreate".log(javaClass.simpleName, Log.VERBOSE)
-        super.onPostCreate(savedInstanceState, persistentState)
-    }
-
-    /**
      * @desc 由完全不可见变为可见
      */
     override fun onRestart() {
@@ -48,6 +38,14 @@ abstract class LogActivity : AppCompatActivity(), View.OnClickListener {
     override fun onStart() {
         "onStart".log(javaClass.simpleName, Log.VERBOSE)
         super.onStart()
+    }
+
+    /**
+     * @desc onCreate彻底执行完毕，做最后的初始化工作
+     */
+    override fun onPostCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
+        "onPostCreate".log(javaClass.simpleName, Log.VERBOSE)
+        super.onPostCreate(savedInstanceState, persistentState)
     }
 
     /**

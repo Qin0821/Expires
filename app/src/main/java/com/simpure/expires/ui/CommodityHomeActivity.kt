@@ -3,7 +3,6 @@ package com.simpure.expires.ui
 import android.animation.AnimatorSet
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
-import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.databinding.DataBindingUtil
@@ -15,7 +14,7 @@ import com.google.zxing.util.Constant.REQ_QR_CODE
 import com.google.zxing.activity.CaptureActivity
 import android.content.Intent
 import android.graphics.Rect
-import android.util.AttributeSet
+import android.os.PersistableBundle
 import com.blankj.utilcode.constant.PermissionConstants
 import com.blankj.utilcode.util.*
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -31,8 +30,6 @@ import android.view.MotionEvent
 import android.view.animation.AnimationUtils
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
-import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.*
 import com.google.zxing.util.BarcodeGenerator
 import com.lxj.xpopup.XPopup
@@ -69,8 +66,110 @@ import kotlinx.android.synthetic.main.item_search.*
 import kotlin.concurrent.thread
 
 
-class CommodityHomeActivity : BaseActivity() {
+class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
 
+
+    private lateinit var mPlaceNamePopup: BasePopupView
+
+    private lateinit var mBinding: ActivityHomeBinding
+
+    private lateinit var mSelectPlace: String
+
+    private lateinit var mPlaceList: List<String>
+
+    private lateinit var mCommodityHomeViewModel: CommodityHome2ViewModel
+
+    private lateinit var mPlacePopup: PlacePopup
+
+    var lastX = 0f
+    var lastY = 0f
+
+    private var isScrollToStart = true
+
+    private var justExpanded = false
+
+    var collapsedHeight = 0
+
+    var lastCommodityListY = 0f
+
+    val userId = 1398762
+
+    val placeFragment = PlaceFragment()
+
+    private lateinit var mBottomSheetBehavior: BottomSheetBehavior<View>
+    private lateinit var mCommodityDetailViewModel: CommodityDetailViewModel
+
+    private val signInApiService by lazy {
+        SignInApiService.create()
+    }
+    var disposable: Disposable? = null
+
+    private val bottomSheetCallback = object : BottomSheetBehavior.BottomSheetCallback() {
+
+        override fun onSlide(bottomSheet: View, slideOffset: Float) {
+            setCommodityHeight(slideOffset)
+        }
+
+        override fun onStateChanged(bottomSheet: View, newState: Int) {
+            when (newState) {
+                BottomSheetBehavior.STATE_COLLAPSED -> {
+                    viewShadow.visibility = View.VISIBLE
+
+                    if (collapsedHeight == 0) {
+                        val rect = Rect()
+                        itemCommodity.getLocalVisibleRect(rect)
+                        collapsedHeight = rect.bottom
+                    }
+                    setCommodityHeight(0f)
+
+                }
+                BottomSheetBehavior.STATE_DRAGGING -> {
+
+
+                    viewShadow.visibility = View.VISIBLE
+
+                    // 在全屏状态，scrollview顶部不可见时，屏蔽sheet滑动事件
+                    Log.e(javaClass.simpleName, "justExpanded: $justExpanded")
+                    if (justExpanded) {
+                        if (isScrollToStart) {
+                            Log.e(javaClass.simpleName, "isScrollToStart: $isScrollToStart")
+                            // 可以滑
+//                                    mBottomSheetBehavior.isHideable = true
+                            mBottomSheetBehavior.state = BottomSheetBehavior.STATE_DRAGGING
+                        } else {
+                            // bu
+                            mBottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+                        }
+                    }
+                }
+                BottomSheetBehavior.STATE_HALF_EXPANDED -> {
+                }
+                BottomSheetBehavior.STATE_EXPANDED -> {
+                    viewShadow.visibility = View.VISIBLE
+
+                    justExpanded = true
+                }
+                BottomSheetBehavior.STATE_HIDDEN -> {
+                    viewShadow.visibility = View.GONE
+                }
+                BottomSheetBehavior.STATE_SETTLING -> {
+                    viewShadow.visibility = View.VISIBLE
+                }
+            }
+        }
+    }
+
+    private val svCommodityScrollListener = object : ScrollViewListener {
+        override fun onScrollChanged(
+            scrollView: ExpiresScrollView,
+            x: Int,
+            y: Int,
+            oldX: Int,
+            oldY: Int
+        ) {
+            isScrollToStart = svCommodity.scrollY == 0
+        }
+    }
 
     fun startSearch(view: View) {
         // view width
@@ -122,185 +221,6 @@ class CommodityHomeActivity : BaseActivity() {
 //        }
     }
 
-    private lateinit var mPlaceNamePopup: BasePopupView
-
-    private fun showEditPopup(
-        view: View,
-        popup: PositionPopupView,
-        callback: SimpleCallback? = null,
-        backgroundRes: Int = R.color.transparency_90
-    ) {
-        val location = IntArray(2)
-        view.getLocationInWindow(location)
-//        tvInventoriesThrow.getLocationInWindow(location)
-
-        XPopup.setShadowBgColor(getCompatColor(backgroundRes))
-
-        mPlaceNamePopup =
-            XPopup
-                .Builder(this)
-                .popupAnimation(PopupAnimation.ScaleAlphaFromCenter)
-                .offsetY(location[1])
-                .setPopupCallback(callback)
-                .asCustom(popup)
-                .show()
-    }
-
-    override fun initData() {
-
-    }
-
-
-    override fun initView() {
-    }
-
-    private lateinit var mBinding: ActivityHomeBinding
-
-    private lateinit var mSelectPlace: String
-
-    private lateinit var mPlaceList: List<String>
-    @SuppressLint("ClickableViewAccessibility")
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_home)
-        setActivityTheme(mBinding.rlCommodityHome)
-
-        mBinding.itemCommodity.itemConsuming.tvCommClear.setOnClickListener(this)
-        mBinding.itemCommodity.itemInventories.ivInventoriesTopping.setOnClickListener(this)
-        mBinding.itemCommodity.itemInventories.tvInventoriesThrow.setOnClickListener(this)
-//        mBinding.itemSearch.rlSearch.setOnClickListener(this)
-//        mBinding.itemSearch.tvSearchCancel.setOnClickListener(this)
-        mBinding.itemNavigation.ivInventories.setOnClickListener(this)
-        mBinding.itemNavigation.ivConsuming.setOnClickListener(this)
-        mBinding.itemNavigation.ivEdit.setOnClickListener(this)
-        mBinding.ivHomeSearch.setOnClickListener(this)
-
-        mBinding.tvAll.setOnClickListener(this)
-        mBinding.tvPlace.setOnTouchListener { v, event ->
-            when (event.action) {
-                MotionEvent.ACTION_DOWN -> {
-                    showPlacePopup(
-                        mBinding.tvPlace,
-                        mPlaceList
-                    )
-                }
-                MotionEvent.ACTION_MOVE -> {
-                    val moveX = event.rawX
-                    val moveY = event.rawY
-                    mPlacePopup.setMoveXY(moveX, moveY)
-                }
-                MotionEvent.ACTION_UP -> {
-                    mPlaceNamePopup.dismiss()
-                    mSelectPlace =
-                        if (mPlacePopup.getSelectPlace().isEmpty()) mSelectPlace else mPlacePopup.getSelectPlace()
-
-                    try {
-                        mBinding.setVariable(BR.placeName, mSelectPlace)
-                        mBinding.setVariable(BR.notAll, true)
-                        mCommodityHomeViewModel.setPlaceName(mSelectPlace)
-                    } catch (e: Exception) {
-                        Log.e(javaClass.simpleName, "can not get name from empty place")
-                    }
-                }
-                else -> {
-
-                }
-            }
-            return@setOnTouchListener true
-        }
-
-        initCommodityList(savedInstanceState)
-
-    }
-
-
-    private lateinit var mCommodityHomeViewModel: CommodityHome2ViewModel
-
-    private fun initGroupHome(group: GroupEntity) {
-
-        if (!::mSelectPlace.isInitialized) {
-            mSelectPlace = group.placeList[0]
-            mBinding.setVariable(BR.placeName, mSelectPlace)
-            mBinding.setVariable(BR.notAll, false)
-        }
-        if (!::mPlaceList.isInitialized) mPlaceList = group.placeList
-
-
-
-        mCommodityHomeViewModel = ViewModelProvider(this).get(CommodityHome2ViewModel::class.java)
-        mCommodityHomeViewModel.commodityHome.observe(this, Observer {
-            if (null == it) return@Observer
-
-            placeFragment.setCommoditiesSummary(it.commoditySummaryList)
-        })
-    }
-
-    private lateinit var mPlacePopup: PlacePopup
-
-    private fun showPlacePopup(
-        view: View,
-        placeList: List<String>
-    ) {
-        val location = IntArray(2)
-        view.getLocationInWindow(location)
-
-        XPopup.setShadowBgColor(getCompatColor(R.color.transparency))
-        mPlacePopup = PlacePopup(this)
-        mPlacePopup.setPlaceList(placeList)
-
-        Log.e(javaClass.simpleName, (location[0] - ConvertUtils.dp2px(14f)).toString())
-        Log.e(javaClass.simpleName, (location[1] - ConvertUtils.dp2px(10f)).toString())
-
-        mPlaceNamePopup =
-            XPopup
-                .Builder(this)
-                .popupAnimation(PopupAnimation.ScaleAlphaFromCenter)
-                .offsetX(location[0] - ConvertUtils.dp2px(14f))
-                .offsetY(location[1] - ConvertUtils.dp2px(10f))
-                .setPopupCallback(object : SimpleCallback() {
-                    override fun onCreated() {
-                        super.onCreated()
-                    }
-
-                    override fun beforeShow() {
-                        super.beforeShow()
-                        val xLimit = arrayOf(
-                            location[0] - ConvertUtils.dp2px(14f),
-                            location[0] - ConvertUtils.dp2px(14f) + ConvertUtils.dp2px(176f)
-                        )
-                        val yLimit = arrayOf(
-                            location[1] - ConvertUtils.dp2px(10f),
-                            location[1] - ConvertUtils.dp2px(10f) + ConvertUtils.dp2px(188f)
-                        )
-                        Log.e(javaClass.simpleName, "x0: ${xLimit[0]}, x1: ${xLimit[1]}")
-                        Log.e(javaClass.simpleName, "y0: ${yLimit[0]}, y1: ${yLimit[1]}")
-                        mPlacePopup.setMoveLimit(xLimit, yLimit)
-                    }
-
-                    override fun onShow() {
-                        super.onShow()
-                    }
-
-                    override fun onDismiss() {
-                        super.onDismiss()
-
-                    }
-
-                    //如果你自己想拦截返回按键事件，则重写这个方法，返回true即可
-                    override fun onBackPressed(): Boolean {
-                        return true; //默认返回false
-                    }
-                })
-                .asCustom(mPlacePopup)
-                .show()
-    }
-
-    override fun onPostCreate(savedInstanceState: Bundle?) {
-        super.onPostCreate(savedInstanceState)
-
-        initBottomSheet()
-    }
-
     private fun executeAnimation(height: Int, llt: LinearLayout) {
         if (height < 0) return
         var p: Int = 0
@@ -327,192 +247,39 @@ class CommodityHomeActivity : BaseActivity() {
         animator.start()
     }
 
+    @SuppressLint("ClickableViewAccessibility")
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_home)
+        setActivityTheme(mBinding.rlCommodityHome)
 
-    var lastX = 0f
-
-    var lastY = 0f
-    private var isScrollToStart = true
-
-    private var justExpanded = false
-    private fun initBottomSheet() {
-        if (!::mBottomSheetBehavior.isInitialized) {
-            viewShadow.setOnClickListener {
-                mBottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
-                viewShadow.visibility = View.GONE
-            }
-            mBottomSheetBehavior = BottomSheetBehavior.from(itemCommodity)
-            mBottomSheetBehavior.setBottomSheetCallback(object :
-                BottomSheetBehavior.BottomSheetCallback() {
-                override fun onSlide(bottomSheet: View, slideOffset: Float) {
-                    setCommodityHeight(slideOffset)
-                }
-
-                override fun onStateChanged(bottomSheet: View, newState: Int) {
-                    when (newState) {
-                        BottomSheetBehavior.STATE_COLLAPSED -> {
-                            viewShadow.visibility = View.VISIBLE
-
-                            if (collapsedHeight == 0) {
-                                val rect = Rect()
-                                itemCommodity.getLocalVisibleRect(rect)
-                                collapsedHeight = rect.bottom
-                            }
-                            setCommodityHeight(0f)
-
-                        }
-                        BottomSheetBehavior.STATE_DRAGGING -> {
-
-
-                            viewShadow.visibility = View.VISIBLE
-
-                            // 在全屏状态，scrollview顶部不可见时，屏蔽sheet滑动事件
-                            Log.e(javaClass.simpleName, "justExpanded: $justExpanded")
-                            if (justExpanded) {
-                                if (isScrollToStart) {
-                                    Log.e(javaClass.simpleName, "isScrollToStart: $isScrollToStart")
-                                    // 可以滑
-//                                    mBottomSheetBehavior.isHideable = true
-                                    mBottomSheetBehavior.state = BottomSheetBehavior.STATE_DRAGGING
-                                } else {
-                                    // bu
-                                    mBottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
-                                }
-                            }
-                        }
-                        BottomSheetBehavior.STATE_HALF_EXPANDED -> {
-                        }
-                        BottomSheetBehavior.STATE_EXPANDED -> {
-                            viewShadow.visibility = View.VISIBLE
-
-                            justExpanded = true
-                        }
-                        BottomSheetBehavior.STATE_HIDDEN -> {
-                            viewShadow.visibility = View.GONE
-                        }
-                        BottomSheetBehavior.STATE_SETTLING -> {
-                            viewShadow.visibility = View.VISIBLE
-                        }
-                    }
-                }
-
-            })
-            mBottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
-
-            svCommodity.setScrollViewListener(object : ScrollViewListener {
-                override fun onScrollChanged(
-                    scrollView: ExpiresScrollView,
-                    x: Int,
-                    y: Int,
-                    oldX: Int,
-                    oldY: Int
-                ) {
-                    isScrollToStart =
-                        svCommodity.scrollY == 0
-                }
-            })
-            itemCommodity.setOnTouchListener { v, event ->
-                when (event.action) {
-                    MotionEvent.ACTION_DOWN -> {
-                        lastX = event.x
-                        lastY = event.y
-                    }
-                    MotionEvent.ACTION_MOVE -> {
-
-                        val yDistance = event.y - lastY
-
-                        Log.e(javaClass.simpleName, itemCommodity.height.toString())
-
-                        setCommodityHeight(yDistance)
-                    }
-                    MotionEvent.ACTION_UP -> {
-                    }
-                    else -> {
-                    }
-                }
-                return@setOnTouchListener true
-            }
-        }
-        mCommodityDetailViewModel =
-            ViewModelProvider(this).get(CommodityDetailViewModel::class.java)
-
-        mCommodityDetailViewModel.commodityDetail.observe(this, Observer {
-            if (null == it) return@Observer
-
-            // 给 commodity sheet 设置数据
-            mBinding.setVariable(BR.commodityDetail, it)
-
-            showInventories(it)
-            showBarcode(it)
-        })
-
+        supportFragmentManager.beginTransaction()
+            .add(R.id.fcCommodity, placeFragment, placeFragment.TAG).commit()
     }
 
-    var collapsedHeight = 0
+    override fun onContentChanged() {
+        super.onContentChanged()
 
-    private fun setCommodityHeight(slideOffset: Float) {
-        if (mBottomSheetBehavior.state == BottomSheetBehavior.STATE_EXPANDED) return
-
-
-        val height = if (slideOffset > 0) {
-            (slideOffset * ConvertUtils.dp2px(44f)).toInt()
-        } else 0
-        val lpC = LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.MATCH_PARENT,
-            height
-        )
-//        itemCommodity.itemConsuming.layoutConsume.visibility =
-//            if (ConvertUtils.px2dp(height.toFloat()) < 20) View.INVISIBLE else View.VISIBLE
-        itemCommodity.itemConsuming.layoutConsume.alpha = (slideOffset - 1)
-        itemCommodity.itemConsuming.layoutConsume.layoutParams = lpC
-
-        /*val minHeight = ConvertUtils.dp2px(100f)
-        val height =
-            if (slideOffset > 0) {
-                (slideOffset * extensibleHeight).toInt() + minHeight
-            } else minHeight
-        val lp = LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.MATCH_PARENT,
-            height
-        )
-        itemCommodity.llCommDetail.layoutParams = lp*/
-
-        val extensibleHeight = itemCommodity.height - collapsedHeight
-
-        val marginBottomHeight = if (slideOffset > 0) {
-            ((1 - slideOffset) * extensibleHeight).toInt()
-        } else extensibleHeight
-        val lp = RelativeLayout.LayoutParams(
-            LinearLayout.LayoutParams.MATCH_PARENT,
-            LinearLayout.LayoutParams.WRAP_CONTENT
-        )
-        lp.setMargins(0, 0, 0, marginBottomHeight + 40)
-        lp.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM)
-        itemCommodity.itemCommodityNavigation.layoutParams = lp
-
-//        Log.e(javaClass.simpleName, "h: $marginBottomHeight")
-//        Log.e(javaClass.simpleName, "itemCommodity.height: ${itemCommodity.height}")
-        val rect = Rect()
-        itemCommodity.getLocalVisibleRect(rect)
-//        Log.e(javaClass.simpleName, "rect: $rect")
-//        Log.e(javaClass.simpleName, "height: $height")
-//        Log.e(javaClass.simpleName, "height: ${ConvertUtils.px2dp(height.toFloat())}")
-//        Log.e(javaClass.simpleName, "slideOffset: $slideOffset")
+        initBottomSheet()
     }
 
-    var lastCommodityListY = 0f
+    override fun onPostCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
+        super.onPostCreate(savedInstanceState, persistentState)
+        initListener()
+    }
 
-    override fun onStart() {
-        super.onStart()
-        initUserViewModel()
+    @SuppressLint("ClickableViewAccessibility")
+    private fun initListener() {
 
-        val onActionDown = object :
-            CommodityHomeRecycleViewActionDownListener {
-            override fun onActionDown(event: MotionEvent) {
-                lastCommodityListY = event.y
-                Log.e(javaClass.simpleName, "ACTION_DOWN -------------- $lastCommodityListY")
-
-            }
-        }
+        mBinding.itemCommodity.itemConsuming.tvCommClear.setOnClickListener(this)
+        mBinding.itemCommodity.itemInventories.ivInventoriesTopping.setOnClickListener(this)
+        mBinding.itemCommodity.itemInventories.tvInventoriesThrow.setOnClickListener(this)
+        mBinding.itemNavigation.ivInventories.setOnClickListener(this)
+        mBinding.itemNavigation.ivConsuming.setOnClickListener(this)
+        mBinding.itemNavigation.ivEdit.setOnClickListener(this)
+        mBinding.ivHomeSearch.setOnClickListener(this)
+        mBinding.tvAll.setOnClickListener(this)
+        mBinding.tvPlace.setOnTouchListener(this)
 
         val onTouchListener = View.OnTouchListener { v, event ->
             Log.e(javaClass.simpleName, event.action.toString())
@@ -539,85 +306,104 @@ class CommodityHomeActivity : BaseActivity() {
             }
             return@OnTouchListener false
         }
-
         placeFragment.setCommodityListTouchListener(onTouchListener)
     }
 
-    val userId = 1398762
+    private fun initBottomSheet() {
+        if (!::mBottomSheetBehavior.isInitialized) {
+            viewShadow.setOnClickListener {
+                mBottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+                viewShadow.visibility = View.GONE
+            }
+            mBottomSheetBehavior = BottomSheetBehavior.from(itemCommodity)
+            mBottomSheetBehavior.setBottomSheetCallback(bottomSheetCallback)
+            mBottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
 
-    private val mObservableUsers: MediatorLiveData<List<UserEntity>> = MediatorLiveData()
+            svCommodity.setScrollViewListener(svCommodityScrollListener)
+            itemCommodity.setOnTouchListener(this)
+        }
+        mCommodityDetailViewModel =
+            ViewModelProvider(this).get(CommodityDetailViewModel::class.java)
+
+        mCommodityDetailViewModel.commodityDetail.observe(this, Observer {
+            if (null == it) return@Observer
+
+            // 给 commodity sheet 设置数据
+            mBinding.setVariable(BR.commodityDetail, it)
+
+            showInventories(it)
+            showBarcode(it)
+        })
+
+    }
+
+    override fun onStart() {
+        super.onStart()
+        initUserViewModel()
+    }
+
+
     private fun initUserViewModel() {
         val viewModel = ViewModelProvider(this).get(UserViewModel::class.java)
         viewModel.setUserId(userId)
         viewModel.commodities.observe(this,
             Observer { user ->
-                if (null != user) {
-                    toast(user.name)
-                    getUserGroup(user.groupIdList)
-                } else {
-                    toast("user is empty")
-                }
+                if (null == user) return@Observer
+
+                getUserGroup(user.groupIdList)
             })
     }
-
-    private val mObservableGroup: MediatorLiveData<GroupEntity> = MediatorLiveData()
 
     private fun getUserGroup(groupIdList: List<String>) {
 
         if (groupIdList.isNotEmpty()) {
-            // 目前不存在多group情况
-//            val group = (application as BasicApp).repository.loadGroupById(groupIdList[0])
             thread {
-
                 val group =
                     (application as BasicApp).database.groupDao().loadGroupById(groupIdList[0])
                 runOnUiThread {
                     initGroupHome(group)
                 }
             }
-
-//            mObservableGroup.value = null
-//            mObservableGroup.addSource(group) {
-//
-////                initGroupHome(it)
-//                Log.e(javaClass.simpleName, it.toString())
-//            }
-
         }
     }
 
-    val placeFragment = PlaceFragment()
+    private fun initGroupHome(group: GroupEntity) {
 
-    private fun initCommodityList(savedInstanceState: Bundle?) {
-
-        if (savedInstanceState == null) {
-
-
-            supportFragmentManager.beginTransaction()
-                .add(R.id.fcCommodity, placeFragment, placeFragment.TAG).commit()
+        if (!::mSelectPlace.isInitialized) {
+            mSelectPlace = group.placeList[0]
+            mBinding.setVariable(BR.placeName, mSelectPlace)
+            mBinding.setVariable(BR.notAll, false)
         }
+        if (!::mPlaceList.isInitialized) mPlaceList = group.placeList
+
+        mCommodityHomeViewModel = ViewModelProvider(this).get(CommodityHome2ViewModel::class.java)
+        mCommodityHomeViewModel.commodityHome.observe(this, Observer {
+            if (null == it) return@Observer
+
+            placeFragment.setCommoditiesSummary(it.commoditySummaryList)
+        })
     }
 
     private fun showInventories(it: CommodityEntity) {
-        if (!it.inventories.isNullOrEmpty()) {
-            with(mBinding.itemCommodity.itemInventories.rvInventories) {
-                if (null == layoutManager) {
-                    layoutManager = object : LinearLayoutManager(
-                        this@CommodityHomeActivity,
-                        VERTICAL, false
-                    ) {
-                        override fun canScrollVertically(): Boolean = false
-                    }
-                    this.layoutManager = layoutManager
+        if (it.inventories.isNullOrEmpty()) return
+        with(mBinding.itemCommodity.itemInventories.rvInventories) {
+            if (null == layoutManager) {
+                layoutManager = object : LinearLayoutManager(
+                    this@CommodityHomeActivity,
+                    VERTICAL, false
+                ) {
+                    override fun canScrollVertically(): Boolean = false
                 }
-                if (null == adapter) {
-                    this.isNestedScrollingEnabled = false
-                    adapter = InventoryAdapter()
-                }
-
-                (adapter as InventoryAdapter).setInventoryList(it.inventories)
+                this.layoutManager = layoutManager
             }
+            if (null == adapter) {
+                this.isNestedScrollingEnabled = false
+                adapter = InventoryAdapter()
+            }
+
+            (adapter as InventoryAdapter).setInventoryList(it.inventories)
         }
+
     }
 
     private fun showBarcode(it: CommodityEntity) {
@@ -643,10 +429,6 @@ class CommodityHomeActivity : BaseActivity() {
 
         }
     }
-
-    private lateinit var mBottomSheetBehavior: BottomSheetBehavior<View>
-    private lateinit var mCommodityDetailViewModel
-            : CommodityDetailViewModel
 
     /** Shows the product detail placeFragment  */
     fun showCommodityDetail(commodityId: Int, sheetVersion: Boolean = true) {
@@ -688,11 +470,6 @@ class CommodityHomeActivity : BaseActivity() {
             .request()
 
     }
-
-    private val signInApiService by lazy {
-        SignInApiService.create()
-    }
-    var disposable: Disposable? = null
 
     fun goConsuming(view: View) {
         disposable =
@@ -796,6 +573,204 @@ class CommodityHomeActivity : BaseActivity() {
                 startAct(Intent(this, SearchActivity::class.java))
             }
         }
+    }
+
+    private fun showEditPopup(
+        view: View,
+        popup: PositionPopupView,
+        callback: SimpleCallback? = null,
+        backgroundRes: Int = R.color.transparency_90
+    ) {
+        val location = IntArray(2)
+        view.getLocationInWindow(location)
+//        tvInventoriesThrow.getLocationInWindow(location)
+
+        XPopup.setShadowBgColor(getCompatColor(backgroundRes))
+
+        mPlaceNamePopup =
+            XPopup
+                .Builder(this)
+                .popupAnimation(PopupAnimation.ScaleAlphaFromCenter)
+                .offsetY(location[1])
+                .setPopupCallback(callback)
+                .asCustom(popup)
+                .show()
+    }
+
+    override fun onTouch(v: View?, event: MotionEvent?): Boolean {
+
+        when (v) {
+            tvPlace -> {
+                placeTouchAnim(event)
+            }
+            itemCommodity -> {
+                return itemCommodityTouchAnim(event)
+            }
+        }
+        return true
+    }
+
+    private fun placeTouchAnim(event: MotionEvent?) {
+        if (null == event) return
+
+        when (event.action) {
+            MotionEvent.ACTION_DOWN -> {
+                showPlacePopup(
+                    mBinding.tvPlace,
+                    mPlaceList
+                )
+            }
+            MotionEvent.ACTION_MOVE -> {
+                val moveX = event.rawX
+                val moveY = event.rawY
+                mPlacePopup.setMoveXY(moveX, moveY)
+            }
+            MotionEvent.ACTION_UP -> {
+                mPlaceNamePopup.dismiss()
+                mSelectPlace =
+                    if (mPlacePopup.getSelectPlace().isEmpty()) mSelectPlace else mPlacePopup.getSelectPlace()
+
+                try {
+                    mBinding.setVariable(BR.placeName, mSelectPlace)
+                    mBinding.setVariable(BR.notAll, true)
+                    mCommodityHomeViewModel.setPlaceName(mSelectPlace)
+                } catch (e: Exception) {
+                    Log.e(javaClass.simpleName, "can not get name from empty place")
+                }
+            }
+            else -> {
+
+            }
+        }
+    }
+
+    private fun itemCommodityTouchAnim(event: MotionEvent?): Boolean {
+        if (null == event) return true
+
+        when (event.action) {
+            MotionEvent.ACTION_DOWN -> {
+                lastX = event.x
+                lastY = event.y
+            }
+            MotionEvent.ACTION_MOVE -> {
+
+                val yDistance = event.y - lastY
+
+                Log.e(javaClass.simpleName, itemCommodity.height.toString())
+
+                setCommodityHeight(yDistance)
+            }
+            MotionEvent.ACTION_UP -> {
+            }
+            else -> {
+            }
+        }
+        return true
+    }
+
+    private fun setCommodityHeight(slideOffset: Float) {
+        if (mBottomSheetBehavior.state == BottomSheetBehavior.STATE_EXPANDED) return
+
+
+        val height = if (slideOffset > 0) {
+            (slideOffset * ConvertUtils.dp2px(44f)).toInt()
+        } else 0
+        val lpC = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            height
+        )
+//        itemCommodity.itemConsuming.layoutConsume.visibility =
+//            if (ConvertUtils.px2dp(height.toFloat()) < 20) View.INVISIBLE else View.VISIBLE
+        itemCommodity.itemConsuming.layoutConsume.alpha = (slideOffset - 1)
+        itemCommodity.itemConsuming.layoutConsume.layoutParams = lpC
+
+        /*val minHeight = ConvertUtils.dp2px(100f)
+        val height =
+            if (slideOffset > 0) {
+                (slideOffset * extensibleHeight).toInt() + minHeight
+            } else minHeight
+        val lp = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            height
+        )
+        itemCommodity.llCommDetail.layoutParams = lp*/
+
+        val extensibleHeight = itemCommodity.height - collapsedHeight
+
+        val marginBottomHeight = if (slideOffset > 0) {
+            ((1 - slideOffset) * extensibleHeight).toInt()
+        } else extensibleHeight
+        val lp = RelativeLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT
+        )
+        lp.setMargins(0, 0, 0, marginBottomHeight + 40)
+        lp.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM)
+        itemCommodity.itemCommodityNavigation.layoutParams = lp
+
+//        Log.e(javaClass.simpleName, "h: $marginBottomHeight")
+//        Log.e(javaClass.simpleName, "itemCommodity.height: ${itemCommodity.height}")
+        val rect = Rect()
+        itemCommodity.getLocalVisibleRect(rect)
+//        Log.e(javaClass.simpleName, "rect: $rect")
+//        Log.e(javaClass.simpleName, "height: $height")
+//        Log.e(javaClass.simpleName, "height: ${ConvertUtils.px2dp(height.toFloat())}")
+//        Log.e(javaClass.simpleName, "slideOffset: $slideOffset")
+    }
+
+    private fun showPlacePopup(view: View, placeList: List<String>) {
+        val location = IntArray(2)
+        view.getLocationInWindow(location)
+
+        XPopup.setShadowBgColor(getCompatColor(R.color.transparency))
+        mPlacePopup = PlacePopup(this)
+        mPlacePopup.setPlaceList(placeList)
+
+        Log.e(javaClass.simpleName, (location[0] - ConvertUtils.dp2px(14f)).toString())
+        Log.e(javaClass.simpleName, (location[1] - ConvertUtils.dp2px(10f)).toString())
+
+        mPlaceNamePopup =
+            XPopup
+                .Builder(this)
+                .popupAnimation(PopupAnimation.ScaleAlphaFromCenter)
+                .offsetX(location[0] - ConvertUtils.dp2px(14f))
+                .offsetY(location[1] - ConvertUtils.dp2px(10f))
+                .setPopupCallback(object : SimpleCallback() {
+                    override fun onCreated() {
+                        super.onCreated()
+                    }
+
+                    override fun beforeShow() {
+                        super.beforeShow()
+                        val xLimit = arrayOf(
+                            location[0] - ConvertUtils.dp2px(14f),
+                            location[0] - ConvertUtils.dp2px(14f) + ConvertUtils.dp2px(176f)
+                        )
+                        val yLimit = arrayOf(
+                            location[1] - ConvertUtils.dp2px(10f),
+                            location[1] - ConvertUtils.dp2px(10f) + ConvertUtils.dp2px(188f)
+                        )
+                        Log.e(javaClass.simpleName, "x0: ${xLimit[0]}, x1: ${xLimit[1]}")
+                        Log.e(javaClass.simpleName, "y0: ${yLimit[0]}, y1: ${yLimit[1]}")
+                        mPlacePopup.setMoveLimit(xLimit, yLimit)
+                    }
+
+                    override fun onShow() {
+                        super.onShow()
+                    }
+
+                    override fun onDismiss() {
+                        super.onDismiss()
+
+                    }
+
+                    //如果你自己想拦截返回按键事件，则重写这个方法，返回true即可
+                    override fun onBackPressed(): Boolean {
+                        return true; //默认返回false
+                    }
+                })
+                .asCustom(mPlacePopup)
+                .show()
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {

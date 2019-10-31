@@ -10,15 +10,6 @@ import kotlinx.android.synthetic.main.activity_search.*
 
 class SearchActivity : BaseActivity() {
 
-    override fun initData() {
-
-
-    }
-
-    override fun initView() {
-
-    }
-
     override fun onClick(v: View?) {
 
         when (v!!) {

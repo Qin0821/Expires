@@ -9,15 +9,6 @@ import com.simpure.expires.ui.BaseActivity
 
 class SettingActivity : BaseActivity() {
 
-    override fun initData() {
-
-
-    }
-
-    override fun initView() {
-
-    }
-
     override fun onClick(v: View?) {
 
     }
