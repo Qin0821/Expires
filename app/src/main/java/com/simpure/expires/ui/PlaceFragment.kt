@@ -35,7 +35,7 @@ class PlaceFragment : Fragment() {
     var lastCommodityListY = 0f
 
 
-    val onTouchListener = View.OnTouchListener { v, event ->
+    private val onTouchListener = View.OnTouchListener { v, event ->
         when (event.action) {
             MotionEvent.ACTION_DOWN -> lastCommodityListY = event.y
             MotionEvent.ACTION_MOVE -> {
@@ -63,7 +63,7 @@ class PlaceFragment : Fragment() {
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_place, container, false)
 
         mPlaceAdapter = PlaceAdapter(mCommodityClickCallback)
-        mBinding.rvCommodityList.setOnTouchListener(onTouchListener)
+//        mBinding.rvCommodityList.setOnTouchListener(onTouchListener)
         mBinding.rvCommodityList.adapter = mPlaceAdapter
         setMaxFlingVelocity(mBinding.rvCommodityList)
 
