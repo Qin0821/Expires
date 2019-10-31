@@ -254,17 +254,14 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
 
         supportFragmentManager.beginTransaction()
             .add(R.id.fcCommodity, placeFragment, placeFragment.TAG).commit()
+
+        initListener()
     }
 
     override fun onContentChanged() {
         super.onContentChanged()
 
         initBottomSheet()
-    }
-
-    override fun onPostCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
-        super.onPostCreate(savedInstanceState, persistentState)
-        initListener()
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -281,7 +278,6 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
         mBinding.tvPlace.setOnTouchListener(this)
 
         val onTouchListener = View.OnTouchListener { v, event ->
-            Log.e(javaClass.simpleName, event.action.toString())
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
                     lastCommodityListY = event.y
@@ -305,7 +301,7 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
             }
             return@OnTouchListener false
         }
-        placeFragment.setCommodityListTouchListener(onTouchListener)
+//        placeFragment.setCommodityListTouchListener(onTouchListener)
     }
 
     private fun initBottomSheet() {
@@ -485,7 +481,7 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
 
     }
 
-    private fun homeTopAnim(yDistance: Float): Boolean {
+    fun homeTopAnim(yDistance: Float): Boolean {
 
         val maxHeight = ConvertUtils.dp2px(78f)
         val minHeight = ConvertUtils.dp2px(32f)

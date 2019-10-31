@@ -2,7 +2,9 @@ package com.simpure.expires.ui
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -30,6 +32,29 @@ class PlaceFragment : Fragment() {
 
     private lateinit var mCommoditySummaryViewModel: CommoditySummaryViewModel
 
+    var lastCommodityListY = 0f
+
+
+    val onTouchListener = View.OnTouchListener { v, event ->
+        when (event.action) {
+            MotionEvent.ACTION_DOWN -> lastCommodityListY = event.y
+            MotionEvent.ACTION_MOVE -> {
+
+                val yDistance = event.y - lastCommodityListY
+                Log.e(javaClass.simpleName, "yDistance : $yDistance")
+
+                return@OnTouchListener (activity as CommodityHomeActivity).homeTopAnim(yDistance)
+
+            }
+            MotionEvent.ACTION_UP -> {
+            }
+            else -> {
+            }
+        }
+        return@OnTouchListener false
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -38,8 +63,10 @@ class PlaceFragment : Fragment() {
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_place, container, false)
 
         mPlaceAdapter = PlaceAdapter(mCommodityClickCallback)
+        mBinding.rvCommodityList.setOnTouchListener(onTouchListener)
         mBinding.rvCommodityList.adapter = mPlaceAdapter
         setMaxFlingVelocity(mBinding.rvCommodityList)
+
 
         return mBinding.root
     }

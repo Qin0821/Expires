@@ -43,9 +43,9 @@ abstract class LogActivity : AppCompatActivity(), View.OnClickListener {
     /**
      * @desc onCreate彻底执行完毕，做最后的初始化工作
      */
-    override fun onPostCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
+    override fun onPostCreate(savedInstanceState: Bundle?) {
         "onPostCreate".log(javaClass.simpleName, Log.VERBOSE)
-        super.onPostCreate(savedInstanceState, persistentState)
+        super.onPostCreate(savedInstanceState)
     }
 
     /**
