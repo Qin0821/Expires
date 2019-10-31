@@ -113,12 +113,6 @@
                             android:textSize="17sp" />
                 </LinearLayout>
 
-                <androidx.viewpager.widget.ViewPager
-                        android:id="@+id/vpCommodityList"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:visibility="gone" />
-
                 <androidx.fragment.app.FragmentContainerView
                         android:id="@+id/fcCommodity"
                         android:layout_width="match_parent"
@@ -133,22 +127,19 @@
 
 
             </LinearLayout>
-
-            <View
-                    android:id="@+id/viewShadow"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/transparency_50"
-                    android:visibility="gone" />
         </RelativeLayout>
 
+        <View
+                android:id="@+id/viewShadow"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/transparency_50"
+                android:visibility="gone" />
 
         <include
                 android:id="@+id/itemCommodity"
                 layout="@layout/dialog_commodity"
                 bind:commodityDetail="@{commodityDetail}" />
 
-        <!-- Bottom sheet content -->
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
 </layout>

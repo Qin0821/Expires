@@ -70,7 +70,7 @@
                         <include
                                 android:id="@+id/itemConsuming"
                                 layout="@layout/item_dialog_commodity_consuming"
-                                bind:commodityDetail="@{commodityDetail}" />
+                                bind:commodityDetail="@{commodityDetail}"/>
 
                         <include
                                 layout="@layout/item_dialog_commodity_line"

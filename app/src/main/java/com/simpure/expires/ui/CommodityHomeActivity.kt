@@ -19,7 +19,6 @@ import com.blankj.utilcode.constant.PermissionConstants
 import com.blankj.utilcode.util.*
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.simpure.expires.api.SignInApiService
-import com.simpure.expires.data.entity.UserEntity
 import com.simpure.expires.utilities.toast
 import com.simpure.expires.viewmodel.UserViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -30,6 +29,7 @@ import android.view.MotionEvent
 import android.view.animation.AnimationUtils
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
+import androidx.constraintlayout.widget.ConstraintSet
 import androidx.lifecycle.*
 import com.google.zxing.util.BarcodeGenerator
 import com.lxj.xpopup.XPopup
@@ -50,7 +50,6 @@ import com.simpure.expires.utilities.startAct
 import com.simpure.expires.view.popup.ConsumingPopup
 import com.simpure.expires.view.popup.InventoriesPopup
 import com.simpure.expires.view.popup.PlacePopup
-import com.simpure.expires.view.recycleView.CommodityHomeRecycleViewActionDownListener
 import com.simpure.expires.view.scrollview.ExpiresScrollView
 import com.simpure.expires.view.scrollview.ScrollViewListener
 import com.simpure.expires.viewmodel.CommodityDetailViewModel
@@ -403,7 +402,6 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
 
             (adapter as InventoryAdapter).setInventoryList(it.inventories)
         }
-
     }
 
     private fun showBarcode(it: CommodityEntity) {
@@ -671,18 +669,40 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
     private fun setCommodityHeight(slideOffset: Float) {
         if (mBottomSheetBehavior.state == BottomSheetBehavior.STATE_EXPANDED) return
 
+        val commodityNumHeight = if (slideOffset > 0) {
+            ((1 - slideOffset) * ConvertUtils.dp2px(20f)).toInt()
+        } else ConvertUtils.dp2px(20f)
 
-        val height = if (slideOffset > 0) {
+        val set = ConstraintSet()
+        set.clone(this, R.layout.item_commodity_head)
+        set.connect(R.id.llCommodityNum, ConstraintSet.TOP, R.id.tvCommodityName, ConstraintSet.TOP)
+        set.connect(
+            R.id.llCommodityNum,
+            ConstraintSet.BOTTOM,
+            R.id.tvCommodityName,
+            ConstraintSet.BOTTOM
+        )
+        set.connect(
+            R.id.llCommodityNum,
+            ConstraintSet.END,
+            ConstraintSet.PARENT_ID,
+            ConstraintSet.END
+        )
+        set.constrainHeight(R.id.llCommodityNum, commodityNumHeight)
+        set.setAlpha(R.id.llCommodityNum, 1 - slideOffset)
+        set.applyTo(mBinding.itemCommodity.itemCommodityHead.bottomSheetLayout)
+
+        val consumeLayoutHeight = if (slideOffset > 0) {
             (slideOffset * ConvertUtils.dp2px(44f)).toInt()
         } else 0
-        val lpC = LinearLayout.LayoutParams(
+
+        val consumeLayoutLP = LinearLayout.LayoutParams(
             LinearLayout.LayoutParams.MATCH_PARENT,
-            height
+            consumeLayoutHeight
         )
-//        itemCommodity.itemConsuming.layoutConsume.visibility =
-//            if (ConvertUtils.px2dp(height.toFloat()) < 20) View.INVISIBLE else View.VISIBLE
-        itemCommodity.itemConsuming.layoutConsume.alpha = (slideOffset - 1)
-        itemCommodity.itemConsuming.layoutConsume.layoutParams = lpC
+
+        itemCommodity.itemConsuming.layoutConsume.alpha = slideOffset
+        itemCommodity.itemConsuming.layoutConsume.layoutParams = consumeLayoutLP
 
         /*val minHeight = ConvertUtils.dp2px(100f)
         val height =
