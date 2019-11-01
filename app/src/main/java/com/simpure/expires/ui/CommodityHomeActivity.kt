@@ -48,6 +48,7 @@ import com.simpure.expires.ui.setting.SettingActivity
 import com.simpure.expires.utilities.getCompatColor
 import com.simpure.expires.utilities.startAct
 import com.simpure.expires.view.popup.ConsumingPopup
+import com.simpure.expires.view.popup.ExpiresPopupView
 import com.simpure.expires.view.popup.InventoriesPopup
 import com.simpure.expires.view.popup.PlacePopup
 import com.simpure.expires.view.scrollview.ExpiresScrollView
@@ -571,7 +572,7 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
 
     private fun showEditPopup(
         view: View,
-        popup: PositionPopupView,
+        popup: ExpiresPopupView,
         callback: SimpleCallback? = null,
         backgroundRes: Int = R.color.transparency_90
     ) {
