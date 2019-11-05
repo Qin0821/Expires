@@ -58,7 +58,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
-                android:text="Thank for your use"
+                android:text="Thanks for your use"
                 android:textColor="@color/bg_comm_action"
                 android:textSize="17sp" />
 

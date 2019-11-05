@@ -7,24 +7,38 @@
 
         <import type="android.view.View" />
 
+        <variable
+                name="isMulti"
+                type="Boolean" />
 
         <variable
                 name="inventory"
                 type="com.simpure.expires.model.Inventory" />
-
     </data>
 
-    <LinearLayout
+    <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="wrap_content">
+
+        <ImageView
+                android:id="@+id/ivInventorySelector"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="8dp"
+                android:src="@drawable/selector_circle_green_off"
+                android:visibility="@{isMulti ? View.VISIBLE : View.GONE}" />
 
         <LinearLayout
+                android:id="@+id/llExpireDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/ivInventorySelector"
                 android:orientation="horizontal"
                 android:paddingTop="5dp"
                 android:paddingBottom="5dp">
+
 
             <ImageView
                     android:layout_width="20dp"
@@ -51,6 +65,8 @@
         <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/llExpireDate"
+                android:layout_toEndOf="@id/ivInventorySelector"
                 android:orientation="horizontal"
                 android:paddingTop="5dp"
                 android:paddingBottom="5dp">
@@ -76,6 +92,6 @@
                     android:textColor="@color/bg_comm_action"
                     android:textSize="17sp" />
         </LinearLayout>
-    </LinearLayout>
+    </RelativeLayout>
 
 </layout>

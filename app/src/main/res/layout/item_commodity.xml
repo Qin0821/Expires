@@ -47,10 +47,9 @@
                     android:overScrollMode="never"
                     android:scrollbars="none">
 
-                <LinearLayout
+                <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:layout_height="wrap_content">
 
                     <include
                             android:id="@+id/itemCommodityHead"
@@ -63,6 +62,7 @@
                             android:id="@+id/llCommDetail"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_below="@id/itemCommodityHead"
                             android:orientation="vertical"
                             android:paddingLeft="20dp"
                             android:paddingRight="20dp">
@@ -70,7 +70,7 @@
                         <include
                                 android:id="@+id/itemConsuming"
                                 layout="@layout/item_dialog_commodity_consuming"
-                                bind:commodityDetail="@{commodityDetail}"/>
+                                bind:commodityDetail="@{commodityDetail}" />
 
                         <include
                                 layout="@layout/item_dialog_commodity_line"
@@ -100,7 +100,7 @@
 
                     </LinearLayout>
 
-                </LinearLayout>
+                </RelativeLayout>
 
             </com.simpure.expires.view.scrollview.ExpiresScrollView>
 
@@ -112,6 +112,14 @@
                     android:layout_height="57dp"
                     android:layout_alignParentBottom="true"
                     app:layout_constraintBottom_toBottomOf="parent" />
+
+            <View
+                    android:id="@+id/sheetShadow"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/transparency"
+                    android:visibility="gone" />
+
         </RelativeLayout>
     </RelativeLayout>
 </layout>

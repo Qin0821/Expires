@@ -4,19 +4,24 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.databinding.DataBindingUtil.inflate
 import android.view.LayoutInflater
+import androidx.databinding.BindingAdapter
 import com.simpure.expires.R
 import com.simpure.expires.databinding.ItemInventoryBinding
 import com.simpure.expires.model.Inventory
-import com.simpure.expires.ui.CommodityClickCallback
+import android.widget.ImageView
 
-class InventoryAdapter(/*private val mCommodityClickCallback: CommodityClickCallback*/) :
+
+class InventoryAdapter(
+    private var inventoryList: List<Inventory>,
+    private val isEdit: Boolean = false/*private val mCommodityClickCallback: CommodityClickCallback*/
+) :
     RecyclerView.Adapter<InventoryAdapter.ViewHolder>() {
 
 
-    private lateinit var mInventoryList: List<Inventory>
+//    private lateinit var mInventoryList: List<Inventory>
 
     fun setInventoryList(inventoryList: List<Inventory>) {
-        mInventoryList = inventoryList
+        this.inventoryList = inventoryList
         notifyDataSetChanged()
     }
 
@@ -30,16 +35,24 @@ class InventoryAdapter(/*private val mCommodityClickCallback: CommodityClickCall
     }
 
     override fun getItemCount(): Int {
-        return if (::mInventoryList.isInitialized) mInventoryList.size else 0
+        return inventoryList.size
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        if (!::mInventoryList.isInitialized) return
 
-        holder.binding.inventory = mInventoryList[position]
+        holder.binding.inventory = inventoryList[position]
+        holder.binding.isMulti = inventoryList.size > 1 && isEdit
         holder.binding.executePendingBindings()
     }
 
     class ViewHolder(val binding: ItemInventoryBinding) :
         RecyclerView.ViewHolder(binding.root)
+
+    object InventoryBinds {
+        @JvmStatic
+        @BindingAdapter("imageResource")
+        fun setImageSrc(view: ImageView, src: Int) {
+            view.setImageResource(src)
+        }
+    }
 }

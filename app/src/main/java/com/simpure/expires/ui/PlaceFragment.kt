@@ -73,7 +73,7 @@ class PlaceFragment : Fragment() {
 
     private fun setMaxFlingVelocity(recycleView: RecyclerView) {
         try {
-            val field = RecyclerView::class.java.getDeclaredField("mMaxFlingVelocity");
+            val field = RecyclerView::class.java.getDeclaredField("mMaxFlingVelocity")
             field.isAccessible = true
             field.set(recycleView, 4000)
         } catch (e: Exception) {
@@ -81,9 +81,11 @@ class PlaceFragment : Fragment() {
         }
     }
 
-    private val mCommodityClickCallback = CommodityClickCallback { commodity ->
-        if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
-            (activity as CommodityHomeActivity).showCommodityDetail(commodity.id)
+    private val mCommodityClickCallback = object : CommodityClickCallback {
+        override fun onClick(commodity: CommoditySummaryModel) {
+            if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
+                (activity as CommodityHomeActivity).showCommodityDetail(commodity.id)
+            }
         }
     }
 

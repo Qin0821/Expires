@@ -14,10 +14,8 @@
  * limitations under the License.
  */
 
-package com.simpure.expires.ui;
+package com.simpure.expires.view.popup
 
-import com.simpure.expires.model.CommoditySummaryModel;
-
-public interface CommodityClickCallback {
-    void onClick(CommoditySummaryModel commodity);
+interface ConsumingCallback {
+    fun clearClick()
 }

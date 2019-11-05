@@ -1,13 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:bind="http://schemas.android.com/tools">
+
     <data>
 
+        <import type="android.view.View" />
+
+        <import type="com.simpure.expires.R" />
+
+        <variable
+                name="isToUseType"
+                type="Boolean" />
+
+        <variable
+                name="isMultiItem"
+                type="Boolean" />
+
+        <variable
+                name="callback"
+                type="com.simpure.expires.view.popup.InventoriesCallback" />
     </data>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clPopupClearLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp">
 
-    </LinearLayout>
+
+        <androidx.cardview.widget.CardView
+                android:id="@+id/cardView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:translationZ="-4dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="3dp"
+                app:contentPadding="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvInventories"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+        </androidx.cardview.widget.CardView>
+
+        <ImageView
+                android:id="@+id/ivMinus"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:background="@mipmap/ic_launcher"
+                android:onClick="@{() -> callback.minusClick()}"
+                android:visibility="@{isToUseType ? View.VISIBLE : View.GONE}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cardView" />
+
+        <TextView
+                android:id="@+id/tvAmount"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="10dp"
+                android:background="@drawable/bg_rounded_rectangle_black_25"
+                android:gravity="center"
+                android:text="1"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                android:visibility="@{isToUseType ? View.VISIBLE : View.GONE}"
+                app:layout_constraintBottom_toBottomOf="@id/ivMinus"
+                app:layout_constraintStart_toEndOf="@id/ivMinus"
+                app:layout_constraintTop_toTopOf="@id/ivMinus" />
+
+        <ImageView
+                android:id="@+id/ivPlus"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@mipmap/ic_launcher"
+                android:onClick="@{() -> callback.plusClick()}"
+                android:visibility="@{isToUseType ? View.VISIBLE : View.GONE}"
+                app:layout_constraintBottom_toBottomOf="@id/tvAmount"
+                app:layout_constraintStart_toEndOf="@id/tvAmount"
+                app:layout_constraintTop_toTopOf="@id/tvAmount" />
+
+        <ImageView
+                android:id="@+id/ivConfirm"
+                imageResource="@{isToUseType ? R.mipmap.ic_launcher : R.mipmap.ic_launcher}"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:onClick="@{() -> isToUseType ? callback.toUseClick() : callback.throwClick()}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cardView" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

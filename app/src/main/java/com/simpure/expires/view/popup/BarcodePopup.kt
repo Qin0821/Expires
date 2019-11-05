@@ -6,23 +6,36 @@ import com.lxj.xpopup.util.XPopupUtils
 import com.simpure.expires.R
 import androidx.databinding.DataBindingUtil.inflate
 import com.lxj.xpopup.widget.PartShadowContainer
+import com.simpure.expires.BR
+import com.simpure.expires.data.entity.CommodityEntity
 
 import com.simpure.expires.databinding.PopupBarcodeBinding
 
 class BarcodePopup(context: Context) : ExpiresPopupView(context) {
+    override fun setMarginTop(top: Int) {
+
+    }
+
+    private val mBinding: PopupBarcodeBinding
+    override lateinit var mCommodityDetail: CommodityEntity
+
+    override fun setCommodityDetail(commodityDetail: CommodityEntity) {
+        mCommodityDetail = commodityDetail
+        mBinding.setVariable(BR.commodityDetail, commodityDetail)
+    }
 
     private val attachPopupContainer: PartShadowContainer =
         findViewById(com.lxj.xpopup.R.id.attachPopupContainer)
 
     init {
-        val binding: PopupBarcodeBinding =
+        mBinding =
             inflate(
                 LayoutInflater.from(getContext()),
                 implLayoutId,
                 attachPopupContainer,
                 false
             )
-        attachPopupContainer.addView(binding.root)
+        attachPopupContainer.addView(mBinding.root)
     }
 
 

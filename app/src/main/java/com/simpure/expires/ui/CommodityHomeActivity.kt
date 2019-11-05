@@ -14,7 +14,6 @@ import com.google.zxing.util.Constant.REQ_QR_CODE
 import com.google.zxing.activity.CaptureActivity
 import android.content.Intent
 import android.graphics.Rect
-import android.os.PersistableBundle
 import com.blankj.utilcode.constant.PermissionConstants
 import com.blankj.utilcode.util.*
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -34,7 +33,6 @@ import androidx.lifecycle.*
 import com.google.zxing.util.BarcodeGenerator
 import com.lxj.xpopup.XPopup
 import com.lxj.xpopup.core.BasePopupView
-import com.lxj.xpopup.core.PositionPopupView
 import com.lxj.xpopup.enums.PopupAnimation
 import com.lxj.xpopup.interfaces.SimpleCallback
 import com.simpure.expires.BR
@@ -47,17 +45,14 @@ import com.simpure.expires.ui.search.SearchActivity
 import com.simpure.expires.ui.setting.SettingActivity
 import com.simpure.expires.utilities.getCompatColor
 import com.simpure.expires.utilities.startAct
-import com.simpure.expires.view.popup.ConsumingPopup
-import com.simpure.expires.view.popup.ExpiresPopupView
-import com.simpure.expires.view.popup.InventoriesPopup
-import com.simpure.expires.view.popup.PlacePopup
+import com.simpure.expires.view.popup.*
 import com.simpure.expires.view.scrollview.ExpiresScrollView
 import com.simpure.expires.view.scrollview.ScrollViewListener
 import com.simpure.expires.viewmodel.CommodityDetailViewModel
 import com.simpure.expires.viewmodel.CommodityHome2ViewModel
 import kotlinx.android.synthetic.main.activity_home.*
-import kotlinx.android.synthetic.main.dialog_commodity.*
-import kotlinx.android.synthetic.main.dialog_commodity.view.*
+import kotlinx.android.synthetic.main.item_commodity.*
+import kotlinx.android.synthetic.main.item_commodity.view.*
 import kotlinx.android.synthetic.main.item_dialog_commodity_consuming.*
 import kotlinx.android.synthetic.main.item_dialog_commodity_consuming.view.*
 import kotlinx.android.synthetic.main.item_dialog_commodity_inventories.*
@@ -80,6 +75,8 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
     private lateinit var mCommodityHomeViewModel: CommodityHome2ViewModel
 
     private lateinit var mPlacePopup: PlacePopup
+
+    private lateinit var mCommodityDetail: CommodityEntity
 
     var lastX = 0f
     var lastY = 0f
@@ -324,6 +321,7 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
         mCommodityDetailViewModel.commodityDetail.observe(this, Observer {
             if (null == it) return@Observer
 
+            mCommodityDetail = it
             // 给 commodity sheet 设置数据
             mBinding.setVariable(BR.commodityDetail, it)
 
@@ -394,10 +392,10 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
             }
             if (null == adapter) {
                 this.isNestedScrollingEnabled = false
-                adapter = InventoryAdapter()
+                adapter = InventoryAdapter(it.inventories)
+            } else {
+                (adapter as InventoryAdapter).setInventoryList(it.inventories)
             }
-
-            (adapter as InventoryAdapter).setInventoryList(it.inventories)
         }
     }
 
@@ -539,10 +537,10 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
                 showEditPopup(v!!, ConsumingPopup(this))
             }
             ivInventoriesTopping -> {
-                showEditPopup(v!!, InventoriesPopup(this, "topping"))
+                showEditPopup(v!!, InventoriesPopup(this, true))
             }
             tvInventoriesThrow -> {
-                showEditPopup(v!!, InventoriesPopup(this, "throw"))
+                showEditPopup(v!!, InventoriesPopup(this, false))
             }
             ivInventories -> {
                 this@CommodityHomeActivity.toast("ivInventories")
@@ -573,14 +571,56 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
     private fun showEditPopup(
         view: View,
         popup: ExpiresPopupView,
-        callback: SimpleCallback? = null,
+//        callback: SimpleCallback? = null,
         backgroundRes: Int = R.color.transparency_90
     ) {
         val location = IntArray(2)
         view.getLocationInWindow(location)
-//        tvInventoriesThrow.getLocationInWindow(location)
+//        location[1] -= ConvertUtils.dp2px(16f)
+        location[1] += ConvertUtils.dp2px(24f)
+
+        if (::mCommodityDetail.isInitialized) {
+            popup.setCommodityDetail(mCommodityDetail)
+            when (popup) {
+                is ConsumingPopup -> {
+                    val callback = object : ConsumingCallback {
+                        override fun clearClick() {
+                            toast("clear")
+                        }
+                    }
+                    popup.setPopupCallback(callback)
+                }
+                is InventoriesPopup -> {
+                    val callback = object : InventoriesCallback {
+                        override fun minusClick() {
+                            toast("minusClick")
+                        }
+
+                        override fun plusClick() {
+                            toast("plusClick")
+                        }
+
+                        override fun toUseClick() {
+                            toast("toUse")
+                        }
+
+                        override fun throwClick() {
+                            toast("throw")
+                        }
+                    }
+                    popup.setPopupCallback(callback)
+                }
+            }
+        }
 
         XPopup.setShadowBgColor(getCompatColor(backgroundRes))
+
+        val callback = object : SimpleCallback() {
+            override fun onDismiss() {
+                super.onDismiss()
+                mBinding.itemCommodity.sheetShadow.visibility = View.GONE
+            }
+        }
 
         mPlaceNamePopup =
             XPopup
@@ -588,8 +628,12 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
                 .popupAnimation(PopupAnimation.ScaleAlphaFromCenter)
                 .offsetY(location[1])
                 .setPopupCallback(callback)
+                .atView(mBinding.itemCommodity.layout)
+//                .maxHeight(500)
                 .asCustom(popup)
                 .show()
+
+//        mBinding.itemCommodity.sheetShadow.visibility = View.VISIBLE
     }
 
     override fun onTouch(v: View?, event: MotionEvent?): Boolean {
