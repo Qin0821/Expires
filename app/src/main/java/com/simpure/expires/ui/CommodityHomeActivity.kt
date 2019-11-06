@@ -314,6 +314,18 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
 
             svCommodity.setScrollViewListener(svCommodityScrollListener)
             itemCommodity.setOnTouchListener(this)
+
+            with(mBinding.itemCommodity.itemCommodityNavigation) {
+                ivInventories.setOnClickListener {
+                    toast("item inventory")
+                }
+                ivConsuming.setOnClickListener {
+                    toast("item consuming")
+                }
+                ivEdit.setOnClickListener {
+                    toast("item edit")
+                }
+            }
         }
         mCommodityDetailViewModel =
             ViewModelProvider(this).get(CommodityDetailViewModel::class.java)
@@ -323,7 +335,7 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
 
             mCommodityDetail = it
             // 给 commodity sheet 设置数据
-            mBinding.setVariable(BR.commodityDetail, it)
+            mBinding.commodityDetail = it
 
             showInventories(it)
             showBarcode(it)
@@ -365,8 +377,8 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
 
         if (!::mSelectPlace.isInitialized) {
             mSelectPlace = group.placeList[0]
-            mBinding.setVariable(BR.placeName, mSelectPlace)
-            mBinding.setVariable(BR.notAll, false)
+            mBinding.placeName = mSelectPlace
+            mBinding.notAll = false
         }
         if (!::mPlaceList.isInitialized) mPlaceList = group.placeList
 
@@ -558,8 +570,8 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
                 cancelSearch()
             }
             tvAll -> {
-                mBinding.setVariable(BR.placeName, mSelectPlace)
-                mBinding.setVariable(BR.notAll, false)
+                mBinding.placeName = mSelectPlace
+                mBinding.notAll = false
                 mCommodityHomeViewModel.setPlaceName("All")
             }
             ivHomeSearch -> {
@@ -670,8 +682,8 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
                     if (mPlacePopup.getSelectPlace().isEmpty()) mSelectPlace else mPlacePopup.getSelectPlace()
 
                 try {
-                    mBinding.setVariable(BR.placeName, mSelectPlace)
-                    mBinding.setVariable(BR.notAll, true)
+                    mBinding.placeName = mSelectPlace
+                    mBinding.notAll = true
                     mCommodityHomeViewModel.setPlaceName(mSelectPlace)
                 } catch (e: Exception) {
                     Log.e(javaClass.simpleName, "can not get name from empty place")
