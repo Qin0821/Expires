@@ -82,15 +82,15 @@ dependencies {
     implementation 'androidx.navigation:navigation-ui-ktx:2.1.0'
     implementation 'androidx.work:work-runtime-ktx:2.2.0'
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.46'
-    implementation 'androidx.fragment:fragment-ktx:1.2.0-beta02'
-    implementation 'com.google.firebase:firebase-core:17.2.0'
+    implementation 'androidx.fragment:fragment-ktx:1.2.0-rc01'
+    implementation 'com.google.firebase:firebase-core:17.2.1'
 
     // Testing dependencies
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.46'
-    implementation 'androidx.recyclerview:recyclerview:1.1.0-beta05'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0-rc01'
     // https://github.com/yarolegovich/DiscreteScrollView
     implementation 'com.yarolegovich:discrete-scrollview:1.4.9'
     implementation 'jp.wasabeef:recyclerview-animators:3.0.0'
@@ -115,7 +115,7 @@ dependencies {
 
     implementation 'com.orhanobut:dialogplus:1.11@aar'
 
-    def room_version = "2.2.0"
+    def room_version = "2.2.1"
 
     implementation "androidx.room:room-runtime:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
