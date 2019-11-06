@@ -25,6 +25,8 @@
     <color name="account">#FFAA00</color>
     <color name="catagories">#00AAFF</color>
     <color name="notifications">#20C200</color>
+    <color name="green">#00C2A1</color>
+    <color name="light_green">#3300C2A1</color>
     <color name="shareApp">#00CCCC</color>
     <color name="rateUs">#735CE6</color>
     <color name="sendFeedback">#FF5C5C</color>

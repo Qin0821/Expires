@@ -18,6 +18,10 @@
                 type="Boolean" />
 
         <variable
+                name="amount"
+                type="String" />
+
+        <variable
                 name="callback"
                 type="com.simpure.expires.view.popup.InventoriesCallback" />
     </data>
@@ -66,9 +70,9 @@
                 android:layout_width="100dp"
                 android:layout_height="50dp"
                 android:layout_marginStart="10dp"
-                android:background="@drawable/bg_rounded_rectangle_black_25"
+                android:background="@drawable/bg_rounded_rectangle_green_25"
                 android:gravity="center"
-                android:text="1"
+                android:text="@{amount}"
                 android:textColor="@color/white"
                 android:textSize="24sp"
                 android:visibility="@{isToUseType ? View.VISIBLE : View.GONE}"

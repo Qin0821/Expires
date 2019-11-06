@@ -590,7 +590,7 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
                     }
                     popup.setPopupCallback(callback)
                 }
-                is InventoriesPopup -> {
+                /*is InventoriesPopup -> {
                     val callback = object : InventoriesCallback {
                         override fun minusClick() {
                             toast("minusClick")
@@ -609,7 +609,7 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
                         }
                     }
                     popup.setPopupCallback(callback)
-                }
+                }*/
             }
         }
 
