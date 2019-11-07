@@ -320,7 +320,16 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
                     toast("item inventory")
                 }
                 ivConsuming.setOnClickListener {
-                    toast("item consuming")
+                    val location = IntArray(2)
+                    it.getLocationInWindow(location)
+
+                    location[1] -= ConvertUtils.dp2px(67f) + BarUtils.getNavBarHeight()
+
+                    XPopup.Builder(this@CommodityHomeActivity)
+                        .popupAnimation(PopupAnimation.TranslateFromTop)
+                        .offsetY(location[1])
+                        .asCustom(ConsumingSelectPopup(this@CommodityHomeActivity))
+                        .show()
                 }
                 ivEdit.setOnClickListener {
                     toast("item edit")

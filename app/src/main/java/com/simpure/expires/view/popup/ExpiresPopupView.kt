@@ -25,51 +25,6 @@ abstract class ExpiresPopupView(context: Context) : BasePopupView(context) {
     protected abstract var mCommodityDetail: CommodityEntity
 
     private val attachPopupContainer: PartShadowContainer = findViewById(R.id.attachPopupContainer)
-//
-//    init {
-//        when (this) {
-//            is ConsumingPopup -> {
-//                val binding: PopupClearBinding =
-//                    inflate(
-//                        LayoutInflater.from(getContext()),
-//                        implLayoutId,
-//                        attachPopupContainer,
-//                        false
-//                    )
-//                attachPopupContainer.addView(binding.root)
-//            }
-//            is InventoriesPopup -> {
-//                val binding: PopupInventoriesBinding =
-//                    inflate(
-//                        LayoutInflater.from(getContext()),
-//                        implLayoutId,
-//                        attachPopupContainer,
-//                        false
-//                    )
-//                attachPopupContainer.addView(binding.root)
-//            }
-//            is DetailPopup -> {
-//                val binding: PopupDetailBinding =
-//                    inflate(
-//                        LayoutInflater.from(getContext()),
-//                        implLayoutId,
-//                        attachPopupContainer,
-//                        false
-//                    )
-//                attachPopupContainer.addView(binding.root)
-//            }
-//            is BarcodePopup -> {
-//                val binding: PopupBarcodeBinding =
-//                    inflate(
-//                        LayoutInflater.from(getContext()),
-//                        implLayoutId,
-//                        attachPopupContainer,
-//                        false
-//                    )
-//                attachPopupContainer.addView(binding.root)
-//            }
-//        }
-//    }
 
     override fun getPopupLayoutId(): Int {
         return com.simpure.expires.R.layout._expires_attach_popup_view
