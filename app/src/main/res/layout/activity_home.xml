@@ -25,6 +25,10 @@
         <variable
                 name="notAll"
                 type="Boolean" />
+
+        <variable
+                name="isNewConsuming"
+                type="Boolean" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -139,7 +143,8 @@
         <include
                 android:id="@+id/itemCommodity"
                 layout="@layout/item_commodity"
-                bind:commodityDetail="@{commodityDetail}" />
+                bind:commodityDetail="@{commodityDetail}"
+                bind:isNewConsuming="@{isNewConsuming}" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

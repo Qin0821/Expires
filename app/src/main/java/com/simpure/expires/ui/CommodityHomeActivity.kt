@@ -319,14 +319,23 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
                 ivInventories.setOnClickListener {
                     toast("item inventory")
                 }
+                ivCancelEdit.setOnClickListener {
+                    mBinding.isNewConsuming = false
+                }
+                ivDeleteEdit.setOnClickListener {
+                    mBinding.isNewConsuming = false
+                }
+                ivConfirmEdit.setOnClickListener {
+                    mBinding.isNewConsuming = false
+                }
                 ivConsuming.setOnClickListener {
                     val location = IntArray(2)
                     it.getLocationInWindow(location)
 
-                    location[1] -= ConvertUtils.dp2px(67f) + BarUtils.getNavBarHeight()
+                    location[1] -= ConvertUtils.dp2px(152.5f) + BarUtils.getNavBarHeight()
 
                     XPopup.Builder(this@CommodityHomeActivity)
-                        .popupAnimation(PopupAnimation.TranslateFromTop)
+                        .popupAnimation(PopupAnimation.ScrollAlphaFromBottom)
                         .offsetY(location[1])
                         .asCustom(ConsumingSelectPopup(this@CommodityHomeActivity))
                         .show()
@@ -350,6 +359,14 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
             showBarcode(it)
         })
 
+    }
+
+    fun newConsuming() {
+        mBinding.isNewConsuming = true
+    }
+
+    fun fromInventroies() {
+        mBinding.itemCommodity.itemInventories.ivInventoriesTopping.performClick()
     }
 
     override fun onStart() {

@@ -3,9 +3,15 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
                 name="commodityDetail"
                 type="com.simpure.expires.data.entity.CommodityEntity" />
+
+        <variable
+                name="isNewConsuming"
+                type="Boolean" />
 
     </data>
 
@@ -39,20 +45,32 @@
                     android:layout_width="36dp"
                     android:layout_height="22dp"
                     android:layout_marginStart="10dp"
-                    android:background="@drawable/bg_rounded_rectangle_deep_gray" />
+                    android:background="@drawable/bg_rounded_rectangle_light_gray"
+                    android:visibility="@{isNewConsuming ? View.GONE : View.VISIBLE}" />
 
             <TextView
                     android:id="@+id/tvInventoriesThrow"
                     android:layout_width="wrap_content"
                     android:layout_height="22dp"
                     android:layout_marginStart="10dp"
-                    android:background="@drawable/bg_rounded_rectangle_deep_gray"
+                    android:background="@drawable/bg_rounded_rectangle_light_gray"
                     android:gravity="center"
                     android:includeFontPadding="false"
                     android:paddingStart="10dp"
                     android:paddingEnd="10dp"
                     android:text="Throw"
-                    android:textColor="@color/white" />
+                    android:textColor="@color/green"
+                    android:visibility="@{isNewConsuming ? View.GONE : View.VISIBLE}" />
+
+            <ImageView
+                    android:id="@+id/ivEditInventories"
+                    android:layout_width="36dp"
+                    android:layout_height="22dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="11dp"
+                    android:layout_marginBottom="11dp"
+                    android:src="@mipmap/ic_launcher"
+                    android:visibility="@{isNewConsuming ? View.VISIBLE : View.GONE}" />
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView

@@ -3,14 +3,21 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:bind="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools">
+
     <data>
-        
+
+        <import type="android.view.View" />
+
         <variable
                 name="type"
                 type="Integer" />
+
+        <variable
+                name="isNewConsuming"
+                type="Boolean" />
     </data>
 
-    <LinearLayout 
+    <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="57dp"
             android:orientation="vertical">
@@ -25,7 +32,6 @@
                 android:id="@+id/llBottomNavigation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
                 android:baselineAligned="false"
                 android:orientation="horizontal">
 
@@ -38,12 +44,23 @@
                 <ImageView
                         android:id="@+id/ivInventories"
                         android:layout_width="52dp"
-                        android:layout_height="32dp"
+                        android:layout_height="56dp"
+                        android:visibility="@{isNewConsuming ? View.GONE : View.VISIBLE}"
                         android:gravity="center"
                         android:onClick="goInventories"
                         android:paddingStart="10dp"
                         android:paddingEnd="10dp"
                         android:src="@mipmap/inventories" />
+
+                <ImageView
+                        android:id="@+id/ivCancelEdit"
+                        android:layout_width="52dp"
+                        android:layout_height="56dp"
+                        android:gravity="center"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="10dp"
+                        android:src="@mipmap/ic_launcher"
+                        android:visibility="@{isNewConsuming ? View.VISIBLE : View.GONE}" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -55,12 +72,23 @@
                 <ImageView
                         android:id="@+id/ivConsuming"
                         android:layout_width="52dp"
-                        android:layout_height="32dp"
+                        android:layout_height="56dp"
                         android:gravity="center"
+                        android:visibility="@{isNewConsuming ? View.GONE : View.VISIBLE}"
                         android:onClick="goConsuming"
                         android:paddingStart="10dp"
                         android:paddingEnd="10dp"
                         android:src="@mipmap/consuming" />
+
+                <ImageView
+                        android:id="@+id/ivDeleteEdit"
+                        android:layout_width="52dp"
+                        android:layout_height="56dp"
+                        android:gravity="center"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="10dp"
+                        android:src="@mipmap/ic_launcher"
+                        android:visibility="@{isNewConsuming ? View.VISIBLE : View.GONE}" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -72,11 +100,22 @@
                 <ImageView
                         android:id="@+id/ivEdit"
                         android:layout_width="52dp"
-                        android:layout_height="32dp"
+                        android:layout_height="56dp"
                         android:gravity="center"
                         android:paddingStart="10dp"
                         android:paddingEnd="10dp"
-                        android:src="@mipmap/edit" />
+                        android:src="@mipmap/edit"
+                        android:visibility="@{isNewConsuming ? View.GONE : View.VISIBLE}" />
+
+                <ImageView
+                        android:id="@+id/ivConfirmEdit"
+                        android:layout_width="52dp"
+                        android:layout_height="56dp"
+                        android:gravity="center"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="10dp"
+                        android:src="@mipmap/ic_launcher"
+                        android:visibility="@{isNewConsuming ? View.VISIBLE : View.GONE}" />
             </RelativeLayout>
         </LinearLayout>
     </LinearLayout>

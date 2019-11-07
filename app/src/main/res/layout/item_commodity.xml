@@ -21,6 +21,10 @@
         <variable
                 name="callback"
                 type="CommodityClickCallback" />
+
+        <variable
+                name="isNewConsuming"
+                type="Boolean" />
     </data>
 
 
@@ -70,20 +74,18 @@
                         <include
                                 android:id="@+id/itemConsuming"
                                 layout="@layout/item_dialog_commodity_consuming"
-                                bind:commodityDetail="@{commodityDetail}" />
+                                bind:commodityDetail="@{commodityDetail}"
+                                bind:isNewConsuming="@{isNewConsuming}" />
 
-                        <include
-                                layout="@layout/item_dialog_commodity_line"
-                                bind:commodityDetail="@{commodityDetail}" />
+                        <include layout="@layout/item_dialog_commodity_line" />
 
                         <include
                                 android:id="@+id/itemInventories"
                                 layout="@layout/item_dialog_commodity_inventories"
-                                bind:commodityDetail="@{commodityDetail}" />
+                                bind:commodityDetail="@{commodityDetail}"
+                                bind:isNewConsuming="@{isNewConsuming}" />
 
-                        <include
-                                layout="@layout/item_dialog_commodity_line"
-                                bind:commodityDetail="@{commodityDetail}" />
+                        <include layout="@layout/item_dialog_commodity_line" />
 
                         <include
                                 layout="@layout/item_dialog_commodity_details"
@@ -111,7 +113,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="57dp"
                     android:layout_alignParentBottom="true"
-                    app:layout_constraintBottom_toBottomOf="parent" />
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    bind:isNewConsuming="@{isNewConsuming}" />
 
             <View
                     android:id="@+id/sheetShadow"

@@ -12,6 +12,10 @@
         <variable
                 name="isEdit"
                 type="Boolean" />
+
+        <variable
+                name="isNewConsuming"
+                type="Boolean" />
     </data>
 
     <LinearLayout
@@ -47,13 +51,24 @@
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="11dp"
                     android:layout_marginBottom="11dp"
-                    android:background="@drawable/bg_rounded_rectangle_deep_gray"
+                    android:background="@drawable/bg_rounded_rectangle_light_gray"
                     android:gravity="center"
                     android:includeFontPadding="false"
                     android:paddingStart="10dp"
                     android:paddingEnd="10dp"
                     android:text="Clear"
-                    android:textColor="@color/white" />
+                    android:textColor="@color/green"
+                    android:visibility="@{isNewConsuming ? View.GONE : View.VISIBLE}" />
+
+            <ImageView
+                    android:id="@+id/ivEditConsuming"
+                    android:layout_width="36dp"
+                    android:layout_height="22dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="11dp"
+                    android:layout_marginBottom="11dp"
+                    android:src="@mipmap/ic_launcher"
+                    android:visibility="@{isNewConsuming ? View.VISIBLE : View.GONE}" />
 
         </LinearLayout>
 
