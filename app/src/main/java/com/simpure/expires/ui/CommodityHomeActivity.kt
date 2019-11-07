@@ -253,13 +253,13 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
         supportFragmentManager.beginTransaction()
             .add(R.id.fcCommodity, placeFragment, placeFragment.TAG).commit()
 
+        initBottomSheet()
         initListener()
     }
 
     override fun onContentChanged() {
         super.onContentChanged()
 
-        initBottomSheet()
     }
 
     @SuppressLint("ClickableViewAccessibility")
