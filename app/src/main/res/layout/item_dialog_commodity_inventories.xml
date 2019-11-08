@@ -67,8 +67,6 @@
                     android:layout_width="36dp"
                     android:layout_height="22dp"
                     android:layout_marginStart="10dp"
-                    android:layout_marginTop="11dp"
-                    android:layout_marginBottom="11dp"
                     android:src="@mipmap/ic_launcher"
                     android:visibility="@{isNewConsuming ? View.VISIBLE : View.GONE}" />
         </LinearLayout>
