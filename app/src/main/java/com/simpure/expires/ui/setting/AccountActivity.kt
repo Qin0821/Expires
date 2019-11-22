@@ -52,10 +52,8 @@ class AccountActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setContentView(R.layout.activity_account)
-
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_account)
-        setActivityTheme(mBinding.tvSetting)
+        setActivityTheme(mBinding.llLayout)
 
         initData()
         initListener()
