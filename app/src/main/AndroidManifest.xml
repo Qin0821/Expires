@@ -29,6 +29,9 @@
         <activity android:name=".ui.SplashActivity" />
         <activity android:name=".ui.search.SearchActivity" />
         <activity android:name=".ui.setting.SettingActivity" />
+        <activity android:name=".ui.setting.AccountActivity" />
+        <activity android:name=".ui.setting.CategoriesActivity" />
+        <activity android:name=".ui.setting.NotificationsActivity" />
         <activity android:name="com.google.zxing.activity.CaptureActivity" />
 
         <!--适配华为（huawei）刘海屏-->

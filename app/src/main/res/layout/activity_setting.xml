@@ -18,6 +18,10 @@
         <variable
                 name="labelList"
                 type="java.util.List" />
+
+        <variable
+                name="reminderInterval"
+                type="String" />
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -27,7 +31,7 @@
             android:orientation="vertical">
 
         <TextView
-                android:id="@+id/tvTitle"
+                android:id="@+id/tvSetting"
                 android:layout_width="match_parent"
                 android:layout_height="78dp"
                 android:gravity="bottom"
@@ -49,6 +53,7 @@
                     android:orientation="vertical">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/clAccount"
                         android:layout_width="match_parent"
                         android:layout_height="90dp"
                         android:layout_marginTop="10dp"
@@ -87,7 +92,7 @@
                     <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Qin"
+                            android:text="@{name}"
                             android:textColor="@color/text_expires_days"
                             android:textSize="17sp"
                             android:textStyle="bold"
@@ -97,7 +102,7 @@
                     <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="liuqin0821@gmail.com"
+                            android:text="@{email}"
                             android:textColor="@color/line1"
                             android:textSize="14sp"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -116,8 +121,9 @@
                         android:textStyle="bold" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/clCatagories"
                         android:layout_width="match_parent"
-                        android:layout_height="124dp"
+                        android:layout_height="50dp"
                         android:layout_marginTop="10dp"
                         android:background="@drawable/bg_rounded_rectangle_white_10"
                         android:paddingStart="20dp"
@@ -152,9 +158,9 @@
                             app:layout_constraintTop_toTopOf="parent" />
 
                     <GridView
+                            android:id="@+id/gvCatagories"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="28dp"
                             android:layout_marginBottom="4dp"
                             android:minHeight="22dp"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -165,6 +171,7 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/clNotifications"
                         android:layout_width="match_parent"
                         android:layout_height="90dp"
                         android:layout_marginTop="10dp"
@@ -203,7 +210,7 @@
                     <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="8:00 AM - 9:00 PM"
+                            android:text="@{reminderInterval}"
                             android:textColor="@color/text_expires_days"
                             android:textSize="17sp"
                             android:textStyle="bold"
@@ -224,6 +231,7 @@
 
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/clShareApp"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:layout_marginTop="10dp"
@@ -262,10 +270,10 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/clRateUs"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:layout_marginTop="10dp"
-
                         android:background="@drawable/bg_rounded_rectangle_white_10"
                         android:paddingStart="20dp"
                         android:paddingTop="12dp"
@@ -284,7 +292,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
-                            android:text="Notifications"
+                            android:text="Rate Us"
                             android:textColor="@color/rateUs"
                             android:textSize="14sp"
                             android:textStyle="bold"
@@ -300,9 +308,9 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/clSendFeedback"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
-
                         android:layout_marginTop="10dp"
                         android:background="@drawable/bg_rounded_rectangle_white_10"
                         android:paddingStart="20dp"

@@ -33,6 +33,10 @@ fun Context.startAct(intent: Intent) {
     this.startActivity(intent)
 }
 
+fun Context.startAct(cls: Class<*>) {
+    this.startActivity(Intent(this, cls))
+}
+
 fun Any.log(tag: String, level: Int = Log.ERROR) {
     when (level) {
         Log.VERBOSE -> Log.v(tag, this.toString())
