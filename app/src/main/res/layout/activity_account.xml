@@ -67,9 +67,7 @@
                         android:layout_marginBottom="10dp"
                         android:background="@drawable/bg_rounded_rectangle_white_10"
                         android:paddingStart="20dp"
-                        android:paddingTop="17dp"
-                        android:paddingEnd="20dp"
-                        android:paddingBottom="17dp">
+                        android:paddingEnd="20dp">
 
                     <ImageView
                             android:id="@+id/ivNickname"
@@ -84,6 +82,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
+                            android:includeFontPadding="false"
                             android:text="Nickname"
                             android:textColor="@color/text_commodity_desc"
                             android:textSize="14sp"
@@ -95,8 +94,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:ellipsize="end"
+                            android:includeFontPadding="false"
                             android:maxLength="20"
                             android:maxLines="1"
+
                             android:text="@{account.nickname}"
                             android:textColor="@color/text_expires_days"
                             android:textSize="17sp"
@@ -112,9 +113,8 @@
                         android:layout_marginBottom="10dp"
                         android:background="@drawable/bg_rounded_rectangle_white_10"
                         android:paddingStart="20dp"
-                        android:paddingTop="17dp"
-                        android:paddingEnd="20dp"
-                        android:paddingBottom="17dp">
+
+                        android:paddingEnd="20dp">
 
                     <ImageView
                             android:id="@+id/ivEmail"
@@ -129,8 +129,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
+                            android:includeFontPadding="false"
                             android:text="Email"
                             android:textColor="@color/text_commodity_desc"
+
                             android:textSize="14sp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toEndOf="@id/ivEmail"
@@ -140,10 +142,12 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:ellipsize="end"
+                            android:includeFontPadding="false"
                             android:maxLength="20"
                             android:maxLines="1"
                             android:text="@{account.email}"
                             android:textColor="@color/text_expires_days"
+
                             android:textSize="17sp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -157,9 +161,8 @@
                         android:layout_marginBottom="10dp"
                         android:background="@drawable/bg_rounded_rectangle_white_10"
                         android:paddingStart="20dp"
-                        android:paddingTop="17dp"
-                        android:paddingEnd="20dp"
-                        android:paddingBottom="17dp">
+
+                        android:paddingEnd="20dp">
 
                     <ImageView
                             android:id="@+id/ivApple"
@@ -174,9 +177,11 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
+                            android:includeFontPadding="false"
                             android:text="Apple"
                             android:textColor="@color/text_commodity_desc"
                             android:textSize="14sp"
+
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toEndOf="@id/ivApple"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -185,6 +190,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:ellipsize="end"
+                            android:includeFontPadding="false"
                             android:maxLength="20"
                             android:maxLines="1"
                             android:text="@{account.nickname}"
@@ -192,6 +198,7 @@
                             android:textSize="17sp"
                             android:visibility="gone"
                             app:layout_constraintBottom_toBottomOf="parent"
+
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
@@ -211,9 +218,8 @@
                         android:layout_marginBottom="10dp"
                         android:background="@drawable/bg_rounded_rectangle_white_10"
                         android:paddingStart="20dp"
-                        android:paddingTop="17dp"
-                        android:paddingEnd="20dp"
-                        android:paddingBottom="17dp">
+
+                        android:paddingEnd="20dp">
 
                     <ImageView
                             android:id="@+id/ivFacebook"
@@ -228,9 +234,11 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
+                            android:includeFontPadding="false"
                             android:text="Facebook"
                             android:textColor="@color/text_commodity_desc"
                             android:textSize="14sp"
+
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toEndOf="@id/ivFacebook"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -239,6 +247,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:ellipsize="end"
+                            android:includeFontPadding="false"
                             android:maxLength="20"
                             android:maxLines="1"
                             android:text="@{account.nickname}"
@@ -247,6 +256,7 @@
                             android:visibility="gone"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
+
                             app:layout_constraintTop_toTopOf="parent" />
 
                     <ImageView
@@ -265,9 +275,8 @@
                         android:layout_marginBottom="10dp"
                         android:background="@drawable/bg_rounded_rectangle_white_10"
                         android:paddingStart="20dp"
-                        android:paddingTop="17dp"
-                        android:paddingEnd="20dp"
-                        android:paddingBottom="17dp">
+
+                        android:paddingEnd="20dp">
 
                     <ImageView
                             android:id="@+id/ivTwitter"
@@ -282,23 +291,27 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
+                            android:includeFontPadding="false"
                             android:text="Twitter"
                             android:textColor="@color/text_commodity_desc"
                             android:textSize="14sp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toEndOf="@id/ivTwitter"
+
                             app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:ellipsize="end"
+                            android:includeFontPadding="false"
                             android:maxLength="20"
                             android:maxLines="1"
                             android:text="@{account.nickname}"
                             android:textColor="@color/text_expires_days"
                             android:textSize="17sp"
                             android:visibility="gone"
+
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -319,9 +332,8 @@
                         android:layout_marginBottom="10dp"
                         android:background="@drawable/bg_rounded_rectangle_white_10"
                         android:paddingStart="20dp"
-                        android:paddingTop="17dp"
-                        android:paddingEnd="20dp"
-                        android:paddingBottom="17dp">
+
+                        android:paddingEnd="20dp">
 
                     <ImageView
                             android:id="@+id/ivGoogle"
@@ -336,7 +348,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
+                            android:includeFontPadding="false"
                             android:text="Google"
+
                             android:textColor="@color/text_commodity_desc"
                             android:textSize="14sp"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -347,10 +361,12 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:ellipsize="end"
+                            android:includeFontPadding="false"
                             android:maxLength="20"
                             android:maxLines="1"
                             android:text="@{account.nickname}"
                             android:textColor="@color/text_expires_days"
+
                             android:textSize="17sp"
                             android:visibility="gone"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -372,9 +388,8 @@
                         android:layout_height="50dp"
                         android:background="@drawable/bg_rounded_rectangle_white_10"
                         android:paddingStart="20dp"
-                        android:paddingTop="17dp"
-                        android:paddingEnd="20dp"
-                        android:paddingBottom="17dp">
+
+                        android:paddingEnd="20dp">
 
                     <ImageView
                             android:id="@+id/ivMicrosoft"
@@ -400,12 +415,14 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:ellipsize="end"
+                            android:includeFontPadding="false"
                             android:maxLength="20"
                             android:maxLines="1"
                             android:text="@{account.nickname}"
                             android:textColor="@color/text_expires_days"
                             android:textSize="17sp"
                             android:visibility="gone"
+
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />

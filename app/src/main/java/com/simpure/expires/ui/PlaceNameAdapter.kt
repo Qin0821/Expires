@@ -13,9 +13,7 @@ import androidx.databinding.DataBindingUtil.inflate
 import androidx.recyclerview.widget.RecyclerView
 import com.simpure.expires.BR
 import com.simpure.expires.R
-import com.simpure.expires.data.Place
 import com.simpure.expires.databinding.ItemPlaceNameBinding
-import com.simpure.expires.utilities.getCompatColor
 
 
 class PlaceNameAdapter(private val context: Context) :

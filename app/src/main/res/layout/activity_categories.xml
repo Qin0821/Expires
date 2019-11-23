@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
+        <variable
+                name="canDrag"
+                type="Boolean" />
     </data>
 
     <LinearLayout
@@ -13,38 +17,62 @@
             android:orientation="vertical">
 
         <!-- 78 + 14 = 92 -->
-        <RelativeLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="92dp"
                 android:paddingStart="14dp"
-                android:paddingEnd="14dp"
+                android:paddingEnd="20dp"
                 android:paddingBottom="8dp">
 
             <TextView
                     android:id="@+id/tvDone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true"
                     android:layout_marginStart="1dp"
                     android:layout_marginTop="16dp"
                     android:text="Done"
                     android:textColor="@color/green"
                     android:textSize="16sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                     android:id="@+id/tvCategories"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentBottom="true"
                     android:gravity="bottom"
                     android:text="Categories"
                     android:textColor="@color/black"
-                    android:textSize="32sp" />
-        </RelativeLayout>
+                    android:textSize="32sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
 
+            <ImageView
+                    android:id="@+id/ivCanDrag"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@mipmap/ic_launcher"
+                    app:layout_constraintBottom_toBottomOf="@id/tvCategories"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/tvCategories" />
+
+            <ImageView
+                    android:id="@+id/ivAdd"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginEnd="20dp"
+                    android:src="@mipmap/ic_launcher"
+                    app:layout_constraintBottom_toBottomOf="@id/tvCategories"
+                    app:layout_constraintEnd_toStartOf="@id/ivCanDrag"
+                    app:layout_constraintTop_toTopOf="@id/tvCategories" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvCategories"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
     </LinearLayout>
 </layout>

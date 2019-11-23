@@ -30,7 +30,7 @@
         <activity android:name=".ui.search.SearchActivity" />
         <activity android:name=".ui.setting.SettingActivity" />
         <activity android:name=".ui.setting.AccountActivity" />
-        <activity android:name=".ui.setting.CategoriesActivity" />
+        <activity android:name=".ui.setting.categories.CategoriesActivity" />
         <activity android:name=".ui.setting.NotificationsActivity" />
         <activity android:name="com.google.zxing.activity.CaptureActivity" />
 

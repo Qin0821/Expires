@@ -6,6 +6,7 @@ import androidx.databinding.DataBindingUtil
 import com.simpure.expires.R
 import com.simpure.expires.databinding.ActivitySettingBinding
 import com.simpure.expires.ui.BaseActivity
+import com.simpure.expires.ui.setting.categories.CategoriesActivity
 import com.simpure.expires.utilities.startAct
 import com.simpure.expires.utilities.toast
 import kotlinx.android.synthetic.main.activity_setting.*
