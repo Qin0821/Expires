@@ -4,6 +4,7 @@ import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.content.Context
 import android.content.Intent
+import android.graphics.Rect
 import android.os.Build
 import android.os.Looper
 import android.util.Log
@@ -81,4 +82,10 @@ fun View.fadeOut() {
                 this@fadeOut.visibility = View.GONE
             }
         })
+}
+
+fun View.isVisibleAll(): Boolean {
+    val rect = Rect()
+    this.getLocalVisibleRect(rect)
+    return rect.top == 0 && rect.bottom == this.height
 }

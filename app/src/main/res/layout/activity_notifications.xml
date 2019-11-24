@@ -1,8 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
+        <import type="android.view.View" />
+
+        <variable
+                name="beginTime"
+                type="String" />
+
+        <variable
+                name="endTime"
+                type="String" />
+
+        <variable
+                name="setBegin"
+                type="String" />
+
+        <variable
+                name="setEnd"
+                type="String" />
+
+        <variable
+                name="onTopTouch"
+                type="Boolean" />
+
+        <variable
+                name="onBottomTouch"
+                type="Boolean" />
     </data>
 
     <LinearLayout
@@ -45,6 +71,158 @@
                     android:textSize="32sp" />
         </RelativeLayout>
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clNotifications"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+                android:background="@drawable/bg_notifications">
+
+            <View
+                    android:id="@+id/shadowTop"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:background="@drawable/bg_half_rounded_rectangle_top_white_10"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            <LinearLayout
+                    android:id="@+id/llFrom"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:background="@drawable/bg_rounded_rectangle_white_20"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toBottomOf="@id/shadowTop"
+                    app:layout_constraintStart_toStartOf="@id/shadowTop"
+                    app:layout_constraintTop_toBottomOf="@id/shadowTop">
+
+                <TextView
+                        android:id="@+id/tvFrom"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginBottom="12dp"
+                        android:includeFontPadding="false"
+                        android:text="From "
+                        android:textColor="@color/green"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                <TextView
+                        android:id="@+id/tvBeginTime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="14dp"
+                        android:includeFontPadding="false"
+                        android:maxLines="1"
+                        android:minWidth="70dp"
+                        android:text="@{beginTime}"
+                        android:textColor="@color/text_expires_days"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:visibility="@{onTopTouch ? View.INVISIBLE : View.VISIBLE}" />
+            </LinearLayout>
+
+            <RelativeLayout
+                    android:id="@+id/rlBeginBall"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/bg_oval_white"
+                    android:visibility="@{onTopTouch ? View.VISIBLE : View.GONE}"
+                    app:layout_constraintBottom_toTopOf="@id/llFrom"
+                    app:layout_constraintEnd_toEndOf="@id/llFrom"
+                    app:layout_constraintStart_toStartOf="@id/llFrom">
+
+                <TextView
+                        android:id="@+id/tvSetBegin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="@{setBegin}"
+                        android:textColor="@color/text_expires_days"
+                        android:textSize="22sp" />
+
+            </RelativeLayout>
+
+            <View
+                    android:id="@+id/shadowBottom"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:background="@drawable/bg_half_rounded_rectangle_bottom_white_10"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+            <LinearLayout
+                    android:id="@+id/llTo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="20dp"
+                    android:background="@drawable/bg_rounded_rectangle_white_20"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toTopOf="@id/shadowBottom"
+                    app:layout_constraintEnd_toEndOf="@id/shadowBottom"
+                    app:layout_constraintTop_toTopOf="@id/shadowBottom">
+
+                <TextView
+                        android:id="@+id/tvTo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginBottom="12dp"
+                        android:includeFontPadding="false"
+                        android:text="To "
+                        android:textColor="@color/green"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                <TextView
+                        android:id="@+id/tvEndTime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="14dp"
+                        android:includeFontPadding="false"
+                        android:maxLines="1"
+                        android:minWidth="70dp"
+                        android:text="@{endTime}"
+                        android:textColor="@color/text_expires_days"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:visibility="@{onBottomTouch ? View.INVISIBLE : View.VISIBLE}" />
+            </LinearLayout>
+
+            <RelativeLayout
+                    android:id="@+id/rlEndBall"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/bg_oval_white"
+                    android:visibility="@{onBottomTouch ? View.VISIBLE : View.GONE}"
+                    app:layout_constraintEnd_toEndOf="@id/llTo"
+                    app:layout_constraintStart_toStartOf="@id/llTo"
+                    app:layout_constraintTop_toBottomOf="@id/llTo">
+
+                <TextView
+                        android:id="@+id/tvSetEnd"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="@{setEnd}"
+                        android:textColor="@color/text_expires_days"
+                        android:textSize="22sp" />
+
+            </RelativeLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
 </layout>
