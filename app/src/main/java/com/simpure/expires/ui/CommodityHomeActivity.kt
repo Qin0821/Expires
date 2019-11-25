@@ -884,7 +884,6 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
 
         // 扫描结果回调
         if (requestCode == REQ_QR_CODE && resultCode == RESULT_OK) {
@@ -892,5 +891,6 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
 //            val scanResult = bundle?.getString(Constant.INTENT_EXTRA_KEY_QR_SCAN)
 //            mBinding.btInventories.text = scanResult
         }
+        super.onActivityResult(requestCode, resultCode, data)
     }
 }

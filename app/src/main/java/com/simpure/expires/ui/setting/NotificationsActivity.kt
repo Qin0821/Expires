@@ -3,7 +3,6 @@ package com.simpure.expires.ui.setting
 import android.annotation.SuppressLint
 import android.graphics.Rect
 import android.os.Bundle
-import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintSet
@@ -16,9 +15,9 @@ import kotlinx.android.synthetic.main.activity_notifications.*
 
 class NotificationsActivity : BaseActivity(), View.OnTouchListener {
 
-    var lastY = 0f
-    var topOffset = 0
-    var bottomOffset = 0
+    private var lastY = 0f
+    private var topOffset = 0
+    private var bottomOffset = 0
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouch(v: View?, event: MotionEvent?): Boolean {
@@ -105,10 +104,7 @@ class NotificationsActivity : BaseActivity(), View.OnTouchListener {
 
             val rect = Rect()
             mBinding.llTo.getGlobalVisibleRect(rect)
-            Log.e("AAAA", "rect.bottom ${rect.bottom}")
-            Log.e("AAAA", "bottomOffset: $bottomOffset")
             if (bottomOffset - rect.bottom > ConvertUtils.dp2px(130f)) {
-                Log.e("AAAA", "bottom")
                 set.clear(ballView.id, ConstraintSet.BOTTOM)
                 set.connect(
                     ballView.id,
@@ -118,7 +114,6 @@ class NotificationsActivity : BaseActivity(), View.OnTouchListener {
                     ConvertUtils.dp2px(10f)
                 )
             } else {
-                Log.e("AAAA", "top")
                 set.clear(ballView.id, ConstraintSet.TOP)
                 set.connect(
                     ballView.id,
@@ -129,9 +124,6 @@ class NotificationsActivity : BaseActivity(), View.OnTouchListener {
                 )
             }
         }
-
-//        set.connect(ballView.id, ConstraintSet.START, dragViewId, ConstraintSet.START)
-//        set.connect(ballView.id, ConstraintSet.END, dragViewId, ConstraintSet.END)
 
         set.applyTo(mBinding.clNotifications)
     }
@@ -198,6 +190,7 @@ class NotificationsActivity : BaseActivity(), View.OnTouchListener {
         }
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private fun initListener() {
 
         mBinding.apply {
