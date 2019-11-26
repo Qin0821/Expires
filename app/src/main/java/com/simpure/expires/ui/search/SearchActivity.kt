@@ -96,7 +96,6 @@ class SearchActivity : BaseActivity() {
                     val intent = Intent(this@SearchActivity, CaptureActivity::class.java)
                     startActivityForResult(intent, Constant.REQ_QR_CODE)
 //                    overridePendingTransition(R.anim.translate_fade_in, R.anim.translate_fade_out);
-                    finish()
                 }
 
                 override fun onDenied(
