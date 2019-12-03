@@ -23,7 +23,7 @@ class SettingActivity : BaseActivity() {
 
             }
             clNotifications -> {
-                startAct(NotificationsActivity::class.java)
+                startAct(NewNotificationsActivity::class.java)
 
             }
             clShareApp -> {

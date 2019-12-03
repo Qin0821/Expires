@@ -4,9 +4,13 @@ import android.os.Bundle
 import android.view.View
 import androidx.databinding.DataBindingUtil
 import com.simpure.expires.R
+import com.simpure.expires.databinding.ActivityLoginBinding
 import com.simpure.expires.ui.BaseActivity
 
 class LoginActivity : BaseActivity() {
+
+    private lateinit var mBinding: ActivityLoginBinding
+
     override fun onClick(v: View?) {
 
     }
