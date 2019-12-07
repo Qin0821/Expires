@@ -18,4 +18,13 @@
         <!--<item name="android:windowIsTranslucent">false</item>-->
         <!--<item name="android:windowDisablePreview">true</item>-->
     </style>
+
+    <style name="ExpiresSwitch" parent="Theme.AppCompat.Light">
+        <!--开启时的颜色-->
+        <item name="colorControlActivated">@color/colorPrimary</item>
+        <!--关闭时的颜色-->
+        <item name="colorSwitchThumbNormal">@color/white</item>
+        <!--关闭时的轨迹颜色取30%的颜色-->
+        <item name="android:colorForeground">@color/black</item>
+    </style>
 </resources>

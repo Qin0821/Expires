@@ -12,6 +12,7 @@ import com.simpure.expires.R
 import com.simpure.expires.databinding.ActivityNotificationsBinding
 import com.simpure.expires.databinding.ActivityNotificationsNewBinding
 import com.simpure.expires.ui.BaseActivity
+import com.simpure.expires.utilities.toast
 import kotlinx.android.synthetic.main.activity_notifications.*
 
 class NewNotificationsActivity : BaseActivity() {
@@ -44,6 +45,9 @@ class NewNotificationsActivity : BaseActivity() {
         mBinding.apply {
             //            llFrom.performClick()
 //            llTo.performClick()
+            scNotifications.setOnCheckedChangeListener { buttonView, isChecked ->
+                mBinding.isAllNotifications = isChecked
+            }
         }
     }
 
@@ -56,6 +60,6 @@ class NewNotificationsActivity : BaseActivity() {
     }
 
     private fun initData() {
-
+        mBinding.isAllNotifications = false
     }
 }
