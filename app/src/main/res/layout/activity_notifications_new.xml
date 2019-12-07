@@ -75,7 +75,7 @@
                     android:textSize="32sp" />
         </RelativeLayout>
 
-        <ScrollView
+        <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
@@ -219,36 +219,18 @@
                             android:textSize="17sp" />
 
                     <!-- 50 280 -->
-                    <androidx.constraintlayout.widget.ConstraintLayout
+                    <FrameLayout
+                            android:id="@+id/clPickerContainer"
                             android:layout_width="match_parent"
-                            android:layout_height="50dp"
-                            android:background="@drawable/bg_rounded_rectangle_white_10">
+                            android:layout_height="280dp"
+                            android:background="@drawable/bg_rounded_rectangle_white_10" />
 
-                        <TextView
-                                android:id="@+id/tvNotifyTime"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="20dp"
-                                android:layout_marginTop="16dp"
-                                android:text="10:00 AM"
-                                android:textStyle="bold"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
-
-                        <TimePicker
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="16dp"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@id/tvNotifyTime" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
+                            android:layout_marginBottom="10dp"
                             android:includeFontPadding="false"
                             android:text="Time to get notified when products are about to be expired."
                             android:textColor="@color/line1"
@@ -256,6 +238,6 @@
                 </LinearLayout>
 
             </LinearLayout>
-        </ScrollView>
+        </androidx.core.widget.NestedScrollView>
     </LinearLayout>
 </layout>

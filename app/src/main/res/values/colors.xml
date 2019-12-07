@@ -18,6 +18,7 @@
     <color name="transparency_20">#33000000</color>
     <color name="transparency_50">#80000000</color>
     <color name="transparency_90">#E6FFFFFF</color>
+    <color name="divider">#FFd5d5d5</color>
 
     <color name="commodity_label_red">#F54949</color>
     <color name="line2">#FF4D4D</color>
