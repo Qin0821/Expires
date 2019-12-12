@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/appBg"
@@ -37,7 +38,8 @@
                     android:layout_width="16dp"
                     android:layout_height="16dp"
                     android:layout_marginStart="20dp"
-                    android:src="@mipmap/ic_launcher" />
+                    android:src="@mipmap/ic_launcher"
+                    app:srcCompat="@mipmap/icons_settings_email" />
 
             <EditText
                     android:layout_width="0dp"
@@ -55,7 +57,8 @@
                     android:layout_width="22dp"
                     android:layout_height="22dp"
                     android:layout_marginEnd="10dp"
-                    android:src="@mipmap/ic_launcher" />
+                    android:src="@mipmap/ic_launcher"
+                    app:srcCompat="@mipmap/icons_textfield_clearall" />
         </LinearLayout>
 
         <LinearLayout
@@ -74,7 +77,8 @@
                     android:layout_width="16dp"
                     android:layout_height="16dp"
                     android:layout_marginStart="20dp"
-                    android:src="@mipmap/ic_launcher" />
+                    android:src="@mipmap/ic_launcher"
+                    app:srcCompat="@mipmap/icons_login_password_yellow" />
 
             <EditText
                     android:layout_width="0dp"
@@ -92,7 +96,8 @@
                     android:layout_width="22dp"
                     android:layout_height="22dp"
                     android:layout_marginEnd="10dp"
-                    android:src="@mipmap/ic_launcher" />
+                    android:src="@mipmap/ic_launcher"
+                    app:srcCompat="@mipmap/icons_textfield_clearall" />
         </LinearLayout>
 
         <LinearLayout
@@ -111,7 +116,8 @@
                     android:layout_width="16dp"
                     android:layout_height="16dp"
                     android:layout_marginStart="20dp"
-                    android:src="@mipmap/ic_launcher" />
+                    android:src="@mipmap/ic_launcher"
+                    app:srcCompat="@mipmap/icons_login_password_red" />
 
             <EditText
                     android:layout_width="0dp"
@@ -129,7 +135,8 @@
                     android:layout_width="22dp"
                     android:layout_height="22dp"
                     android:layout_marginEnd="10dp"
-                    android:src="@mipmap/ic_launcher" />
+                    android:src="@mipmap/ic_launcher"
+                    app:srcCompat="@mipmap/icons_textfield_clearall" />
         </LinearLayout>
 
         <TextView
@@ -212,7 +219,8 @@
                     app:layout_constraintEnd_toStartOf="@id/ivMicrosoft"
                     app:layout_constraintHorizontal_chainStyle="spread_inside"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@mipmap/icons_settings_apple" />
 
             <ImageView
                     android:id="@+id/ivMicrosoft"
@@ -222,7 +230,8 @@
                     android:src="@mipmap/ic_launcher"
                     app:layout_constraintEnd_toStartOf="@id/ivGoogle"
                     app:layout_constraintStart_toEndOf="@id/ivApple"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@mipmap/icons_settings_microsoft" />
 
             <ImageView
                     android:id="@+id/ivGoogle"
@@ -233,7 +242,8 @@
                     android:src="@mipmap/ic_launcher"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/ivMicrosoft"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@mipmap/icons_settings_google" />
 
             <ImageView
                     android:id="@+id/ivFacebook"
@@ -243,7 +253,8 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/ivTwitter"
                     app:layout_constraintHorizontal_chainStyle="spread_inside"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:srcCompat="@mipmap/icons_settings_facebook" />
 
             <ImageView
                     android:id="@+id/ivTwitter"
@@ -252,7 +263,8 @@
                     android:src="@mipmap/ic_launcher"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/ivWeChat"
-                    app:layout_constraintStart_toEndOf="@id/ivFacebook" />
+                    app:layout_constraintStart_toEndOf="@id/ivFacebook"
+                    app:srcCompat="@mipmap/icons_settings_twitter" />
 
             <ImageView
                     android:id="@+id/ivWeChat"
@@ -261,7 +273,8 @@
                     android:src="@mipmap/ic_launcher"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/ivQQ"
-                    app:layout_constraintStart_toEndOf="@id/ivTwitter" />
+                    app:layout_constraintStart_toEndOf="@id/ivTwitter"
+                    app:srcCompat="@mipmap/icons_settings_wechat" />
 
             <ImageView
                     android:id="@+id/ivQQ"
@@ -270,7 +283,8 @@
                     android:src="@mipmap/ic_launcher"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/ivWeChat" />
+                    app:layout_constraintStart_toEndOf="@id/ivWeChat"
+                    app:srcCompat="@mipmap/icons_settings_qq" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

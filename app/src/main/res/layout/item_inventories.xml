@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -15,7 +16,8 @@
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_marginEnd="10dp"
-                android:src="@color/commodity_label_blue" />
+                android:src="@color/commodity_label_blue"
+                app:srcCompat="@mipmap/icons_detail_inventoriesstatus_normal_grey" />
 
         <TextView
                 android:layout_width="0dp"
@@ -44,7 +46,8 @@
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_marginEnd="10dp"
-                android:src="@color/commodity_label_blue" />
+                android:src="@color/commodity_label_blue"
+                app:srcCompat="@mipmap/icons_detail_amount_grey" />
 
         <TextView
                 android:layout_width="0dp"

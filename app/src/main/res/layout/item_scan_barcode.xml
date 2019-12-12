@@ -10,7 +10,7 @@
             android:layout_width="48dp"
             android:layout_height="34dp"
             android:layout_marginEnd="32dp"
-            android:src="@mipmap/ic_launcher"
+            android:src="@mipmap/icons_scan_medium_theme"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/tvScan"
             app:layout_constraintHorizontal_chainStyle="packed"

@@ -78,7 +78,8 @@
                             android:layout_alignParentEnd="true"
                             android:layout_marginTop="4dp"
                             android:layout_marginEnd="14dp"
-                            android:src="@mipmap/ic_launcher" />
+                            android:src="@mipmap/ic_launcher"
+                            app:srcCompat="@mipmap/icons_dashboard_search_black" />
 
                 </RelativeLayout>
 

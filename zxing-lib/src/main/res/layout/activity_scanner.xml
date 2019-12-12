@@ -33,14 +33,14 @@
 
         <ImageButton
                 android:id="@+id/btFlash"
-                android:layout_width="40dip"
-                android:layout_height="40dip"
+                android:layout_width="54dip"
+                android:layout_height="54dip"
                 android:layout_gravity="bottom|center_horizontal"
                 android:layout_marginBottom="270dip"
                 android:background="@color/transparent"
                 android:padding="6dip"
                 android:scaleType="centerInside"
-                android:src="@drawable/flash_off" />
+                android:src="@mipmap/icons_flash_off_theme" />
 
         <TextView
                 android:id="@+id/tvFlash"
@@ -60,21 +60,20 @@
             android:paddingStart="14dp"
             android:paddingEnd="14dp">
 
-        <ImageButton
+        <TextView
                 android:id="@+id/ibBack"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_centerVertical="true"
-                android:background="@color/transparent"
-                android:scaleType="centerCrop"
-                android:src="@drawable/arrow_left_gray" />
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/layout_cancel"
+                android:textColor="@color/green_expires" />
 
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:includeFontPadding="false"
-                android:text="Expires"
+                android:text="@string/layout_scan"
                 android:textColor="#000000"
                 android:textSize="16sp" />
 
@@ -87,7 +86,7 @@
                 android:layout_centerVertical="true"
                 android:background="@color/transparent"
                 android:scaleType="centerCrop"
-                android:src="@drawable/book_open_gray"
+                android:src="@mipmap/icons_scan_album_theme"
                 android:textColor="@android:color/white" />
     </RelativeLayout>
 

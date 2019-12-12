@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
 
@@ -51,7 +52,8 @@
                 android:layout_height="50dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
-                android:src="@color/commodity_label_blue" />
+                android:src="@color/commodity_label_blue"
+                app:srcCompat="@mipmap/barcode" />
 
         <TextView
                 android:id="@+id/tvBarcode"

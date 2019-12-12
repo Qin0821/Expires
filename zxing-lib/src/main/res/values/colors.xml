@@ -10,5 +10,6 @@
     <color name="result_point_color">#C0FFFF00</color>
     <color name="laser_color">#6F87F3</color>
     <color name="corner_color">#6F87F3</color>
+    <color name="green_expires">#FF00C2A1</color>
     <!-- QRCode scanner color end -->
 </resources>

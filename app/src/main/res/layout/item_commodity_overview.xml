@@ -83,7 +83,8 @@
                     android:layout_alignParentTop="true"
                     android:layout_alignParentEnd="true"
                     android:layout_marginEnd="5dp"
-                    android:src="@mipmap/inventory_alerts" />
+                    android:src="@mipmap/inventory_alerts"
+                    app:srcCompat="@mipmap/icons_detail_inventoryalert_normal_grey" />
 
 
             <LinearLayout

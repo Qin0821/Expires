@@ -76,7 +76,8 @@
                             android:src="@mipmap/ic_launcher"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:srcCompat="@mipmap/icons_settings_account" />
 
                     <TextView
                             android:layout_width="wrap_content"
@@ -123,7 +124,8 @@
                             android:src="@mipmap/ic_launcher"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:srcCompat="@mipmap/icons_settings_email" />
 
                     <TextView
                             android:layout_width="wrap_content"
@@ -171,7 +173,8 @@
                             android:src="@mipmap/ic_launcher"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:srcCompat="@mipmap/icons_settings_apple" />
 
                     <TextView
                             android:layout_width="wrap_content"
@@ -228,7 +231,8 @@
                             android:src="@mipmap/ic_launcher"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:srcCompat="@mipmap/icons_settings_facebook" />
 
                     <TextView
                             android:layout_width="wrap_content"
@@ -285,7 +289,8 @@
                             android:src="@mipmap/ic_launcher"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:srcCompat="@mipmap/icons_settings_twitter" />
 
                     <TextView
                             android:layout_width="wrap_content"
@@ -342,7 +347,8 @@
                             android:src="@mipmap/ic_launcher"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:srcCompat="@mipmap/icons_settings_google" />
 
                     <TextView
                             android:layout_width="wrap_content"
@@ -398,7 +404,8 @@
                             android:src="@mipmap/ic_launcher"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:srcCompat="@mipmap/icons_settings_microsoft" />
 
                     <TextView
                             android:layout_width="wrap_content"

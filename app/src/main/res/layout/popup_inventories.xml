@@ -58,12 +58,12 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginTop="10dp"
-                android:background="@mipmap/ic_launcher"
                 android:onClick="@{() -> callback.minusClick()}"
                 android:visibility="@{isToUseType ? View.VISIBLE : View.GONE}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/cardView" />
+                app:layout_constraintTop_toBottomOf="@id/cardView"
+                app:srcCompat="@mipmap/icons_detail_button_largeminus_theme" />
 
         <TextView
                 android:id="@+id/tvAmount"
@@ -85,12 +85,12 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginStart="10dp"
-                android:background="@mipmap/ic_launcher"
                 android:onClick="@{() -> callback.plusClick()}"
                 android:visibility="@{isToUseType ? View.VISIBLE : View.GONE}"
                 app:layout_constraintBottom_toBottomOf="@id/tvAmount"
                 app:layout_constraintStart_toEndOf="@id/tvAmount"
-                app:layout_constraintTop_toTopOf="@id/tvAmount" />
+                app:layout_constraintTop_toTopOf="@id/tvAmount"
+                app:srcCompat="@mipmap/icons_detail_button_largeplus_theme" />
 
         <ImageView
                 android:id="@+id/ivConfirm"
@@ -101,7 +101,8 @@
                 android:onClick="@{() -> isToUseType ? callback.toUseClick() : callback.throwClick()}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/cardView" />
+                app:layout_constraintTop_toBottomOf="@id/cardView"
+                app:srcCompat="@mipmap/icons_detail_button_up_theme" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

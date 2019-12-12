@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
 
@@ -13,7 +14,7 @@
                 type="Boolean" />
     </data>
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:paddingStart="20dp"
@@ -34,7 +35,8 @@
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="15dp"
-                android:src="@mipmap/ic_launcher" />
+                android:src="@mipmap/ic_launcher"
+                app:srcCompat="@mipmap/icons_textfield_clearall" />
 
         <View
                 android:layout_width="match_parent"

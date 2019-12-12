@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
 
@@ -46,7 +47,8 @@
                     android:layout_height="22dp"
                     android:layout_marginStart="10dp"
                     android:background="@drawable/bg_rounded_rectangle_light_gray"
-                    android:visibility="@{isNewConsuming ? View.GONE : View.VISIBLE}" />
+                    android:visibility="@{isNewConsuming ? View.GONE : View.VISIBLE}"
+                    app:srcCompat="@mipmap/icons_detail_up_theme" />
 
             <TextView
                     android:id="@+id/tvInventoriesThrow"

@@ -164,7 +164,8 @@
                                 android:src="@mipmap/ic_launcher"
                                 app:layout_constraintEnd_toEndOf="@id/tvDetailed"
                                 app:layout_constraintStart_toStartOf="@id/tvDetailed"
-                                app:layout_constraintTop_toBottomOf="@id/tvDetailed" />
+                                app:layout_constraintTop_toBottomOf="@id/tvDetailed"
+                                app:srcCompat="@mipmap/icons_detail_selectcircle_selected" />
 
 
                         <ImageView
@@ -195,7 +196,8 @@
                                 android:src="@mipmap/ic_launcher"
                                 app:layout_constraintEnd_toEndOf="@id/tvSummary"
                                 app:layout_constraintStart_toStartOf="@id/tvSummary"
-                                app:layout_constraintTop_toBottomOf="@id/tvSummary" />
+                                app:layout_constraintTop_toBottomOf="@id/tvSummary"
+                                app:srcCompat="@mipmap/icons_detail_selectcircle_notselected" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 

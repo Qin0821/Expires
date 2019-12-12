@@ -1,5 +1,6 @@
 <resources>
     <string name="layout_scan">扫码</string>
+    <string name="layout_cancel">返回</string>
     <string name="layout_album">相册</string>
     <string name="layout_focus_qrcode">请对准二维码进行扫描</string>
     <string name="layout_turn_light_on">Tap to turn light on</string>

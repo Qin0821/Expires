@@ -60,7 +60,8 @@
                         android:paddingStart="10dp"
                         android:paddingEnd="10dp"
                         android:src="@mipmap/ic_launcher"
-                        android:visibility="@{isNewConsuming ? View.VISIBLE : View.GONE}" />
+                        android:visibility="@{isNewConsuming ? View.VISIBLE : View.GONE}"
+                        app:srcCompat="@mipmap/icons_dock_inventories_black" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -88,7 +89,8 @@
                         android:paddingStart="10dp"
                         android:paddingEnd="10dp"
                         android:src="@mipmap/ic_launcher"
-                        android:visibility="@{isNewConsuming ? View.VISIBLE : View.GONE}" />
+                        android:visibility="@{isNewConsuming ? View.VISIBLE : View.GONE}"
+                        app:srcCompat="@mipmap/icons_dock_consuming_black" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -115,7 +117,8 @@
                         android:paddingStart="10dp"
                         android:paddingEnd="10dp"
                         android:src="@mipmap/ic_launcher"
-                        android:visibility="@{isNewConsuming ? View.VISIBLE : View.GONE}" />
+                        android:visibility="@{isNewConsuming ? View.VISIBLE : View.GONE}"
+                        app:srcCompat="@mipmap/icons_dock_edit_black" />
             </RelativeLayout>
         </LinearLayout>
     </LinearLayout>
