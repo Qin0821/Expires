@@ -2,6 +2,8 @@ package com.simpure.expires.ui.setting.categories
 
 import android.os.Bundle
 import android.view.View
+import android.widget.ImageView
+import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,13 +19,20 @@ class CategoriesActivity : BaseActivity() {
         with(mBinding) {
 
             when (v!!) {
-                ivCanDrag -> {
+                ivDragOrConfirm -> {
                     mCanDrag = !mCanDrag
                     touchCallBack.setCanDrag(mCanDrag)
                     mBinding.canDrag = mCanDrag
+                    adapter.setCategoriesCanDrag(mCanDrag)
                 }
-                ivAdd -> {
-                    toast("add")
+                ivAddOrCancel -> {
+                    if (mCanDrag) {
+                        mCanDrag = !mCanDrag
+                        adapter.setCategoriesCanDrag(mCanDrag)
+                    } else {
+                        toast("add")
+                    }
+
                 }
                 tvDone -> finish()
             }
@@ -75,8 +84,8 @@ class CategoriesActivity : BaseActivity() {
     private fun initListener() {
 
         mBinding.apply {
-            ivCanDrag.setOnClickListener(this@CategoriesActivity)
-            ivAdd.setOnClickListener(this@CategoriesActivity)
+            ivDragOrConfirm.setOnClickListener(this@CategoriesActivity)
+            ivAddOrCancel.setOnClickListener(this@CategoriesActivity)
             tvDone.setOnClickListener(this@CategoriesActivity)
         }
 
@@ -87,4 +96,36 @@ class CategoriesActivity : BaseActivity() {
 
     }
 
+    object Categories {
+
+        @JvmStatic
+        @BindingAdapter("setDragSrc")
+        fun ImageView.setDragSrc(canDrag: Boolean) {
+            if (canDrag) {
+                this.setImageResource(R.mipmap.icons_menu_drag_grey)
+            } else {
+                this.setImageResource(R.mipmap.icons_arrow_right_grey)
+            }
+        }
+
+        @JvmStatic
+        @BindingAdapter("setCategoriesConformSrc")
+        fun ImageView.setCategoriesConformSrc(canDrag: Boolean) {
+            if (canDrag) {
+                this.setImageResource(R.mipmap.icons_category_confirm_themecolor)
+            } else {
+                this.setImageResource(R.mipmap.icons_category_sort_themecolor)
+            }
+        }
+
+        @JvmStatic
+        @BindingAdapter("setCategoriesCancelSrc")
+        fun ImageView.setCategoriesCancelSrc(canDrag: Boolean) {
+            if (canDrag) {
+                this.setImageResource(R.mipmap.icons_category_cancel_themecolor)
+            } else {
+                this.setImageResource(R.mipmap.icons_detail_add_theme)
+            }
+        }
+    }
 }

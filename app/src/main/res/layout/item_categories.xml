@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
+        <import type="android.view.View" />
 
         <variable
                 name="name"
@@ -12,12 +13,16 @@
         <variable
                 name="canDrag"
                 type="Boolean" />
+
+        <variable
+                name="isLastItem"
+                type="Boolean" />
     </data>
 
     <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:paddingStart="20dp"
+            android:layout_height="@dimen/dp100"
+            android:paddingStart="@dimen/dp40"
             android:paddingEnd="0dp">
 
         <TextView
@@ -30,19 +35,19 @@
                 android:textSize="17sp" />
 
         <ImageView
-                android:layout_width="22dp"
-                android:layout_height="22dp"
+                setDragSrc="@{canDrag}"
+                android:layout_width="@dimen/dp44"
+                android:layout_height="@dimen/dp44"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:layout_marginEnd="15dp"
-                android:src="@mipmap/ic_launcher"
-                app:srcCompat="@mipmap/icons_textfield_clearall" />
+                android:layout_marginEnd="@dimen/dp30" />
 
         <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="@dimen/dp2"
                 android:layout_alignParentBottom="true"
-                android:background="@color/line" />
+                android:background="@color/line"
+                android:visibility="@{isLastItem ? View.GONE : View.VISIBLE}" />
 
     </RelativeLayout>
 </layout>

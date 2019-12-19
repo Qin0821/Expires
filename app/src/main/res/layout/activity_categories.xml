@@ -24,13 +24,13 @@
                 android:paddingEnd="20dp"
                 android:paddingBottom="8dp">
 
-            <TextView
+            <ImageView
                     android:id="@+id/tvDone"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/dp48"
+                    android:layout_height="@dimen/dp48"
                     android:layout_marginStart="1dp"
                     android:layout_marginTop="16dp"
-                    android:text="Done"
+                    android:src="@mipmap/icons_back_theme"
                     android:textColor="@color/green"
                     android:textSize="16sp"
                     android:textStyle="bold"
@@ -49,22 +49,24 @@
                     app:layout_constraintStart_toStartOf="parent" />
 
             <ImageView
-                    android:id="@+id/ivCanDrag"
+                    android:id="@+id/ivDragOrConfirm"
+                    setCategoriesConformSrc="@{canDrag}"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:src="@mipmap/ic_launcher"
+                    android:src="@mipmap/icons_category_confirm_themecolor"
                     app:layout_constraintBottom_toBottomOf="@id/tvCategories"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@id/tvCategories" />
 
             <ImageView
-                    android:id="@+id/ivAdd"
+                    android:id="@+id/ivAddOrCancel"
+                    setCategoriesCancelSrc="@{canDrag}"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_marginEnd="20dp"
-                    android:src="@mipmap/ic_launcher"
+                    android:src="@mipmap/icons_category_cancel_themecolor"
                     app:layout_constraintBottom_toBottomOf="@id/tvCategories"
-                    app:layout_constraintEnd_toStartOf="@id/ivCanDrag"
+                    app:layout_constraintEnd_toStartOf="@id/ivDragOrConfirm"
                     app:layout_constraintTop_toTopOf="@id/tvCategories" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -72,7 +74,10 @@
         <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvCategories"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp20"
+                android:layout_marginEnd="@dimen/dp20"
+                android:background="@drawable/bg_rounded_rectangle_white_10" />
 
     </LinearLayout>
 </layout>

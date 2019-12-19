@@ -68,12 +68,13 @@
                             android:id="@+id/ivAccount"
                             android:layout_width="16dp"
                             android:layout_height="16dp"
-                            android:src="@mipmap/ic_launcher"
+                            app:layout_constraintBottom_toBottomOf="@id/tvAccount"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintTop_toTopOf="@id/tvAccount"
                             app:srcCompat="@mipmap/icons_settings_account" />
 
                     <TextView
+                            android:id="@+id/tvAccount"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
@@ -87,7 +88,7 @@
                     <ImageView
                             android:layout_width="22dp"
                             android:layout_height="22dp"
-                            android:src="@drawable/arrow_left_gray"
+                            android:src="@mipmap/icons_arrow_right_grey"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
@@ -137,12 +138,14 @@
                             android:id="@+id/ivCatagories"
                             android:layout_width="16dp"
                             android:layout_height="16dp"
-                            android:src="@mipmap/ic_launcher"
+                            
+                            app:layout_constraintBottom_toBottomOf="@id/tvCatagories"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintTop_toTopOf="@id/tvCatagories"
                             app:srcCompat="@mipmap/icons_settings_catagories" />
 
                     <TextView
+                            android:id="@+id/tvCatagories"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
@@ -156,7 +159,7 @@
                     <ImageView
                             android:layout_width="22dp"
                             android:layout_height="22dp"
-                            android:src="@drawable/arrow_left_gray"
+                            android:src="@mipmap/icons_arrow_right_grey"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
@@ -188,12 +191,14 @@
                             android:id="@+id/ivNotifications"
                             android:layout_width="16dp"
                             android:layout_height="16dp"
-                            android:src="@mipmap/ic_launcher"
+                            
+                            app:layout_constraintBottom_toBottomOf="@id/tvNotifications"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintTop_toTopOf="@id/tvNotifications"
                             app:srcCompat="@mipmap/icons_settings_notifications" />
 
                     <TextView
+                            android:id="@+id/tvNotifications"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
@@ -207,7 +212,7 @@
                     <ImageView
                             android:layout_width="22dp"
                             android:layout_height="22dp"
-                            android:src="@drawable/arrow_left_gray"
+                            android:src="@mipmap/icons_arrow_right_grey"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
@@ -249,12 +254,14 @@
                             android:id="@+id/ivShareApp"
                             android:layout_width="16dp"
                             android:layout_height="16dp"
-                            android:src="@mipmap/ic_launcher"
+                            
+                            app:layout_constraintBottom_toBottomOf="@id/tvShareApp"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintTop_toTopOf="@id/tvShareApp"
                             app:srcCompat="@mipmap/icons_settings_share" />
 
                     <TextView
+                            android:id="@+id/tvShareApp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
@@ -268,7 +275,7 @@
                     <ImageView
                             android:layout_width="22dp"
                             android:layout_height="22dp"
-                            android:src="@drawable/arrow_left_gray"
+                            android:src="@mipmap/icons_arrow_right_grey"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
@@ -289,12 +296,14 @@
                             android:id="@+id/ivRateUs"
                             android:layout_width="16dp"
                             android:layout_height="16dp"
-                            android:src="@mipmap/ic_launcher"
+                            
+                            app:layout_constraintBottom_toBottomOf="@id/tvRateUs"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintTop_toTopOf="@id/tvRateUs"
                             app:srcCompat="@mipmap/icons_settings_rate" />
 
                     <TextView
+                            android:id="@+id/tvRateUs"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
@@ -308,7 +317,7 @@
                     <ImageView
                             android:layout_width="22dp"
                             android:layout_height="22dp"
-                            android:src="@drawable/arrow_left_gray"
+                            android:src="@mipmap/icons_arrow_right_grey"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -328,12 +337,14 @@
                             android:id="@+id/ivSendFeedback"
                             android:layout_width="16dp"
                             android:layout_height="16dp"
-                            android:src="@mipmap/ic_launcher"
+                            
+                            app:layout_constraintBottom_toBottomOf="@id/tvSendFeedback"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintTop_toTopOf="@id/tvSendFeedback"
                             app:srcCompat="@mipmap/icons_settings_feedback" />
 
                     <TextView
+                            android:id="@+id/tvSendFeedback"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
@@ -347,7 +358,7 @@
                     <ImageView
                             android:layout_width="22dp"
                             android:layout_height="22dp"
-                            android:src="@drawable/arrow_left_gray"
+                            android:src="@mipmap/icons_arrow_right_grey"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>

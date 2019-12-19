@@ -4,6 +4,8 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil.inflate
 
 
@@ -93,5 +95,10 @@ class CategoriesAdapter(private val context: Context, private val list: MutableL
     override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
         super.onDetachedFromRecyclerView(recyclerView)
         this.recyclerView = null
+    }
+
+    fun setCategoriesCanDrag(canDrag: Boolean) {
+        mBinding.canDrag = canDrag
+        notifyDataSetChanged()
     }
 }
