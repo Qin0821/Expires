@@ -95,9 +95,6 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
     private lateinit var mBottomSheetBehavior: BottomSheetBehavior<View>
     private lateinit var mCommodityDetailViewModel: CommodityDetailViewModel
 
-    private val expiresApiService by lazy {
-        ExpiresApiService.create()
-    }
     var disposable: Disposable? = null
 
     private val bottomSheetCallback = object : BottomSheetBehavior.BottomSheetCallback() {
