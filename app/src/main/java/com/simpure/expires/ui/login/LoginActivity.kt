@@ -3,11 +3,16 @@ package com.simpure.expires.ui.login
 import android.os.Bundle
 import android.view.View
 import androidx.databinding.DataBindingUtil
+import com.simpure.expires.BasicApp
 import com.simpure.expires.R
 import com.simpure.expires.databinding.ActivityLoginBinding
 import com.simpure.expires.ui.BaseActivity
-import com.simpure.expires.ui.CommodityHomeActivity
-import com.simpure.expires.utilities.startAct
+import com.simpure.expires.utilities.SPConstants
+import com.simpure.expires.utilities.getString
+import com.simpure.expires.utilities.put
+import com.simpure.expires.utilities.report
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 
 class LoginActivity : BaseActivity() {
 
@@ -23,6 +28,9 @@ class LoginActivity : BaseActivity() {
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_login)
 
 
-        startAct(CommodityHomeActivity::class.java)
+        LoginUtil(this).checkUserStatus()
+//        startAct(CommodityHomeActivity::class.java)
     }
+
+
 }

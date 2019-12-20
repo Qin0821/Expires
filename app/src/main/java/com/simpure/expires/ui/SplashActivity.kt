@@ -11,9 +11,9 @@ import com.google.zxing.activity.CaptureActivity
 import com.google.zxing.util.Constant
 import com.simpure.expires.R
 import com.simpure.expires.databinding.ActivitySplashBinding
-import com.simpure.expires.utilities.APP_MODEL
-import com.simpure.expires.utilities.MODEL_EXPIRES
-import com.simpure.expires.utilities.MODEL_SCAN
+import com.simpure.expires.utilities.Constants.APP_MODEL
+import com.simpure.expires.utilities.Constants.MODEL_EXPIRES
+import com.simpure.expires.utilities.Constants.MODEL_SCAN
 
 class SplashActivity : BaseActivity() {
     override fun onClick(v: View?) {

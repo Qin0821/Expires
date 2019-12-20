@@ -13,7 +13,7 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.*
 
-interface SignInApiService {
+interface ExpiresApiService {
 
     @POST("api/sign/{id}")
     fun scanQRCode(@Path("id") id: Int): Observable<ApiResponse<SignIn>>
@@ -31,7 +31,7 @@ interface SignInApiService {
     fun addCommodity(@Body commodity: ExCommodityEntity): Observable<BaseResponse>
 
     companion object {
-        fun create(): SignInApiService {
+        fun create(): ExpiresApiService {
 
             val retrofit = Retrofit.Builder()
                 .addCallAdapterFactory(
@@ -43,7 +43,7 @@ interface SignInApiService {
                 .baseUrl("http://72.167.220.164:8282")
                 .build()
 
-            return retrofit.create(SignInApiService::class.java)
+            return retrofit.create(ExpiresApiService::class.java)
         }
     }
 }

@@ -89,3 +89,9 @@ fun View.isVisibleAll(): Boolean {
     this.getLocalVisibleRect(rect)
     return rect.top == 0 && rect.bottom == this.height
 }
+
+fun Throwable.report(context: Context? = null, toastMsg: String? = null) {
+    // todo report error
+
+    toastMsg?.let { context?.toast(it) }
+}

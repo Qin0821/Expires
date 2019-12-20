@@ -17,7 +17,7 @@ import android.graphics.Rect
 import com.blankj.utilcode.constant.PermissionConstants
 import com.blankj.utilcode.util.*
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.simpure.expires.api.SignInApiService
+import com.simpure.expires.api.ExpiresApiService
 import com.simpure.expires.utilities.toast
 import com.simpure.expires.viewmodel.UserViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -35,7 +35,6 @@ import com.lxj.xpopup.XPopup
 import com.lxj.xpopup.core.BasePopupView
 import com.lxj.xpopup.enums.PopupAnimation
 import com.lxj.xpopup.interfaces.SimpleCallback
-import com.simpure.expires.BR
 import com.simpure.expires.BasicApp
 import com.simpure.expires.R
 import com.simpure.expires.data.entity.CommodityEntity
@@ -96,8 +95,8 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
     private lateinit var mBottomSheetBehavior: BottomSheetBehavior<View>
     private lateinit var mCommodityDetailViewModel: CommodityDetailViewModel
 
-    private val signInApiService by lazy {
-        SignInApiService.create()
+    private val expiresApiService by lazy {
+        ExpiresApiService.create()
     }
     var disposable: Disposable? = null
 
@@ -504,7 +503,7 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
 
     fun goConsuming(view: View) {
         disposable =
-            signInApiService.scanQRCode(50)
+            expiresApiService.scanQRCode(50)
                 .subscribeOn(io.reactivex.schedulers.Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
