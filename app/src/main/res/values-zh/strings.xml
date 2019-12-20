@@ -1,2 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="app_name">Expires</string>
+    <string name="all">全部</string>
+    <string name="cancel">取消</string>
+    <string name="password">密码</string>
+    <string name="search">搜索</string>
+    <string name="ic_search">搜索</string>
+    <string name="confirm_password">确认密码</string>
+    <string name="email">邮箱</string>
+    <string name="ic_apple">苹果</string>
+    <string name="ic_clear">清空</string>
+    <string name="ic_email">邮箱</string>
+    <string name="ic_facebook">Facebook</string>
+    <string name="ic_google">谷歌</string>
+    <string name="ic_launcher">Logo</string>
+    <string name="ic_microsoft">微软</string>
+    <string name="ic_password">密码</string>
+    <string name="ic_password_confirm">确认密码</string>
+    <string name="ic_qq">QQ</string>
+    <string name="ic_twitter">推特</string>
+    <string name="ic_wechat">微信</string>
+    <string name="log_in_or_sign_up">登录 / 注册</string>
+    <string name="or">或</string>
+    <string name="sign_with_other_accounts">使用其他账户登录</string>
+</resources>

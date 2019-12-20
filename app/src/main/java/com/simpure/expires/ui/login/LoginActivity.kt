@@ -6,6 +6,8 @@ import androidx.databinding.DataBindingUtil
 import com.simpure.expires.R
 import com.simpure.expires.databinding.ActivityLoginBinding
 import com.simpure.expires.ui.BaseActivity
+import com.simpure.expires.ui.CommodityHomeActivity
+import com.simpure.expires.utilities.startAct
 
 class LoginActivity : BaseActivity() {
 
@@ -20,5 +22,7 @@ class LoginActivity : BaseActivity() {
 
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_login)
 
+
+        startAct(CommodityHomeActivity::class.java)
     }
 }

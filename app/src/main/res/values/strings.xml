@@ -2,6 +2,26 @@
     <string name="app_name">Expires</string>
     <string name="search">Search</string>
     <string name="cancel">Cancel</string>
-    <string name="searchIcon">searchIcon</string>
     <string name="all">All</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="email">Email</string>
+    <string name="log_in_or_sign_up">Log In / Sign Up</string>
+    <string name="or">OR</string>
+    <string name="sign_with_other_accounts">Sign With Other Accounts</string>
+
+
+    <string name="ic_search">icon search</string>
+    <string name="ic_launcher">icon launcher</string>
+    <string name="ic_email">icon email</string>
+    <string name="ic_clear">icon clear</string>
+    <string name="ic_password">icon password</string>
+    <string name="ic_password_confirm">icon confirm password</string>
+    <string name="ic_apple">icon apple</string>
+    <string name="ic_microsoft">icon microsoft</string>
+    <string name="ic_google">icon google</string>
+    <string name="ic_facebook">icon facebook</string>
+    <string name="ic_twitter">icon twitter</string>
+    <string name="ic_wechat">icon wechat</string>
+    <string name="ic_qq">icon qq</string>
 </resources>

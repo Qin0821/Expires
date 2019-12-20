@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -10,13 +11,14 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/appBg"
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp">
+            android:paddingStart="@dimen/dp40"
+            android:paddingEnd="@dimen/dp40">
 
         <ImageView
-                android:layout_width="80dp"
-                android:layout_height="80dp"
+                android:layout_width="@dimen/dp160"
+                android:layout_height="@dimen/dp160"
                 android:layout_marginTop="120dp"
+                android:contentDescription="@string/email"
                 android:src="@mipmap/ic_launcher"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -25,8 +27,8 @@
         <LinearLayout
                 android:id="@+id/llEmail"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginBottom="20dp"
+                android:layout_height="@dimen/dp80"
+                android:layout_marginBottom="@dimen/dp40"
                 android:background="@drawable/bg_rounded_rectangle_white_10"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
@@ -35,37 +37,38 @@
                 app:layout_constraintStart_toStartOf="parent">
 
             <ImageView
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:layout_marginStart="20dp"
-                    android:src="@mipmap/ic_launcher"
+                    android:layout_width="@dimen/dp32"
+                    android:layout_height="@dimen/dp32"
+                    android:layout_marginStart="@dimen/dp40"
+                    android:contentDescription="@string/ic_email"
                     app:srcCompat="@mipmap/icons_settings_email" />
 
             <EditText
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginEnd="10dp"
+                    android:layout_marginStart="@dimen/dp40"
+                    android:layout_marginEnd="@dimen/dp20"
                     android:layout_weight="1"
                     android:background="@null"
-                    android:hint="Email"
+                    android:hint="@string/email"
                     android:textColorHint="@color/line1"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    tools:targetApi="o" />
 
 
             <ImageView
-                    android:layout_width="22dp"
-                    android:layout_height="22dp"
-                    android:layout_marginEnd="10dp"
-                    android:src="@mipmap/ic_launcher"
+                    android:layout_width="@dimen/dp44"
+                    android:layout_height="@dimen/dp44"
+                    android:layout_marginEnd="@dimen/dp20"
+                    android:contentDescription="@string/email"
                     app:srcCompat="@mipmap/icons_textfield_clearall" />
         </LinearLayout>
 
         <LinearLayout
                 android:id="@+id/llPassword"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginBottom="10dp"
+                android:layout_height="@dimen/dp80"
+                android:layout_marginBottom="@dimen/dp20"
                 android:background="@drawable/bg_rounded_rectangle_white_10"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
@@ -74,37 +77,37 @@
                 app:layout_constraintStart_toStartOf="parent">
 
             <ImageView
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:layout_marginStart="20dp"
-                    android:src="@mipmap/ic_launcher"
+                    android:layout_width="@dimen/dp32"
+                    android:layout_height="@dimen/dp32"
+                    android:layout_marginStart="@dimen/dp40"
+                    android:contentDescription="@string/ic_password"
                     app:srcCompat="@mipmap/icons_login_password_yellow" />
 
             <EditText
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginEnd="10dp"
+                    android:layout_marginStart="@dimen/dp40"
+                    android:layout_marginEnd="@dimen/dp20"
                     android:layout_weight="1"
                     android:background="@null"
-                    android:hint="Password"
+                    android:hint="@string/password"
                     android:textColorHint="@color/line1"
                     android:textSize="14sp" />
 
 
             <ImageView
-                    android:layout_width="22dp"
-                    android:layout_height="22dp"
-                    android:layout_marginEnd="10dp"
-                    android:src="@mipmap/ic_launcher"
+                    android:layout_width="@dimen/dp44"
+                    android:layout_height="@dimen/dp44"
+                    android:layout_marginEnd="@dimen/dp20"
+                    android:contentDescription="@string/ic_clear"
                     app:srcCompat="@mipmap/icons_textfield_clearall" />
         </LinearLayout>
 
         <LinearLayout
                 android:id="@+id/llConfirmPassword"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginBottom="20dp"
+                android:layout_height="@dimen/dp80"
+                android:layout_marginBottom="@dimen/dp40"
                 android:background="@drawable/bg_rounded_rectangle_white_10"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
@@ -113,40 +116,40 @@
                 app:layout_constraintStart_toStartOf="parent">
 
             <ImageView
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:layout_marginStart="20dp"
-                    android:src="@mipmap/ic_launcher"
+                    android:layout_width="@dimen/dp32"
+                    android:layout_height="@dimen/dp32"
+                    android:layout_marginStart="@dimen/dp40"
+                    android:contentDescription="@string/ic_password_confirm"
                     app:srcCompat="@mipmap/icons_login_password_red" />
 
             <EditText
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginEnd="10dp"
+                    android:layout_marginStart="@dimen/dp40"
+                    android:layout_marginEnd="@dimen/dp20"
                     android:layout_weight="1"
                     android:background="@null"
-                    android:hint="Confirm Password"
+                    android:hint="@string/confirm_password"
                     android:textColorHint="@color/line1"
                     android:textSize="14sp" />
 
 
             <ImageView
-                    android:layout_width="22dp"
-                    android:layout_height="22dp"
-                    android:layout_marginEnd="10dp"
-                    android:src="@mipmap/ic_launcher"
+                    android:layout_width="@dimen/dp44"
+                    android:layout_height="@dimen/dp44"
+                    android:layout_marginEnd="@dimen/dp20"
+                    android:contentDescription="@string/ic_clear"
                     app:srcCompat="@mipmap/icons_textfield_clearall" />
         </LinearLayout>
 
         <TextView
                 android:id="@+id/tvLogin"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginBottom="25dp"
+                android:layout_height="@dimen/dp80"
+                android:layout_marginBottom="@dimen/dp50"
                 android:background="@drawable/bg_rounded_rectangle_green_10"
                 android:gravity="center"
-                android:text="Log In / Sign Up"
+                android:text="@string/log_in_or_sign_up"
                 android:textColor="@color/white"
                 android:textSize="15sp"
                 app:layout_constraintBottom_toTopOf="@id/tvOr" />
@@ -154,8 +157,8 @@
         <View
                 android:id="@+id/lineLeft"
                 android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_marginEnd="10dp"
+                android:layout_height="@dimen/dp1"
+                android:layout_marginEnd="@dimen/dp20"
                 android:background="@color/line"
                 app:layout_constraintBottom_toBottomOf="@id/tvOr"
                 app:layout_constraintEnd_toStartOf="@id/tvOr"
@@ -168,7 +171,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="14dp"
-                android:text="OR"
+                android:text="@string/or"
                 android:textColor="@color/line"
                 android:textSize="10sp"
                 app:layout_constraintBottom_toTopOf="@id/clLoginThird"
@@ -178,8 +181,8 @@
         <View
                 android:id="@+id/lineRight"
                 android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_marginStart="10dp"
+                android:layout_height="@dimen/dp1"
+                android:layout_marginStart="@dimen/dp20"
                 android:background="@color/line"
                 app:layout_constraintBottom_toBottomOf="@id/tvOr"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -189,9 +192,9 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/clLoginThird"
-                android:layout_width="246dp"
-                android:layout_height="78dp"
-                android:layout_marginBottom="20dp"
+                android:layout_width="@dimen/dp492"
+                android:layout_height="@dimen/dp156"
+                android:layout_marginBottom="@dimen/dp40"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent">
@@ -200,7 +203,7 @@
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Sign With Other Accounts"
+                    android:text="@string/sign_with_other_accounts"
                     android:textColor="@color/text_expires_days"
                     android:textSize="14sp"
                     android:textStyle="bold"
@@ -211,11 +214,11 @@
 
             <ImageView
                     android:id="@+id/ivApple"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_marginStart="37dp"
-                    android:layout_marginTop="5dp"
-                    android:src="@mipmap/ic_launcher"
+                    android:layout_width="@dimen/dp48"
+                    android:layout_height="@dimen/dp48"
+                    android:layout_marginStart="@dimen/dp74"
+                    android:layout_marginTop="@dimen/dp10"
+                    android:contentDescription="@string/ic_apple"
                     app:layout_constraintEnd_toStartOf="@id/ivMicrosoft"
                     app:layout_constraintHorizontal_chainStyle="spread_inside"
                     app:layout_constraintStart_toStartOf="parent"
@@ -224,10 +227,10 @@
 
             <ImageView
                     android:id="@+id/ivMicrosoft"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_marginTop="5dp"
-                    android:src="@mipmap/ic_launcher"
+                    android:layout_width="@dimen/dp48"
+                    android:layout_height="@dimen/dp48"
+                    android:layout_marginTop="@dimen/dp10"
+                    android:contentDescription="@string/ic_microsoft"
                     app:layout_constraintEnd_toStartOf="@id/ivGoogle"
                     app:layout_constraintStart_toEndOf="@id/ivApple"
                     app:layout_constraintTop_toTopOf="parent"
@@ -235,11 +238,11 @@
 
             <ImageView
                     android:id="@+id/ivGoogle"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginEnd="37dp"
-                    android:src="@mipmap/ic_launcher"
+                    android:layout_width="@dimen/dp48"
+                    android:layout_height="@dimen/dp48"
+                    android:layout_marginTop="@dimen/dp10"
+                    android:layout_marginEnd="@dimen/dp74"
+                    android:contentDescription="@string/ic_google"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/ivMicrosoft"
                     app:layout_constraintTop_toTopOf="parent"
@@ -247,9 +250,9 @@
 
             <ImageView
                     android:id="@+id/ivFacebook"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@mipmap/ic_launcher"
+                    android:layout_width="@dimen/dp48"
+                    android:layout_height="@dimen/dp48"
+                    android:contentDescription="@string/ic_facebook"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/ivTwitter"
                     app:layout_constraintHorizontal_chainStyle="spread_inside"
@@ -258,9 +261,9 @@
 
             <ImageView
                     android:id="@+id/ivTwitter"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@mipmap/ic_launcher"
+                    android:layout_width="@dimen/dp48"
+                    android:layout_height="@dimen/dp48"
+                    android:contentDescription="@string/ic_twitter"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/ivWeChat"
                     app:layout_constraintStart_toEndOf="@id/ivFacebook"
@@ -268,9 +271,9 @@
 
             <ImageView
                     android:id="@+id/ivWeChat"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@mipmap/ic_launcher"
+                    android:layout_width="@dimen/dp48"
+                    android:layout_height="@dimen/dp48"
+                    android:contentDescription="@string/ic_wechat"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/ivQQ"
                     app:layout_constraintStart_toEndOf="@id/ivTwitter"
@@ -278,9 +281,9 @@
 
             <ImageView
                     android:id="@+id/ivQQ"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@mipmap/ic_launcher"
+                    android:layout_width="@dimen/dp48"
+                    android:layout_height="@dimen/dp48"
+                    android:contentDescription="@string/ic_qq"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/ivWeChat"
