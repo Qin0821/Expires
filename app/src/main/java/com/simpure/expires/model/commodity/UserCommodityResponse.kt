@@ -6,5 +6,5 @@ import com.simpure.expires.model.IBaseResponse
 data class UserCommodityResponse(
     override val code: Int,
     override val msg: String,
-    val data: List<Commodity>
+    val page: UserCommodityPageResp
 ) : IBaseResponse

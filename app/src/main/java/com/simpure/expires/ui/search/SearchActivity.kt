@@ -3,13 +3,11 @@ package com.simpure.expires.ui.search
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.KeyEvent
 import android.view.View
 import androidx.databinding.DataBindingUtil
 import com.blankj.utilcode.constant.PermissionConstants
-import com.blankj.utilcode.util.LogUtils
-import com.blankj.utilcode.util.PermissionUtils
-import com.blankj.utilcode.util.ScreenUtils
-import com.blankj.utilcode.util.ToastUtils
+import com.blankj.utilcode.util.*
 import com.google.zxing.activity.CaptureActivity
 import com.google.zxing.util.Constant
 import com.simpure.expires.R
@@ -23,8 +21,25 @@ class SearchActivity : BaseActivity() {
     override fun onClick(v: View?) {
 
         when (v!!) {
+            tvDone -> finish()
             clSearch -> {
+                KeyboardUtils.showSoftInput(this@SearchActivity)
+                mBinding.isSearching = true
+                mBinding.etSearch.apply {
+                    // isFocusable = true
+                    // isFocusableInTouchMode = true
+                    requestFocus()
+                }
                 prepareSearch()
+            }
+            tvSearchCancel -> {
+                KeyboardUtils.hideSoftInput(this@SearchActivity)
+                mBinding.etSearch.apply {
+                    // isFocusable = false
+                    // isFocusableInTouchMode = false
+                    clearFocus()
+                }
+                mBinding.isSearching = false
             }
             itemScanBarcode -> {
                 goScanActivity()
@@ -81,8 +96,18 @@ class SearchActivity : BaseActivity() {
     private fun initListener() {
 
         mBinding.apply {
+            isSearching = false
+            tvDone.setOnClickListener(this@SearchActivity)
             itemScanBarcode.setOnClickListener(this@SearchActivity)
             clSearch.setOnClickListener(this@SearchActivity)
+            tvSearchCancel.setOnClickListener(this@SearchActivity)
+            etSearch.setOnEditorActionListener { v, actionId, event ->
+                if (actionId == KeyEvent.ACTION_DOWN) {
+                    toast("search ${etSearch.text}")
+                }
+
+                return@setOnEditorActionListener true
+            }
         }
 
     }

@@ -6,6 +6,7 @@
 
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
+    <color name="black_50">#80000000</color>
     <color name="appBg">#F7F7F7</color>
     <color name="line">#E6E6E6</color>
     <color name="placeNameBg">#F2F2F2</color>

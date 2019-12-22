@@ -51,8 +51,10 @@
                 <RelativeLayout
                         android:id="@+id/rlCommodityHomeTop"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/dp156"
-                        android:orientation="vertical">
+                        android:layout_height="@dimen/dp178"
+                        android:orientation="vertical"
+                        android:paddingEnd="@dimen/dp28"
+                        android:paddingBottom="@dimen/dp22">
 
                     <!--32 16 8 6 78 32-->
                     <TextView
@@ -77,9 +79,37 @@
                             android:layout_alignParentTop="true"
                             android:layout_alignParentEnd="true"
                             android:layout_marginTop="@dimen/dp8"
-                            android:layout_marginEnd="@dimen/dp28"
                             android:contentDescription="@string/ic_search"
                             app:srcCompat="@mipmap/icons_dashboard_search_black" />
+
+                    <LinearLayout
+                            android:id="@+id/llPlace"
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/dp64"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentBottom="true"
+                            android:background="@drawable/bg_rounded_rectangle_white_20"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:paddingStart="@dimen/dp20"
+                            android:paddingEnd="@dimen/dp20">
+
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="@dimen/dp64"
+                                android:gravity="center"
+                                android:paddingStart="@dimen/dp40"
+                                android:paddingEnd="@dimen/dp40"
+                                android:text="@{placeName}"
+                                android:textColor="@color/text_expires_days"
+                                android:textSize="14sp" />
+
+                        <ImageView
+                                android:layout_width="@dimen/dp36"
+                                android:layout_height="@dimen/dp36"
+                                android:src="@mipmap/icons_arrowdown_grey" />
+                    </LinearLayout>
+
 
                 </RelativeLayout>
 
@@ -92,7 +122,8 @@
                         android:layout_marginBottom="@dimen/dp16"
                         android:background="@drawable/bg_rounded_rectangle_gray_8"
                         android:orientation="horizontal"
-                        android:padding="@dimen/dp6">
+                        android:padding="@dimen/dp6"
+                        android:visibility="gone">
 
                     <TextView
                             android:id="@+id/tvAll"

@@ -27,6 +27,9 @@ interface ExpiresApiService {
     @GET("/ex/app/expires/commodity/userList")
     fun getUserCommodity(@Query("token") token: String): Observable<UserCommodityResponse>
 
+    @GET("/ex/app/expires/commodity")
+    fun getAllCommodity(@Query("pageSize") pageSize: Int = 20, @Query("pageNo") pageNo: Int = 1): Observable<UserCommodityResponse>
+
     @POST("/ex/app/expires/commodity")
     fun addCommodity(@Body commodity: ExCommodityEntity): Observable<BaseResponse>
 

@@ -30,6 +30,7 @@ class PlaceNameAdapter(private val context: Context) :
     fun getSelectedPlacePosition() = selectedPlacePosition
 
     fun setSelectedPosition(position: Int) {
+        if (mSelectedPosition == position) return
         Log.e(javaClass.simpleName, position.toString())
         mSelectedPosition = position
 
@@ -56,6 +57,7 @@ class PlaceNameAdapter(private val context: Context) :
         val binding = DataBindingUtil.getBinding<ItemPlaceNameBinding>(holder.itemView)
         with(binding!!) {
 
+            Log.e("AAA", mPlaceList[position])
             setVariable(BR.placeName, mPlaceList[position])
             setVariable(
                 BR.isSelected,

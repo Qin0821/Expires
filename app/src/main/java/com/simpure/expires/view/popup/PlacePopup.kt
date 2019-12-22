@@ -2,8 +2,10 @@ package com.simpure.expires.view.popup
 
 import android.annotation.SuppressLint
 import android.util.Log
+import android.widget.LinearLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.ConvertUtils
+import com.blankj.utilcode.util.ShadowUtils
 import com.lxj.xpopup.core.PositionPopupView
 import com.lxj.xpopup.util.XPopupUtils
 import com.simpure.expires.R
@@ -11,6 +13,7 @@ import com.simpure.expires.data.Place
 import com.simpure.expires.ui.CommodityHomeActivity
 import com.simpure.expires.ui.PlaceNameAdapter
 import kotlinx.android.synthetic.main.popup_place.view.*
+import java.lang.Exception
 
 @SuppressLint("ViewConstructor")
 class PlacePopup(activity: CommodityHomeActivity) : PositionPopupView(activity) {
@@ -34,6 +37,11 @@ class PlacePopup(activity: CommodityHomeActivity) : PositionPopupView(activity) 
             rvPlace.adapter = mAdapter
         }
         mAdapter.setPlaceList(placeList)
+
+//        rvPlace.measure(
+//            0,
+//            MeasureSpec.makeMeasureSpec(0 /* any */, MeasureSpec.UNSPECIFIED)
+//        )
     }
 
     fun setMoveLimit(xLimit: Array<Int>, yLimit: Array<Int>) {
@@ -52,16 +60,16 @@ class PlacePopup(activity: CommodityHomeActivity) : PositionPopupView(activity) 
 
             this.dismiss()
         } else {
-            val y = moveY - yLimit[0]
-            val position =
-                when {
-                    y < ConvertUtils.dp2px(46f) -> 0
-                    y < ConvertUtils.dp2px(94f) -> 1
-                    y < ConvertUtils.dp2px(140f) -> 2
-                    else -> 3
-                }
-            mAdapter.setSelectedPosition(position)
-            mSelectedPlace = mPlaceList[position]
+            try {
+                val y = moveY - yLimit[0]
+                val position: Int = (y / ConvertUtils.dp2px(42f)).toInt()
+                mAdapter.setSelectedPosition(position)
+                mSelectedPlace = mPlaceList[position]
+
+            } catch (e: Exception) {
+                Log.e("AAA", y.toString())
+                Log.e("AAA", ConvertUtils.dp2px(42f).toString())
+            }
         }
 
     }

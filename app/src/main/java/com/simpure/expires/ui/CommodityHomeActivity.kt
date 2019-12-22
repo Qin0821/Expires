@@ -43,12 +43,14 @@ import com.simpure.expires.ui.commodity.InventoryAdapter
 import com.simpure.expires.ui.search.SearchActivity
 import com.simpure.expires.ui.setting.SettingActivity
 import com.simpure.expires.utilities.getCompatColor
+import com.simpure.expires.utilities.report
 import com.simpure.expires.utilities.startAct
 import com.simpure.expires.view.popup.*
 import com.simpure.expires.view.scrollview.ExpiresScrollView
 import com.simpure.expires.view.scrollview.ScrollViewListener
 import com.simpure.expires.viewmodel.CommodityDetailViewModel
 import com.simpure.expires.viewmodel.CommodityHome2ViewModel
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.item_commodity.*
 import kotlinx.android.synthetic.main.item_commodity.view.*
@@ -269,7 +271,8 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
         mBinding.itemNavigation.ivEdit.setOnClickListener(this)
         mBinding.ivHomeSearch.setOnClickListener(this)
         mBinding.tvAll.setOnClickListener(this)
-        mBinding.tvPlace.setOnTouchListener(this)
+//        mBinding.llPlace.setOnTouchListener(this)
+        mBinding.llPlace.setOnClickListener(this)
 
         val onTouchListener = View.OnTouchListener { v, event ->
             when (event.action) {
@@ -367,7 +370,26 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
 
     override fun onStart() {
         super.onStart()
+        // 先读取本地数据库
         initUserViewModel()
+        // 再联网获取数据
+        getCommodityList()
+    }
+
+    private fun getCommodityList() {
+
+//        expiresApiService.getAllCommodity()
+//            .observeOn(Schedulers.io())
+//            .subscribeOn(AndroidSchedulers.mainThread())
+//            .subscribe({
+//                if (it.code != 0) {
+//                    toast(it.msg)
+//                }
+//
+////                it.data
+//            }, {
+//                it.report()
+//            })
     }
 
 
@@ -599,6 +621,12 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
             ivHomeSearch -> {
                 startAct(Intent(this, SearchActivity::class.java))
             }
+            llPlace -> {
+                showPlacePopup(
+                    mBinding.llPlace,
+                    mPlaceList
+                )
+            }
         }
     }
 
@@ -673,7 +701,7 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
     override fun onTouch(v: View?, event: MotionEvent?): Boolean {
 
         when (v) {
-            tvPlace -> {
+            llPlace -> {
                 placeTouchAnim(event)
             }
             itemCommodity -> {
@@ -689,7 +717,7 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
                 showPlacePopup(
-                    mBinding.tvPlace,
+                    mBinding.llPlace,
                     mPlaceList
                 )
             }
@@ -828,8 +856,8 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
             XPopup
                 .Builder(this)
                 .popupAnimation(PopupAnimation.ScaleAlphaFromCenter)
-                .offsetX(location[0] - ConvertUtils.dp2px(14f))
-                .offsetY(location[1] - ConvertUtils.dp2px(10f))
+//                .offsetX(ScreenUtils.getScreenWidth() - ConvertUtils.dp2px(28f) - width)
+//                .offsetY(location[1] - ConvertUtils.dp2px(10f))
                 .setPopupCallback(object : SimpleCallback() {
                     override fun onCreated() {
                         super.onCreated()
@@ -861,7 +889,7 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
 
                     //如果你自己想拦截返回按键事件，则重写这个方法，返回true即可
                     override fun onBackPressed(): Boolean {
-                        return true; //默认返回false
+                        return true //默认返回false
                     }
                 })
                 .asCustom(mPlacePopup)

@@ -66,11 +66,20 @@ class CaptureActivity : AppCompatActivity(), Callback {
     private var mProgress: ProgressDialog? = null
     private var scanBitmap: Bitmap? = null
 
+
+    private var mLastClickTime = 0L
+    private val TIME_INTERVAL = 1000
+
     private val albumOnClick = View.OnClickListener {
-        //打开手机中的相册
-        val innerIntent = Intent(Intent.ACTION_GET_CONTENT) //"android.intent.action.GET_CONTENT"
-        innerIntent.type = "image/*"
-        startActivityForResult(innerIntent, REQUEST_CODE_SCAN_GALLERY)
+
+        if (System.currentTimeMillis() - mLastClickTime >= TIME_INTERVAL) {
+            //打开手机中的相册
+            val innerIntent =
+                Intent(Intent.ACTION_GET_CONTENT) //"android.intent.action.GET_CONTENT"
+            innerIntent.type = "image/*"
+            startActivityForResult(innerIntent, REQUEST_CODE_SCAN_GALLERY)
+            mLastClickTime = System.currentTimeMillis();
+        }
     }
 
     /**
@@ -94,12 +103,12 @@ class CaptureActivity : AppCompatActivity(), Callback {
             }
             isFlashOn = if (isFlashOn) {
                 // 关闭闪光灯
-                btFlash?.setImageResource(R.drawable.flash_off)
+                btFlash?.setImageResource(R.mipmap.icons_flashoff_theme)
                 tvFlash.setText(R.string.layout_turn_light_on)
                 false
             } else {
                 // 开启闪光灯
-                btFlash?.setImageResource(R.drawable.flash_on)
+                btFlash?.setImageResource(R.mipmap.icons_flashon_theme)
                 tvFlash.setText(R.string.layout_turn_light_off)
                 true
             }

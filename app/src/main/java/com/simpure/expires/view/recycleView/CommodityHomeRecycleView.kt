@@ -21,10 +21,10 @@ class CommodityHomeRecycleView : RecyclerView {
 
     override fun onInterceptTouchEvent(e: MotionEvent?): Boolean {
 //        Log.e("CommodityHomeActivity", "onInterceptTouchEvent -------------- ${e!!.action}")
-        if (e!!.action == MotionEvent.ACTION_DOWN) {
-//            mActionDownListener.onActionDown(e)
-            return false
-        }
+//        if (e!!.action == MotionEvent.ACTION_DOWN) {
+////            mActionDownListener.onActionDown(e)
+//            return false
+//        }
         return super.onInterceptTouchEvent(e)
     }
 

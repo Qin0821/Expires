@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Expires</string>
+    <string name="app_name">Freshever</string>
     <string name="search">Search</string>
     <string name="cancel">Cancel</string>
     <string name="all">All</string>
@@ -9,8 +9,11 @@
     <string name="log_in_or_sign_up">Log In / Sign Up</string>
     <string name="or">OR</string>
     <string name="sign_with_other_accounts">Sign With Other Accounts</string>
+    <string name="history">History</string>
+    <string name="labels">Labels</string>
 
 
+    <string name="ic_back">icon back</string>
     <string name="ic_search">icon search</string>
     <string name="ic_launcher">icon launcher</string>
     <string name="ic_email">icon email</string>
