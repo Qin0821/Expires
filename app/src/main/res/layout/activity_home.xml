@@ -12,7 +12,7 @@
 
         <variable
                 name="commodityHomeActivity"
-                type="com.simpure.expires.ui.CommodityHomeActivity" />
+                type="com.simpure.expires.ui.home.CommodityHomeActivity" />
 
         <variable
                 name="commodityDetail"
@@ -29,6 +29,10 @@
         <variable
                 name="isNewConsuming"
                 type="Boolean" />
+
+        <variable
+                name="title"
+                type="String" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -46,7 +50,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
-                    tools:context=".ui.CommodityHomeActivity">
+                    tools:context=".ui.home.CommodityHomeActivity">
 
                 <RelativeLayout
                         android:id="@+id/rlCommodityHomeTop"
@@ -68,7 +72,7 @@
                             android:includeFontPadding="false"
                             android:maxHeight="@dimen/dp108"
                             android:minHeight="@dimen/dp62"
-                            android:text="@string/app_name"
+                            android:text="@{title}"
                             android:textColor="@color/black"
                             android:textSize="32sp" />
 
@@ -149,12 +153,19 @@
                             android:textSize="17sp" />
                 </LinearLayout>
 
+                <androidx.viewpager2.widget.ViewPager2
+                        android:id="@+id/vpHome"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1" />
+
                 <androidx.fragment.app.FragmentContainerView
                         android:id="@+id/fcCommodity"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
-                        android:orientation="horizontal" />
+                        android:orientation="horizontal"
+                        android:visibility="gone" />
 
                 <include
                         android:id="@+id/itemNavigation"

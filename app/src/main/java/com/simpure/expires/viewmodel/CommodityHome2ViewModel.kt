@@ -7,7 +7,7 @@ import androidx.lifecycle.MediatorLiveData
 import com.simpure.expires.BasicApp
 import com.simpure.expires.DataRepository
 import com.simpure.expires.model.CommodityHomeModel
-import com.simpure.expires.ui.CommodityHomeActivity
+import com.simpure.expires.ui.home.CommodityHomeActivity
 
 /**
  * The ViewModel for [CommodityHomeActivity]

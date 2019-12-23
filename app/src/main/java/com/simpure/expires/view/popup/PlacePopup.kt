@@ -2,15 +2,12 @@ package com.simpure.expires.view.popup
 
 import android.annotation.SuppressLint
 import android.util.Log
-import android.widget.LinearLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.ConvertUtils
-import com.blankj.utilcode.util.ShadowUtils
 import com.lxj.xpopup.core.PositionPopupView
 import com.lxj.xpopup.util.XPopupUtils
 import com.simpure.expires.R
-import com.simpure.expires.data.Place
-import com.simpure.expires.ui.CommodityHomeActivity
+import com.simpure.expires.ui.home.CommodityHomeActivity
 import com.simpure.expires.ui.PlaceNameAdapter
 import kotlinx.android.synthetic.main.popup_place.view.*
 import java.lang.Exception

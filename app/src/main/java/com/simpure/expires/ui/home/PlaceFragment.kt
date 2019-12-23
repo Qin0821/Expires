@@ -1,4 +1,4 @@
-package com.simpure.expires.ui
+package com.simpure.expires.ui.home
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -16,6 +16,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.simpure.expires.R
 import com.simpure.expires.databinding.FragmentPlaceBinding
 import com.simpure.expires.model.CommoditySummaryModel
+import com.simpure.expires.ui.CommodityClickCallback
+import com.simpure.expires.ui.PlaceAdapter
 import com.simpure.expires.view.recycleView.CommodityHomeRecycleViewActionDownListener
 import com.simpure.expires.viewmodel.CommoditySummaryViewModel
 import java.lang.Exception
@@ -62,7 +64,8 @@ class PlaceFragment : Fragment() {
     ): View? {
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_place, container, false)
 
-        mPlaceAdapter = PlaceAdapter(mCommodityClickCallback)
+        mPlaceAdapter =
+            PlaceAdapter(mCommodityClickCallback)
 //        mBinding.rvCommodityList.setOnTouchListener(onTouchListener)
         mBinding.rvCommodityList.adapter = mPlaceAdapter
         setMaxFlingVelocity(mBinding.rvCommodityList)
@@ -81,7 +84,8 @@ class PlaceFragment : Fragment() {
         }
     }
 
-    private val mCommodityClickCallback = object : CommodityClickCallback {
+    private val mCommodityClickCallback = object :
+        CommodityClickCallback {
         override fun onClick(commodity: CommoditySummaryModel) {
             if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
                 (activity as CommodityHomeActivity).showCommodityDetail(commodity.id)

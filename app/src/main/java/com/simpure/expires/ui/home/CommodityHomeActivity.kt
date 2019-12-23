@@ -1,4 +1,4 @@
-package com.simpure.expires.ui
+package com.simpure.expires.ui.home
 
 import android.animation.AnimatorSet
 import android.animation.ValueAnimator
@@ -17,7 +17,6 @@ import android.graphics.Rect
 import com.blankj.utilcode.constant.PermissionConstants
 import com.blankj.utilcode.util.*
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.simpure.expires.api.ExpiresApiService
 import com.simpure.expires.utilities.toast
 import com.simpure.expires.viewmodel.UserViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -29,6 +28,7 @@ import android.view.animation.AnimationUtils
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import androidx.constraintlayout.widget.ConstraintSet
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.*
 import com.google.zxing.util.BarcodeGenerator
 import com.lxj.xpopup.XPopup
@@ -39,18 +39,16 @@ import com.simpure.expires.BasicApp
 import com.simpure.expires.R
 import com.simpure.expires.data.entity.CommodityEntity
 import com.simpure.expires.data.entity.GroupEntity
+import com.simpure.expires.ui.BaseActivity
 import com.simpure.expires.ui.commodity.InventoryAdapter
 import com.simpure.expires.ui.search.SearchActivity
-import com.simpure.expires.ui.setting.SettingActivity
 import com.simpure.expires.utilities.getCompatColor
-import com.simpure.expires.utilities.report
 import com.simpure.expires.utilities.startAct
 import com.simpure.expires.view.popup.*
 import com.simpure.expires.view.scrollview.ExpiresScrollView
 import com.simpure.expires.view.scrollview.ScrollViewListener
 import com.simpure.expires.viewmodel.CommodityDetailViewModel
 import com.simpure.expires.viewmodel.CommodityHome2ViewModel
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.item_commodity.*
 import kotlinx.android.synthetic.main.item_commodity.view.*
@@ -93,6 +91,7 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
     val userId = 1398762
 
     val placeFragment = PlaceFragment()
+    val accountFragment = AccountFragment()
 
     private lateinit var mBottomSheetBehavior: BottomSheetBehavior<View>
     private lateinit var mCommodityDetailViewModel: CommodityDetailViewModel
@@ -248,11 +247,19 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_home)
         setActivityTheme(mBinding.rlCommodityHome)
 
+        initFragment()
+        initBottomSheet()
+        initListener()
+    }
+
+    private fun initFragment() {
+        mBinding.title = getString(R.string.app_name)
+
         supportFragmentManager.beginTransaction()
             .add(R.id.fcCommodity, placeFragment, placeFragment.TAG).commit()
 
-        initBottomSheet()
-        initListener()
+        val pagerAdapter = ScreenSlidePagerAdapter(this)
+        vpHome.adapter = pagerAdapter
     }
 
     override fun onContentChanged() {
@@ -273,6 +280,8 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
         mBinding.tvAll.setOnClickListener(this)
 //        mBinding.llPlace.setOnTouchListener(this)
         mBinding.llPlace.setOnClickListener(this)
+        mBinding.vpHome.setOnScrollChangeListener { view, i, i2, i3, i4 ->  }
+        mBinding.vpHome.setOnDragListener { view, dragEvent ->  }
 
         val onTouchListener = View.OnTouchListener { v, event ->
             when (event.action) {
@@ -599,13 +608,22 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
                 showEditPopup(v!!, InventoriesPopup(this, false))
             }
             ivInventories -> {
-                this@CommodityHomeActivity.toast("ivInventories")
+                mBinding.title = this.getString(R.string.app_name)
+//                supportFragmentManager.beginTransaction()
+//                    .replace(R.id.fcCommodity, placeFragment, null)
+//                    .commit()
+                vpHome.currentItem = 0
             }
             ivConsuming -> {
                 this@CommodityHomeActivity.toast("ivConsuming")
             }
             ivEdit -> {
-                startAct(Intent(this, SettingActivity::class.java))
+//                startAct(Intent(this, SettingActivity::class.java))
+                mBinding.title = this.getString(R.string.account)
+//                supportFragmentManager.beginTransaction()
+//                    .replace(R.id.fcCommodity, accountFragment, null)
+//                    .commit()
+                vpHome.currentItem = 1
             }
             rlSearch -> {
                 startSearch(v!!)
@@ -856,8 +874,8 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
             XPopup
                 .Builder(this)
                 .popupAnimation(PopupAnimation.ScaleAlphaFromCenter)
-//                .offsetX(ScreenUtils.getScreenWidth() - ConvertUtils.dp2px(28f) - width)
-//                .offsetY(location[1] - ConvertUtils.dp2px(10f))
+                .offsetX(ScreenUtils.getScreenWidth() - ConvertUtils.dp2px(128f))
+                .offsetY(location[1] - ConvertUtils.dp2px(10f))
                 .setPopupCallback(object : SimpleCallback() {
                     override fun onCreated() {
                         super.onCreated()

@@ -29,11 +29,11 @@
                     android:id="@+id/tvDone"
                     android:layout_width="@dimen/dp48"
                     android:layout_height="@dimen/dp48"
-                    android:src="@mipmap/icons_back_theme"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
                     android:layout_marginStart="1dp"
                     android:layout_marginTop="16dp"
+                    android:src="@mipmap/icons_back_theme"
                     android:textColor="@color/green"
                     android:textSize="16sp"
                     android:textStyle="bold" />
