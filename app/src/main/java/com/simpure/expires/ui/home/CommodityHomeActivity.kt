@@ -30,6 +30,7 @@ import android.widget.RelativeLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.*
+import androidx.viewpager2.widget.ViewPager2
 import com.google.zxing.util.BarcodeGenerator
 import com.lxj.xpopup.XPopup
 import com.lxj.xpopup.core.BasePopupView
@@ -97,6 +98,8 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
     private lateinit var mCommodityDetailViewModel: CommodityDetailViewModel
 
     var disposable: Disposable? = null
+
+    private lateinit var titleArray: Array<String>
 
     private val bottomSheetCallback = object : BottomSheetBehavior.BottomSheetCallback() {
 
@@ -247,13 +250,14 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_home)
         setActivityTheme(mBinding.rlCommodityHome)
 
+        titleArray = arrayOf(getString(R.string.app_name), getString(R.string.account))
         initFragment()
         initBottomSheet()
         initListener()
     }
 
     private fun initFragment() {
-        mBinding.title = getString(R.string.app_name)
+        mBinding.title = titleArray[0]
 
         supportFragmentManager.beginTransaction()
             .add(R.id.fcCommodity, placeFragment, placeFragment.TAG).commit()
@@ -280,8 +284,12 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
         mBinding.tvAll.setOnClickListener(this)
 //        mBinding.llPlace.setOnTouchListener(this)
         mBinding.llPlace.setOnClickListener(this)
-        mBinding.vpHome.setOnScrollChangeListener { view, i, i2, i3, i4 ->  }
-        mBinding.vpHome.setOnDragListener { view, dragEvent ->  }
+        mBinding.vpHome.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                mBinding.title = titleArray[position]
+                super.onPageSelected(position)
+            }
+        })
 
         val onTouchListener = View.OnTouchListener { v, event ->
             when (event.action) {
@@ -608,7 +616,7 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
                 showEditPopup(v!!, InventoriesPopup(this, false))
             }
             ivInventories -> {
-                mBinding.title = this.getString(R.string.app_name)
+                mBinding.title = titleArray[0]
 //                supportFragmentManager.beginTransaction()
 //                    .replace(R.id.fcCommodity, placeFragment, null)
 //                    .commit()
@@ -619,7 +627,7 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
             }
             ivEdit -> {
 //                startAct(Intent(this, SettingActivity::class.java))
-                mBinding.title = this.getString(R.string.account)
+                mBinding.title = titleArray[1]
 //                supportFragmentManager.beginTransaction()
 //                    .replace(R.id.fcCommodity, accountFragment, null)
 //                    .commit()
