@@ -19,13 +19,13 @@
 
     <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="57dp"
+            android:layout_height="@dimen/dp100"
             android:orientation="vertical">
 
         <View
                 android:id="@+id/line"
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="@dimen/dp2"
                 android:background="@color/line" />
 
         <LinearLayout
@@ -43,22 +43,22 @@
 
                 <ImageView
                         android:id="@+id/ivInventories"
-                        android:layout_width="52dp"
-                        android:layout_height="56dp"
+                        android:layout_width="@dimen/dp104"
+                        android:layout_height="@dimen/dp100"
                         android:gravity="center"
                         android:onClick="goInventories"
-                        android:paddingStart="10dp"
-                        android:paddingEnd="10dp"
+                        android:paddingStart="@dimen/dp20"
+                        android:paddingEnd="@dimen/dp20"
                         android:src="@mipmap/ic_launcher"
                         android:visibility="@{isNewConsuming ? View.GONE : View.VISIBLE}" />
 
                 <ImageView
                         android:id="@+id/ivCancelEdit"
-                        android:layout_width="52dp"
-                        android:layout_height="56dp"
+                        android:layout_width="@dimen/dp104"
+                        android:layout_height="@dimen/dp100"
                         android:gravity="center"
-                        android:paddingStart="10dp"
-                        android:paddingEnd="10dp"
+                        android:paddingStart="@dimen/dp20"
+                        android:paddingEnd="@dimen/dp20"
                         android:src="@mipmap/ic_launcher"
                         android:visibility="@{isNewConsuming ? View.VISIBLE : View.GONE}"
                         app:srcCompat="@mipmap/icons_dock_inventories_black" />
@@ -71,23 +71,23 @@
                     android:gravity="center">
 
                 <ImageView
-                        android:id="@+id/ivConsuming"
-                        android:layout_width="52dp"
-                        android:layout_height="56dp"
+                        android:id="@+id/ivAdd"
+                        android:layout_width="@dimen/dp104"
+                        android:layout_height="@dimen/dp100"
                         android:gravity="center"
                         android:onClick="goConsuming"
-                        android:paddingStart="10dp"
-                        android:paddingEnd="10dp"
+                        android:paddingStart="@dimen/dp20"
+                        android:paddingEnd="@dimen/dp20"
                         android:src="@mipmap/icons_detail_add_black"
                         android:visibility="@{isNewConsuming ? View.GONE : View.VISIBLE}" />
 
                 <ImageView
                         android:id="@+id/ivDeleteEdit"
-                        android:layout_width="52dp"
-                        android:layout_height="56dp"
+                        android:layout_width="@dimen/dp104"
+                        android:layout_height="@dimen/dp100"
                         android:gravity="center"
-                        android:paddingStart="10dp"
-                        android:paddingEnd="10dp"
+                        android:paddingStart="@dimen/dp20"
+                        android:paddingEnd="@dimen/dp20"
                         android:src="@mipmap/ic_launcher"
                         android:visibility="@{isNewConsuming ? View.VISIBLE : View.GONE}"
                         app:srcCompat="@mipmap/icons_dock_consuming_black" />
@@ -101,21 +101,21 @@
 
                 <ImageView
                         android:id="@+id/ivEdit"
-                        android:layout_width="52dp"
-                        android:layout_height="56dp"
+                        android:layout_width="@dimen/dp104"
+                        android:layout_height="@dimen/dp100"
                         android:gravity="center"
-                        android:paddingStart="10dp"
-                        android:paddingEnd="10dp"
+                        android:paddingStart="@dimen/dp20"
+                        android:paddingEnd="@dimen/dp20"
                         android:src="@mipmap/icons_dock_more_black"
                         android:visibility="@{isNewConsuming ? View.GONE : View.VISIBLE}" />
 
                 <ImageView
                         android:id="@+id/ivConfirmEdit"
-                        android:layout_width="52dp"
-                        android:layout_height="56dp"
+                        android:layout_width="@dimen/dp104"
+                        android:layout_height="@dimen/dp100"
                         android:gravity="center"
-                        android:paddingStart="10dp"
-                        android:paddingEnd="10dp"
+                        android:paddingStart="@dimen/dp20"
+                        android:paddingEnd="@dimen/dp20"
                         android:src="@mipmap/ic_launcher"
                         android:visibility="@{isNewConsuming ? View.VISIBLE : View.GONE}"
                         app:srcCompat="@mipmap/icons_dock_edit_black" />

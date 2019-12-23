@@ -28,7 +28,6 @@ import android.view.animation.AnimationUtils
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import androidx.constraintlayout.widget.ConstraintSet
-import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.*
 import androidx.viewpager2.widget.ViewPager2
 import com.google.zxing.util.BarcodeGenerator
@@ -278,7 +277,7 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
         mBinding.itemCommodity.itemInventories.ivInventoriesTopping.setOnClickListener(this)
         mBinding.itemCommodity.itemInventories.tvInventoriesThrow.setOnClickListener(this)
         mBinding.itemNavigation.ivInventories.setOnClickListener(this)
-        mBinding.itemNavigation.ivConsuming.setOnClickListener(this)
+        mBinding.itemNavigation.ivAdd.setOnClickListener(this)
         mBinding.itemNavigation.ivEdit.setOnClickListener(this)
         mBinding.ivHomeSearch.setOnClickListener(this)
         mBinding.tvAll.setOnClickListener(this)
@@ -344,17 +343,8 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
                 ivConfirmEdit.setOnClickListener {
                     mBinding.isNewConsuming = false
                 }
-                ivConsuming.setOnClickListener {
-                    val location = IntArray(2)
-                    it.getLocationInWindow(location)
-
-                    location[1] -= ConvertUtils.dp2px(152.5f) + BarUtils.getNavBarHeight()
-
-                    XPopup.Builder(this@CommodityHomeActivity)
-                        .popupAnimation(PopupAnimation.ScrollAlphaFromBottom)
-                        .offsetY(location[1])
-                        .asCustom(ConsumingSelectPopup(this@CommodityHomeActivity))
-                        .show()
+                ivAdd.setOnClickListener {
+                    showAddPopup(it)
                 }
                 ivEdit.setOnClickListener {
                     toast("item edit")
@@ -383,6 +373,14 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
 
     fun fromInventroies() {
         mBinding.itemCommodity.itemInventories.ivInventoriesTopping.performClick()
+    }
+    
+    fun typeInManually() {
+        toast("type in manually")
+    }
+
+    fun scanBarcode() {
+        toast("scan")
     }
 
     override fun onStart() {
@@ -605,15 +603,17 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
     }
 
     override fun onClick(v: View?) {
+        if (null == v) return
+
         when (v) {
             tvCommClear -> {
-                showEditPopup(v!!, ConsumingPopup(this))
+                showEditPopup(v, ConsumingPopup(this))
             }
             ivInventoriesTopping -> {
-                showEditPopup(v!!, InventoriesPopup(this, true))
+                showEditPopup(v, InventoriesPopup(this, true))
             }
             tvInventoriesThrow -> {
-                showEditPopup(v!!, InventoriesPopup(this, false))
+                showEditPopup(v, InventoriesPopup(this, false))
             }
             ivInventories -> {
                 mBinding.title = titleArray[0]
@@ -622,8 +622,8 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
 //                    .commit()
                 vpHome.currentItem = 0
             }
-            ivConsuming -> {
-                this@CommodityHomeActivity.toast("ivConsuming")
+            ivAdd -> {
+                showAddPopup(v)
             }
             ivEdit -> {
 //                startAct(Intent(this, SettingActivity::class.java))
@@ -634,7 +634,7 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
                 vpHome.currentItem = 1
             }
             rlSearch -> {
-                startSearch(v!!)
+                startSearch(v)
             }
             tvSearchCancel -> {
                 cancelSearch()
@@ -654,6 +654,21 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
                 )
             }
         }
+    }
+
+    private fun showAddPopup(it: View) {
+        val location = IntArray(2)
+        it.getLocationInWindow(location)
+
+        location[1] -= ConvertUtils.dp2px(152.5f) + BarUtils.getNavBarHeight()
+
+        XPopup.Builder(this@CommodityHomeActivity)
+            .popupAnimation(PopupAnimation.ScrollAlphaFromBottom)
+            .atView(mBinding.fcCommodity)
+//            .offsetY(location[1])
+            .offsetY(0)
+            .asCustom(AddPopup(this@CommodityHomeActivity))
+            .show()
     }
 
     private fun showEditPopup(

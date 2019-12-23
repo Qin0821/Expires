@@ -12,6 +12,10 @@
     <string name="sign_with_other_accounts">Sign With Other Accounts</string>
     <string name="history">History</string>
     <string name="labels">Labels</string>
+    <string name="type_in_manually">Type In Manually</string>
+    <string name="scan_barcode">Scan Barcode</string>
+    <string name="new_consuming">New Consuming</string>
+    <string name="from_inventories">From Inventories</string>
 
 
     <string name="ic_back">icon back</string>
