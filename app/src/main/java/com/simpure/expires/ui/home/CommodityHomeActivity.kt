@@ -1,10 +1,11 @@
 package com.simpure.expires.ui.home
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.animation.AnimatorSet
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.view.View
 import androidx.databinding.DataBindingUtil
 import com.simpure.expires.databinding.ActivityHomeBinding
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -22,12 +23,13 @@ import com.simpure.expires.viewmodel.UserViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import android.util.Log
-import android.view.KeyEvent
-import android.view.MotionEvent
+import android.view.*
 import android.view.animation.AnimationUtils
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import androidx.constraintlayout.widget.ConstraintSet
+import androidx.core.widget.PopupWindowCompat
+import androidx.databinding.BindingAdapter
 import androidx.lifecycle.*
 import androidx.viewpager2.widget.ViewPager2
 import com.google.zxing.util.BarcodeGenerator
@@ -58,6 +60,7 @@ import kotlinx.android.synthetic.main.item_dialog_commodity_inventories.*
 import kotlinx.android.synthetic.main.item_navigation.*
 import kotlinx.android.synthetic.main.item_search.*
 import kotlin.concurrent.thread
+import kotlin.math.abs
 
 
 class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
@@ -249,6 +252,7 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_home)
         setActivityTheme(mBinding.rlCommodityHome)
 
+        mBinding.showPopup = false
         titleArray = arrayOf(getString(R.string.app_name), getString(R.string.account))
         initFragment()
         initBottomSheet()
@@ -263,11 +267,6 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
 
         val pagerAdapter = ScreenSlidePagerAdapter(this)
         vpHome.adapter = pagerAdapter
-    }
-
-    override fun onContentChanged() {
-        super.onContentChanged()
-
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -374,7 +373,7 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
     fun fromInventroies() {
         mBinding.itemCommodity.itemInventories.ivInventoriesTopping.performClick()
     }
-    
+
     fun typeInManually() {
         toast("type in manually")
     }
@@ -623,7 +622,8 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
                 vpHome.currentItem = 0
             }
             ivAdd -> {
-                showAddPopup(v)
+//                showAddPopup(v)
+                showAddPopup2(v)
             }
             ivEdit -> {
 //                startAct(Intent(this, SettingActivity::class.java))
@@ -654,6 +654,49 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
                 )
             }
         }
+    }
+
+    private fun showAddPopup2(v: View) {
+
+        val popup = AddPopup2(this, {
+            mBinding.showPopup = false
+        })
+        val contentView = popup.contentView
+        Log.e("AAA", popup.width.toString())
+        Log.e("AAA", popup.height.toString())
+        contentView.measure(
+            makeDropDownMeasureSpec(popup.height),
+            makeDropDownMeasureSpec(popup.height)
+        )
+
+        Log.e("AAA", contentView.measuredHeight.toString())
+        Log.e("AAA", mBinding.itemNavigation.llBottomNavigation.height.toString())
+        Log.e("AAA", contentView.measuredWidth.toString())
+        Log.e("AAA", mBinding.itemNavigation.llBottomNavigation.width.toString())
+
+        val offsetX =
+            abs(mBinding.itemNavigation.llBottomNavigation.width - popup.contentView.measuredWidth) / 2
+        val offsetY =
+            -((popup.contentView.measuredHeight) + mBinding.itemNavigation.llBottomNavigation.height)
+
+        mBinding.showPopup = true
+        PopupWindowCompat.showAsDropDown(
+            popup,
+            mBinding.itemNavigation.llBottomNavigation,
+            offsetX,
+            offsetY,
+            Gravity.START
+        )
+
+    }
+
+    private fun makeDropDownMeasureSpec(measureSpec: Int): Int {
+        val mode = if (measureSpec == ViewGroup.LayoutParams.WRAP_CONTENT) {
+            View.MeasureSpec.UNSPECIFIED
+        } else {
+            View.MeasureSpec.AT_MOST
+        }
+        return View.MeasureSpec.makeMeasureSpec(View.MeasureSpec.getSize(measureSpec), mode)
     }
 
     private fun showAddPopup(it: View) {
@@ -900,9 +943,6 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
                 .offsetX(ScreenUtils.getScreenWidth() - ConvertUtils.dp2px(128f))
                 .offsetY(location[1] - ConvertUtils.dp2px(10f))
                 .setPopupCallback(object : SimpleCallback() {
-                    override fun onCreated() {
-                        super.onCreated()
-                    }
 
                     override fun beforeShow() {
                         super.beforeShow()
@@ -917,15 +957,6 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
                         Log.e(javaClass.simpleName, "x0: ${xLimit[0]}, x1: ${xLimit[1]}")
                         Log.e(javaClass.simpleName, "y0: ${yLimit[0]}, y1: ${yLimit[1]}")
                         mPlacePopup.setMoveLimit(xLimit, yLimit)
-                    }
-
-                    override fun onShow() {
-                        super.onShow()
-                    }
-
-                    override fun onDismiss() {
-                        super.onDismiss()
-
                     }
 
                     //如果你自己想拦截返回按键事件，则重写这个方法，返回true即可
@@ -958,4 +989,51 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
         }
         super.onActivityResult(requestCode, resultCode, data)
     }
+
+    object Home {
+
+        @JvmStatic
+        @BindingAdapter("fadeVisible")
+        fun View.setFadeVisible(visible: Boolean) {
+            this.animate().cancel()
+
+            val animator: ValueAnimator
+            if (visible) {
+                this.visibility = View.VISIBLE
+
+                animator = ValueAnimator.ofFloat(0f, 1f)
+                animator.addUpdateListener { animation ->
+                    val alpha = animation.animatedValue as Float
+                    this.alpha = alpha
+                }
+
+//                this.alpha = 0f
+//                this.animate().alpha(1f).setListener(object : AnimatorListenerAdapter() {
+//                    override fun onAnimationEnd(animation: Animator?) {
+////                        super.onAnimationEnd(animation)
+//                        this@setFadeVisible.alpha = 1f
+//                    }
+//                })
+            } else {
+                animator = ValueAnimator.ofFloat(1f, 0f)
+                animator.addUpdateListener { animation ->
+                    val alpha = animation.animatedValue as Float
+                    this.alpha = alpha
+                    if (alpha == 0f) {
+                        this.visibility = View.GONE
+                    }
+                }
+//                this.animate().alpha(0f).setListener(object : AnimatorListenerAdapter() {
+//                    override fun onAnimationEnd(animation: Animator?) {
+////                        super.onAnimationEnd(animation)
+//                        this@setFadeVisible.alpha = 1f
+//                        this@setFadeVisible.visibility = View.GONE
+//                    }
+//                })
+            }
+            animator.duration = 360
+            animator.start()
+        }
+    }
 }
+

@@ -1,95 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/cardView"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dp20"
-        android:translationZ="-4dp"
-        app:cardCornerRadius="@dimen/dp24"
-        app:cardElevation="@dimen/dp6">
+        android:padding="@dimen/dp20">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.cardview.widget.CardView xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/cardView"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp301"
-            android:background="@color/white">
+            android:layout_height="wrap_content"
+            android:translationZ="-4dp"
+            app:cardCornerRadius="@dimen/dp24"
+            app:cardElevation="@dimen/dp6">
 
-        <View
-                android:id="@+id/clTypeInManually"
+
+        <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp150"
-                android:background="@color/white"
-                app:layout_constraintBottom_toTopOf="@id/clScanBarcode"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:layout_height="@dimen/dp301"
+                android:background="@color/white">
 
-        <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="22dp"
-                android:layout_height="22dp"
-                app:layout_constraintBottom_toBottomOf="@id/clTypeInManually"
-                app:layout_constraintEnd_toStartOf="@id/textView"
-                app:layout_constraintHorizontal_chainStyle="packed"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/clTypeInManually"
-                app:srcCompat="@mipmap/icons_type_medium_theme" />
+            <View
+                    android:id="@+id/clTypeInManually"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp150"
+                    app:layout_constraintBottom_toTopOf="@id/clScanBarcode"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-                android:id="@+id/textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="50dp"
-                android:gravity="center"
-                android:text="@string/type_in_manually"
-                android:textColor="@color/black"
-                android:textSize="17sp"
-                app:layout_constraintBottom_toBottomOf="@id/clTypeInManually"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/imageView"
-                app:layout_constraintTop_toTopOf="@id/clTypeInManually" />
+            <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    app:layout_constraintBottom_toBottomOf="@id/clTypeInManually"
+                    app:layout_constraintEnd_toStartOf="@id/textView"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/clTypeInManually"
+                    app:srcCompat="@mipmap/icons_type_medium_theme" />
 
-        <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp1"
-                android:background="@color/searchHint"
-                app:layout_constraintBottom_toTopOf="@id/clScanBarcode"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/clTypeInManually" />
+            <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="50dp"
+                    android:gravity="center"
+                    android:text="@string/type_in_manually"
+                    android:textColor="@color/black"
+                    android:textSize="17sp"
+                    app:layout_constraintBottom_toBottomOf="@id/clTypeInManually"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/imageView"
+                    app:layout_constraintTop_toTopOf="@id/clTypeInManually" />
 
-        <View
-                android:id="@+id/clScanBarcode"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp150"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/clTypeInManually" />
+            <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp1"
+                    android:background="@color/searchHint"
+                    app:layout_constraintBottom_toTopOf="@id/clScanBarcode"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/clTypeInManually" />
 
-        <ImageView
-                android:id="@+id/imageView1"
-                android:layout_width="22dp"
-                android:layout_height="22dp"
-                app:layout_constraintBottom_toBottomOf="@id/clScanBarcode"
-                app:layout_constraintHorizontal_chainStyle="packed"
-                app:layout_constraintStart_toStartOf="@id/imageView"
-                app:layout_constraintTop_toTopOf="@id/clScanBarcode"
-                app:srcCompat="@mipmap/icons_scan_medium_theme" />
+            <View
+                    android:id="@+id/clScanBarcode"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp150"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/clTypeInManually" />
 
-        <TextView
-                android:id="@+id/textView1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="@string/scan_barcode"
-                android:textColor="@color/black"
-                android:textSize="17sp"
-                app:layout_constraintBottom_toBottomOf="@id/clScanBarcode"
-                app:layout_constraintStart_toStartOf="@id/textView"
-                app:layout_constraintTop_toTopOf="@id/clScanBarcode" />
+            <ImageView
+                    android:id="@+id/imageView1"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    app:layout_constraintBottom_toBottomOf="@id/clScanBarcode"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintStart_toStartOf="@id/imageView"
+                    app:layout_constraintTop_toTopOf="@id/clScanBarcode"
+                    app:srcCompat="@mipmap/icons_scan_medium_theme" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                    android:id="@+id/textView1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/scan_barcode"
+                    android:textColor="@color/black"
+                    android:textSize="17sp"
+                    app:layout_constraintBottom_toBottomOf="@id/clScanBarcode"
+                    app:layout_constraintStart_toStartOf="@id/textView"
+                    app:layout_constraintTop_toTopOf="@id/clScanBarcode" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-</androidx.cardview.widget.CardView>
+    </androidx.cardview.widget.CardView>
+</FrameLayout>

@@ -6,6 +6,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
                 name="homeDTO"
                 type="com.simpure.expires.data.CommodityHomeRepository" />
@@ -33,6 +35,10 @@
         <variable
                 name="title"
                 type="String" />
+
+        <variable
+                name="showPopup"
+                type="Boolean" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -53,119 +59,138 @@
                     tools:context=".ui.home.CommodityHomeActivity">
 
                 <RelativeLayout
-                        android:id="@+id/rlCommodityHomeTop"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/dp178"
-                        android:orientation="vertical"
-                        android:paddingEnd="@dimen/dp28"
-                        android:paddingBottom="@dimen/dp22">
-
-                    <!--32 16 8 6 78 32-->
-                    <TextView
-                            android:id="@+id/tvAppName"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentStart="true"
-                            android:layout_alignParentBottom="true"
-                            android:layout_marginStart="@dimen/dp28"
-                            android:gravity="center_vertical"
-                            android:includeFontPadding="false"
-                            android:maxHeight="@dimen/dp108"
-                            android:minHeight="@dimen/dp62"
-                            android:text="@{title}"
-                            android:textColor="@color/black"
-                            android:textSize="32sp" />
-
-                    <ImageView
-                            android:id="@+id/ivHomeSearch"
-                            android:layout_width="@dimen/dp48"
-                            android:layout_height="@dimen/dp48"
-                            android:layout_alignParentTop="true"
-                            android:layout_alignParentEnd="true"
-                            android:layout_marginTop="@dimen/dp8"
-                            android:contentDescription="@string/ic_search"
-                            app:srcCompat="@mipmap/icons_dashboard_search_black" />
+                        android:layout_height="0dp"
+                        android:layout_weight="1">
 
                     <LinearLayout
-                            android:id="@+id/llPlace"
-                            android:layout_width="wrap_content"
-                            android:layout_height="@dimen/dp64"
-                            android:layout_alignParentEnd="true"
-                            android:layout_alignParentBottom="true"
-                            android:background="@drawable/bg_rounded_rectangle_white_20"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal"
-                            android:paddingStart="@dimen/dp20"
-                            android:paddingEnd="@dimen/dp20">
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
 
-                        <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="@dimen/dp64"
-                                android:gravity="center"
-                                android:paddingStart="@dimen/dp40"
-                                android:paddingEnd="@dimen/dp40"
-                                android:text="@{placeName}"
-                                android:textColor="@color/text_expires_days"
-                                android:textSize="14sp" />
+                        <RelativeLayout
+                                android:id="@+id/rlCommodityHomeTop"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/dp178"
+                                android:orientation="vertical"
+                                android:paddingEnd="@dimen/dp28"
+                                android:paddingBottom="@dimen/dp22">
 
-                        <ImageView
-                                android:layout_width="@dimen/dp36"
-                                android:layout_height="@dimen/dp36"
-                                android:src="@mipmap/icons_arrowdown_grey" />
+                            <!--32 16 8 6 78 32-->
+                            <TextView
+                                    android:id="@+id/tvAppName"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentStart="true"
+                                    android:layout_alignParentBottom="true"
+                                    android:layout_marginStart="@dimen/dp28"
+                                    android:gravity="center_vertical"
+                                    android:includeFontPadding="false"
+                                    android:maxHeight="@dimen/dp108"
+                                    android:minHeight="@dimen/dp62"
+                                    android:text="@{title}"
+                                    android:textColor="@color/black"
+                                    android:textSize="32sp" />
+
+                            <ImageView
+                                    android:id="@+id/ivHomeSearch"
+                                    android:layout_width="@dimen/dp48"
+                                    android:layout_height="@dimen/dp48"
+                                    android:layout_alignParentTop="true"
+                                    android:layout_alignParentEnd="true"
+                                    android:layout_marginTop="@dimen/dp8"
+                                    android:contentDescription="@string/ic_search"
+                                    app:srcCompat="@mipmap/icons_dashboard_search_black" />
+
+                            <LinearLayout
+                                    android:id="@+id/llPlace"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="@dimen/dp64"
+                                    android:layout_alignParentEnd="true"
+                                    android:layout_alignParentBottom="true"
+                                    android:background="@drawable/bg_rounded_rectangle_white_20"
+                                    android:gravity="center_vertical"
+                                    android:orientation="horizontal"
+                                    android:paddingStart="@dimen/dp20"
+                                    android:paddingEnd="@dimen/dp20">
+
+                                <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="@dimen/dp64"
+                                        android:gravity="center"
+                                        android:paddingStart="@dimen/dp40"
+                                        android:paddingEnd="@dimen/dp40"
+                                        android:text="@{placeName}"
+                                        android:textColor="@color/text_expires_days"
+                                        android:textSize="14sp" />
+
+                                <ImageView
+                                        android:layout_width="@dimen/dp36"
+                                        android:layout_height="@dimen/dp36"
+                                        android:src="@mipmap/icons_arrowdown_grey" />
+                            </LinearLayout>
+
+
+                        </RelativeLayout>
+
+                        <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/dp60"
+                                android:layout_marginStart="@dimen/dp20"
+                                android:layout_marginTop="@dimen/dp16"
+                                android:layout_marginEnd="@dimen/dp20"
+                                android:layout_marginBottom="@dimen/dp16"
+                                android:background="@drawable/bg_rounded_rectangle_gray_8"
+                                android:orientation="horizontal"
+                                android:padding="@dimen/dp6"
+                                android:visibility="gone">
+
+                            <TextView
+                                    android:id="@+id/tvAll"
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:background='@{!notAll ? @drawable/bg_rounded_rectangle_white_6 : null}'
+                                    android:gravity="center"
+                                    android:text="@string/all"
+                                    android:textColor="@{!notAll ? @color/text_expires_days : @color/bg_comm_action}"
+                                    android:textSize="17sp" />
+
+                            <TextView
+                                    android:id="@+id/tvPlace"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:width="0dp"
+                                    android:background='@{notAll ? @drawable/bg_rounded_rectangle_white_6 : null}'
+                                    android:gravity="center"
+                                    android:text="@{placeName}"
+                                    android:textColor="@{!notAll ? @color/bg_comm_action : @color/text_expires_days}"
+                                    android:textSize="17sp" />
+                        </LinearLayout>
+
+                        <androidx.viewpager2.widget.ViewPager2
+                                android:id="@+id/vpHome"
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="1" />
+
+                        <androidx.fragment.app.FragmentContainerView
+                                android:id="@+id/fcCommodity"
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                android:orientation="horizontal"
+                                android:visibility="gone" />
                     </LinearLayout>
 
-
+                    <View
+                            android:id="@+id/popupShadow"
+                            fadeVisible="@{showPopup}"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@color/white_50" />
                 </RelativeLayout>
-
-                <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/dp60"
-                        android:layout_marginStart="@dimen/dp20"
-                        android:layout_marginTop="@dimen/dp16"
-                        android:layout_marginEnd="@dimen/dp20"
-                        android:layout_marginBottom="@dimen/dp16"
-                        android:background="@drawable/bg_rounded_rectangle_gray_8"
-                        android:orientation="horizontal"
-                        android:padding="@dimen/dp6"
-                        android:visibility="gone">
-
-                    <TextView
-                            android:id="@+id/tvAll"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:background='@{!notAll ? @drawable/bg_rounded_rectangle_white_6 : null}'
-                            android:gravity="center"
-                            android:text="@string/all"
-                            android:textColor="@{!notAll ? @color/text_expires_days : @color/bg_comm_action}"
-                            android:textSize="17sp" />
-
-                    <TextView
-                            android:id="@+id/tvPlace"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:width="0dp"
-                            android:background='@{notAll ? @drawable/bg_rounded_rectangle_white_6 : null}'
-                            android:gravity="center"
-                            android:text="@{placeName}"
-                            android:textColor="@{!notAll ? @color/bg_comm_action : @color/text_expires_days}"
-                            android:textSize="17sp" />
-                </LinearLayout>
-
-                <androidx.viewpager2.widget.ViewPager2
-                        android:id="@+id/vpHome"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1" />
-
-                <androidx.fragment.app.FragmentContainerView
-                        android:id="@+id/fcCommodity"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:orientation="horizontal"
-                        android:visibility="gone" />
 
                 <include
                         android:id="@+id/itemNavigation"
