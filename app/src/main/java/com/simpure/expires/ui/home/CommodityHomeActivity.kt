@@ -33,6 +33,8 @@ import androidx.databinding.BindingAdapter
 import androidx.lifecycle.*
 import androidx.viewpager2.widget.ViewPager2
 import com.google.zxing.util.BarcodeGenerator
+import com.gyf.immersionbar.ImmersionBar.setFitsSystemWindows
+import com.gyf.immersionbar.ktx.immersionBar
 import com.lxj.xpopup.XPopup
 import com.lxj.xpopup.core.BasePopupView
 import com.lxj.xpopup.enums.PopupAnimation
@@ -250,10 +252,25 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_home)
-        setActivityTheme(mBinding.rlCommodityHome)
+        setExpiresTheme()
+
+        initData()
+        initView()
+    }
+
+    private fun initData() {
+        titleArray = arrayOf(getString(R.string.app_name), getString(R.string.account))
+    }
+
+    private fun initView() {
+        val lp = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            BarUtils.getStatusBarHeight() + ConvertUtils.dp2px(89f)
+        )
+        rlCommodityHomeTop.layoutParams = lp
 
         mBinding.showPopup = false
-        titleArray = arrayOf(getString(R.string.app_name), getString(R.string.account))
+
         initFragment()
         initBottomSheet()
         initListener()

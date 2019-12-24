@@ -35,6 +35,16 @@ abstract class BaseActivity : LogActivity(), View.OnClickListener {
         }
     }
 
+    protected fun setExpiresTheme() {
+        immersionBar {
+            transparentStatusBar()
+            statusBarDarkFont(true)
+            navigationBarColor(R.color.appBg)
+            navigationBarDarkIcon(true)
+            init()
+        }
+    }
+
 
 //    abstract fun initData()
 //    abstract fun initView()
