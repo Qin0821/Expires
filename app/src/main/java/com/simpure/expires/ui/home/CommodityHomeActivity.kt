@@ -105,6 +105,8 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
 
     private lateinit var titleArray: Array<String>
 
+    private var lastBehavior = BottomSheetBehavior.STATE_HIDDEN
+
     private val bottomSheetCallback = object : BottomSheetBehavior.BottomSheetCallback() {
 
         override fun onSlide(bottomSheet: View, slideOffset: Float) {
@@ -114,7 +116,9 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
         override fun onStateChanged(bottomSheet: View, newState: Int) {
             when (newState) {
                 BottomSheetBehavior.STATE_COLLAPSED -> {
-                    viewShadow.visibility = View.VISIBLE
+                    Log.e("AAA", "STATE_COLLAPSED")
+
+                    mBinding.showBottomSheet = true
 
                     if (collapsedHeight == 0) {
                         val rect = Rect()
@@ -125,9 +129,9 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
 
                 }
                 BottomSheetBehavior.STATE_DRAGGING -> {
+                    Log.e("AAA", "STATE_DRAGGING")
 
-
-                    viewShadow.visibility = View.VISIBLE
+//                    mBinding.showBottomSheet = true
 
                     // 在全屏状态，scrollview顶部不可见时，屏蔽sheet滑动事件
                     Log.e(javaClass.simpleName, "justExpanded: $justExpanded")
@@ -144,17 +148,32 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
                     }
                 }
                 BottomSheetBehavior.STATE_HALF_EXPANDED -> {
+                    Log.e("AAA", "STATE_HALF_EXPANDED")
+
                 }
                 BottomSheetBehavior.STATE_EXPANDED -> {
-                    viewShadow.visibility = View.VISIBLE
+//                    mBinding.showBottomSheet = true
+                    Log.e("AAA", "STATE_EXPANDED")
 
                     justExpanded = true
                 }
                 BottomSheetBehavior.STATE_HIDDEN -> {
-                    viewShadow.visibility = View.GONE
+                    Log.e("AAA", "STATE_HIDDEN")
+                    mBinding.showBottomSheet = false
                 }
                 BottomSheetBehavior.STATE_SETTLING -> {
-                    viewShadow.visibility = View.VISIBLE
+                    if (mClickShadowToHiden) {
+                        mBinding.showBottomSheet = false
+                        mClickShadowToHiden = false
+                    } else if (lastBehavior == BottomSheetBehavior.STATE_HIDDEN) {
+                        mBinding.showBottomSheet = true
+                    }
+//                    else if (lastBehavior == BottomSheetBehavior.STATE_COLLAPSED) {
+//                        mBinding.showBottomSheet = false
+//                    }
+                    Log.e("AAA", "STATE_SETTLING")
+
+//                    mBinding.showBottomSheet = true
                 }
             }
         }
@@ -333,11 +352,12 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
 //        placeFragment.setCommodityListTouchListener(onTouchListener)
     }
 
+    private var mClickShadowToHiden = false
     private fun initBottomSheet() {
         if (!::mBottomSheetBehavior.isInitialized) {
             viewShadow.setOnClickListener {
+                mClickShadowToHiden = true
                 mBottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
-                viewShadow.visibility = View.GONE
             }
             mBottomSheetBehavior = BottomSheetBehavior.from(itemCommodity)
             mBottomSheetBehavior.setBottomSheetCallback(bottomSheetCallback)
@@ -970,7 +990,7 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
             LinearLayout.LayoutParams.MATCH_PARENT,
             LinearLayout.LayoutParams.WRAP_CONTENT
         )
-        lp.setMargins(0, 0, 0, marginBottomHeight + 40)
+        lp.setMargins(0, 0, 0, marginBottomHeight)
         lp.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM)
         itemCommodity.itemCommodityNavigation.layoutParams = lp
 
@@ -1054,8 +1074,8 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
     object Home {
 
         @JvmStatic
-        @BindingAdapter("fadeVisible")
-        fun View.setFadeVisible(visible: Boolean) {
+        @BindingAdapter("whiteFadeVisible")
+        fun View.setWhiteFadeVisible(visible: Boolean) {
             this.animate().cancel()
 
             val animator: ValueAnimator
@@ -1072,7 +1092,7 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
 //                this.animate().alpha(1f).setListener(object : AnimatorListenerAdapter() {
 //                    override fun onAnimationEnd(animation: Animator?) {
 ////                        super.onAnimationEnd(animation)
-//                        this@setFadeVisible.alpha = 1f
+//                        this@setFadVisible.alpha = 1f
 //                    }
 //                })
             } else {
@@ -1091,6 +1111,55 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
 //                        this@setFadeVisible.visibility = View.GONE
 //                    }
 //                })
+            }
+            animator.duration = 360
+            animator.start()
+        }
+
+        @JvmStatic
+        @BindingAdapter("blackFadeVisible")
+        fun View.setBlackFadeVisible(visible: Boolean) {
+
+//            Log.e("AAA", visible.toString())
+//            Log.e("AAA", this.alpha.toString())
+//            Log.e("AAA", if (this.visibility == View.VISIBLE) "Visible" else "Gone")
+            if (visible) {
+                if (this.visibility == View.VISIBLE || this.alpha != 0f) {
+                    this.visibility = View.VISIBLE
+                    return
+                }
+            } else {
+                if (this.visibility == View.GONE || this.alpha != 1f) {
+                    this.visibility = View.GONE
+                    return
+                }
+            }
+
+            this.animate().cancel()
+
+            val animator: ValueAnimator
+            if (visible) {
+//                Log.e("AAA", "2")
+
+                this.visibility = View.VISIBLE
+
+                animator = ValueAnimator.ofFloat(0f, 1f)
+                animator.addUpdateListener { animation ->
+                    val alpha = animation.animatedValue as Float
+                    this.alpha = alpha
+                }
+
+            } else {
+//                Log.e("AAA", "3")
+
+                animator = ValueAnimator.ofFloat(1f, 0f)
+                animator.addUpdateListener { animation ->
+                    val alpha = animation.animatedValue as Float
+                    this.alpha = alpha
+                    if (alpha == 0f) {
+                        this.visibility = View.GONE
+                    }
+                }
             }
             animator.duration = 360
             animator.start()

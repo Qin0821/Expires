@@ -39,6 +39,10 @@
         <variable
                 name="showPopup"
                 type="Boolean" />
+
+        <variable
+                name="showBottomSheet"
+                type="Boolean" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -187,7 +191,7 @@
 
                     <View
                             android:id="@+id/popupShadow"
-                            fadeVisible="@{showPopup}"
+                            whiteFadeVisible="@{showPopup}"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:background="@color/transparency_90" />
@@ -204,10 +208,11 @@
 
         <View
                 android:id="@+id/viewShadow"
+                blackFadeVisible="@{showBottomSheet}"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/transparency_50"
-                android:visibility="gone" />
+                android:alpha="0"
+                android:background="@color/transparency_50" />
 
         <include
                 android:id="@+id/itemCommodity"

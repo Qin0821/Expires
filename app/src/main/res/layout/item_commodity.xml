@@ -32,9 +32,9 @@
             android:id="@+id/layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingTop="40dp"
+            android:paddingTop="@dimen/dp80"
             app:behavior_hideable="true"
-            app:behavior_peekHeight="364dp"
+            app:behavior_peekHeight="@dimen/dp700"
             app:layout_behavior="@string/bottom_sheet_behavior">
 
         <RelativeLayout
@@ -68,8 +68,8 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@id/itemCommodityHead"
                             android:orientation="vertical"
-                            android:paddingLeft="20dp"
-                            android:paddingRight="20dp">
+                            android:paddingLeft="@dimen/dp40"
+                            android:paddingRight="@dimen/dp40">
 
                         <include
                                 android:id="@+id/itemConsuming"
@@ -111,7 +111,7 @@
                     android:id="@+id/itemCommodityNavigation"
                     layout="@layout/item_navigation"
                     android:layout_width="match_parent"
-                    android:layout_height="57dp"
+                    android:layout_height="@dimen/dp100"
                     android:layout_alignParentBottom="true"
                     app:layout_constraintBottom_toBottomOf="parent"
                     bind:isNewConsuming="@{isNewConsuming}" />
