@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.recyclerview.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/rvPlace"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/bg_rounded_rectangle_white_20"
-        android:maxHeight="188dp"
+        android:maxWidth="@dimen/dp360"
+        android:maxHeight="@dimen/dp380"
+        android:minWidth="@dimen/dp186"
         android:paddingStart="@dimen/dp8"
-        android:paddingEnd="@dimen/dp8">
-
-
-</androidx.recyclerview.widget.RecyclerView>
+        android:paddingEnd="@dimen/dp8"
+        tools:listitem="@layout/item_place_name" />

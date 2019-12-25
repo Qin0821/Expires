@@ -30,8 +30,8 @@ class PlacePopup(activity: CommodityHomeActivity) : PositionPopupView(activity) 
             val layoutManager = LinearLayoutManager(mActivity)
             layoutManager.orientation = LinearLayoutManager.VERTICAL
             rvPlace.layoutManager = layoutManager
-            mAdapter = PlaceNameAdapter(mActivity)
-            rvPlace.adapter = mAdapter
+//            mAdapter = PlaceNameAdapter(mActivity)
+//            rvPlace.adapter = mAdapter
         }
         mAdapter.setPlaceList(placeList)
 

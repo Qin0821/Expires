@@ -1,6 +1,5 @@
 package com.simpure.expires.ui
 
-import android.content.Context
 import android.graphics.Typeface
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,26 +7,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
-import androidx.databinding.DataBindingUtil
 import androidx.databinding.DataBindingUtil.inflate
 import androidx.recyclerview.widget.RecyclerView
-import com.simpure.expires.BR
 import com.simpure.expires.R
 import com.simpure.expires.databinding.ItemPlaceNameBinding
+import com.simpure.expires.model.commodity.placeName.PlaceNameViewModel
 
 
-class PlaceNameAdapter(private val context: Context) :
+class PlaceNameAdapter(private val activity: BaseActivity, val onPlaceClick: (String) -> Unit) :
     RecyclerView.Adapter<PlaceNameAdapter.ViewHolder>() {
 
-    private var selectedPlacePosition = 0
     private var mSelectedPosition = -1
     private lateinit var mPlaceList: List<String>
-
-    fun setSelectedPlace(position: Int) {
-        this.selectedPlacePosition = position
-    }
-
-    fun getSelectedPlacePosition() = selectedPlacePosition
 
     fun setSelectedPosition(position: Int) {
         if (mSelectedPosition == position) return
@@ -42,33 +33,47 @@ class PlaceNameAdapter(private val context: Context) :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding: ItemPlaceNameBinding = inflate(
-            LayoutInflater.from(context), R.layout.item_place_name,
-            parent, false
+        return ViewHolder(
+            inflate(
+                LayoutInflater.from(activity), R.layout.item_place_name,
+                parent, false
+            )
         )
-        return ViewHolder(binding.root)
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+
+        with(holder) {
+            Log.e("AAA", mPlaceList[position])
+            bind(
+                createOnClickListener(mPlaceList[position]),
+                PlaceNameViewModel(mPlaceList[position], position == mSelectedPosition)
+            )
+        }
     }
 
     override fun getItemCount(): Int {
         return mPlaceList.size
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val binding = DataBindingUtil.getBinding<ItemPlaceNameBinding>(holder.itemView)
-        with(binding!!) {
-
-            Log.e("AAA", mPlaceList[position])
-            setVariable(BR.placeName, mPlaceList[position])
-            setVariable(
-                BR.isSelected,
-                position == mSelectedPosition
-            )
-
-            executePendingBindings()
+    private fun createOnClickListener(placeName: String): View.OnClickListener {
+        return View.OnClickListener {
+            onPlaceClick(placeName)
         }
     }
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+    class ViewHolder(private val binding: ItemPlaceNameBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+
+        fun bind(listener: View.OnClickListener, viewModel: PlaceNameViewModel) {
+            with(binding) {
+
+                clickListener = listener
+                this.viewModel = viewModel
+                executePendingBindings()
+            }
+        }
+    }
 
     object PlaceNameBinds {
         @BindingAdapter("isSelected")

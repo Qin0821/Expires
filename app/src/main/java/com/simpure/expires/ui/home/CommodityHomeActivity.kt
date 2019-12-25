@@ -665,19 +665,60 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
                 startAct(Intent(this, SearchActivity::class.java))
             }
             llPlace -> {
-                showPlacePopup(
-                    mBinding.llPlace,
-                    mPlaceList
-                )
+                showPlacePopup2(mPlaceList)
+//                showPlacePopup(
+//                    mBinding.llPlace,
+//                    mPlaceList
+//                )
             }
         }
     }
 
+    private fun showPlacePopup2(placeList: List<String>) {
+
+        val popup = PlacePopup2(this,
+            {
+                mBinding.showPopup = false
+            },
+            {
+                mBinding.showPopup = false
+                mBinding.placeName = it
+            })
+        popup.setPlaceList(placeList)
+
+        val contentView = popup.contentView
+        Log.e("AAA", popup.width.toString())
+        Log.e("AAA", popup.height.toString())
+        contentView.measure(
+            makeDropDownMeasureSpec(popup.height),
+            makeDropDownMeasureSpec(popup.height)
+        )
+
+        Log.e("AAA", contentView.measuredHeight.toString())
+        Log.e("AAA", mBinding.itemNavigation.llBottomNavigation.height.toString())
+        Log.e("AAA", contentView.measuredWidth.toString())
+        Log.e("AAA", mBinding.itemNavigation.llBottomNavigation.width.toString())
+
+        val offsetX =
+            abs(popup.contentView.measuredWidth - mBinding.llPlace.width) / 2
+        val offsetY =
+            -(mBinding.llPlace.height + ConvertUtils.dp2px(5f))
+
+        mBinding.showPopup = true
+        PopupWindowCompat.showAsDropDown(
+            popup,
+            mBinding.llPlace,
+            offsetX,
+            offsetY,
+            Gravity.START
+        )
+    }
+
     private fun showAddPopup2(v: View) {
 
-        val popup = AddPopup2(this, {
+        val popup = AddPopup2(this) {
             mBinding.showPopup = false
-        })
+        }
         val contentView = popup.contentView
         Log.e("AAA", popup.width.toString())
         Log.e("AAA", popup.height.toString())
