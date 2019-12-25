@@ -95,8 +95,8 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
 
     val userId = 1398762
 
-    val placeFragment = PlaceFragment()
-    val accountFragment = AccountFragment()
+    private val placeFragment = PlaceFragment()
+    private val accountFragment = AccountFragment()
 
     private lateinit var mBottomSheetBehavior: BottomSheetBehavior<View>
     private lateinit var mCommodityDetailViewModel: CommodityDetailViewModel
@@ -279,10 +279,10 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
     private fun initFragment() {
         mBinding.title = titleArray[0]
 
-        supportFragmentManager.beginTransaction()
-            .add(R.id.fcCommodity, placeFragment, placeFragment.TAG).commit()
+//        supportFragmentManager.beginTransaction()
+//            .add(R.id.fcCommodity, placeFragment, placeFragment.TAG).commit()
 
-        val pagerAdapter = ScreenSlidePagerAdapter(this)
+        val pagerAdapter = ScreenSlidePagerAdapter(this, placeFragment, accountFragment)
         vpHome.adapter = pagerAdapter
     }
 
@@ -450,12 +450,12 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
 
     private fun initGroupHome(group: GroupEntity) {
 
-        if (!::mSelectPlace.isInitialized) {
-            mSelectPlace = group.placeList[0]
+        if (!::mPlaceList.isInitialized) {
+            mPlaceList = listOf("All") + group.placeList
+            mSelectPlace = mPlaceList[0]
             mBinding.placeName = mSelectPlace
-            mBinding.notAll = false
+            mBinding.notAll = true
         }
-        if (!::mPlaceList.isInitialized) mPlaceList = group.placeList
 
         mCommodityHomeViewModel = ViewModelProvider(this).get(CommodityHome2ViewModel::class.java)
         mCommodityHomeViewModel.commodityHome.observe(this, Observer {
@@ -680,9 +680,10 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
             {
                 mBinding.showPopup = false
             },
-            {
+            { placeName ->
                 mBinding.showPopup = false
-                mBinding.placeName = it
+                mBinding.placeName = placeName
+                mCommodityHomeViewModel.setPlaceName(placeName)
             })
         popup.setPlaceList(placeList)
 
@@ -1030,8 +1031,10 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
         return if (keyCode == KeyEvent.KEYCODE_BACK) {
             if (mBottomSheetBehavior.state != BottomSheetBehavior.STATE_HIDDEN) {
                 mBottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+                false
+            } else {
+                super.onKeyDown(keyCode, event)
             }
-            false
         } else {
             super.onKeyDown(keyCode, event)
         }

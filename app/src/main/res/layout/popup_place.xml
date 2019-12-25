@@ -8,6 +8,4 @@
         android:maxWidth="@dimen/dp360"
         android:maxHeight="@dimen/dp380"
         android:minWidth="@dimen/dp186"
-        android:paddingStart="@dimen/dp8"
-        android:paddingEnd="@dimen/dp8"
         tools:listitem="@layout/item_place_name" />

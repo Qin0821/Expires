@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
+        <import type="android.view.View" />
 
         <variable
                 name="clickListener"
@@ -12,28 +15,45 @@
                 type="com.simpure.expires.model.commodity.placeName.PlaceNameViewModel" />
     </data>
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp64"
             android:layout_gravity="center"
-            android:layout_marginTop="@dimen/dp8"
-            android:layout_marginBottom="@dimen/dp8"
-            android:background="@drawable/bg_rounded_rectangle_gray_20"
+            android:layout_margin="@dimen/dp8"
+            android:background="@{viewModel.isSelected ? @drawable/bg_rounded_rectangle_gray_20 : null}"
             android:orientation="vertical">
-        <!--            android:background="@{viewModel.isSelected ? @drawable/bg_rounded_rectangle_gray_20 : null}"-->
+        <!--            android:background="@drawable/bg_rounded_rectangle_gray_20"-->
 
-        <TextView
-                android:id="@+id/tvName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:onClick="@{clickListener}"
-                android:text="@{viewModel.placeName}"
-                android:textColor="@color/text_place_select"
-                android:textSize="17sp"
-                app:isSelected="@{viewModel.isSelected}" />
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingStart="@dimen/dp20"
+                android:paddingEnd="@dimen/dp20">
+
+            <TextView
+                    android:id="@+id/tvName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:onClick="@{clickListener}"
+                    android:text="@{viewModel.placeName}"
+                    android:textColor="@color/text_place_select"
+                    android:textSize="17sp"
+                    app:isSelected="@{viewModel.isSelected}" />
+
+
+            <ImageView
+                    android:layout_width="@dimen/dp36"
+                    android:layout_height="@dimen/dp36"
+                    android:visibility="@{viewModel.isSelected ? View.VISIBLE : View.GONE}"
+                    app:srcCompat="@mipmap/icons_arrow_up_white" />
+        </LinearLayout>
+
 
     </RelativeLayout>
 </layout>

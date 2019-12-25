@@ -47,7 +47,7 @@ class PlaceNameAdapter(private val activity: BaseActivity, val onPlaceClick: (St
             Log.e("AAA", mPlaceList[position])
             bind(
                 createOnClickListener(mPlaceList[position]),
-                PlaceNameViewModel(mPlaceList[position], position == mSelectedPosition)
+                PlaceNameViewModel(mPlaceList[position], position == 0)
             )
         }
     }
@@ -67,7 +67,6 @@ class PlaceNameAdapter(private val activity: BaseActivity, val onPlaceClick: (St
 
         fun bind(listener: View.OnClickListener, viewModel: PlaceNameViewModel) {
             with(binding) {
-
                 clickListener = listener
                 this.viewModel = viewModel
                 executePendingBindings()
