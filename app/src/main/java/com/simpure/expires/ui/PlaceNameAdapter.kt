@@ -18,7 +18,8 @@ class PlaceNameAdapter(private val activity: BaseActivity, val onPlaceClick: (St
     RecyclerView.Adapter<PlaceNameAdapter.ViewHolder>() {
 
     private var mSelectedPosition = -1
-    private lateinit var mPlaceList: List<String>
+    private lateinit var mRowList: List<String>
+    private lateinit var mPlaceList: MutableList<String>
 
     fun setSelectedPosition(position: Int) {
         if (mSelectedPosition == position) return
@@ -29,7 +30,8 @@ class PlaceNameAdapter(private val activity: BaseActivity, val onPlaceClick: (St
     }
 
     fun setPlaceList(placeList: List<String>) {
-        mPlaceList = placeList
+        mRowList = placeList
+        mPlaceList = placeList as MutableList<String>
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -46,7 +48,7 @@ class PlaceNameAdapter(private val activity: BaseActivity, val onPlaceClick: (St
         with(holder) {
             Log.e("AAA", mPlaceList[position])
             bind(
-                createOnClickListener(mPlaceList[position]),
+                createOnClickListener(position),
                 PlaceNameViewModel(mPlaceList[position], position == 0)
             )
         }
@@ -56,9 +58,16 @@ class PlaceNameAdapter(private val activity: BaseActivity, val onPlaceClick: (St
         return mPlaceList.size
     }
 
-    private fun createOnClickListener(placeName: String): View.OnClickListener {
+    private fun createOnClickListener(position: Int): View.OnClickListener {
         return View.OnClickListener {
+            val placeName = mPlaceList[position]
             onPlaceClick(placeName)
+
+            val p = mRowList.indexOf(placeName)
+            val list: MutableList<String> = mRowList as MutableList<String>
+            list.add(0, list[p])
+            list.removeAt(p + 1)
+            mPlaceList = list
         }
     }
 

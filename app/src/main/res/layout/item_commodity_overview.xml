@@ -30,25 +30,23 @@
                 type="CommodityClickCallback" />
     </data>
 
-    <androidx.cardview.widget.CardView
+    <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="5dp"
-            android:onClick="@{() -> callback.onClick(commodity)}"
-            android:orientation="vertical"
-            android:translationZ="-2dp"
-            app:cardCornerRadius="10dp">
+            android:layout_height="@dimen/dp160"
+            android:layout_marginStart="@dimen/dp20"
+            android:layout_marginTop="@dimen/dp5"
+            android:layout_marginEnd="@dimen/dp20"
+            android:layout_marginBottom="@dimen/dp5"
+            android:background="@mipmap/test"
+            android:onClick="@{() -> callback.onClick(commodity)}">
 
 
         <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:paddingStart="20dp"
-                android:paddingTop="10dp"
-                android:paddingEnd="10dp"
+                android:paddingStart="@dimen/dp40"
+                android:paddingTop="@dimen/dp20"
+                android:paddingEnd="@dimen/dp20"
                 android:paddingBottom="9dp">
 
             <TextView
@@ -78,11 +76,11 @@
                     android:textStyle="bold" />
 
             <ImageView
-                    android:layout_width="22dp"
-                    android:layout_height="22dp"
+                    android:layout_width="@dimen/dp44"
+                    android:layout_height="@dimen/dp44"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="5dp"
+                    android:layout_marginEnd="@dimen/dp10"
                     android:src="@mipmap/inventory_alerts"
                     app:srcCompat="@mipmap/icons_detail_inventoryalert_normal_grey" />
 
@@ -107,7 +105,7 @@
                 <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="4dp"
+                        android:layout_marginStart="@dimen/dp8"
                         android:ellipsize="end"
                         android:maxLines="1"
                         android:text="days"
@@ -116,5 +114,5 @@
             </LinearLayout>
 
         </RelativeLayout>
-    </androidx.cardview.widget.CardView>
+    </RelativeLayout>
 </layout>

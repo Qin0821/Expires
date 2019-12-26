@@ -197,7 +197,7 @@ object DataGenerator {
             CommodityEntity(35, "烤面筋", nowDate.minusMinutes(10).millis, 1, place = "Snacks")
         )
 
-        val commodityList = fridgeList + makeUpsList + snacksList
+        val commodityList = fridgeList + makeUpsList + snacksList + fridgeList + makeUpsList + snacksList
 
         return commodityList
     }
