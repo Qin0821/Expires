@@ -33,10 +33,10 @@
     <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp160"
-            android:layout_marginStart="@dimen/dp20"
-            android:layout_marginTop="@dimen/dp5"
-            android:layout_marginEnd="@dimen/dp20"
-            android:layout_marginBottom="@dimen/dp5"
+            android:layout_marginStart="@dimen/dp16"
+            android:layout_marginTop="@dimen/dp4"
+            android:layout_marginEnd="@dimen/dp4"
+            android:layout_marginBottom="@dimen/dp16"
             android:background="@mipmap/test"
             android:onClick="@{() -> callback.onClick(commodity)}">
 

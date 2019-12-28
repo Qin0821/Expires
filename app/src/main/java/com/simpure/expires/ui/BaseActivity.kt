@@ -35,11 +35,11 @@ abstract class BaseActivity : LogActivity(), View.OnClickListener {
         }
     }
 
-    protected fun setExpiresTheme() {
+    protected fun setExpiresTheme(colorResId: Int = R.color.appBg) {
         immersionBar {
             transparentStatusBar()
             statusBarDarkFont(true)
-            navigationBarColor(R.color.appBg)
+            navigationBarColor(colorResId)
             navigationBarDarkIcon(true)
             init()
         }

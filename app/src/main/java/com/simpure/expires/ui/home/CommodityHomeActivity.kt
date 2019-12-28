@@ -1,27 +1,12 @@
 package com.simpure.expires.ui.home
 
-import android.animation.Animator
-import android.animation.AnimatorListenerAdapter
+
 import android.animation.AnimatorSet
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
-import android.os.Bundle
-import androidx.databinding.DataBindingUtil
-import com.simpure.expires.databinding.ActivityHomeBinding
-import androidx.recyclerview.widget.LinearLayoutManager
-
-
-import com.google.zxing.util.Constant.REQ_QR_CODE
-import com.google.zxing.activity.CaptureActivity
 import android.content.Intent
 import android.graphics.Rect
-import com.blankj.utilcode.constant.PermissionConstants
-import com.blankj.utilcode.util.*
-import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.simpure.expires.utilities.toast
-import com.simpure.expires.viewmodel.UserViewModel
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
+import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.view.animation.AnimationUtils
@@ -30,11 +15,17 @@ import android.widget.RelativeLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.widget.PopupWindowCompat
 import androidx.databinding.BindingAdapter
-import androidx.lifecycle.*
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
+import com.blankj.utilcode.constant.PermissionConstants
+import com.blankj.utilcode.util.*
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.zxing.activity.CaptureActivity
 import com.google.zxing.util.BarcodeGenerator
-import com.gyf.immersionbar.ImmersionBar.setFitsSystemWindows
-import com.gyf.immersionbar.ktx.immersionBar
+import com.google.zxing.util.Constant.REQ_QR_CODE
 import com.lxj.xpopup.XPopup
 import com.lxj.xpopup.core.BasePopupView
 import com.lxj.xpopup.enums.PopupAnimation
@@ -43,16 +34,21 @@ import com.simpure.expires.BasicApp
 import com.simpure.expires.R
 import com.simpure.expires.data.entity.CommodityEntity
 import com.simpure.expires.data.entity.GroupEntity
+import com.simpure.expires.databinding.ActivityHomeBinding
 import com.simpure.expires.ui.BaseActivity
 import com.simpure.expires.ui.commodity.InventoryAdapter
 import com.simpure.expires.ui.search.SearchActivity
 import com.simpure.expires.utilities.getCompatColor
 import com.simpure.expires.utilities.startAct
+import com.simpure.expires.utilities.toast
 import com.simpure.expires.view.popup.*
 import com.simpure.expires.view.scrollview.ExpiresScrollView
 import com.simpure.expires.view.scrollview.ScrollViewListener
 import com.simpure.expires.viewmodel.CommodityDetailViewModel
 import com.simpure.expires.viewmodel.CommodityHome2ViewModel
+import com.simpure.expires.viewmodel.UserViewModel
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.item_commodity.*
 import kotlinx.android.synthetic.main.item_commodity.view.*
@@ -160,11 +156,12 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
                 BottomSheetBehavior.STATE_HIDDEN -> {
                     Log.e("AAA", "STATE_HIDDEN")
                     mBinding.showBottomSheet = false
+                    setExpiresTheme()
                 }
                 BottomSheetBehavior.STATE_SETTLING -> {
-                    if (mClickShadowToHiden) {
+                    if (mClickShadowToHidden) {
                         mBinding.showBottomSheet = false
-                        mClickShadowToHiden = false
+                        mClickShadowToHidden = false
                     } else if (lastBehavior == BottomSheetBehavior.STATE_HIDDEN) {
                         mBinding.showBottomSheet = true
                     }
@@ -352,11 +349,12 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
 //        placeFragment.setCommodityListTouchListener(onTouchListener)
     }
 
-    private var mClickShadowToHiden = false
+    private var mClickShadowToHidden = false
     private fun initBottomSheet() {
         if (!::mBottomSheetBehavior.isInitialized) {
             viewShadow.setOnClickListener {
-                mClickShadowToHiden = true
+                setNavigatorAnim()
+                mClickShadowToHidden = true
                 mBottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
             }
             mBottomSheetBehavior = BottomSheetBehavior.from(itemCommodity)
@@ -537,6 +535,7 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
         mCommodityDetailViewModel.setCommodityId(commodityId)
         mBottomSheetBehavior.state = when (mBottomSheetBehavior.state) {
             BottomSheetBehavior.STATE_HIDDEN -> {
+                setExpiresTheme(R.color.white)
                 BottomSheetBehavior.STATE_COLLAPSED
             }
             BottomSheetBehavior.STATE_COLLAPSED or BottomSheetBehavior.STATE_EXPANDED -> BottomSheetBehavior.STATE_HIDDEN
@@ -1069,6 +1068,17 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
 //            mBinding.btInventories.text = scanResult
         }
         super.onActivityResult(requestCode, resultCode, data)
+    }
+
+    private fun setNavigatorAnim() {
+        // todo 加个动画
+//        val valueAnimator = ValueAnimator.ofArgb(Color.WHITE, 0xFFF7F7F7.toInt())
+//        valueAnimator.addUpdateListener {
+//            setExpiresTheme(Color.parseColor(it.animatedValue.toString()))
+////            mBinding.llPlace.setBackgroundColor(it.animatedValue as Int)
+//        }
+//        valueAnimator.duration = 3000
+//        valueAnimator.start()
     }
 
     object Home {
