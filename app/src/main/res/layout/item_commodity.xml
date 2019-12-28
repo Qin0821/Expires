@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:bind="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools">
+        xmlns:bind="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -23,7 +22,15 @@
                 type="CommodityClickCallback" />
 
         <variable
-                name="isNewConsuming"
+                name="isHome"
+                type="Boolean" />
+
+        <variable
+                name="isDetail"
+                type="Boolean" />
+
+        <variable
+                name="canDelete"
                 type="Boolean" />
     </data>
 
@@ -75,7 +82,7 @@
                                 android:id="@+id/itemConsuming"
                                 layout="@layout/item_dialog_commodity_consuming"
                                 bind:commodityDetail="@{commodityDetail}"
-                                bind:isNewConsuming="@{isNewConsuming}" />
+                                bind:isHome="@{isHome}" />
 
                         <include layout="@layout/item_dialog_commodity_line" />
 
@@ -83,7 +90,7 @@
                                 android:id="@+id/itemInventories"
                                 layout="@layout/item_dialog_commodity_inventories"
                                 bind:commodityDetail="@{commodityDetail}"
-                                bind:isNewConsuming="@{isNewConsuming}" />
+                                bind:isHome="@{isHome}" />
 
                         <include layout="@layout/item_dialog_commodity_line" />
 
@@ -114,7 +121,9 @@
                     android:layout_height="@dimen/dp100"
                     android:layout_alignParentBottom="true"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    bind:isNewConsuming="@{isNewConsuming}" />
+                    bind:canDelete="@{canDelete}"
+                    bind:isDetail="@{isDetail}"
+                    bind:isHome="@{isHome}" />
 
             <View
                     android:id="@+id/sheetShadow"

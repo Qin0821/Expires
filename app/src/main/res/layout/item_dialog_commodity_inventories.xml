@@ -11,7 +11,7 @@
                 type="com.simpure.expires.data.entity.CommodityEntity" />
 
         <variable
-                name="isNewConsuming"
+                name="isHome"
                 type="Boolean" />
 
     </data>
@@ -47,7 +47,7 @@
                     android:layout_height="22dp"
                     android:layout_marginStart="10dp"
                     android:background="@drawable/bg_rounded_rectangle_light_gray"
-                    android:visibility="@{isNewConsuming ? View.GONE : View.VISIBLE}"
+                    android:visibility="@{isHome ? View.GONE : View.VISIBLE}"
                     app:srcCompat="@mipmap/icons_detail_up_theme" />
 
             <TextView
@@ -62,7 +62,7 @@
                     android:paddingEnd="10dp"
                     android:text="Throw"
                     android:textColor="@color/green"
-                    android:visibility="@{isNewConsuming ? View.GONE : View.VISIBLE}" />
+                    android:visibility="@{isHome ? View.GONE : View.VISIBLE}" />
 
             <ImageView
                     android:id="@+id/ivEditInventories"
@@ -70,7 +70,7 @@
                     android:layout_height="22dp"
                     android:layout_marginStart="10dp"
                     android:src="@mipmap/ic_launcher"
-                    android:visibility="@{isNewConsuming ? View.VISIBLE : View.GONE}" />
+                    android:visibility="@{isHome ? View.VISIBLE : View.GONE}" />
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView

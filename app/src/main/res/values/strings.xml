@@ -16,8 +16,13 @@
     <string name="scan_barcode">Scan Barcode</string>
     <string name="new_consuming">New Consuming</string>
     <string name="from_inventories">From Inventories</string>
+    <string name="inventories">Inventories</string>
+    <string name="consuming">Consuming</string>
+    <string name="modify">Modify</string>
 
 
+    <string name="ic_consuming">icon consuming</string>
+    <string name="ic_modify">icon modify</string>
     <string name="ic_back">icon back</string>
     <string name="ic_search">icon search</string>
     <string name="ic_launcher">icon launcher</string>
@@ -32,4 +37,12 @@
     <string name="ic_twitter">icon twitter</string>
     <string name="ic_wechat">icon wechat</string>
     <string name="ic_qq">icon qq</string>
+    <string name="ic_delete">icon delete</string>
+    <string name="ic_arrow_up">icon arrow up</string>
+    <string name="ic_add">icon add</string>
+    <string name="ic_minus">icon minus</string>
+    <string name="ic_inventories">icon inventories</string>
+    <string name="ic_bottom_first">icon bottom first</string>
+    <string name="ic_bottom_second">icon bottom second</string>
+    <string name="ic_bottom_third">icon bottom third</string>
 </resources>

@@ -14,7 +14,7 @@
                 type="Boolean" />
 
         <variable
-                name="isNewConsuming"
+                name="isHome"
                 type="Boolean" />
     </data>
 
@@ -58,7 +58,7 @@
                     android:paddingEnd="10dp"
                     android:text="Clear"
                     android:textColor="@color/green"
-                    android:visibility="@{isNewConsuming ? View.GONE : View.VISIBLE}" />
+                    android:visibility="@{isHome ? View.GONE : View.VISIBLE}" />
 
             <ImageView
                     android:id="@+id/ivEditConsuming"
@@ -68,7 +68,7 @@
                     android:layout_marginTop="11dp"
                     android:layout_marginBottom="11dp"
                     android:src="@mipmap/ic_launcher"
-                    android:visibility="@{isNewConsuming ? View.VISIBLE : View.GONE}" />
+                    android:visibility="@{isHome ? View.VISIBLE : View.GONE}" />
 
         </LinearLayout>
 

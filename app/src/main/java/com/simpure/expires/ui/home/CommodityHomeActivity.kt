@@ -155,6 +155,7 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
                 }
                 BottomSheetBehavior.STATE_HIDDEN -> {
                     Log.e("AAA", "STATE_HIDDEN")
+                    mBinding.isHome = true
                     mBinding.showBottomSheet = false
                     setExpiresTheme()
                 }
@@ -286,6 +287,7 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
         rlCommodityHomeTop.layoutParams = lp
 
         mBinding.showPopup = false
+        mBinding.isHome = true
 
         initFragment()
         initBottomSheet()
@@ -309,8 +311,8 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
         mBinding.itemCommodity.itemInventories.ivInventoriesTopping.setOnClickListener(this)
         mBinding.itemCommodity.itemInventories.tvInventoriesThrow.setOnClickListener(this)
         mBinding.itemNavigation.ivInventories.setOnClickListener(this)
-        mBinding.itemNavigation.ivAdd.setOnClickListener(this)
-        mBinding.itemNavigation.ivEdit.setOnClickListener(this)
+        mBinding.itemNavigation.ivBottomSecond.setOnClickListener(this)
+        mBinding.itemNavigation.ivBottomThird.setOnClickListener(this)
         mBinding.ivHomeSearch.setOnClickListener(this)
         mBinding.tvAll.setOnClickListener(this)
 //        mBinding.llPlace.setOnTouchListener(this)
@@ -366,21 +368,38 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
 
             with(mBinding.itemCommodity.itemCommodityNavigation) {
                 ivInventories.setOnClickListener {
-                    toast("item inventory")
+                    if (mBinding.isDetail == null) return@setOnClickListener
+                    if (mBinding.isDetail!!) {
+                        toast("item inventory")
+                    } else {
+                        toast("item cancel")
+                    }
                 }
-                ivCancelEdit.setOnClickListener {
-                    mBinding.isNewConsuming = false
+                ivConsuming.setOnClickListener {
+                    if (mBinding.isDetail == null || mBinding.canDelete == null) return@setOnClickListener
+                    if (mBinding.isDetail!!) {
+                        toast("item consuming")
+                    } else if (mBinding.canDelete!!) {
+                        toast("item delete")
+                    }
+                    //                    mBinding.isHome = false
                 }
-                ivDeleteEdit.setOnClickListener {
-                    mBinding.isNewConsuming = false
+                ivModify.setOnClickListener {
+                    if (mBinding.isDetail == null) return@setOnClickListener
+                    if (mBinding.isDetail!!) {
+                        toast("item modity")
+                    } else {
+                        toast("item confirm")
+                    }
+                    //                    mBinding.isHome = false
                 }
-                ivConfirmEdit.setOnClickListener {
-                    mBinding.isNewConsuming = false
+                ivModify.setOnClickListener {
+                    //                    mBinding.isHome = false
                 }
-                ivAdd.setOnClickListener {
+                ivBottomSecond.setOnClickListener {
                     showAddPopup(it)
                 }
-                ivEdit.setOnClickListener {
+                ivBottomThird.setOnClickListener {
                     toast("item edit")
                 }
             }
@@ -402,7 +421,7 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
     }
 
     fun newConsuming() {
-        mBinding.isNewConsuming = true
+        mBinding.isHome = true
     }
 
     fun fromInventroies() {
@@ -657,11 +676,11 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
 //                    .commit()
                 vpHome.currentItem = 0
             }
-            ivAdd -> {
+            ivConsuming -> {
 //                showAddPopup(v)
                 showAddPopup2(v)
             }
-            ivEdit -> {
+            ivModify -> {
 //                startAct(Intent(this, SettingActivity::class.java))
                 mBinding.title = titleArray[1]
 //                supportFragmentManager.beginTransaction()
@@ -1073,7 +1092,7 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
     private fun setNavigatorAnim() {
         // todo 加个动画
 //        val valueAnimator = ValueAnimator.ofArgb(Color.WHITE, 0xFFF7F7F7.toInt())
-//        valueAnimator.addUpdateListener {
+//        valueAnimator.addUpdateListener
 //            setExpiresTheme(Color.parseColor(it.animatedValue.toString()))
 ////            mBinding.llPlace.setBackgroundColor(it.animatedValue as Int)
 //        }

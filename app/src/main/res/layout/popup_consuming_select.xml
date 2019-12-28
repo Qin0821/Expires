@@ -4,21 +4,21 @@
         android:id="@+id/cardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_margin="@dimen/dp20"
         android:translationZ="-4dp"
-        app:cardCornerRadius="12dp"
+        app:cardCornerRadius="@dimen/dp24"
         app:cardElevation="3dp"
-        app:contentPadding="10dp">
+        app:contentPadding="@dimen/dp20">
 
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="150.5dp"
+            android:layout_height="@dimen/dp301"
             android:background="@color/searchHint">
 
         <View
                 android:id="@+id/clNewConsuming"
                 android:layout_width="match_parent"
-                android:layout_height="75dp"
+                android:layout_height="@dimen/dp150"
                 android:background="@color/white"
                 app:layout_constraintBottom_toTopOf="@id/clFromInventories"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -27,9 +27,9 @@
 
         <ImageView
                 android:id="@+id/imageView"
-                android:layout_width="22dp"
-                android:layout_height="22dp"
-                android:src="@mipmap/ic_launcher"
+                android:layout_width="@dimen/dp44"
+                android:layout_height="@dimen/dp44"
+                android:contentDescription="@string/ic_add"
                 app:layout_constraintBottom_toTopOf="@id/imageView1"
                 app:layout_constraintEnd_toStartOf="@id/textView"
                 app:layout_constraintHorizontal_chainStyle="packed"
@@ -41,7 +41,7 @@
                 android:id="@+id/textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="50dp"
+                android:layout_marginStart="@dimen/dp100"
                 android:gravity="center"
                 android:text="@string/new_consuming"
                 android:textColor="@color/black"
@@ -55,8 +55,8 @@
         <View
                 android:id="@+id/clFromInventories"
                 android:layout_width="match_parent"
-                android:layout_height="75dp"
-                android:layout_marginTop="0.5dp"
+                android:layout_height="@dimen/dp150"
+                android:layout_marginTop="@dimen/dp1"
                 android:background="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -65,8 +65,9 @@
 
         <ImageView
                 android:id="@+id/imageView1"
-                android:layout_width="22dp"
-                android:layout_height="22dp"
+                android:layout_width="@dimen/dp44"
+                android:layout_height="@dimen/dp44"
+                android:contentDescription="@string/ic_arrow_up"
                 android:src="@mipmap/ic_launcher"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintHorizontal_chainStyle="packed"

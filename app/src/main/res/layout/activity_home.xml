@@ -29,7 +29,15 @@
                 type="Boolean" />
 
         <variable
-                name="isNewConsuming"
+                name="isHome"
+                type="Boolean" />
+
+        <variable
+                name="isDetail"
+                type="Boolean" />
+
+        <variable
+                name="canDelete"
                 type="Boolean" />
 
         <variable
@@ -217,8 +225,10 @@
         <include
                 android:id="@+id/itemCommodity"
                 layout="@layout/item_commodity"
+                bind:canDelete="@{canDelete}"
                 bind:commodityDetail="@{commodityDetail}"
-                bind:isNewConsuming="@{isNewConsuming}" />
+                bind:isDetail="@{isDetail}"
+                bind:isHome="@{isHome}" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
