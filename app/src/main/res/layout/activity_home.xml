@@ -51,6 +51,14 @@
         <variable
                 name="showBottomSheet"
                 type="Boolean" />
+
+        <variable
+                name="isEdit"
+                type="Boolean" />
+
+        <variable
+                name="isEmpty"
+                type="Boolean" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -140,7 +148,8 @@
                                 <ImageView
                                         android:layout_width="@dimen/dp36"
                                         android:layout_height="@dimen/dp36"
-                                        android:src="@mipmap/icons_arrowdown_grey" />
+                                        android:contentDescription="@string/ic_arrow_down"
+                                        android:src="@mipmap/icons_arrow_down_grey" />
                             </LinearLayout>
 
 
@@ -208,6 +217,7 @@
                 <include
                         android:id="@+id/itemNavigation"
                         layout="@layout/item_navigation"
+                        bind:isHome="@{true}"
                         app:layout_constraintBottom_toBottomOf="parent" />
 
 
@@ -228,6 +238,8 @@
                 bind:canDelete="@{canDelete}"
                 bind:commodityDetail="@{commodityDetail}"
                 bind:isDetail="@{isDetail}"
+                bind:isEdit="@{isEdit}"
+                bind:isEmpty="@{isEmpty}"
                 bind:isHome="@{isHome}" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

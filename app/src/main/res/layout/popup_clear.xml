@@ -30,6 +30,7 @@
                 android:layout_width="@dimen/dp210"
                 android:layout_height="@dimen/dp44"
                 android:layout_marginStart="@dimen/dp20"
+                android:contentDescription="@string/ic_consuming_data_switch"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@mipmap/icons_detail_button_exp2prod_theme" />
@@ -39,18 +40,20 @@
                 android:layout_width="@dimen/dp72"
                 android:layout_height="@dimen/dp44"
                 android:layout_marginEnd="16dp"
+                android:contentDescription="@string/ic_edit_cancel"
                 app:layout_constraintEnd_toStartOf="@id/ivConsumingEditConfirm"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@mipmap/icons_detail_button_smallcancel_theme" />
+                app:srcCompat="@mipmap/icons_detail_button_small_cancel_theme" />
 
         <ImageView
                 android:id="@+id/ivConsumingEditConfirm"
                 android:layout_width="@dimen/dp72"
                 android:layout_height="@dimen/dp44"
                 android:layout_marginEnd="@dimen/dp20"
+                android:contentDescription="@string/ic_edit_confirm"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@mipmap/icons_detail_button_smallconfirm_theme" />
+                app:srcCompat="@mipmap/icons_detail_button_small_confirm_theme" />
 
         <androidx.cardview.widget.CardView
                 android:id="@+id/cardView"
@@ -67,7 +70,7 @@
             <include
                     layout="@layout/item_dialog_commodity_consuming"
                     bind:commodityDetail="@{commodityDetail}"
-                    bind:isEdit="@{isEdit}" />
+                    bind:isPopup="true" />
         </androidx.cardview.widget.CardView>
 
         <ImageView

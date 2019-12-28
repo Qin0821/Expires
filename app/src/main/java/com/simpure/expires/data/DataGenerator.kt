@@ -69,7 +69,7 @@ object DataGenerator {
                 "根",
                 "Fridge",
                 listOf("food", "delicious", "yellow"),
-                "6955725010589",
+                "WYT5201415",
                 DateTime.now().millis,
                 listOf(
                     Inventory(

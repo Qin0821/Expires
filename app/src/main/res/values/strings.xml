@@ -12,6 +12,7 @@
     <string name="sign_with_other_accounts">Sign With Other Accounts</string>
     <string name="history">History</string>
     <string name="labels">Labels</string>
+    <string name="label">Label</string>
     <string name="type_in_manually">Type In Manually</string>
     <string name="scan_barcode">Scan Barcode</string>
     <string name="new_consuming">New Consuming</string>
@@ -19,8 +20,30 @@
     <string name="inventories">Inventories</string>
     <string name="consuming">Consuming</string>
     <string name="modify">Modify</string>
+    <string name="remind_me">Remind Me</string>
+    <string name="before">Before</string>
+    <string name="barcode">Barcode</string>
+    <string name="clear">Clear</string>
+    <string name="expire_date">Expire Date</string>
+    <string name="production_date">Production Date</string>
+    <string name="expiring_in">Expiring In</string>
+    <string name="amount">Amount</string>
+    <string name="details">Details</string>
+    <string name="place">Place</string>
+    <string name="default_barcode">Thanks for your us</string>
 
 
+    <string name="ic_consuming_data_switch">icon consuming data switch</string>
+    <string name="ic_edit_cancel">icon edit cancel</string>
+    <string name="ic_edit_confirm">icon edit confirm</string>
+    <string name="ic_label">icon label</string>
+    <string name="ic_amount">icon Amount</string>
+    <string name="ic_edit">icon edit</string>
+    <string name="ic_expiring_in">icon Expiring In</string>
+    <string name="ic_production_date">icon Production Date</string>
+    <string name="ic_expire_date">icon Expire Date</string>
+    <string name="ic_barcode">icon barcode</string>
+    <string name="ic_before">icon before</string>
     <string name="ic_consuming">icon consuming</string>
     <string name="ic_modify">icon modify</string>
     <string name="ic_back">icon back</string>
@@ -39,6 +62,7 @@
     <string name="ic_qq">icon qq</string>
     <string name="ic_delete">icon delete</string>
     <string name="ic_arrow_up">icon arrow up</string>
+    <string name="ic_arrow_down">icon arrow down</string>
     <string name="ic_add">icon add</string>
     <string name="ic_minus">icon minus</string>
     <string name="ic_inventories">icon inventories</string>

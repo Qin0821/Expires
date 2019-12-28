@@ -10,11 +10,15 @@
                 type="com.simpure.expires.data.entity.CommodityEntity" />
 
         <variable
+                name="isPopup"
+                type="Boolean" />
+
+        <variable
                 name="isEdit"
                 type="Boolean" />
 
         <variable
-                name="isHome"
+                name="isEmpty"
                 type="Boolean" />
     </data>
 
@@ -26,21 +30,21 @@
         <LinearLayout
                 android:id="@+id/layoutConsume"
                 android:layout_width="match_parent"
-                android:layout_height="44dp"
+                android:layout_height="@dimen/dp88"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:visibility="@{isEdit ? View.GONE: View.VISIBLE}">
+                android:visibility="@{isPopup ? View.GONE: View.VISIBLE}">
 
             <TextView
                     android:id="@+id/tvCommPropTitle"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="@dimen/dp20"
+                    android:layout_marginBottom="@dimen/dp20"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:includeFontPadding="false"
-                    android:text="Consuming"
+                    android:text="@string/consuming"
                     android:textColor="@color/line"
                     android:textSize="20sp" />
 
@@ -48,55 +52,57 @@
                     android:id="@+id/tvCommClear"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="11dp"
-                    android:layout_marginBottom="11dp"
+                    android:layout_marginStart="@dimen/dp20"
+                    android:layout_marginTop="@dimen/dp22"
+                    android:layout_marginBottom="@dimen/dp22"
                     android:background="@drawable/bg_rounded_rectangle_light_gray"
                     android:gravity="center"
                     android:includeFontPadding="false"
-                    android:paddingStart="10dp"
-                    android:paddingEnd="10dp"
-                    android:text="Clear"
+                    android:paddingStart="@dimen/dp20"
+                    android:paddingEnd="@dimen/dp20"
+                    android:text="@string/clear"
                     android:textColor="@color/green"
-                    android:visibility="@{isHome ? View.GONE : View.VISIBLE}" />
+                    android:visibility="@{isEdit ? View.GONE : View.VISIBLE}" />
 
             <ImageView
                     android:id="@+id/ivEditConsuming"
-                    android:layout_width="36dp"
-                    android:layout_height="22dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="11dp"
-                    android:layout_marginBottom="11dp"
-                    android:src="@mipmap/ic_launcher"
-                    android:visibility="@{isHome ? View.VISIBLE : View.GONE}" />
+                    android:layout_width="@dimen/dp72"
+                    android:layout_height="@dimen/dp44"
+                    android:layout_marginStart="@dimen/dp20"
+                    android:layout_marginTop="@dimen/dp22"
+                    android:layout_marginBottom="@dimen/dp22"
+                    android:contentDescription="@string/ic_edit"
+                    android:src="@mipmap/icons_detail_button_edit_theme"
+                    android:visibility="@{isEdit ? View.VISIBLE : View.GONE}" />
 
         </LinearLayout>
 
         <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
+                android:layout_height="@dimen/dp60"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:paddingTop="5dp"
-                android:paddingBottom="5dp">
+                android:paddingTop="@dimen/dp10"
+                android:paddingBottom="@dimen/dp10">
 
             <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_marginEnd="10dp"
+                    android:layout_width="@dimen/dp40"
+                    android:layout_height="@dimen/dp40"
+                    android:layout_marginEnd="@dimen/dp20"
+                    android:contentDescription="@string/expire_date"
                     android:src="@mipmap/expiry_date" />
 
             <TextView
                     android:layout_width="0dp"
-                    android:layout_height="20dp"
+                    android:layout_height="@dimen/dp40"
                     android:layout_weight="1"
-                    android:text="Expire Date"
+                    android:text="@string/expire_date"
                     android:textColor="@color/bg_comm_action"
                     android:textSize="17sp" />
 
             <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="20dp"
+                    android:layout_height="@dimen/dp40"
                     android:text="@{commodityDetail.formatExpirationDate()}"
                     android:textColor="@color/bg_comm_action"
                     android:textSize="17sp" />
@@ -104,29 +110,30 @@
 
         <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
+                android:layout_height="@dimen/dp60"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:paddingTop="5dp"
-                android:paddingBottom="5dp">
+                android:paddingTop="@dimen/dp10"
+                android:paddingBottom="@dimen/dp10">
 
             <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_marginEnd="10dp"
+                    android:layout_width="@dimen/dp40"
+                    android:layout_height="@dimen/dp40"
+                    android:layout_marginEnd="@dimen/dp20"
+                    android:contentDescription="@string/ic_production_date"
                     android:src="@mipmap/production_date" />
 
             <TextView
                     android:layout_width="0dp"
-                    android:layout_height="20dp"
+                    android:layout_height="@dimen/dp40"
                     android:layout_weight="1"
-                    android:text="Production Date"
+                    android:text="@string/production_date"
                     android:textColor="@color/bg_comm_action"
                     android:textSize="17sp" />
 
             <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="20dp"
+                    android:layout_height="@dimen/dp40"
                     android:text="@{commodityDetail.formatProductionDate()}"
                     android:textColor="@color/bg_comm_action"
                     android:textSize="17sp" />
@@ -134,30 +141,31 @@
 
         <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
+                android:layout_height="@dimen/dp60"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:paddingTop="4dp"
                 android:paddingBottom="4dp">
 
             <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_marginEnd="10dp"
+                    android:layout_width="@dimen/dp40"
+                    android:layout_height="@dimen/dp40"
+                    android:layout_marginEnd="@dimen/dp20"
+                    android:contentDescription="@string/ic_expiring_in"
                     android:src="@mipmap/expiring_in" />
 
             <TextView
                     android:layout_width="0dp"
-                    android:layout_height="22dp"
+                    android:layout_height="@dimen/dp44"
                     android:layout_weight="1"
                     android:includeFontPadding="false"
-                    android:text="Expiring In"
+                    android:text="@string/expiring_in"
                     android:textColor="@color/bg_comm_action"
                     android:textSize="17sp" />
 
             <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="20dp"
+                    android:layout_height="@dimen/dp40"
                     android:text="@{String.valueOf(commodityDetail.expiryDate)}"
                     android:textColor="@color/bg_comm_action"
                     android:textSize="17sp" />
@@ -166,29 +174,30 @@
         <LinearLayout
                 android:id="@+id/itemAmount"
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
+                android:layout_height="@dimen/dp60"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:paddingTop="5dp"
-                android:paddingBottom="5dp">
+                android:paddingTop="@dimen/dp10"
+                android:paddingBottom="@dimen/dp10">
 
             <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_marginEnd="10dp"
+                    android:layout_width="@dimen/dp40"
+                    android:layout_height="@dimen/dp40"
+                    android:layout_marginEnd="@dimen/dp20"
+                    android:contentDescription="@string/ic_amount"
                     android:src="@mipmap/amount" />
 
             <TextView
                     android:layout_width="0dp"
-                    android:layout_height="20dp"
+                    android:layout_height="@dimen/dp40"
                     android:layout_weight="1"
-                    android:text="Amount"
+                    android:text="@string/amount"
                     android:textColor="@color/bg_comm_action"
                     android:textSize="17sp" />
 
             <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="20dp"
+                    android:layout_height="@dimen/dp40"
                     android:text="@{String.valueOf(commodityDetail.amount)}"
                     android:textColor="@color/bg_comm_action"
                     android:textSize="17sp" />

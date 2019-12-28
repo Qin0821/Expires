@@ -32,6 +32,14 @@
         <variable
                 name="canDelete"
                 type="Boolean" />
+
+        <variable
+                name="isEdit"
+                type="Boolean" />
+
+        <variable
+                name="isEmpty"
+                type="Boolean" />
     </data>
 
 
@@ -82,7 +90,9 @@
                                 android:id="@+id/itemConsuming"
                                 layout="@layout/item_dialog_commodity_consuming"
                                 bind:commodityDetail="@{commodityDetail}"
-                                bind:isHome="@{isHome}" />
+                                bind:isEdit="@{isEdit}"
+                                bind:isEmpty="@{isEmpty}"
+                                />
 
                         <include layout="@layout/item_dialog_commodity_line" />
 
@@ -98,9 +108,13 @@
                                 layout="@layout/item_dialog_commodity_details"
                                 bind:commodityDetail="@{commodityDetail}" />
 
+                        <include layout="@layout/item_dialog_commodity_line" />
+
                         <include
-                                layout="@layout/item_dialog_commodity_line"
+                                layout="@layout/item_dialog_commodity_remind_me"
                                 bind:commodityDetail="@{commodityDetail}" />
+
+                        <include layout="@layout/item_dialog_commodity_line" />
 
                         <include
                                 android:id="@+id/itemBarcode"
@@ -123,6 +137,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     bind:canDelete="@{canDelete}"
                     bind:isDetail="@{isDetail}"
+                    bind:isEdit="@{isEdit}"
                     bind:isHome="@{isHome}" />
 
             <View

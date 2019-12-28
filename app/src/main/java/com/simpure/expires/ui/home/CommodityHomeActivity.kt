@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.view.animation.AnimationUtils
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import androidx.constraintlayout.widget.ConstraintSet
@@ -39,6 +40,7 @@ import com.simpure.expires.ui.BaseActivity
 import com.simpure.expires.ui.commodity.InventoryAdapter
 import com.simpure.expires.ui.search.SearchActivity
 import com.simpure.expires.utilities.getCompatColor
+import com.simpure.expires.utilities.report
 import com.simpure.expires.utilities.startAct
 import com.simpure.expires.utilities.toast
 import com.simpure.expires.view.popup.*
@@ -47,8 +49,10 @@ import com.simpure.expires.view.scrollview.ScrollViewListener
 import com.simpure.expires.viewmodel.CommodityDetailViewModel
 import com.simpure.expires.viewmodel.CommodityHome2ViewModel
 import com.simpure.expires.viewmodel.UserViewModel
+import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.item_commodity.*
 import kotlinx.android.synthetic.main.item_commodity.view.*
@@ -89,7 +93,7 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
 
     var lastCommodityListY = 0f
 
-    val userId = 1398762
+    private val userId = 1398762
 
     private val placeFragment = PlaceFragment()
     private val accountFragment = AccountFragment()
@@ -103,6 +107,8 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
 
     private var lastBehavior = BottomSheetBehavior.STATE_HIDDEN
 
+    private lateinit var mBarcodeDisposable: Disposable
+
     private val bottomSheetCallback = object : BottomSheetBehavior.BottomSheetCallback() {
 
         override fun onSlide(bottomSheet: View, slideOffset: Float) {
@@ -114,6 +120,8 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
                 BottomSheetBehavior.STATE_COLLAPSED -> {
                     Log.e("AAA", "STATE_COLLAPSED")
 
+                    mBinding.isHome = false
+                    mBinding.isDetail = true
                     mBinding.showBottomSheet = true
 
                     if (collapsedHeight == 0) {
@@ -156,14 +164,19 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
                 BottomSheetBehavior.STATE_HIDDEN -> {
                     Log.e("AAA", "STATE_HIDDEN")
                     mBinding.isHome = true
+                    mBinding.isDetail = false
                     mBinding.showBottomSheet = false
                     setExpiresTheme()
                 }
                 BottomSheetBehavior.STATE_SETTLING -> {
                     if (mClickShadowToHidden) {
+                        mBinding.isHome = true
+                        mBinding.isDetail = false
                         mBinding.showBottomSheet = false
                         mClickShadowToHidden = false
                     } else if (lastBehavior == BottomSheetBehavior.STATE_HIDDEN) {
+                        mBinding.isHome = false
+                        mBinding.isDetail = true
                         mBinding.showBottomSheet = true
                     }
 //                    else if (lastBehavior == BottomSheetBehavior.STATE_COLLAPSED) {
@@ -368,7 +381,6 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
 
             with(mBinding.itemCommodity.itemCommodityNavigation) {
                 ivInventories.setOnClickListener {
-                    if (mBinding.isDetail == null) return@setOnClickListener
                     if (mBinding.isDetail!!) {
                         toast("item inventory")
                     } else {
@@ -376,30 +388,33 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
                     }
                 }
                 ivConsuming.setOnClickListener {
-                    if (mBinding.isDetail == null || mBinding.canDelete == null) return@setOnClickListener
+                    if ( mBinding.canDelete == null) return@setOnClickListener
                     if (mBinding.isDetail!!) {
                         toast("item consuming")
                     } else if (mBinding.canDelete!!) {
                         toast("item delete")
                     }
-                    //                    mBinding.isHome = false
                 }
                 ivModify.setOnClickListener {
-                    if (mBinding.isDetail == null) return@setOnClickListener
                     if (mBinding.isDetail!!) {
                         toast("item modity")
+                        mBinding.isEdit = true
+                        mBinding.isHome = false
+                        mBinding.isDetail = false
                     } else {
                         toast("item confirm")
                     }
-                    //                    mBinding.isHome = false
                 }
-                ivModify.setOnClickListener {
-                    //                    mBinding.isHome = false
+                ivBottomFirst.setOnClickListener {
+                    mBinding.isEdit = false
+                    mBinding.isDetail = true
                 }
                 ivBottomSecond.setOnClickListener {
                     showAddPopup(it)
                 }
                 ivBottomThird.setOnClickListener {
+                    mBinding.isEdit = false
+                    mBinding.isDetail = true
                     toast("item edit")
                 }
             }
@@ -421,7 +436,8 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
     }
 
     fun newConsuming() {
-        mBinding.isHome = true
+        toast("new consuming")
+
     }
 
     fun fromInventroies() {
@@ -523,28 +539,31 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
         }
     }
 
-    private fun showBarcode(it: CommodityEntity) {
-        if (it.barcode.isNotEmpty()) {
-            thread {
-                with(mBinding.itemCommodity.itemBarcode.ivBarcode) {
-                    val barcodeBitmap =
-                        BarcodeGenerator.getBarcodeImage(it.barcode, this.width, this.height)
-                    runOnUiThread {
-                        // 上面的width和height会莫名其妙变成0导致这里报错
-                        // 先不处理
-                        // 如果app在其他地方必须用到sd卡读取权限
-                        // 这里做sd卡的缓存
-                        // 如果没有必要的sd卡权限，这里做成存数据库
-                        // http://ddrv.cn/a/119750
-//                        if (null == barcodeBitmap) {
-//                            parent!!.context.toast("条形码解析失败")
-//                        }
-                        this.setImageBitmap(barcodeBitmap)
-                    }
-                }
-            }
+    private fun showBarcode(commodity: CommodityEntity) {
 
-        }
+        mBarcodeDisposable = Observable.just(commodity)
+            .filter {
+                it.barcode.isNotEmpty()
+            }
+            .observeOn(Schedulers.io())
+            .map {
+                Pair(
+                    BarcodeGenerator.getBarcodeImage(
+                        it.barcode,
+                        ConvertUtils.dp2px(320f),
+                        ConvertUtils.dp2px(50f)
+                    )!!, it.barcode
+                )
+            }
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                mBinding.itemCommodity.itemBarcode.apply {
+                    ivBarcode.setImageBitmap(it.first)
+                    tvBarcode.text = it.second
+                }
+            }, {
+                it.report(this, "条形码解析失败")
+            })
     }
 
     /** Shows the product detail placeFragment  */
@@ -592,7 +611,7 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
     fun goConsuming(view: View) {
         disposable =
             expiresApiService.scanQRCode(50)
-                .subscribeOn(io.reactivex.schedulers.Schedulers.io())
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                     { result ->
@@ -1100,6 +1119,11 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
 //        valueAnimator.start()
     }
 
+    override fun onDestroy() {
+        if (::mBarcodeDisposable.isInitialized) mBarcodeDisposable.dispose()
+        super.onDestroy()
+    }
+
     object Home {
 
         @JvmStatic
@@ -1193,6 +1217,25 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
             animator.duration = 360
             animator.start()
         }
+
+        @JvmStatic
+        @BindingAdapter("setFirstButton")
+        fun ImageView.setFirstButton(isEdit: Boolean) {
+            this.setImageResource(if (isEdit) R.mipmap.icons_dock_cancel_black else R.mipmap.ic_launcher )
+        }
+
+        @JvmStatic
+        @BindingAdapter("setSecondButton")
+        fun ImageView.setSecondButton(isEdit: Boolean) {
+            this.setImageResource(if (isEdit) R.mipmap.icons_dock_delete_black else R.mipmap.icons_detail_add_black)
+        }
+
+        @JvmStatic
+        @BindingAdapter("setThirdButton")
+        fun ImageView.setThirdButton(isEdit: Boolean) {
+            this.setImageResource(if (isEdit) R.mipmap.icons_dock_save_black else R.mipmap.icons_dock_more_black)
+        }
     }
+
 }
 

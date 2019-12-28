@@ -28,8 +28,8 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp">
+                android:paddingTop="@dimen/dp20"
+                android:paddingBottom="@dimen/dp20">
 
 
             <TextView
@@ -38,7 +38,7 @@
                     android:layout_height="24dp"
                     android:layout_weight="1"
                     android:includeFontPadding="false"
-                    android:text="Details"
+                    android:text="@string/details"
                     android:textColor="@color/line"
                     android:textSize="20sp" />
 
@@ -48,26 +48,26 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:paddingTop="5dp"
-                android:paddingBottom="5dp">
+                android:paddingTop="@dimen/dp10"
+                android:paddingBottom="@dimen/dp10">
 
             <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_marginEnd="10dp"
+                    android:layout_width="@dimen/dp40"
+                    android:layout_height="@dimen/dp40"
+                    android:layout_marginEnd="@dimen/dp20"
                     android:src="@mipmap/outlined" />
 
             <TextView
                     android:layout_width="0dp"
-                    android:layout_height="20dp"
+                    android:layout_height="@dimen/dp40"
                     android:layout_weight="1"
-                    android:text="Place"
+                    android:text="@string/place"
                     android:textColor="@color/bg_comm_action"
                     android:textSize="17sp" />
 
             <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="20dp"
+                    android:layout_height="@dimen/dp40"
                     android:text="11 / 5 / 2020"
                     android:textColor="@color/bg_comm_action"
                     android:textSize="17sp" />
@@ -77,27 +77,28 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:paddingTop="5dp"
-                android:paddingBottom="5dp"
+                android:paddingTop="@dimen/dp10"
+                android:paddingBottom="@dimen/dp10"
                 android:visibility="gone">
 
             <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_marginEnd="10dp"
+                    android:layout_width="@dimen/dp40"
+                    android:layout_height="@dimen/dp40"
+                    android:contentDescription="@string/ic_label"
+                    android:layout_marginEnd="@dimen/dp20"
                     android:src="@mipmap/label" />
 
             <TextView
                     android:layout_width="0dp"
-                    android:layout_height="20dp"
+                    android:layout_height="@dimen/dp40"
                     android:layout_weight="1"
-                    android:text="Label"
+                    android:text="@string/label"
                     android:textColor="@color/bg_comm_action"
                     android:textSize="17sp" />
 
             <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="20dp"
+                    android:layout_height="@dimen/dp40"
                     android:text="Fridge"
                     android:textColor="@color/bg_comm_action"
                     android:textSize="17sp" />
