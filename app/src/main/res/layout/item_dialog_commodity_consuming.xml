@@ -20,6 +20,14 @@
         <variable
                 name="isEmpty"
                 type="Boolean" />
+
+        <variable
+                name="plusListener"
+                type="android.view.View.OnClickListener" />
+
+        <variable
+                name="minusListener"
+                type="android.view.View.OnClickListener" />
     </data>
 
     <LinearLayout
@@ -38,9 +46,7 @@
             <TextView
                     android:id="@+id/tvCommPropTitle"
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="@dimen/dp20"
-                    android:layout_marginBottom="@dimen/dp20"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:includeFontPadding="false"
@@ -159,7 +165,7 @@
                     android:layout_height="@dimen/dp44"
                     android:layout_weight="1"
                     android:includeFontPadding="false"
-                    android:text="@string/expiring_in"
+                    android:text="@{isPopup ? @string/expiring_in_days : @string/expiring_in}"
                     android:textColor="@color/bg_comm_action"
                     android:textSize="17sp" />
 
@@ -196,11 +202,27 @@
                     android:textSize="17sp" />
 
             <TextView
+                    android:layout_width="@dimen/dp44"
+                    android:layout_height="@dimen/dp44"
+                    android:layout_marginEnd="@dimen/dp38"
+                    android:onClick="@{plusListener}"
+                    android:background="@mipmap/icons_detail_button_small_plus_theme"
+                    android:visibility="@{isEdit &amp;&amp; isPopup ? View.VISIBLE : View.GONE}" />
+
+            <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/dp40"
                     android:text="@{String.valueOf(commodityDetail.amount)}"
                     android:textColor="@color/bg_comm_action"
                     android:textSize="17sp" />
+
+            <TextView
+                    android:layout_width="@dimen/dp44"
+                    android:layout_height="@dimen/dp44"
+                    android:layout_marginStart="@dimen/dp38"
+                    android:onClick="@{minusListener}"
+                    android:background="@mipmap/icons_detail_button_small_minus_theme"
+                    android:visibility="@{isEdit &amp;&amp; isPopup ? View.VISIBLE : View.GONE}" />
         </LinearLayout>
 
     </LinearLayout>

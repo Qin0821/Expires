@@ -321,6 +321,7 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
     private fun initListener() {
 
         mBinding.itemCommodity.itemConsuming.tvCommClear.setOnClickListener(this)
+        mBinding.itemCommodity.itemConsuming.ivEditConsuming.setOnClickListener(this)
         mBinding.itemCommodity.itemInventories.ivInventoriesTopping.setOnClickListener(this)
         mBinding.itemCommodity.itemInventories.tvInventoriesThrow.setOnClickListener(this)
         mBinding.itemNavigation.ivInventories.setOnClickListener(this)
@@ -681,6 +682,9 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
         when (v) {
             tvCommClear -> {
                 showEditPopup(v, ConsumingPopup(this))
+            }
+            ivEditConsuming -> {
+                showEditPopup(v, ConsumingPopup(this, true))
             }
             ivInventoriesTopping -> {
                 showEditPopup(v, InventoriesPopup(this, true))

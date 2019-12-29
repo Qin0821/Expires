@@ -92,7 +92,7 @@
                                 bind:commodityDetail="@{commodityDetail}"
                                 bind:isEdit="@{isEdit}"
                                 bind:isEmpty="@{isEmpty}"
-                                />
+                                bind:isPopup="@{false}" />
 
                         <include layout="@layout/item_dialog_commodity_line" />
 
@@ -100,26 +100,33 @@
                                 android:id="@+id/itemInventories"
                                 layout="@layout/item_dialog_commodity_inventories"
                                 bind:commodityDetail="@{commodityDetail}"
-                                bind:isHome="@{isHome}" />
+                                bind:isEdit="@{isEdit}"
+                                bind:isEmpty="@{isEmpty}" />
 
                         <include layout="@layout/item_dialog_commodity_line" />
 
                         <include
                                 layout="@layout/item_dialog_commodity_details"
-                                bind:commodityDetail="@{commodityDetail}" />
+                                bind:commodityDetail="@{commodityDetail}"
+                                bind:isEdit="@{isEdit}"
+                                bind:isEmpty="@{isEmpty}" />
 
                         <include layout="@layout/item_dialog_commodity_line" />
 
                         <include
                                 layout="@layout/item_dialog_commodity_remind_me"
-                                bind:commodityDetail="@{commodityDetail}" />
+                                bind:commodityDetail="@{commodityDetail}"
+                                bind:isEdit="@{isEdit}"
+                                bind:isEmpty="@{isEmpty}" />
 
                         <include layout="@layout/item_dialog_commodity_line" />
 
                         <include
                                 android:id="@+id/itemBarcode"
                                 layout="@layout/item_dialog_commodity_barcode"
-                                bind:commodityDetail="@{commodityDetail}" />
+                                bind:commodityDetail="@{commodityDetail}"
+                                bind:isEdit="@{isEdit}"
+                                bind:isEmpty="@{isEmpty}" />
 
                     </LinearLayout>
 

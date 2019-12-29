@@ -19,6 +19,18 @@
         <variable
                 name="amount"
                 type="String" />
+
+        <variable
+                name="isPopup"
+                type="Boolean" />
+
+        <variable
+                name="isEdit"
+                type="Boolean" />
+
+        <variable
+                name="isEmpty"
+                type="Boolean" />
     </data>
 
     <LinearLayout

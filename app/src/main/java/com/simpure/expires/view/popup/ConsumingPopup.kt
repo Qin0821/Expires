@@ -2,6 +2,7 @@ package com.simpure.expires.view.popup
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.databinding.DataBindingUtil
 import com.lxj.xpopup.util.XPopupUtils
@@ -9,14 +10,14 @@ import com.lxj.xpopup.widget.PartShadowContainer
 import com.simpure.expires.BR
 import com.simpure.expires.R
 import com.simpure.expires.data.entity.CommodityEntity
-import com.simpure.expires.databinding.PopupClearBinding
+import com.simpure.expires.databinding.PopupConsumingBinding
 
-class ConsumingPopup(context: Context) : ExpiresPopupView(context) {
+class ConsumingPopup(context: Context, val isEdit: Boolean = false) : ExpiresPopupView(context) {
 
     override fun setMarginTop(top: Int) {
 //        val lp = mBinding.cardView.layoutParams as ConstraintLayout.LayoutParams
         val set = ConstraintSet()
-        set.clone(context, R.layout.popup_clear)
+        set.clone(context, R.layout.popup_consuming)
         set.connect(
             R.id.cardView,
             ConstraintSet.TOP,
@@ -43,7 +44,6 @@ class ConsumingPopup(context: Context) : ExpiresPopupView(context) {
 
     override fun setCommodityDetail(commodityDetail: CommodityEntity) {
         mCommodityDetail = commodityDetail
-        mBinding.setVariable(BR.isEdit, true)
         mBinding.setVariable(BR.commodityDetail, commodityDetail)
     }
 
@@ -54,7 +54,7 @@ class ConsumingPopup(context: Context) : ExpiresPopupView(context) {
     private val attachPopupContainer: PartShadowContainer =
         findViewById(com.lxj.xpopup.R.id.attachPopupContainer)
 
-    private val mBinding: PopupClearBinding
+    private val mBinding: PopupConsumingBinding
 
     init {
         mBinding =
@@ -64,11 +64,28 @@ class ConsumingPopup(context: Context) : ExpiresPopupView(context) {
                 attachPopupContainer,
                 false
             )
-        attachPopupContainer.addView(mBinding.root)
+        mBinding.apply {
+            isEdit = this@ConsumingPopup.isEdit
+            minusListener = OnClickListener {
+                val detail = commodityDetail
+                if (null != detail) {
+                    if (detail.amount > 1) detail.amount-- else return@OnClickListener
+                    commodityDetail = detail
+                }
+            }
+            plusListener = OnClickListener {
+                val detail = commodityDetail
+                if (null != detail) {
+                    detail.amount++
+                    commodityDetail = detail
+                }
+            }
+            attachPopupContainer.addView(this.root)
+        }
     }
 
     override fun getImplLayoutId(): Int {
-        return R.layout.popup_clear
+        return R.layout.popup_consuming
     }
 
     override fun getPopupWidth(): Int {

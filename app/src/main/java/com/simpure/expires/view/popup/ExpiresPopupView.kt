@@ -1,9 +1,6 @@
 package com.simpure.expires.view.popup
 
 import android.content.Context
-import android.view.LayoutInflater
-import android.view.View
-import androidx.databinding.DataBindingUtil.inflate
 
 import android.view.ViewGroup
 import com.lxj.xpopup.core.BasePopupView
@@ -14,13 +11,10 @@ import com.lxj.xpopup.animator.ScrollScaleAnimator
 import com.lxj.xpopup.util.XPopupUtils
 import com.lxj.xpopup.enums.PopupAnimation.ScaleAlphaFromCenter
 import com.simpure.expires.data.entity.CommodityEntity
-import com.simpure.expires.databinding.PopupBarcodeBinding
-import com.simpure.expires.databinding.PopupClearBinding
-import com.simpure.expires.databinding.PopupDetailBinding
-import com.simpure.expires.databinding.PopupInventoriesBinding
 
 @Suppress("LeakingThis")
-abstract class ExpiresPopupView(context: Context) : BasePopupView(context) {
+abstract class ExpiresPopupView(context: Context, val dismissCallback: () -> Unit) :
+    BasePopupView(context) {
 
     protected abstract var mCommodityDetail: CommodityEntity
 
@@ -52,7 +46,7 @@ abstract class ExpiresPopupView(context: Context) : BasePopupView(context) {
     abstract fun setMarginTop(top: Int)
 
     override fun dismiss() {
-
+        dismissCallback()
         super.dismiss()
     }
 }

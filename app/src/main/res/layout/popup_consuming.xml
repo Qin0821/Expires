@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
                 name="commodityDetail"
                 type="com.simpure.expires.data.entity.CommodityEntity" />
@@ -16,6 +18,14 @@
         <variable
                 name="callback"
                 type="com.simpure.expires.view.popup.ConsumingCallback" />
+
+        <variable
+                name="plusListener"
+                type="android.view.View.OnClickListener" />
+
+        <variable
+                name="minusListener"
+                type="android.view.View.OnClickListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -31,6 +41,7 @@
                 android:layout_height="@dimen/dp44"
                 android:layout_marginStart="@dimen/dp20"
                 android:contentDescription="@string/ic_consuming_data_switch"
+                android:visibility="@{isEdit ? View.VISIBLE: View.GONE}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@mipmap/icons_detail_button_exp2prod_theme" />
@@ -41,6 +52,7 @@
                 android:layout_height="@dimen/dp44"
                 android:layout_marginEnd="16dp"
                 android:contentDescription="@string/ic_edit_cancel"
+                android:visibility="@{isEdit ? View.VISIBLE: View.GONE}"
                 app:layout_constraintEnd_toStartOf="@id/ivConsumingEditConfirm"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@mipmap/icons_detail_button_small_cancel_theme" />
@@ -51,6 +63,7 @@
                 android:layout_height="@dimen/dp44"
                 android:layout_marginEnd="@dimen/dp20"
                 android:contentDescription="@string/ic_edit_confirm"
+                android:visibility="@{isEdit ? View.VISIBLE: View.GONE}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@mipmap/icons_detail_button_small_confirm_theme" />
@@ -59,6 +72,7 @@
                 android:id="@+id/cardView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp20"
                 android:padding="@dimen/dp20"
                 android:translationZ="-4dp"
                 app:cardCornerRadius="@dimen/dp24"
@@ -70,7 +84,10 @@
             <include
                     layout="@layout/item_dialog_commodity_consuming"
                     bind:commodityDetail="@{commodityDetail}"
-                    bind:isPopup="true" />
+                    bind:isEdit="@{isEdit}"
+                    bind:isPopup="@{true}"
+                    bind:minusListener="@{minusListener}"
+                    bind:plusListener="@{plusListener}" />
         </androidx.cardview.widget.CardView>
 
         <ImageView
@@ -82,6 +99,7 @@
                 android:contentDescription="@string/ic_delete"
                 android:onClick="@{() -> callback.clearClick()}"
                 android:src="@mipmap/icons_detail_button_delete_theme"
+                android:visibility="@{isEdit ? View.GONE: View.VISIBLE}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/cardView" />

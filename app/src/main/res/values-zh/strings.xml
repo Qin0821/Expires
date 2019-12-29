@@ -60,4 +60,10 @@
     <string name="remind_me">提醒</string>
     <string name="scan_barcode">扫码</string>
     <string name="type_in_manually">手动录入</string>
+    <string name="place">地点</string>
+    <string name="label">标签</string>
+    <string name="ic_top_inventories">从库存取出</string>
+    <string name="ic_label">标签</string>
+    <string name="details">详情</string>
+    <string name="default_barcode">默认二维码</string>
 </resources>

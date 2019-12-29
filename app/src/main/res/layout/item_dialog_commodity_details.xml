@@ -16,6 +16,18 @@
         <variable
                 name="amount"
                 type="String" />
+
+        <variable
+                name="isPopup"
+                type="Boolean" />
+
+        <variable
+                name="isEdit"
+                type="Boolean" />
+
+        <variable
+                name="isEmpty"
+                type="Boolean" />
     </data>
 
     <LinearLayout
@@ -55,7 +67,8 @@
                     android:layout_width="@dimen/dp40"
                     android:layout_height="@dimen/dp40"
                     android:layout_marginEnd="@dimen/dp20"
-                    android:src="@mipmap/outlined" />
+                    android:contentDescription="@string/ic_edit"
+                    android:src="@mipmap/icons_detail_category_grey" />
 
             <TextView
                     android:layout_width="0dp"

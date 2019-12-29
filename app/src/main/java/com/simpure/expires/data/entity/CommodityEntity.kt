@@ -17,7 +17,7 @@ class CommodityEntity constructor(
     override var name: String,
     override var productionDate: Long,
     override var expiryDate: Int,
-    override val amount: Int = 0,
+    override var amount: Int = 0,
     override val unit: String = "",
     override val place: String = "",
     override val labels: List<String> = listOf(),
