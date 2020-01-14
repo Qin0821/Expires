@@ -13,6 +13,7 @@ import com.google.zxing.util.Constant
 import com.simpure.expires.R
 import com.simpure.expires.databinding.ActivitySearchBinding
 import com.simpure.expires.ui.BaseActivity
+import com.simpure.expires.utilities.goScanAct
 import com.simpure.expires.utilities.toast
 import kotlinx.android.synthetic.main.activity_search.*
 
@@ -42,8 +43,7 @@ class SearchActivity : BaseActivity() {
                 mBinding.isSearching = false
             }
             itemScanBarcode -> {
-                goScanActivity()
-
+                goScanAct()
             }
         }
     }
@@ -110,33 +110,6 @@ class SearchActivity : BaseActivity() {
             }
         }
 
-    }
-
-    private fun goScanActivity() {
-        PermissionUtils.permission(PermissionConstants.CAMERA)
-            .rationale { shouldRequest -> ToastUtils.showShort(shouldRequest.toString()) }
-            .callback(object : PermissionUtils.FullCallback {
-                override fun onGranted(permissionsGranted: List<String>) {
-                    LogUtils.d(permissionsGranted)
-                    val intent = Intent(this@SearchActivity, CaptureActivity::class.java)
-                    startActivityForResult(intent, Constant.REQ_QR_CODE)
-//                    overridePendingTransition(R.anim.translate_fade_in, R.anim.translate_fade_out);
-                }
-
-                override fun onDenied(
-                    permissionsDeniedForever: List<String>,
-                    permissionsDenied: List<String>
-                ) {
-                    LogUtils.d(permissionsDeniedForever, permissionsDenied)
-                    if (permissionsDeniedForever.isNotEmpty()) {
-                        ToastUtils.showShort("showOpenAppSettingDialog")
-                        return
-                    }
-                    ToastUtils.showShort("requestCamera")
-                }
-            })
-            .theme { activity -> ScreenUtils.setFullScreen(activity) }
-            .request()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

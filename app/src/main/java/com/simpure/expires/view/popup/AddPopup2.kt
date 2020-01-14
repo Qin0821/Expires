@@ -10,10 +10,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupWindow
 import com.simpure.expires.R
+import com.simpure.expires.ui.home.CommodityHomeActivity
+import com.simpure.expires.utilities.goScanAct
+import com.simpure.expires.utilities.toast
 
 class AddPopup2(val context: Context, val dismissCallback: () -> Unit) : PopupWindow(context) {
 
     private val mAlpha: Float = 0.5f
+
+    private val vTypeInManually: View
+    private val vScanBarcode: View
 
     init {
         height = ViewGroup.LayoutParams.WRAP_CONTENT
@@ -27,6 +33,18 @@ class AddPopup2(val context: Context, val dismissCallback: () -> Unit) : PopupWi
         )
         setContentView(contentView)
 //        showBackgroundAnimator()
+
+        vTypeInManually = contentView.findViewById(R.id.vTypeInManually)
+        vScanBarcode = contentView.findViewById(R.id.vScanBarcode)
+
+        vTypeInManually.setOnClickListener {
+            context.toast("vTypeInManually")
+            dismiss()
+        }
+        vScanBarcode.setOnClickListener {
+            (context as CommodityHomeActivity).goScanAct()
+            dismiss()
+        }
     }
 
     /**

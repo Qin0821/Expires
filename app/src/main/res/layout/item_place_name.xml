@@ -39,6 +39,7 @@
                     android:layout_weight="1"
                     android:ellipsize="end"
                     android:gravity="center"
+                    android:includeFontPadding="false"
                     android:maxLines="1"
                     android:onClick="@{clickListener}"
                     android:text="@{viewModel.placeName}"
@@ -50,6 +51,7 @@
             <ImageView
                     android:layout_width="@dimen/dp36"
                     android:layout_height="@dimen/dp36"
+                    android:layout_marginStart="@dimen/dp12"
                     android:visibility="@{viewModel.isSelected ? View.VISIBLE : View.GONE}"
                     app:srcCompat="@mipmap/icons_arrow_up_white" />
         </LinearLayout>

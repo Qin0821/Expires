@@ -19,10 +19,10 @@
                 android:background="@color/white">
 
             <View
-                    android:id="@+id/clTypeInManually"
+                    android:id="@+id/vTypeInManually"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp150"
-                    app:layout_constraintBottom_toTopOf="@id/clScanBarcode"
+                    app:layout_constraintBottom_toTopOf="@id/vScanBarcode"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -31,11 +31,11 @@
                     android:id="@+id/imageView"
                     android:layout_width="22dp"
                     android:layout_height="22dp"
-                    app:layout_constraintBottom_toBottomOf="@id/clTypeInManually"
+                    app:layout_constraintBottom_toBottomOf="@id/vTypeInManually"
                     app:layout_constraintEnd_toStartOf="@id/textView"
                     app:layout_constraintHorizontal_chainStyle="packed"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/clTypeInManually"
+                    app:layout_constraintTop_toTopOf="@id/vTypeInManually"
                     app:srcCompat="@mipmap/icons_type_medium_theme" />
 
             <TextView
@@ -47,37 +47,37 @@
                     android:text="@string/type_in_manually"
                     android:textColor="@color/black"
                     android:textSize="17sp"
-                    app:layout_constraintBottom_toBottomOf="@id/clTypeInManually"
+                    app:layout_constraintBottom_toBottomOf="@id/vTypeInManually"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/imageView"
-                    app:layout_constraintTop_toTopOf="@id/clTypeInManually" />
+                    app:layout_constraintTop_toTopOf="@id/vTypeInManually" />
 
             <View
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp1"
                     android:background="@color/searchHint"
-                    app:layout_constraintBottom_toTopOf="@id/clScanBarcode"
+                    app:layout_constraintBottom_toTopOf="@id/vScanBarcode"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/clTypeInManually" />
+                    app:layout_constraintTop_toBottomOf="@id/vTypeInManually" />
 
             <View
-                    android:id="@+id/clScanBarcode"
+                    android:id="@+id/vScanBarcode"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp150"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/clTypeInManually" />
+                    app:layout_constraintTop_toBottomOf="@id/vTypeInManually" />
 
             <ImageView
                     android:id="@+id/imageView1"
                     android:layout_width="22dp"
                     android:layout_height="22dp"
-                    app:layout_constraintBottom_toBottomOf="@id/clScanBarcode"
+                    app:layout_constraintBottom_toBottomOf="@id/vScanBarcode"
                     app:layout_constraintHorizontal_chainStyle="packed"
                     app:layout_constraintStart_toStartOf="@id/imageView"
-                    app:layout_constraintTop_toTopOf="@id/clScanBarcode"
+                    app:layout_constraintTop_toTopOf="@id/vScanBarcode"
                     app:srcCompat="@mipmap/icons_scan_medium_theme" />
 
             <TextView
@@ -88,9 +88,9 @@
                     android:text="@string/scan_barcode"
                     android:textColor="@color/black"
                     android:textSize="17sp"
-                    app:layout_constraintBottom_toBottomOf="@id/clScanBarcode"
+                    app:layout_constraintBottom_toBottomOf="@id/vScanBarcode"
                     app:layout_constraintStart_toStartOf="@id/textView"
-                    app:layout_constraintTop_toTopOf="@id/clScanBarcode" />
+                    app:layout_constraintTop_toTopOf="@id/vScanBarcode" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

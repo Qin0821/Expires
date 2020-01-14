@@ -16,8 +16,8 @@ import com.simpure.expires.model.Inventory
 import com.simpure.expires.ui.commodity.InventoryAdapter
 import com.simpure.expires.utilities.toast
 
-class InventoriesPopup(context: Context, private val isToUseType: Boolean) :
-    ExpiresPopupView(context) {
+class InventoriesPopup(context: Context, private val isToUseType: Boolean, dismissCallback: () -> Unit) :
+    ExpiresPopupView(context, dismissCallback) {
 
     private val mContext: Context = context
     private var mBinding: PopupInventoriesBinding

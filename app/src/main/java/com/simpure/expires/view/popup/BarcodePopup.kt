@@ -11,7 +11,8 @@ import com.simpure.expires.data.entity.CommodityEntity
 
 import com.simpure.expires.databinding.PopupBarcodeBinding
 
-class BarcodePopup(context: Context) : ExpiresPopupView(context) {
+class BarcodePopup(context: Context, dismissCallback: () -> Unit) :
+    ExpiresPopupView(context, dismissCallback) {
     override fun setMarginTop(top: Int) {
 
     }

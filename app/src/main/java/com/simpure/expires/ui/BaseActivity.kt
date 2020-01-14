@@ -6,11 +6,19 @@ import android.os.PersistableBundle
 import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import com.blankj.utilcode.constant.PermissionConstants
+import com.blankj.utilcode.util.LogUtils
+import com.blankj.utilcode.util.PermissionUtils
+import com.blankj.utilcode.util.ScreenUtils
+import com.blankj.utilcode.util.ToastUtils
+import com.google.zxing.activity.CaptureActivity
+import com.google.zxing.util.Constant
 import com.gyf.immersionbar.ktx.immersionBar
 import com.simpure.expires.BasicApp
 import com.simpure.expires.R
 import com.simpure.expires.api.ExpiresApiService
 import com.simpure.expires.utilities.log
+import com.simpure.expires.utilities.toast
 
 abstract class BaseActivity : LogActivity(), View.OnClickListener {
 
@@ -46,6 +54,10 @@ abstract class BaseActivity : LogActivity(), View.OnClickListener {
     }
 
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+
+        super.onActivityResult(requestCode, resultCode, data)
+    }
 //    abstract fun initData()
 //    abstract fun initView()
 

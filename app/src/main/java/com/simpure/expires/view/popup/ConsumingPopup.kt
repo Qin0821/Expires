@@ -12,7 +12,7 @@ import com.simpure.expires.R
 import com.simpure.expires.data.entity.CommodityEntity
 import com.simpure.expires.databinding.PopupConsumingBinding
 
-class ConsumingPopup(context: Context, val isEdit: Boolean = false) : ExpiresPopupView(context) {
+class ConsumingPopup(context: Context, val isEdit: Boolean = false, dismissCallback: () -> Unit) : ExpiresPopupView(context, dismissCallback) {
 
     override fun setMarginTop(top: Int) {
 //        val lp = mBinding.cardView.layoutParams as ConstraintLayout.LayoutParams

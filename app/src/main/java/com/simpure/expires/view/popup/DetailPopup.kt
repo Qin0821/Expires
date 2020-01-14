@@ -10,7 +10,8 @@ import com.simpure.expires.R
 import com.simpure.expires.data.entity.CommodityEntity
 import com.simpure.expires.databinding.PopupDetailBinding
 
-class DetailPopup(context: Context) : ExpiresPopupView(context) {
+class DetailPopup(context: Context, dismissCallback: () -> Unit) :
+    ExpiresPopupView(context, dismissCallback) {
     override fun setMarginTop(top: Int) {
 
 

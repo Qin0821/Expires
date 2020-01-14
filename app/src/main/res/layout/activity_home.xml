@@ -136,9 +136,13 @@
                                     android:paddingEnd="@dimen/dp20">
 
                                 <TextView
-                                        android:layout_width="wrap_content"
+                                        android:layout_width="0dp"
                                         android:layout_height="@dimen/dp64"
+                                        android:layout_weight="1"
                                         android:gravity="center"
+                                        android:includeFontPadding="false"
+                                        android:maxLines="1"
+                                        android:ellipsize="end"
                                         android:paddingStart="@dimen/dp40"
                                         android:paddingEnd="@dimen/dp40"
                                         android:text="@{placeName}"
@@ -217,8 +221,8 @@
                 <include
                         android:id="@+id/itemNavigation"
                         layout="@layout/item_navigation"
-                        bind:isHome="@{true}"
-                        app:layout_constraintBottom_toBottomOf="parent" />
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        bind:isHome="@{true}" />
 
 
             </LinearLayout>

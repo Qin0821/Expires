@@ -325,6 +325,7 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
         mBinding.itemCommodity.itemInventories.ivInventoriesTopping.setOnClickListener(this)
         mBinding.itemCommodity.itemInventories.tvInventoriesThrow.setOnClickListener(this)
         mBinding.itemNavigation.ivInventories.setOnClickListener(this)
+        mBinding.itemNavigation.ivBottomFirst.setOnClickListener(this)
         mBinding.itemNavigation.ivBottomSecond.setOnClickListener(this)
         mBinding.itemNavigation.ivBottomThird.setOnClickListener(this)
         mBinding.ivHomeSearch.setOnClickListener(this)
@@ -389,10 +390,9 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
                     }
                 }
                 ivConsuming.setOnClickListener {
-                    if ( mBinding.canDelete == null) return@setOnClickListener
                     if (mBinding.isDetail!!) {
                         toast("item consuming")
-                    } else if (mBinding.canDelete!!) {
+                    } else if (null != mBinding.canDelete && mBinding.canDelete!!) {
                         toast("item delete")
                     }
                 }
@@ -681,16 +681,24 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
 
         when (v) {
             tvCommClear -> {
-                showEditPopup(v, ConsumingPopup(this))
+                showEditPopup(v, ConsumingPopup(this, false, {
+                    toast("clear")
+                }))
             }
             ivEditConsuming -> {
-                showEditPopup(v, ConsumingPopup(this, true))
+                showEditPopup(v, ConsumingPopup(this, true, {
+                    toast("edit")
+                }))
             }
             ivInventoriesTopping -> {
-                showEditPopup(v, InventoriesPopup(this, true))
+                showEditPopup(v, InventoriesPopup(this, true, {
+                    toast("ivInventoriesTopping")
+                }))
             }
             tvInventoriesThrow -> {
-                showEditPopup(v, InventoriesPopup(this, false))
+                showEditPopup(v, InventoriesPopup(this, false, {
+                    toast("tvInventoriesThrow")
+                }))
             }
             ivInventories -> {
                 mBinding.title = titleArray[0]
@@ -731,6 +739,15 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
 //                    mBinding.llPlace,
 //                    mPlaceList
 //                )
+            }
+            ivBottomFirst -> {
+                toast("first")
+            }
+            ivBottomSecond -> {
+                showAddPopup2(v)
+            }
+            ivBottomThird -> {
+                toast("third")
             }
         }
     }
@@ -1206,6 +1223,7 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
                     this.alpha = alpha
                 }
 
+                animator.duration = 360
             } else {
 //                Log.e("AAA", "3")
 
@@ -1217,15 +1235,15 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
                         this.visibility = View.GONE
                     }
                 }
+                animator.duration = 180
             }
-            animator.duration = 360
             animator.start()
         }
 
         @JvmStatic
         @BindingAdapter("setFirstButton")
         fun ImageView.setFirstButton(isEdit: Boolean) {
-            this.setImageResource(if (isEdit) R.mipmap.icons_dock_cancel_black else R.mipmap.ic_launcher )
+            this.setImageResource(if (isEdit) R.mipmap.icons_dock_cancel_black else R.mipmap.ic_launcher)
         }
 
         @JvmStatic
