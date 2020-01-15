@@ -700,25 +700,25 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
                     toast("tvInventoriesThrow")
                 }))
             }
-            ivInventories -> {
-                mBinding.title = titleArray[0]
-//                supportFragmentManager.beginTransaction()
-//                    .replace(R.id.fcCommodity, placeFragment, null)
-//                    .commit()
-                vpHome.currentItem = 0
-            }
-            ivConsuming -> {
-//                showAddPopup(v)
-                showAddPopup2(v)
-            }
-            ivModify -> {
-//                startAct(Intent(this, SettingActivity::class.java))
-                mBinding.title = titleArray[1]
-//                supportFragmentManager.beginTransaction()
-//                    .replace(R.id.fcCommodity, accountFragment, null)
-//                    .commit()
-                vpHome.currentItem = 1
-            }
+//            ivInventories -> {
+//                mBinding.title = titleArray[0]
+//                vpHome.currentItem = 0
+////                supportFragmentManager.beginTransaction()
+////                    .replace(R.id.fcCommodity, placeFragment, null)
+////                    .commit()
+//            }
+//            ivConsuming -> {
+////                showAddPopup(v)
+//                showAddPopup2(v)
+//            }
+//            ivModify -> {
+////                startAct(Intent(this, SettingActivity::class.java))
+//                mBinding.title = titleArray[1]
+//                vpHome.currentItem = 1
+////                supportFragmentManager.beginTransaction()
+////                    .replace(R.id.fcCommodity, accountFragment, null)
+////                    .commit()
+//            }
             rlSearch -> {
                 startSearch(v)
             }
@@ -741,13 +741,15 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
 //                )
             }
             ivBottomFirst -> {
-                toast("first")
+                mBinding.title = titleArray[0]
+                vpHome.currentItem = 0
             }
             ivBottomSecond -> {
                 showAddPopup2(v)
             }
             ivBottomThird -> {
-                toast("third")
+                mBinding.title = titleArray[1]
+                vpHome.currentItem = 1
             }
         }
     }
@@ -1111,7 +1113,10 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
                 mBottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
                 false
             } else {
-                super.onKeyDown(keyCode, event)
+                val intent = Intent(Intent.ACTION_MAIN)
+                intent.addCategory(Intent.CATEGORY_HOME)
+                startAct(intent)
+                false
             }
         } else {
             super.onKeyDown(keyCode, event)

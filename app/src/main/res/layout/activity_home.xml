@@ -125,11 +125,11 @@
 
                             <LinearLayout
                                     android:id="@+id/llPlace"
-                                    android:layout_width="wrap_content"
+                                    android:layout_width="@dimen/dp146"
                                     android:layout_height="@dimen/dp64"
                                     android:layout_alignParentEnd="true"
                                     android:layout_alignParentBottom="true"
-                                    android:background="@mipmap/test"
+                                    android:background="@mipmap/bg_detail_section"
                                     android:gravity="center_vertical"
                                     android:orientation="horizontal"
                                     android:paddingStart="@dimen/dp20"
