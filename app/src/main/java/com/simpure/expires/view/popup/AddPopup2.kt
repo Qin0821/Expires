@@ -14,7 +14,11 @@ import com.simpure.expires.ui.home.CommodityHomeActivity
 import com.simpure.expires.utilities.goScanAct
 import com.simpure.expires.utilities.toast
 
-class AddPopup2(val context: Context, val dismissCallback: () -> Unit) : PopupWindow(context) {
+class AddPopup2(
+    val context: Context,
+    val typeInManuallyCallback: () -> Unit,
+    val dismissCallback: () -> Unit
+) : PopupWindow(context) {
 
     private val mAlpha: Float = 0.5f
 
@@ -38,7 +42,7 @@ class AddPopup2(val context: Context, val dismissCallback: () -> Unit) : PopupWi
         vScanBarcode = contentView.findViewById(R.id.vScanBarcode)
 
         vTypeInManually.setOnClickListener {
-            context.toast("vTypeInManually")
+            typeInManuallyCallback()
             dismiss()
         }
         vScanBarcode.setOnClickListener {

@@ -26,6 +26,14 @@
         <variable
                 name="minusListener"
                 type="android.view.View.OnClickListener" />
+
+        <variable
+                name="expireListener"
+                type="android.view.View.OnClickListener" />
+
+        <variable
+                name="productionListener"
+                type="android.view.View.OnClickListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -82,12 +90,15 @@
                 app:layout_constraintTop_toBottomOf="@id/ivConsumingDateSwitch">
 
             <include
+                    android:id="@+id/itemDialogCommodityConsuming"
                     layout="@layout/item_dialog_commodity_consuming"
                     bind:commodityDetail="@{commodityDetail}"
+                    bind:expireListener="@{expireListener}"
                     bind:isEdit="@{isEdit}"
                     bind:isPopup="@{true}"
                     bind:minusListener="@{minusListener}"
-                    bind:plusListener="@{plusListener}" />
+                    bind:plusListener="@{plusListener}"
+                    bind:productionListener="@{productionListener}" />
         </androidx.cardview.widget.CardView>
 
         <ImageView

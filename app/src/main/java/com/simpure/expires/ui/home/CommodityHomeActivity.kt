@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.view.animation.AnimationUtils
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
@@ -56,6 +57,7 @@ import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.item_commodity.*
 import kotlinx.android.synthetic.main.item_commodity.view.*
+import kotlinx.android.synthetic.main.item_commodity_head.*
 import kotlinx.android.synthetic.main.item_dialog_commodity_consuming.*
 import kotlinx.android.synthetic.main.item_dialog_commodity_consuming.view.*
 import kotlinx.android.synthetic.main.item_dialog_commodity_inventories.*
@@ -120,6 +122,11 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
                 BottomSheetBehavior.STATE_COLLAPSED -> {
                     Log.e("AAA", "STATE_COLLAPSED")
 
+                    // 如果刚刚是编辑状态，变为COLLAPSED状态时需要还原数据
+                    if (null != mBinding.isEdit && mBinding.isEdit!!) {
+                        mBinding.isEdit = false
+//                        mBinding.commodityDetail = mCommodityDetail
+                    }
                     mBinding.isHome = false
                     mBinding.isDetail = true
                     mBinding.showBottomSheet = true
@@ -170,11 +177,13 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
                 }
                 BottomSheetBehavior.STATE_SETTLING -> {
                     if (mClickShadowToHidden) {
+                        toast("2")
                         mBinding.isHome = true
                         mBinding.isDetail = false
                         mBinding.showBottomSheet = false
                         mClickShadowToHidden = false
                     } else if (lastBehavior == BottomSheetBehavior.STATE_HIDDEN) {
+                        toast("1")
                         mBinding.isHome = false
                         mBinding.isDetail = true
                         mBinding.showBottomSheet = true
@@ -187,6 +196,7 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
 //                    mBinding.showBottomSheet = true
                 }
             }
+            lastBehavior = newState
         }
     }
 
@@ -328,6 +338,7 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
         mBinding.itemNavigation.ivBottomFirst.setOnClickListener(this)
         mBinding.itemNavigation.ivBottomSecond.setOnClickListener(this)
         mBinding.itemNavigation.ivBottomThird.setOnClickListener(this)
+        mBinding.itemCommodity.itemCommodityHead.tvCommodityName.setOnClickListener(this)
         mBinding.ivHomeSearch.setOnClickListener(this)
         mBinding.tvAll.setOnClickListener(this)
 //        mBinding.llPlace.setOnTouchListener(this)
@@ -430,6 +441,7 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
             // 给 commodity sheet 设置数据
             mBinding.commodityDetail = it
 
+            toast(it.calc())
             showInventories(it)
             showBarcode(it)
         })
@@ -751,6 +763,20 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
                 mBinding.title = titleArray[1]
                 vpHome.currentItem = 1
             }
+
+            // 编辑状态
+            tvCommodityName -> {
+                if (null == mBinding.isEdit || !mBinding.isEdit!!) {
+                    toast("not edit")
+                    return
+                } else {
+                    tvCommodityName.apply {
+                        isFocusable = true
+                        isFocusableInTouchMode = true
+                        requestFocus()
+                    }
+                }
+            }
         }
     }
 
@@ -797,7 +823,7 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
 
     private fun showAddPopup2(v: View) {
 
-        val popup = AddPopup2(this) {
+        val popup = AddPopup2(this, switch2EditState()) {
             mBinding.showPopup = false
         }
         val contentView = popup.contentView
@@ -827,6 +853,17 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
             Gravity.START
         )
 
+    }
+
+    private fun switch2EditState(): () -> Unit {
+        return {
+            mBinding.commodityDetail = CommodityEntity()
+
+            mBottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+            mBinding.isEdit = true
+            mBinding.isHome = false
+            mBinding.isDetail = false
+        }
     }
 
     private fun makeDropDownMeasureSpec(measureSpec: Int): Int {
@@ -1261,6 +1298,16 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
         @BindingAdapter("setThirdButton")
         fun ImageView.setThirdButton(isEdit: Boolean) {
             this.setImageResource(if (isEdit) R.mipmap.icons_dock_save_black else R.mipmap.icons_dock_more_black)
+        }
+
+        @JvmStatic
+        @BindingAdapter("setCommodityName")
+        fun EditText.setCommodityName(name: String) {
+            if (name.isEmpty()) {
+                this.hint = "New Name"
+            } else {
+
+            }
         }
     }
 

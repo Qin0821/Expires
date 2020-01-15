@@ -13,10 +13,10 @@ import com.simpure.expires.model.Inventory
 @TypeConverters(Converters::class)
 class CommodityEntity constructor(
     @PrimaryKey
-    override var id: Int,
-    override var name: String,
-    override var productionDate: Long,
-    override var expiryDate: Int,
+    override var id: Int = 0,
+    override var name: String = "",
+    override var productionDate: Long = 0L,
+    override var expiryDate: Int = 0,
     override var amount: Int = 0,
     override val unit: String = "",
     override val place: String = "",

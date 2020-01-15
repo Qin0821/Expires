@@ -37,7 +37,7 @@
                 android:focusableInTouchMode="true"
                 android:src="@drawable/selector_rv_green"
                 android:visibility="@{isMulti ? View.VISIBLE : View.GONE}"
-                app:srcCompat="@mipmap/icons_detail_selectcircle_notselected" />
+                app:srcCompat="@mipmap/icons_detail_select_circle_not_selected" />
 
         <LinearLayout
                 android:id="@+id/llExpireDate"

@@ -22,7 +22,7 @@ interface ExpiresDate {
     }
 
     fun calc(): String {
-        return getExpirationDate().calcExpirationDate().toString()
+        return if (getExpirationDate() != 0L) getExpirationDate().calcExpirationDate().toString() else "0"
     }
 
     /**

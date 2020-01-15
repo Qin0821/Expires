@@ -33,6 +33,7 @@
     <string name="place">Place</string>
     <string name="default_barcode">Thanks for your use</string>
     <string name="throw_inventories">Throw</string>
+    <string name="new_commodity_name">New commodity name</string>
 
 
     <string name="ic_consuming_data_switch">icon consuming data switch</string>

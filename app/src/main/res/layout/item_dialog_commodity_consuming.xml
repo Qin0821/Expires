@@ -28,6 +28,15 @@
         <variable
                 name="minusListener"
                 type="android.view.View.OnClickListener" />
+
+
+        <variable
+                name="expireListener"
+                type="android.view.View.OnClickListener" />
+
+        <variable
+                name="productionListener"
+                type="android.view.View.OnClickListener" />
     </data>
 
     <LinearLayout
@@ -84,9 +93,11 @@
         </LinearLayout>
 
         <LinearLayout
+                android:id="@+id/llExpireDate"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp60"
                 android:gravity="center_vertical"
+                android:onClick="@{expireListener}"
                 android:orientation="horizontal"
                 android:paddingTop="@dimen/dp10"
                 android:paddingBottom="@dimen/dp10">
@@ -106,6 +117,13 @@
                     android:textColor="@color/bg_comm_action"
                     android:textSize="17sp" />
 
+            <FrameLayout
+                    android:id="@+id/expirePickerContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="280dp"
+                    android:background="@drawable/bg_rounded_rectangle_white_10"
+                    android:visibility="gone" />
+
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/dp40"
@@ -115,9 +133,11 @@
         </LinearLayout>
 
         <LinearLayout
+                android:id="@+id/llProductionDate"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp60"
                 android:gravity="center_vertical"
+                android:onClick="@{productionListener}"
                 android:orientation="horizontal"
                 android:paddingTop="@dimen/dp10"
                 android:paddingBottom="@dimen/dp10">
@@ -136,6 +156,13 @@
                     android:text="@string/production_date"
                     android:textColor="@color/bg_comm_action"
                     android:textSize="17sp" />
+
+            <FrameLayout
+                    android:id="@+id/productionPickerContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="280dp"
+                    android:background="@drawable/bg_rounded_rectangle_white_10"
+                    android:visibility="gone" />
 
             <TextView
                     android:layout_width="wrap_content"
@@ -205,8 +232,8 @@
                     android:layout_width="@dimen/dp44"
                     android:layout_height="@dimen/dp44"
                     android:layout_marginEnd="@dimen/dp38"
-                    android:onClick="@{plusListener}"
                     android:background="@mipmap/icons_detail_button_small_plus_theme"
+                    android:onClick="@{plusListener}"
                     android:visibility="@{isEdit &amp;&amp; isPopup ? View.VISIBLE : View.GONE}" />
 
             <TextView
@@ -220,8 +247,8 @@
                     android:layout_width="@dimen/dp44"
                     android:layout_height="@dimen/dp44"
                     android:layout_marginStart="@dimen/dp38"
-                    android:onClick="@{minusListener}"
                     android:background="@mipmap/icons_detail_button_small_minus_theme"
+                    android:onClick="@{minusListener}"
                     android:visibility="@{isEdit &amp;&amp; isPopup ? View.VISIBLE : View.GONE}" />
         </LinearLayout>
 
