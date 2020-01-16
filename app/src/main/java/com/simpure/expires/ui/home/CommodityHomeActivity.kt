@@ -691,21 +691,31 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
     override fun onClick(v: View?) {
         if (null == v) return
 
+        if (isEditName) {
+            KeyboardUtils.hideSoftInput(this)
+            mBinding.itemCommodity.itemCommodityHead.tvCommodityName.apply {
+                isFocusable = false
+                isFocusableInTouchMode = false
+                clearFocus()
+                isEditName = false
+            }
+        }
+
         when (v) {
             tvCommClear -> {
-                showEditPopup(v, ConsumingPopup(this, false, {
+                showEditPopup(v, ConsumingPopup(this, false) {
                     toast("clear")
-                }))
+                })
             }
             ivEditConsuming -> {
-                showEditPopup(v, ConsumingPopup(this, true, {
+                showEditPopup(v, ConsumingPopup(this, true) {
                     toast("edit")
-                }))
+                })
             }
             ivInventoriesTopping -> {
-                showEditPopup(v, InventoriesPopup(this, true, {
+                showEditPopup(v, InventoriesPopup(this, true) {
                     toast("ivInventoriesTopping")
-                }))
+                })
             }
             tvInventoriesThrow -> {
                 showEditPopup(v, InventoriesPopup(this, false, {
@@ -765,20 +775,23 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
             }
 
             // 编辑状态
-            tvCommodityName -> {
+            mBinding.itemCommodity.itemCommodityHead.tvCommodityName -> {
                 if (null == mBinding.isEdit || !mBinding.isEdit!!) {
                     toast("not edit")
                     return
                 } else {
-                    tvCommodityName.apply {
+                    mBinding.itemCommodity.itemCommodityHead.tvCommodityName.apply {
                         isFocusable = true
                         isFocusableInTouchMode = true
                         requestFocus()
+                        isEditName = true
                     }
                 }
             }
         }
     }
+
+    private var isEditName = false
 
     private fun showPlacePopup2(placeList: List<String>) {
 
@@ -863,6 +876,8 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
             mBinding.isEdit = true
             mBinding.isHome = false
             mBinding.isDetail = false
+
+            mBinding.itemCommodity.layout.setIsEdit(true)
         }
     }
 

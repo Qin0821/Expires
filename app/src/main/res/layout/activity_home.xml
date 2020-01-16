@@ -59,6 +59,7 @@
         <variable
                 name="isEmpty"
                 type="Boolean" />
+
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout

@@ -43,7 +43,7 @@
     </data>
 
 
-    <RelativeLayout
+    <com.simpure.expires.view.relativeLayout.ItemCommodityRelativeLayout
             android:id="@+id/layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -155,5 +155,5 @@
                     android:visibility="gone" />
 
         </RelativeLayout>
-    </RelativeLayout>
+    </com.simpure.expires.view.relativeLayout.ItemCommodityRelativeLayout>
 </layout>
