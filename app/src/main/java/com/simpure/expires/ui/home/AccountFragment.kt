@@ -9,6 +9,12 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.simpure.expires.R
 import com.simpure.expires.databinding.ActivitySettingBinding
+import com.simpure.expires.ui.setting.AccountActivity
+import com.simpure.expires.ui.setting.NewNotificationsActivity
+import com.simpure.expires.ui.setting.NotificationsActivity
+import com.simpure.expires.ui.setting.categories.CategoriesActivity
+import com.simpure.expires.utilities.startAct
+import com.simpure.expires.utilities.toast
 
 class AccountFragment : Fragment() {
 
@@ -33,6 +39,27 @@ class AccountFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
+        mBinding.apply {
+            accountClick = View.OnClickListener {
+                context?.startAct(AccountActivity::class.java)
+            }
+            catagoriesClick = View.OnClickListener {
+                context?.startAct(CategoriesActivity::class.java)
+            }
+            notificationsClick = View.OnClickListener {
+                context?.startAct(NewNotificationsActivity::class.java)
+            }
+            shareAppClick = View.OnClickListener {
+                context?.toast("share")
+            }
+            rateUsClick = View.OnClickListener {
+                context?.toast("rate")
+            }
+            feedbackClick = View.OnClickListener {
+                context?.toast("feedback")
+            }
+        }
     }
 
 

@@ -135,7 +135,7 @@
         <LinearLayout
                 android:id="@+id/llProductionDate"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp60"
+                android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:onClick="@{productionListener}"
                 android:orientation="horizontal"

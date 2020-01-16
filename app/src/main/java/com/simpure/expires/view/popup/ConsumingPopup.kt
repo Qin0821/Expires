@@ -89,7 +89,6 @@ class ConsumingPopup(context: Context, val isEdit: Boolean = false, dismissCallb
             productionListener = OnClickListener {
                 if (null == isEdit || !isEdit!!) return@OnClickListener
 
-
                 itemDialogCommodityConsuming.productionPickerContainer.visibility = View.VISIBLE
             }
 
