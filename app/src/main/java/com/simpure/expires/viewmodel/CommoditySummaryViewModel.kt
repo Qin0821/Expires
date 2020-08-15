@@ -40,14 +40,14 @@ class CommoditySummaryViewModel(application: Application) : AndroidViewModel(app
         }
     }
 
-    fun setCommoditiesSummary(place: String) {
-
-        mObservableCommodities.addSource(
-            mRepository.loadCommodityHomeByPlace(
-                place
-            )
-        ) {
-            mObservableCommodities.setValue(it)
-        }
-    }
+//    fun setCommoditiesSummary(place: String) {
+//
+//        mObservableCommodities.addSource(
+//            mRepository.loadCommodityHomeByPlace(
+//                place
+//            )
+//        ) {
+//            mObservableCommodities.setValue(it)
+//        }
+//    }
 }

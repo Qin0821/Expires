@@ -4,16 +4,17 @@ package com.simpure.expires.ui.home
 import android.animation.AnimatorSet
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
+import android.content.ComponentName
+import android.content.Context
 import android.content.Intent
+import android.content.ServiceConnection
 import android.graphics.Rect
 import android.os.Bundle
+import android.os.IBinder
 import android.util.Log
 import android.view.*
 import android.view.animation.AnimationUtils
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.RelativeLayout
+import android.widget.*
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.widget.PopupWindowCompat
 import androidx.databinding.BindingAdapter
@@ -37,9 +38,9 @@ import com.simpure.expires.R
 import com.simpure.expires.data.entity.CommodityEntity
 import com.simpure.expires.data.entity.GroupEntity
 import com.simpure.expires.databinding.ActivityHomeBinding
+import com.simpure.expires.server.IServiceBinder
 import com.simpure.expires.ui.BaseActivity
 import com.simpure.expires.ui.commodity.InventoryAdapter
-import com.simpure.expires.ui.search.SearchActivity
 import com.simpure.expires.utilities.getCompatColor
 import com.simpure.expires.utilities.report
 import com.simpure.expires.utilities.startAct
@@ -57,7 +58,6 @@ import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.item_commodity.*
 import kotlinx.android.synthetic.main.item_commodity.view.*
-import kotlinx.android.synthetic.main.item_commodity_head.*
 import kotlinx.android.synthetic.main.item_dialog_commodity_consuming.*
 import kotlinx.android.synthetic.main.item_dialog_commodity_consuming.view.*
 import kotlinx.android.synthetic.main.item_dialog_commodity_inventories.*
@@ -446,7 +446,56 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
             showBarcode(it)
         })
 
+//        val intent = Intent(this@CommodityHomeActivity, AIDLService::class.java)
+//        bindService(intent, mAIDLConnection, Context.BIND_AUTO_CREATE)
+
+        Log.e("AAA", "start bind")
+        val bindIntent = Intent()
+        bindIntent.component = ComponentName(
+            "com.keqiang.xiaoxinhuan",
+            "com.keqiang.xiaoxinhuan.service.AIDLService"
+        )
+        bindService(
+            bindIntent,
+            object : ServiceConnection {
+                override fun onServiceDisconnected(name: ComponentName?) {
+                    Log.e("AAA", componentName.className + "Disconnected")
+                    ToastUtils.showShort(componentName.className + "Disconnected")
+                    iServiceBinder = null
+                }
+
+                override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
+                    Log.e("AAA", componentName.className + "connected")
+                    ToastUtils.showShort(componentName.className + "connected")
+                    iServiceBinder = IServiceBinder.Stub.asInterface(service)
+                }
+
+            },
+            Context.BIND_AUTO_CREATE
+        )
     }
+
+    var iServiceBinder: IServiceBinder? = null
+
+//    private val mAIDLConnection: ServiceConnection = object : ServiceConnection {
+//        override fun onServiceConnected(componentName: ComponentName?, iBinder: IBinder) {
+//            ToastUtils.showShort("$componentName connected")
+//            val binder: AIDLService.MyBinder = iBinder as AIDLService.MyBinder
+//            val aidlService: AIDLService = binder.service
+//            aidlService.setOnLoginListener { userName, passWord ->
+//                ToastUtils.showShort("AIDL work $userName + $passWord")
+//
+//                runOnUiThread {
+//
+//                    tvAppName.text = "AIDL work $userName + $passWord"
+//                }
+//            }
+//        }
+//
+//        override fun onServiceDisconnected(componentName: ComponentName?) {
+//            ToastUtils.showShort("$componentName disconnected")
+//        }
+//    }
 
     fun newConsuming() {
         toast("new consuming")
@@ -753,7 +802,12 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
                 mCommodityHomeViewModel.setPlaceName("All")
             }
             ivHomeSearch -> {
-                startAct(Intent(this, SearchActivity::class.java))
+                try {
+                    iServiceBinder?.getServiceBinder(packageName)
+                } catch (e: java.lang.Exception) {
+                    Toast.makeText(this, e.message, Toast.LENGTH_SHORT).show()
+                }
+//                startAct(Intent(this, SearchActivity::class.java))
             }
             llPlace -> {
                 showPlacePopup2(mPlaceList)
@@ -1004,7 +1058,9 @@ class CommodityHomeActivity : BaseActivity(), View.OnTouchListener {
             MotionEvent.ACTION_UP -> {
                 mPlaceNamePopup.dismiss()
                 mSelectPlace =
-                    if (mPlacePopup.getSelectPlace().isEmpty()) mSelectPlace else mPlacePopup.getSelectPlace()
+                    if (mPlacePopup.getSelectPlace()
+                            .isEmpty()
+                    ) mSelectPlace else mPlacePopup.getSelectPlace()
 
                 try {
                     mBinding.placeName = mSelectPlace

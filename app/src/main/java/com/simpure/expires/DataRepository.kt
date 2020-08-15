@@ -84,9 +84,9 @@ class DataRepository private constructor(private val mDatabase: AppDatabase) {
         return mDatabase.commodityDao().loadCommodity(commodityId)
     }
 
-    fun loadCommodityHomeByPlace(place: String): LiveData<List<CommoditySummaryModel>> {
-        return mDatabase.commodityDao().loadCommoditiesSummaryByName(place)
-    }
+//    fun loadCommodityHomeByPlace(place: String): LiveData<List<CommoditySummaryModel>> {
+//        return mDatabase.commodityDao().loadCommoditiesSummaryByName(place)
+//    }
 
     companion object {
 

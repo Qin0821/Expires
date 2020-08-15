@@ -45,6 +45,15 @@
                 android:name="notch.config"
                 android:value="portrait|landscape" />
 
+        <service android:name="com.simpure.expires.ui.home.AIDLService"
+                android:exported="true">
+            <intent-filter>
+                <action android:name="com.jason.aidlserver"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </service>
+
+
     </application>
 
 </manifest>

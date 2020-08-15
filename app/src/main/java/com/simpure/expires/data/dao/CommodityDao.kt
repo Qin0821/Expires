@@ -39,13 +39,12 @@ interface CommodityDao {
     @Query("SELECT * FROM commodities WHERE id = :commodityId")
     fun loadCommoditySync(commodityId: Int): CommodityEntity
 
-    @Query("SELECT id, name, productionDate, expiryDate, place  FROM commodities")
+    @Query("SELECT id, name, productionDate, expiryDate FROM commodities")
     fun loadAllCommoditiesSummary(): LiveData<List<CommoditySummaryModel>>
 
-    @Query("SELECT id, name, productionDate, expiryDate, place FROM commodities WHERE place LIKE :place")
+//    @Query("SELECT id, name, productionDate, expiryDate, place FROM commodities WHERE place LIKE :place")
 //    @Query("SELECT id, name, productionDate, expiryDate FROM commodities where place = :place")
-    fun loadCommoditiesSummaryByName(place: String): LiveData<List<CommoditySummaryModel>>
-    // todo 返回为null 看一下
+//    fun loadCommoditiesSummaryByName(place: String): LiveData<List<CommoditySummaryModel>>
 
     //    @Query("SELECT commodities.* FROM commodities JOIN commoditiesFts ON (commodities.id = commoditiesFts.rowid) "
     //        + "WHERE commoditiesFts MATCH :query")

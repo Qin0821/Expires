@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
+import com.blankj.utilcode.util.ToastUtils
 import com.simpure.expires.BasicApp
 import com.simpure.expires.DataRepository
 import com.simpure.expires.model.CommodityHomeModel
@@ -42,14 +43,15 @@ class CommodityHome2ViewModel(application: Application) : AndroidViewModel(appli
             }
             mObservableCommodityHome.value = mCommodityHomeModel
         } else {
-            mObservableCommodityHome.addSource(mRepository.loadCommodityHomeByPlace(place)) {
-                mCommodityHomeModel.apply {
-                    placeName = place
-                    commoditySummaryList = it
-                    placeMap[place] = it
-                }
-                mObservableCommodityHome.value = mCommodityHomeModel
-            }
+            ToastUtils.showShort("todo")
+//            mObservableCommodityHome.addSource(mRepository.loadCommodityHomeByPlace(place)) {
+//                mCommodityHomeModel.apply {
+//                    placeName = place
+//                    commoditySummaryList = it
+//                    placeMap[place] = it
+//                }
+//                mObservableCommodityHome.value = mCommodityHomeModel
+//            }
         }
     }
 

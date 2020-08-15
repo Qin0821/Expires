@@ -112,7 +112,8 @@
                                     android:minHeight="@dimen/dp62"
                                     android:text="@{title}"
                                     android:textColor="@color/black"
-                                    android:textSize="32sp" />
+                                    android:textSize="32sp"
+                                    tools:text="Freshever"/>
 
                             <ImageView
                                     android:id="@+id/ivHomeSearch"
@@ -140,10 +141,10 @@
                                         android:layout_width="0dp"
                                         android:layout_height="@dimen/dp64"
                                         android:layout_weight="1"
+                                        android:ellipsize="end"
                                         android:gravity="center"
                                         android:includeFontPadding="false"
                                         android:maxLines="1"
-                                        android:ellipsize="end"
                                         android:paddingStart="@dimen/dp40"
                                         android:paddingEnd="@dimen/dp40"
                                         android:text="@{placeName}"
@@ -225,7 +226,6 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         bind:isHome="@{true}" />
 
-
             </LinearLayout>
         </RelativeLayout>
 
@@ -245,7 +245,8 @@
                 bind:isDetail="@{isDetail}"
                 bind:isEdit="@{isEdit}"
                 bind:isEmpty="@{isEmpty}"
-                bind:isHome="@{isHome}" />
+                bind:isHome="@{isHome}"
+                tools:visibility="gone" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
